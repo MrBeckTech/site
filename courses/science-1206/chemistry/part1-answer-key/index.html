@@ -4,170 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Science 1206 - Unit 2 Booklet #1 Complete Answer Key</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         :root {
-            --primary: #1e3a8a;
-            --primary-light: #eff6ff;
-            --secondary: #0d9488;
-            --text: #1f2937;
-            --border: #cbd5e1;
-            --ans-color: #b91c1c;
-            --bg-alt: #f8fafc;
+            --night: #1b1030; --win: linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+            --panel: #160d2b; --rim: #8a6fd0; --ink: #f6efff; --ink2: #c3b2e6; --line: #3a2463;
+            --gold: #ffd23f; --mint: #5df2a4; --sky: #6ad3ff; --coral: #ff5d73;
+            --pix: 'Press Start 2P','Courier New',monospace;
+            --term: 'VT323','Courier New',monospace;
+            --body: 'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+            color-scheme: dark;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.5;
-            color: var(--text);
-            margin: 0;
-            padding: 10px;
-            background-color: #ffffff;
+        html, body {
+            margin: 0; background-color: var(--night); color: var(--ink);
+            font-family: var(--body); font-size: 16px; line-height: 1.5;
+            background-image: radial-gradient(#ffffff10 1px, transparent 1px); background-size: 6px 6px;
         }
+        :focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; }
 
-        .paper {
-            background-color: #ffffff;
-            padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
+        .paper { max-width: 1060px; margin: 0 auto; padding: 18px 16px 30px; }
+
+        .back {
+            display: inline-block; margin-bottom: 14px; font-family: var(--pix); font-size: 10px; line-height: 1;
+            color: var(--gold); text-decoration: none; padding: 8px 10px; background: #3a2463;
+            border: 3px solid #000; border-radius: 4px; box-shadow: inset 0 0 0 2px #5b3f94;
         }
+        .back:hover { box-shadow: inset 0 0 0 2px var(--gold); }
 
-        header {
-            border-bottom: 3px solid var(--primary);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            text-align: center;
+        header, section {
+            background: var(--win); border: 4px solid #000; border-radius: 6px;
+            box-shadow: inset 0 0 0 3px var(--rim), 5px 5px 0 #000;
+            padding: 18px 20px; margin-bottom: 22px;
         }
-
+        header { text-align: center; }
+        .kicker { margin: 0 0 10px; color: var(--ink2); font-size: 15px; }
         h1 {
-            color: var(--primary);
-            margin: 0 0 5px 0;
-            font-size: 24px;
+            margin: 0 0 12px; font-family: var(--pix); font-weight: 400; font-size: clamp(14px, 2.2vw, 20px);
+            line-height: 1.6; color: var(--gold); text-shadow: 3px 3px 0 #000;
         }
-
-        h2 {
-            color: #475569;
-            margin: 0 0 10px 0;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
         .badge {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        section {
-            margin-bottom: 30px;
-            background: #fff;
-            padding: 15px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
+            display: inline-block; font-family: var(--pix); font-size: 9px; line-height: 1;
+            background: var(--mint); color: var(--night); border: 3px solid #000; padding: 6px 9px;
         }
 
         h3 {
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary-light);
-            padding-bottom: 8px;
-            margin-top: 0;
-            font-size: 18px;
+            margin: 0 0 6px; font-family: var(--pix); font-weight: 400; font-size: 12px; line-height: 1.7;
+            color: var(--mint); text-shadow: 2px 2px 0 #000;
         }
+        h4 { color: var(--sky); margin: 22px 0 8px; font-size: 17px; }
 
-        h4 {
-            color: var(--secondary);
-            margin-top: 18px;
-            margin-bottom: 8px;
-            font-size: 15px;
-        }
+        .answer { color: var(--gold); font-weight: 700; }
+        strong { color: var(--ink); }
 
-        .answer {
-            color: var(--ans-color);
-            font-weight: 600;
-        }
-
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            margin: 15px 0;
-        }
-
+        .table-responsive { width: 100%; overflow-x: auto; margin: 12px 0; }
         table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            min-width: 450px;
+            width: 100%; border-collapse: collapse; font-size: 14px; min-width: 450px;
+            background: var(--panel); border: 3px solid #000;
         }
-
-        th, td {
-            border: 1px solid var(--border);
-            padding: 8px 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: var(--bg-alt);
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
+        th, td { border: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+        th { background: #2a1850; color: var(--mint); font-weight: 700; }
+        tr:nth-child(even) td { background: #1d1238; }
+        td p { margin: 4px 0; }
 
         .symbol-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin: 15px 0;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+            gap: 12px; margin: 12px 0;
         }
-
         .symbol-card {
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 10px;
-            text-align: center;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
+            background: var(--panel); border: 3px solid #000; border-radius: 4px; padding: 12px 10px;
+            text-align: center; display: flex; flex-direction: column; align-items: center;
+        }
+        .symbol-card svg { width: 96px; height: 96px; flex-shrink: 0; }
+        .symbol-card p { margin: 8px 0 0; font-size: 14px; font-weight: 700; line-height: 1.35; }
+
+        .note {
+            background: var(--panel); border: 3px solid #000; border-left: 6px solid var(--sky);
+            border-radius: 4px; padding: 10px 14px; margin: 12px 0; color: var(--ink); font-size: 15px;
         }
 
-        .symbol-card svg {
-            margin-bottom: 8px;
-            flex-shrink: 0;
+        .bohr-row { display: flex; align-items: stretch; gap: 14px; margin: 12px 0; flex-wrap: wrap; }
+        .bohr-card {
+            flex: 1 1 300px; background: var(--panel); border: 3px solid #000; border-radius: 4px; padding: 12px 16px;
         }
-
-        .symbol-card p {
-            margin: 5px 0 0 0;
-            font-size: 11px;
-            font-weight: bold;
+        .bohr-card h5 { margin: 0 0 4px; font-family: var(--pix); font-weight: 400; font-size: 10px; line-height: 1.6; color: var(--gold); }
+        .bohr-card svg { display: block; max-width: 100%; height: auto; margin: 4px auto 8px; }
+        .bohr-card p { margin: 4px 0; font-size: 15px; }
+        .bohr-arrow {
+            flex: 0 0 auto; align-self: center; text-align: center; color: var(--coral); font-weight: 700; font-size: 15px;
         }
+        .bohr-arrow span { display: block; font-family: var(--term); font-size: 40px; line-height: 1; }
+        @media (max-width: 700px) { .bohr-arrow span { transform: rotate(90deg); } }
 
-        ul, ol {
-            padding-left: 20px;
-        }
+        ul, ol { padding-left: 22px; }
+        li { margin-bottom: 6px; }
 
-        li {
-            margin-bottom: 6px;
+        @media print {
+            html, body { background: #fff; color: #000; font-size: 12px; }
+            .back { display: none; }
+            header, section { background: #fff; border: 1px solid #999; box-shadow: none; break-inside: auto; }
+            h1, h3 { color: #000; text-shadow: none; }
+            h4 { color: #1e3a8a; }
+            .kicker, strong { color: #000; }
+            .badge { background: #fff; }
+            .answer { color: #b91c1c; }
+            table, .symbol-card, .note, .bohr-card { background: #fff; border-color: #999; }
+            th { background: #eee; color: #000; }
+            tr:nth-child(even) td { background: #fafafa; }
+            th, td { border-color: #bbb; }
+            .bohr-card h5 { color: #000; }
         }
     </style>
 </head>
 <body>
 
 <div class="paper">
+    <a class="back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>
     <header>
-        <h1>Queen Elizabeth Regional High School</h1>
-        <h2>Science 1206 - Unit 2: Chemical Reactions</h2>
-        <span class="badge">BOOKLET #1 COMPLETE ANSWER KEY</span>
+        <p class="kicker">Queen Elizabeth Regional High School &middot; Science 1206 &middot; Unit 2: Chemical Reactions</p>
+        <h1>BOOKLET #1 ANSWER KEY</h1>
+        <span class="badge">COMPLETE ANSWERS</span>
     </header>
 
     <!-- SECTION 1: LAB SAFETY & WHMIS -->
@@ -185,132 +144,115 @@
 
         <h4>Official WHMIS 2015 Pictograms</h4>
         <div class="symbol-grid">
-            <!-- Flame -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#d32f2f" stroke-width="6" stroke-linejoin="round"/>
-                    <path d="M50 22 C42 38, 32 45, 38 65 C41 74, 50 78, 55 78 C48 72, 48 62, 54 55 C58 50, 62 43, 62 35 C62 28, 56 22, 50 22 Z" fill="#d32f2f"/>
-                    <path d="M50 48 C44 56, 44 65, 50 72 C55 72, 58 68, 56 62 C54 56, 51 52, 50 48 Z" fill="#ffffff"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="WHMIS flame pictogram">
+                    <polygon points="50,3.5 96.5,50 50,96.5 3.5,50" fill="#fff" stroke="#e3001b" stroke-width="6.5" stroke-linejoin="round"/>
+                    <path d="M50 23 C55 32 66 38 66 53 C66 62 60 68 51 68 L49 68 C40 68 34 62 34 54 C34 46 38 42 42 35 C43 41 45 44 48 45 C46 37 47 30 50 23 Z" fill="#000"/>
+                    <path d="M50 49 C54 53 57 57 56 61 C55 65 52 66 50 66 C47 66 44 64 44 60 C44 56 47 54 50 49 Z" fill="#fff"/>
+                    <rect x="31" y="70" width="38" height="4" fill="#000"/>
                 </svg>
                 <p>Flame<br><span class="answer">(Flammable Hazards)</span></p>
             </div>
-
-            <!-- Flame Over Circle -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#d32f2f" stroke-width="6" stroke-linejoin="round"/>
-                    <circle cx="50" cy="58" r="16" fill="none" stroke="#000" stroke-width="5"/>
-                    <path d="M50 22 C44 32, 40 38, 44 48 C47 48, 53 48, 56 42 C58 38, 54 28, 50 22 Z" fill="#000"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="WHMIS flame over circle pictogram">
+                    <polygon points="50,3.5 96.5,50 50,96.5 3.5,50" fill="#fff" stroke="#e3001b" stroke-width="6.5" stroke-linejoin="round"/>
+                    <circle cx="50" cy="56" r="9" fill="none" stroke="#000" stroke-width="5"/>
+                    <path d="M39 47 C35 40 39 34 43 29 C43 35 46 37 48 33 C48 28 51 24 55 20 C55 27 61 31 61 38 C61 42 60 45 59 47 C56 45 53 44 50 44 C46 44 42 45 39 47 Z" fill="#000"/>
+                    <rect x="33" y="69" width="34" height="4" fill="#000"/>
                 </svg>
                 <p>Flame Over Circle<br><span class="answer">(Oxidizing Hazards)</span></p>
             </div>
-
-            <!-- Gas Cylinder -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#d32f2f" stroke-width="6" stroke-linejoin="round"/>
-                    <rect x="30" y="44" width="40" height="12" rx="6" fill="#000"/>
-                    <rect x="22" y="47" width="10" height="6" fill="#000"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="WHMIS gas cylinder pictogram">
+                    <polygon points="50,3.5 96.5,50 50,96.5 3.5,50" fill="#fff" stroke="#e3001b" stroke-width="6.5" stroke-linejoin="round"/>
+                    <g transform="rotate(-24 50 54)">
+                        <rect x="27" y="46" width="38" height="17" rx="8.5" fill="#000"/>
+                        <rect x="64" y="50.5" width="5" height="8" fill="#000"/>
+                        <rect x="68.5" y="48" width="4.5" height="13" rx="1" fill="#000"/>
+                    </g>
                 </svg>
                 <p>Gas Cylinder<br><span class="answer">(Gases Under Pressure)</span></p>
             </div>
-
-            <!-- Corrosion -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#d32f2f" stroke-width="6" stroke-linejoin="round"/>
-                    <!-- Pouring tubes -->
-                    <path d="M28 28 L42 42" stroke="#000" stroke-width="4" stroke-linecap="round"/>
-                    <path d="M72 28 L58 42" stroke="#000" stroke-width="4" stroke-linecap="round"/>
-                    <!-- Surface & Hand -->
-                    <line x1="20" y1="65" x2="48" y2="65" stroke="#000" stroke-width="4"/>
-                    <path d="M56 65 Q65 58 75 62 Q80 65 75 70 L56 70 Z" fill="#000"/>
-                    <!-- Effect -->
-                    <circle cx="34" cy="65" r="4" fill="#d32f2f"/>
-                    <circle cx="65" cy="65" r="4" fill="#d32f2f"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="WHMIS corrosion pictogram">
+                    <polygon points="50,3.5 96.5,50 50,96.5 3.5,50" fill="#fff" stroke="#e3001b" stroke-width="6.5" stroke-linejoin="round"/>
+                    <rect x="36.5" y="22" width="6" height="18" rx="3" fill="#000" transform="rotate(-30 39.5 31)"/>
+                    <rect x="57.5" y="22" width="6" height="18" rx="3" fill="#000" transform="rotate(30 60.5 31)"/>
+                    <path d="M44.5 41 q2 4 0 6 q-2 -2 0 -6 Z M44.5 49 q1.6 3 0 4.5 q-1.6 -1.5 0 -4.5 Z" fill="#000"/>
+                    <path d="M55.5 41 q2 4 0 6 q-2 -2 0 -6 Z M55.5 49 q1.6 3 0 4.5 q-1.6 -1.5 0 -4.5 Z" fill="#000"/>
+                    <rect x="27" y="57" width="21" height="6.5" fill="#000"/>
+                    <circle cx="44.5" cy="57" r="3.2" fill="#fff"/>
+                    <rect x="52" y="56" width="13" height="8" rx="2.5" fill="#000"/>
+                    <rect x="62" y="56" width="13" height="3.6" rx="1.8" fill="#000"/>
+                    <rect x="62" y="60.4" width="11.5" height="3.6" rx="1.8" fill="#000"/>
+                    <rect x="59.5" y="49.5" width="3.6" height="9" rx="1.8" fill="#000" transform="rotate(25 61.3 54)"/>
+                    <circle cx="55.5" cy="56.2" r="2.6" fill="#fff"/>
+                    <rect x="29" y="67" width="42" height="3.5" fill="#000"/>
                 </svg>
                 <p>Corrosion<br><span class="answer">(Corrosive Materials)</span></p>
             </div>
-
-            <!-- Exploding Bomb -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#d32f2f" stroke-width="6" stroke-linejoin="round"/>
-                    <circle cx="50" cy="55" r="10" fill="#000"/>
-                    <path d="M50 35 L50 25 M35 50 L25 50 M65 50 L75 50 M38 38 L28 28 M62 38 L72 28 M38 62 L28 72 M62 62 L72 72" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="WHMIS exploding bomb pictogram">
+                    <polygon points="50,3.5 96.5,50 50,96.5 3.5,50" fill="#fff" stroke="#e3001b" stroke-width="6.5" stroke-linejoin="round"/>
+                    <polygon points="50.0,41.0 52.6,49.0 59.6,44.5 56.5,52.2 64.8,53.4 57.4,57.3 63.0,63.5 54.8,61.7 55.1,70.1 50.0,63.5 44.9,70.1 45.2,61.7 37.0,63.5 42.6,57.3 35.2,53.4 43.5,52.2 40.4,44.5 47.4,49.0" fill="#000"/>
+                    <polygon points="33,33 39,34 35,39" fill="#000"/><polygon points="64,31 59,34 65,37" fill="#000"/><polygon points="28,52 34,49 33,56" fill="#000"/><polygon points="72,50 66,47 67,54" fill="#000"/><polygon points="46,24 51,24 48,30" fill="#000"/><polygon points="58,26 62,30 56,31" fill="#000"/>
+                    <rect x="32" y="72" width="36" height="3.5" fill="#000"/>
                 </svg>
                 <p>Exploding Bomb<br><span class="answer">(Explosive Hazards)</span></p>
             </div>
-
-            <!-- Skull and Crossbones -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#d32f2f" stroke-width="6" stroke-linejoin="round"/>
-                    <!-- Crossbones -->
-                    <path d="M28 32 L72 68 M72 32 L28 68" stroke="#000" stroke-width="5" stroke-linecap="round"/>
-                    <!-- Skull Head -->
-                    <circle cx="50" cy="42" r="14" fill="#000"/>
-                    <rect x="43" y="52" width="14" height="8" fill="#000"/>
-                    <!-- Eyes & Teeth -->
-                    <circle cx="45" cy="42" r="3" fill="#fff"/>
-                    <circle cx="55" cy="42" r="3" fill="#fff"/>
-                    <line x1="47" y1="56" x2="47" y2="60" stroke="#fff" stroke-width="1.5"/>
-                    <line x1="50" y1="56" x2="50" y2="60" stroke="#fff" stroke-width="1.5"/>
-                    <line x1="53" y1="56" x2="53" y2="60" stroke="#fff" stroke-width="1.5"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="WHMIS skull and crossbones pictogram">
+                    <polygon points="50,3.5 96.5,50 50,96.5 3.5,50" fill="#fff" stroke="#e3001b" stroke-width="6.5" stroke-linejoin="round"/>
+                    <line x1="34" y1="59" x2="66" y2="74" stroke="#000" stroke-width="5"/><circle cx="32.8" cy="61.5" r="3.4" fill="#000"/><circle cx="35.2" cy="56.5" r="3.4" fill="#000"/><circle cx="64.8" cy="76.5" r="3.4" fill="#000"/><circle cx="67.2" cy="71.5" r="3.4" fill="#000"/><line x1="66" y1="59" x2="34" y2="74" stroke="#000" stroke-width="5"/><circle cx="64.8" cy="56.5" r="3.4" fill="#000"/><circle cx="67.2" cy="61.5" r="3.4" fill="#000"/><circle cx="32.8" cy="71.5" r="3.4" fill="#000"/><circle cx="35.2" cy="76.5" r="3.4" fill="#000"/>
+                    <circle cx="50" cy="40" r="13.5" fill="#000"/>
+                    <rect x="42" y="46" width="16" height="12" rx="3" fill="#000"/>
+                    <ellipse cx="44.5" cy="40" rx="3.6" ry="4.2" fill="#fff"/>
+                    <ellipse cx="55.5" cy="40" rx="3.6" ry="4.2" fill="#fff"/>
+                    <polygon points="50,45 48,49 52,49" fill="#fff"/>
+                    <path d="M46 53 V57 M50 53 V57 M54 53 V57" stroke="#fff" stroke-width="1.6"/>
                 </svg>
-                <p>Skull & Crossbones<br><span class="answer">(Acute Toxicity / Fatal)</span></p>
+                <p>Skull &amp; Crossbones<br><span class="answer">(Acute Toxicity / Fatal)</span></p>
             </div>
-
-            <!-- Health Hazard -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#d32f2f" stroke-width="6" stroke-linejoin="round"/>
-                    <!-- Head & Torso Silhouette -->
-                    <circle cx="50" cy="30" r="8" fill="#000"/>
-                    <path d="M32 68 C32 48, 68 48, 68 68 Z" fill="#000"/>
-                    <!-- Starburst in Chest -->
-                    <polygon points="50,42 53,48 59,45 55,51 61,54 54,56 56,62 50,58 44,62 46,56 39,54 45,51 41,45 47,48" fill="#fff"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="WHMIS health hazard pictogram">
+                    <polygon points="50,3.5 96.5,50 50,96.5 3.5,50" fill="#fff" stroke="#e3001b" stroke-width="6.5" stroke-linejoin="round"/>
+                    <circle cx="50" cy="31" r="7.5" fill="#000"/>
+                    <path d="M33 72 C33 55 40 45 50 45 C60 45 67 55 67 72 Z" fill="#000"/>
+                    <polygon points="50.0,49.5 51.5,55.5 56.7,52.3 53.5,57.5 59.5,59.0 53.5,60.5 56.7,65.7 51.5,62.5 50.0,68.5 48.5,62.5 43.3,65.7 46.5,60.5 40.5,59.0 46.5,57.5 43.3,52.3 48.5,55.5" fill="#fff"/>
                 </svg>
                 <p>Health Hazard<br><span class="answer">(Chronic Health Effects)</span></p>
             </div>
-
-            <!-- Exclamation Mark -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#d32f2f" stroke-width="6" stroke-linejoin="round"/>
-                    <path d="M50 25 L50 56" stroke="#000" stroke-width="10" stroke-linecap="round"/>
-                    <circle cx="50" cy="71" r="5.5" fill="#000"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="WHMIS exclamation mark pictogram">
+                    <polygon points="50,3.5 96.5,50 50,96.5 3.5,50" fill="#fff" stroke="#e3001b" stroke-width="6.5" stroke-linejoin="round"/>
+                    <path d="M50 25 L50 55" stroke="#000" stroke-width="10" stroke-linecap="round"/>
+                    <circle cx="50" cy="68" r="5.5" fill="#000"/>
                 </svg>
                 <p>Exclamation Mark<br><span class="answer">(Irritant / Less Severe)</span></p>
             </div>
-
-            <!-- Environment -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="#d32f2f" stroke-width="6" stroke-linejoin="round"/>
-                    <!-- Bare Tree -->
-                    <path d="M38 65 L38 42 M38 52 L30 44 M38 48 L46 42" stroke="#000" stroke-width="3" stroke-linecap="round"/>
-                    <!-- Dead Fish -->
-                    <path d="M52 60 Q65 52 74 60 Q65 68 52 60 Z" fill="#000"/>
-                    <polygon points="74,60 82,54 82,66" fill="#000"/>
-                    <circle cx="57" cy="58" r="1.5" fill="#fff"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="GHS environment pictogram">
+                    <polygon points="50,3.5 96.5,50 50,96.5 3.5,50" fill="#fff" stroke="#e3001b" stroke-width="6.5" stroke-linejoin="round"/>
+                    <path d="M40 66 V32 M40 42 L33 35 M40 37 L45 31 M40 49 L47 42 M40 56 L34 51" stroke="#000" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+                    <ellipse cx="59" cy="60" rx="10" ry="5" fill="#000"/>
+                    <polygon points="68,60 75,55 75,65" fill="#000"/>
+                    <path d="M52.5 57.5 L55.5 60.5 M55.5 57.5 L52.5 60.5" stroke="#fff" stroke-width="1.4"/>
+                    <rect x="28" y="66" width="44" height="3.5" fill="#000"/>
                 </svg>
                 <p>Environment<br><span class="answer">(Aquatic Toxicity)</span></p>
             </div>
-
-            <!-- Biohazard -->
             <div class="symbol-card">
-                <svg width="80" height="80" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="42" fill="none" stroke="#000" stroke-width="4"/>
-                    <!-- 3 Rings pattern -->
-                    <circle cx="50" cy="38" r="16" fill="none" stroke="#000" stroke-width="4"/>
-                    <circle cx="39" cy="58" r="16" fill="none" stroke="#000" stroke-width="4"/>
-                    <circle cx="61" cy="58" r="16" fill="none" stroke="#000" stroke-width="4"/>
-                    <circle cx="50" cy="50" r="6" fill="#000"/>
+                <svg viewBox="0 0 100 100" role="img" aria-label="WHMIS biohazardous infectious materials pictogram">
+                    <circle cx="50" cy="50" r="45" fill="#fff" stroke="#000" stroke-width="5"/>
+                    <circle cx="50.0" cy="39.0" r="14" fill="#000"/><circle cx="59.5" cy="55.5" r="14" fill="#000"/><circle cx="40.5" cy="55.5" r="14" fill="#000"/><circle cx="50.0" cy="34.5" r="10" fill="#fff"/><circle cx="63.4" cy="57.8" r="10" fill="#fff"/><circle cx="36.6" cy="57.8" r="10" fill="#fff"/>
+                    <circle cx="50" cy="50" r="9" fill="none" stroke="#000" stroke-width="3"/>
+                    <line x1="50" y1="50" x2="50.0" y2="59.0" stroke="#fff" stroke-width="2"/><line x1="50" y1="50" x2="42.2" y2="45.5" stroke="#fff" stroke-width="2"/><line x1="50" y1="50" x2="57.8" y2="45.5" stroke="#fff" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="3.6" fill="#fff"/>
                 </svg>
                 <p>Biohazard<br><span class="answer">(Infectious Materials)</span></p>
             </div>
         </div>
+        <p class="note">Biohazardous infectious materials use a <strong>round</strong> black border, not the red diamond. The environment pictogram is part of the global (GHS) system and often appears on SDSs, but WHMIS does not require it.</p>
 
         <p><strong>SDS</strong> = <span class="answer">Safety Data Sheet</span></p>
         <p><strong>Tells you:</strong> <span class="answer">Hazards associated with a substance, how to handle, store, and dispose of it safely, and first aid procedures if something goes wrong.</span></p>
@@ -375,26 +317,24 @@
         </ul>
 
         <h4>Atom vs. Ion Comparison</h4>
-        <div class="table-responsive">
-            <table>
-                <tr>
-                    <th>Sodium Atom (Na)</th>
-                    <th>Sodium Ion (Na⁺)</th>
-                </tr>
-                <tr>
-                    <td>
-                        <p><strong>Protons:</strong> 11p⁺ | <strong>Neutrons:</strong> 12n⁰</p>
-                        <p><strong>Electrons:</strong> 11e⁻ (Configuration: 2-8-1)</p>
-                        <p class="answer">Neutral atom (p⁺ = e⁻)<br>Unstable valence shell</p>
-                    </td>
-                    <td>
-                        <p><strong>Protons:</strong> 11p⁺ | <strong>Neutrons:</strong> 12n⁰</p>
-                        <p><strong>Electrons:</strong> 10e⁻ (Configuration: 2-8)</p>
-                        <p class="answer">Charged particle (p⁺ ≠ e⁻)<br>Full, stable octet [Na]⁺</p>
-                    </td>
-                </tr>
-            </table>
+        <div class="bohr-row">
+            <div class="bohr-card">
+                <h5>SODIUM ATOM (Na)</h5>
+                <svg width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="Bohr-Rutherford diagram: 11 protons, 12 neutrons, electrons 2-8-1"><circle cx="100.0" cy="100.0" r="44" fill="none" stroke="#8a6fd0" stroke-width="2"/><circle cx="100.0" cy="56.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="100.0" cy="144.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="100.0" cy="100.0" r="66" fill="none" stroke="#8a6fd0" stroke-width="2"/><circle cx="100.0" cy="34.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="146.7" cy="53.3" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="166.0" cy="100.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="146.7" cy="146.7" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="100.0" cy="166.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="53.3" cy="146.7" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="34.0" cy="100.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="53.3" cy="53.3" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="100.0" cy="100.0" r="88" fill="none" stroke="#8a6fd0" stroke-width="2"/><circle cx="100.0" cy="12.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="100.0" cy="100.0" r="27" fill="#3a1630" stroke="#ff5d73" stroke-width="3"/><text x="100.0" y="97.0" text-anchor="middle" font-family="Atkinson Hyperlegible,system-ui,sans-serif" font-weight="700" font-size="15" fill="#f6efff">11 p⁺</text><text x="100.0" y="115.0" text-anchor="middle" font-family="Atkinson Hyperlegible,system-ui,sans-serif" font-weight="700" font-size="15" fill="#f6efff">12 n⁰</text></svg>
+                <p><strong>Protons:</strong> 11p⁺ | <strong>Neutrons:</strong> 12n⁰</p>
+                <p><strong>Electrons:</strong> 11e⁻ (Configuration: 2-8-1)</p>
+                <p class="answer">Neutral atom (p⁺ = e⁻)<br>Unstable valence shell</p>
+            </div>
+            <div class="bohr-arrow"><span>&#10142;</span>loses 1 e⁻</div>
+            <div class="bohr-card">
+                <h5>SODIUM ION (Na⁺)</h5>
+                <svg width="192" height="164" viewBox="0 0 192 164" role="img" aria-label="Bohr-Rutherford diagram: 11 protons, 12 neutrons, electrons 2-8"><circle cx="96.0" cy="82.0" r="44" fill="none" stroke="#8a6fd0" stroke-width="2"/><circle cx="96.0" cy="38.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="96.0" cy="126.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="96.0" cy="82.0" r="66" fill="none" stroke="#8a6fd0" stroke-width="2"/><circle cx="96.0" cy="16.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="142.7" cy="35.3" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="162.0" cy="82.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="142.7" cy="128.7" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="96.0" cy="148.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="49.3" cy="128.7" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="30.0" cy="82.0" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="49.3" cy="35.3" r="6" fill="#6ad3ff" stroke="#000" stroke-width="2"/><circle cx="96.0" cy="82.0" r="27" fill="#3a1630" stroke="#ff5d73" stroke-width="3"/><text x="96.0" y="79.0" text-anchor="middle" font-family="Atkinson Hyperlegible,system-ui,sans-serif" font-weight="700" font-size="15" fill="#f6efff">11 p⁺</text><text x="96.0" y="97.0" text-anchor="middle" font-family="Atkinson Hyperlegible,system-ui,sans-serif" font-weight="700" font-size="15" fill="#f6efff">12 n⁰</text><path d="M18 4 H8 V160 H18 M166 4 H176 V160 H166" fill="none" stroke="#f6efff" stroke-width="3"/><text x="191" y="18" text-anchor="end" font-family="Atkinson Hyperlegible,system-ui,sans-serif" font-weight="700" font-size="22" fill="#ffd23f">+</text></svg>
+                <p><strong>Protons:</strong> 11p⁺ | <strong>Neutrons:</strong> 12n⁰</p>
+                <p><strong>Electrons:</strong> 10e⁻ (Configuration: 2-8)</p>
+                <p class="answer">Charged particle (p⁺ ≠ e⁻)<br>Full, stable octet [Na]⁺</p>
+            </div>
         </div>
+        <p class="note">Losing its one valence electron empties sodium's third shell. The ion has 11 protons but only 10 electrons, so its overall charge is 1+. The square brackets and the + show the charge belongs to the whole ion.</p>
     </section>
 
     <!-- SECTION 3: IONIC VS MOLECULAR DEFINITIONS -->
@@ -421,7 +361,7 @@
         <h4>Diatomic &amp; Special Polyatomic Elements</h4>
         <ul>
             <li><strong>Diatomic Molecules:</strong> <span class="answer">Two atoms of the same element, chemically bonded, forming a molecular substance.</span></li>
-            <li><strong>Remember: HONClBrIF(Say Honkle brif) Elements:</strong> <span class="answer">H₂, O₂, N₂, F₂, Cl₂, Br₂, I₂ (and At₂)</span></li>
+            <li><strong>Remember: HONClBrIF (say "Honkle-brif") Elements:</strong> <span class="answer">H₂, O₂, N₂, F₂, Cl₂, Br₂, I₂ (and At₂)</span></li>
             <li>Special Polyatomic Elements: <span class="answer">Phosphorus (P₄), Sulfur (S₈)</span></li>
         </ul>
 
@@ -772,7 +712,7 @@
                 <tr><td>10</td><td>oxygen</td><td><span class="answer">O₂</span></td><td>25</td><td><span class="answer">beryllium oxide</span></td><td>BeO</td></tr>
                 <tr><td>11</td><td>potassium borate</td><td><span class="answer">K₃BO₃</span></td><td>26</td><td><span class="answer">methane</span></td><td>CH₄</td></tr>
                 <tr><td>12</td><td>barium sulfide</td><td><span class="answer">BaS</span></td><td>27</td><td><span class="answer">ammonium hydroxide</span></td><td>NH₄OH</td></tr>
-                <tr><td>13</td><td>dinitrogen trioxide</td><td><span class="answer">N₂O₃</span></td><td>28</td><td><span class="answer">sulfur solid</span></td><td>S∯</td></tr>
+                <tr><td>13</td><td>dinitrogen trioxide</td><td><span class="answer">N₂O₃</span></td><td>28</td><td><span class="answer">sulfur solid</span></td><td>S₈</td></tr>
                 <tr><td>14</td><td>aluminum hydroxide</td><td><span class="answer">Al(OH)₃</span></td><td>29</td><td><span class="answer">lithium chlorate</span></td><td>LiClO₃</td></tr>
                 <tr><td>15</td><td>glucose</td><td><span class="answer">C₆H₁₂O₆</span></td><td>30</td><td><span class="answer">lithium phosphide</span></td><td>Li₃P</td></tr>
             </table>
