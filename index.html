@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mr. Beck's Wonderful Website</title>
+<meta name="description" content="Simulations, games and review for Mr. Beck's science classes.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#1b1030; --win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --panel:#160d2b; --rim:#8a6fd0; --ink:#f6efff; --ink2:#c3b2e6;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --amber:#ffb347;
+  --pix:'Press Start 2P','Courier New',monospace; --term:'VT323','Courier New',monospace;
+  --body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background-color:var(--night);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+.wrap{max-width:1240px;margin:0 auto;padding:22px 16px 28px}
+
+/* header */
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;margin-bottom:22px}
+.logo{margin:0;font-family:var(--pix);font-weight:400;font-size:clamp(16px,2.4vw,26px);line-height:1.55;color:var(--gold);text-shadow:4px 4px 0 #000}
+.logo span{display:block;font-size:.5em;color:var(--mint);text-shadow:2px 2px 0 #000;margin-bottom:6px}
+.tag{margin:0;max-width:420px;color:var(--ink2)}
+
+/* windows */
+.win{background:var(--win);border:4px solid #000;border-radius:6px;box-shadow:inset 0 0 0 3px var(--rim),5px 5px 0 #000;padding:16px}
+.label{font-family:var(--pix);font-weight:400;font-size:10px;line-height:1.6;color:var(--mint);margin:0}
+.pill{display:inline-block;font-family:var(--pix);font-size:9px;line-height:1;background:var(--region,var(--mint));color:var(--night);border:3px solid #000;padding:5px 8px}
+
+/* regions */
+.region{--region:var(--mint);margin-bottom:22px}
+.region-hd{display:flex;align-items:center;gap:12px;margin:0 0 12px}
+.region-hd h2{margin:0;font-family:var(--pix);font-weight:400;font-size:clamp(13px,1.6vw,17px);line-height:1.5;color:var(--region);text-shadow:3px 3px 0 #000}
+.region-hd p{margin:0 0 0 auto;color:var(--ink2);font-size:.95rem}
+.logs{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:18px;align-items:start}
+
+/* quest logs */
+.log h3{margin:0;font-family:var(--pix);font-weight:400;font-size:12px;line-height:1.5;color:var(--gold)}
+.log .sub{margin:4px 0 12px;color:var(--ink2);font-size:.92rem}
+.quests{list-style:none;margin:0;padding:8px;background:var(--panel);border:3px solid #000;border-radius:4px;display:grid;gap:2px}
+.quests.two{display:block;columns:2;column-gap:10px}
+.quests.two li{break-inside:avoid;margin-bottom:2px}
+.quests a{display:flex;align-items:baseline;gap:10px;padding:5px 8px 5px 22px;border-radius:3px;position:relative}
+.quests a::before{content:'▶';position:absolute;left:6px;top:7px;font-size:.7em;color:var(--gold);opacity:0}
+.quests a:hover,.quests a:focus-visible{background:#2d1b55}
+.quests a:hover::before,.quests a:focus-visible::before{opacity:1}
+.quests a:hover .t,.quests a:focus-visible .t{color:var(--gold)}
+.n{font-family:var(--term);font-size:1.3rem;line-height:1;color:var(--mint);min-width:1.4em}
+.t{font-weight:700}
+.kind{margin-left:auto;font-family:var(--pix);font-size:7px;line-height:1;padding:4px 5px;border:2px solid #000;background:#3a2463;color:var(--ink2);white-space:nowrap}
+.kind.new{background:var(--coral);color:var(--night)}
+.extras{margin-top:12px}
+.extras .quests{grid-template-columns:1fr 1fr;column-gap:10px}
+
+/* locked regions */
+.locked{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.locked .win{display:flex;align-items:center;gap:14px;opacity:.72;padding:14px 16px}
+.locked h2{margin:0;font-family:var(--pix);font-weight:400;font-size:11px;line-height:1.6;color:var(--region)}
+.locked p{margin:2px 0 0;color:var(--ink2);font-size:.92rem}
+.lock{font-family:var(--term);font-size:1.6rem;line-height:1;color:var(--region)}
+
+.foot{margin-top:22px;color:var(--ink2);font-size:.85rem;text-align:center}
+
+@media(max-width:980px){
+  .logs{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .quests.two{columns:1}
+  .extras .quests,.locked{grid-template-columns:1fr}
+  .region-hd{flex-wrap:wrap}
+  .region-hd p{margin:0;width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1 class="logo"><span>WORLD MAP</span>MR. BECK'S<br>WONDERFUL WEBSITE</h1>
+    <p class="tag">Simulations, games and review for science class. Pick a unit, then choose a quest.</p>
+  </header>
+
+  <main>
+    <section class="region" aria-labelledby="sci">
+      <div class="region-hd">
+        <span class="pill">REGION 1</span>
+        <h2 id="sci">SCIENCE 1206</h2>
+        <p>Grade 10 science</p>
+      </div>
+      <div class="logs">
+        <article class="log win" aria-labelledby="u1">
+          <h3 id="u1">UNIT 1 · WEATHER</h3>
+          <p class="sub">18 simulations, in the order we cover them.</p>
+          <ol class="quests two">
+            <li><a href="courses/science-1206/weather/sims/energy-budget/"><span class="n">01</span><span class="t">Energy Budget and Albedo</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/heat-transfer/"><span class="n">02</span><span class="t">Conduction, Convection and Radiation</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/heat-sinks/"><span class="n">03</span><span class="t">Heat Sinks and Coastal Breezes</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/atmosphere-pressure/"><span class="n">04</span><span class="t">Layers of the Atmosphere</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/humidity/"><span class="n">05</span><span class="t">Humidity and Dew Point</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/water-cycle/"><span class="n">06</span><span class="t">The Water Cycle and Energy</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/air-masses/"><span class="n">07</span><span class="t">Air Masses of North America</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/pressure-systems/"><span class="n">08</span><span class="t">High and Low Pressure Systems</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/coriolis-effect/"><span class="n">09</span><span class="t">The Coriolis Effect</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/global-winds/"><span class="n">10</span><span class="t">Global Wind Systems</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/jet-streams/"><span class="n">11</span><span class="t">Jet Streams</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/weather-fronts/"><span class="n">12</span><span class="t">Weather Fronts</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/surface-currents/"><span class="n">13</span><span class="t">Ocean Surface Currents</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/deep-currents/"><span class="n">14</span><span class="t">Deep Ocean Currents</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/el-nino-la-nina/"><span class="n">15</span><span class="t">El Niño and La Niña</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/thunderstorms-tornadoes/"><span class="n">16</span><span class="t">Thunderstorms and Tornadoes</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/hurricanes/"><span class="n">17</span><span class="t">Hurricanes</span></a></li>
+            <li><a href="courses/science-1206/weather/sims/noreasters-blizzards/"><span class="n">18</span><span class="t">Nor'easters and Blizzards</span></a></li>
+          </ol>
+          <div class="extras">
+            <p class="label">SIDE QUESTS</p>
+            <ul class="quests" style="margin-top:8px">
+              <li><a href="courses/science-1206/weather/weather-map-lab/"><span class="t">Canada Weather Map Lab</span><span class="kind">LAB</span></a></li>
+              <li><a href="courses/science-1206/weather/u1-review-pt1/"><span class="t">Unit 1 Review Guide</span><span class="kind">REVIEW</span></a></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="log win" aria-labelledby="u2">
+          <h3 id="u2">UNIT 2 · CHEMISTRY</h3>
+          <p class="sub">Atoms, ions, bonds and naming compounds.</p>
+          <ul class="quests">
+            <li><a href="courses/science-1206/chemistry/element-quest/"><span class="t">Element Quest</span><span class="kind new">NEW</span></a></li>
+            <li><a href="courses/science-1206/chemistry/atoms-ions-bonds/"><span class="t">Atoms, Ions and Bonds</span></a></li>
+            <li><a href="courses/science-1206/chemistry/ionic-compounds/"><span class="t">Ionic Compounds</span></a></li>
+            <li><a href="courses/science-1206/chemistry/molecular-naming/"><span class="t">Naming Molecular Compounds</span></a></li>
+          </ul>
+          <div class="extras">
+            <p class="label">SIDE QUESTS</p>
+            <ul class="quests" style="margin-top:8px;grid-template-columns:1fr">
+              <li><a href="courses/science-1206/chemistry/part1-answer-key/"><span class="t">Booklet #1 Answer Key</span><span class="kind">KEY</span></a></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="locked" aria-label="Coming soon">
+      <div class="win" style="--region:var(--amber)">
+        <span class="lock" aria-hidden="true">[?]</span>
+        <div><h2>POWER &amp; ENERGY 3201</h2><p>Coming soon.</p></div>
+      </div>
+      <div class="win" style="--region:var(--sky)">
+        <span class="lock" aria-hidden="true">[?]</span>
+        <div><h2>GRADE 7 SCIENCE</h2><p>Coming soon.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <p class="foot">Mr. Beck · Science</p>
+</div>
+<script>
+// Inside a Google Sites embed box, open quests in their own full tab instead of inside the box.
+try{
+  if(window.top!==window.self){
+    for(const a of document.querySelectorAll('a[href]')){a.target='_blank';a.rel='noopener'}
+  }
+}catch(e){}
+</script>
+</body>
+</html>
