@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>90s Retro Science Review Guide</title>
+<style>
+  /* 90s Retro Aesthetic Base */
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+  :root {
+    --bg-color: #008080; /* Classic Teal */
+    --hot-pink: #ff007f;
+    --neon-yellow: #ffff00;
+    --electric-blue: #00dfff;
+    --purple: #8b008b;
+    --card-bg: #c0c0c0; /* Windows 95 Grey */
+  }
+
+  body {
+    background-color: var(--bg-color);
+    background-image: radial-gradient(var(--purple) 15%, transparent 16%), radial-gradient(var(--electric-blue) 15%, transparent 16%);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    font-family: 'VT323', monospace;
+    color: #000;
+    margin: 0;
+    padding: 20px;
+  }
+
+  /* Main Container Box */
+  .retro-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 5px solid #000;
+    box-shadow: 10px 10px 0px #000;
+    padding: 20px;
+  }
+
+  /* Header Section */
+  header {
+    background: linear-gradient(90deg, var(--hot-pink), var(--purple));
+    border: 4px solid #000;
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 3px 3px 0px #000;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    margin: 0 0 10px 0;
+    color: var(--neon-yellow);
+    text-shadow: 3px 3px 0px #000;
+  }
+
+  h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.1rem;
+    background: var(--neon-yellow);
+    color: #000;
+    padding: 8px;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0px #000;
+    margin-top: 30px;
+    text-transform: uppercase;
+  }
+
+  /* Retro Marquee Styling */
+  .marquee-box {
+    background: #000;
+    color: var(--electric-blue);
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    padding: 5px;
+    border: 2px solid #fff;
+    margin-bottom: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* Retro Table Styling */
+  .retro-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1.2rem;
+  }
+
+  .retro-table th {
+    background: var(--electric-blue);
+    color: #000;
+    border: 3px solid #000;
+    padding: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+  }
+
+  .retro-table td {
+    border: 2px solid #000;
+    padding: 8px 12px;
+    background: #fff;
+  }
+
+  .retro-table tr:nth-child(even) td {
+    background: #f0f0f0;
+  }
+
+  .code-badge {
+    background: var(--hot-pink);
+    color: #fff;
+    font-weight: bold;
+    padding: 2px 8px;
+    border: 2px solid #000;
+    display: inline-block;
+  }
+
+  .term-badge {
+    background: var(--neon-yellow);
+    font-weight: bold;
+    padding: 2px 6px;
+    border: 2px solid #000;
+    display: inline-block;
+  }
+
+  /* Card Grid for Concepts */
+  .concept-card {
+    background: #fff;
+    border: 3px solid #000;
+    box-shadow: 6px 6px 0px #000;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .concept-card h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    color: var(--hot-pink);
+    margin-top: 0;
+    border-bottom: 2px dashed #000;
+    padding-bottom: 8px;
+  }
+
+  .concept-card ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .concept-card li {
+    margin-bottom: 8px;
+  }
+
+  /* Decorative Badges */
+  .badge-90s {
+    display: inline-block;
+    background: var(--hot-pink);
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6rem;
+    padding: 4px 8px;
+    border: 2px solid #000;
+    transform: rotate(-2deg);
+    margin-bottom: 10px;
+  }
+
+  /* Button/Footer Styling */
+  .footer-retro {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+    background: var(--neon-yellow);
+    border: 3px solid #000;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="retro-container">
+  
+  <header>
+    <div class="badge-90s">★ EXTREME STUDY GUIDE ★</div>
+    <h1>CHAPTER 1 SCIENCE REVIEW</h1>
+    <p style="font-size: 1.4rem; margin: 0;">Meteorology, Energy Transfer, Weather Systems & Ocean Circulation</p>
+  </header>
+
+  <div class="marquee-box">
+    <marquee behavior="scroll" direction="left" scrollamount="6">
+      *** COOL DOWN WITH WEATHER SYSTEMS! *** DONT FORGET YOUR ALBEDO VALUES! *** RADICAL SCIENCE STUDY SHEET ***
+    </marquee>
+  </div>
+
+  <h2>PART 1: KEY VOCABULARY & MATCHING</h2>
+  
+  <table class="retro-table">
+    <thead>
+      <tr>
+        <th style="width: 10%;">Code</th>
+        <th>Definition / Concept</th>
+        <th style="width: 35%;">Matching Term & Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="code-badge">(a)</span></td>
+        <td>A vertical transfer of energy involving particle flow; warm/energetic particles become less dense and rise, cold particles become denser and sink.</td>
+        <td><span class="term-badge">8. Convection</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(b)</span></td>
+        <td>The degree to which a substance reflects radiation/energy; derived from the Latin word for 'whiteness'.</td>
+        <td><span class="term-badge">11. Albedo</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(c)</span></td>
+        <td>The set of atmospheric and environmental conditions observed from day to day.</td>
+        <td><span class="term-badge">1. Weather</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(d)</span></td>
+        <td>A transfer of energy that does not require particles, utilizing electromagnetic waves.</td>
+        <td><span class="term-badge">10. Radiation</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(e)</span></td>
+        <td>A horizontal transfer of energy, occurring alongside convection to form complete convection currents.</td>
+        <td><span class="term-badge">9. Advection</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(f)</span></td>
+        <td>Energy transfer involving energetic particles colliding with adjacent particles, passing along kinetic thermal energy.</td>
+        <td><span class="term-badge">7. Conduction</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(g)</span></td>
+        <td>The horizontal movement of air flowing from a high pressure system toward a low pressure system.</td>
+        <td><span class="term-badge">25. Wind</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(h)</span></td>
+        <td>The quantity of heat energy required to raise the temperature of 1 gram of a substance by 1°C.</td>
+        <td><span class="term-badge">12. Specific Heat Capacity</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(i)</span></td>
+        <td>The apparent deflection of an object moving straight across a rotating surface (twisting right in the Northern Hemisphere).</td>
+        <td><span class="term-badge">26. Coriolis Effect</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(j)</span></td>
+        <td>The capacity of a substance to absorb, store, and retain heat (e.g., water, due to high specific heat capacity).</td>
+        <td><span class="term-badge">13. Heat Sink</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(k)</span></td>
+        <td>A cool, dry air mass that originates over land in the far northern continental region.</td>
+        <td><span class="term-badge">22. Continental Polar Air Mass</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(l)</span></td>
+        <td>A warm, moist air mass originating over warm oceanic waters in the Caribbean region.</td>
+        <td><span class="term-badge">23. Maritime Tropical Air Mass</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(m)</span></td>
+        <td>A major planetary wind belt operating between 30° and 60° latitude in both hemispheres.</td>
+        <td><span class="term-badge">27. Prevailing Westerlies</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(n)</span></td>
+        <td>High-altitude, high-speed westerly winds (~7,000 m) near 30° and 60° latitude that steer surface weather.</td>
+        <td><span class="term-badge">30. Jet Stream</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(o)</span></td>
+        <td>A continuous global cycle that transfers both water and massive quantities of thermal energy.</td>
+        <td><span class="term-badge">33. Water Cycle</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(p)</span></td>
+        <td>The phase change from gas to liquid, releasing latent heat as clouds and precipitation form.</td>
+        <td><span class="term-badge">35. Condensation</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(q)</span></td>
+        <td>Warm ocean current originating in the Caribbean, flowing along eastern North America toward Newfoundland.</td>
+        <td><span class="term-badge">38. Gulf Stream</span></td>
+      </tr>
+      <tr>
+        <td><span class="code-badge">(r)</span></td>
+        <td>Phase change directly from solid to gas (vapor) as snow/ice absorbs energy from the environment.</td>
+        <td><span class="term-badge">36. Sublimation (Heat Absorbing)</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>PART 2: CONCEPTS & REVIEW QUESTIONS</h2>
+
+  <div class="concept-card">
+    <h3>1. Earth's Energy Budget & Global Thermal Balance</h3>
+    <ul>
+      <li><b>Incoming Solar Radiation:</b> ~50% passes through the atmosphere and is absorbed by land/ocean. The remaining 50% is absorbed by atmospheric gases/particles (20%), reflected by clouds/dust (25%), or reflected by Earth's surfaces (5%).</li>
+      <li><b>Outward Radiation Balance:</b> To maintain stable global temperatures, Earth radiates an equivalent amount of thermal energy back into space as long-wavelength infrared radiation.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>2. Albedo & The Hydrosphere as a Heat Sink</h3>
+    <ul>
+      <li><b>Albedo Dynamics:</b> Light surfaces (snow/ice) have high albedo (reflect 70–80%). Dark surfaces (soil/ocean) have low albedo, absorbing most solar energy.</li>
+      <li><b>Hydrosphere Heat Sink:</b> Water's high specific heat capacity allows it to absorb vast thermal energy without drastic temperature shifts, buffering global climate.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>3. Impact of Specific Heat Capacity on Air Temp</h3>
+    <ul>
+      <li><b>Terrestrial Heating:</b> Land heats up and cools down rapidly due to low specific heat capacity, leading to extreme daily and seasonal fluctuations.</li>
+      <li><b>Aquatic Moderation:</b> Water warms and cools gradually, creating milder winters and cooler summers in coastal regions.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>4. Thermal Energy Transfer Mechanisms</h3>
+    <ul>
+      <li><b>Radiation:</b> Solar shortwave radiation warms the surface, which re-emits longwave thermal infrared radiation.</li>
+      <li><b>Conduction:</b> Heat transfers through particle-to-particle collisions when air contacts warm ground or water.</li>
+      <li><b>Convection:</b> Warm air expands, rises, and is replaced by cooler, denser air, forming vertical atmospheric circulation cells.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>5. Greenhouse Effect as an Atmospheric Heat Sink</h3>
+    <ul>
+      <li><b>Mechanisms:</b> Greenhouse gases (H₂O vapor, CO₂, CH₄) absorb emitted longwave IR radiation and re-radiate thermal energy in all directions.</li>
+      <li><b>Climate Role:</b> Traps energy in the troposphere to maintain average global temperatures suitable for life.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>6. Phase Changes: Endothermic vs. Exothermic</h3>
+    <ul>
+      <li><b>Heat Absorbed (Endothermic):</b> Melting, Evaporation, and Sublimation require water molecules to absorb energy from their surroundings.</li>
+      <li><b>Heat Released (Exothermic):</b> Freezing, Condensation, and Deposition release stored latent thermal energy into ambient air/water.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>7. Latent Heat of Fusion & Vaporization</h3>
+    <ul>
+      <li><b>Latent Heat of Fusion:</b> Energy absorbed or released during transitions between solid and liquid states at constant temperature.</li>
+      <li><b>Latent Heat of Vaporization:</b> Energy absorbed or released during transitions between liquid and gas states at constant temperature.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>8. Heat Transfer in the Global Water Cycle</h3>
+    <ul>
+      <li><b>Evaporative Storage:</b> Solar energy converts sensible heat into latent heat stored within water vapor.</li>
+      <li><b>Atmospheric Release:</b> Condensation releases latent heat high in the troposphere as clouds form, fueling storms.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>9. Convection vs. Advection</h3>
+    <ul>
+      <li><b>Convection:</b> Vertical transfer of energy driven by buoyancy and thermal density differences.</li>
+      <li><b>Advection:</b> Horizontal transfer of energy or mass by moving fluids (e.g., winds or surface currents).</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>10. Solar Insolation & Spherical Geometry</h3>
+    <ul>
+      <li><b>Equatorial Direct Rays:</b> Rays strike directly at 90°, concentrating energy over a minimal surface area.</li>
+      <li><b>Polar Slanted Rays:</b> Solar energy strikes at oblique angles, spreading energy over a larger surface area with lower absorption.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>11. Pressure, Air Density, & Wind Generation</h3>
+    <ul>
+      <li><b>Low Pressure:</b> Heated air expands, becomes less dense, and ascends.</li>
+      <li><b>High Pressure:</b> Cooling air contracts, becomes denser, and sinks.</li>
+      <li><b>Wind Generation:</b> Pressure gradients force air to move horizontally from high pressure to low pressure.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>12. Air Masses: Classification & Formation</h3>
+    <ul>
+      <li><b>Arctic (A):</b> Bitterly cold and dry.</li>
+      <li><b>Continental Polar (cP):</b> Cold and dry.</li>
+      <li><b>Maritime Polar (mP):</b> Cool and humid.</li>
+      <li><b>Continental Tropical (cT):</b> Hot and dry.</li>
+      <li><b>Maritime Tropical (mT):</b> Warm and humid.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>13. High vs. Low Pressure Systems</h3>
+    <ul>
+      <li><b>High Pressure (Anticyclone):</b> Sinking, dense, dry air flowing outward. Clockwise rotation in NH; produces clear, fair weather.</li>
+      <li><b>Low Pressure (Cyclone):</b> Rising warm air drawing air inward. Counterclockwise rotation in NH; generates clouds and precipitation.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>14. Global Circulation & Coriolis Effect</h3>
+    <ul>
+      <li><b>Global Convection:</b> Equatorial heating and polar cooling drive massive atmospheric circulation cells.</li>
+      <li><b>Coriolis Deflection:</b> Earth's rotation deflects air right in the NH and left in the SH, creating 3 distinct circulation belts per hemisphere.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>15. Major Planetary Wind Systems</h3>
+    <ul>
+      <li><b>Trade Winds:</b> 0°–30° latitude; blow persistently from east to west toward the equator.</li>
+      <li><b>Prevailing Westerlies:</b> 30°–60° latitude; blow from west to east, steering North American weather.</li>
+      <li><b>Polar Easterlies:</b> 60° to poles; transport cold arctic air from east to west.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>16. Dynamics of the Polar Jet Stream</h3>
+    <ul>
+      <li><b>Characteristics:</b> High-speed westerly winds (~7,000–12,000 m altitude) near 40°–60°N latitude.</li>
+      <li><b>Weather Impact:</b> Thermal boundary separating polar and tropical air; jet stream undulations steer surface storm systems.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>17. Atmospheric Fronts</h3>
+    <ul>
+      <li><b>Cold Front:</b> Cold air wedges under warm air, creating intense, short duration precipitation/thunderstorms.</li>
+      <li><b>Warm Front:</b> Warm air gently climbs over cold air, creating overcast stratus clouds and prolonged rain.</li>
+      <li><b>Stationary Front:</b> Two non-advancing air masses meet, creating extended periods of rain and clouds.</li>
+      <li><b>Occluded Front:</b> Fast cold front overtakes warm front, lifting warm air off the surface; brings complex clouds and heavy rain.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>18. Surface Ocean Currents</h3>
+    <ul>
+      <li><b>Mechanism:</b> Driven by prevailing surface winds and deflected by landmasses and Coriolis effect into giant ocean gyres.</li>
+      <li><b>Heat Transport:</b> Warm currents move tropical energy poleward (west boundaries); cold currents move polar water toward equator (east boundaries).</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>19. Local Impacts: Gulf Stream & Labrador Current</h3>
+    <ul>
+      <li><b>Gulf Stream:</b> Carries warm tropical waters northward along eastern North America, moderating Atlantic Canada's winter temps.</li>
+      <li><b>Labrador Current:</b> Transports cold Arctic water south, chilling summer coastal temps and creating heavy sea fog when meeting warm air.</li>
+    </ul>
+  </div>
+
+  <div class="concept-card">
+    <h3>20. Thermohaline Circulation</h3>
+    <ul>
+      <li><b>Drivers:</b> Driven by water density differences from temperature ('thermo') and salinity ('haline').</li>
+      <li><b>Global Conveyor Belt:</b> Cold, dense, saline polar water sinks and flows globally before upwelling, circulating thermal energy and nutrients planet-wide.</li>
+    </ul>
+  </div>
+
+  <div class="footer-retro">
+    ▲ BEST VIEWED IN NETSCAPE NAVIGATOR 4.0 OR INTERNET EXPLORER ★ END OF REVIEW GUIDE ▲
+  </div>
+
+</div>
+
+</body>
+</html>

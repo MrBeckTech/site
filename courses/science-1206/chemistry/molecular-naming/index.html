@@ -1,0 +1,1163 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Naming Molecular Compounds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F6FA; --surface:#FFFFFF; --surface-2:#EBF0F6; --ink:#1B2A41; --muted:#4D5D75; --line:#D3DBE6; --ring:#8A97AB;
+  --metal:#E8743B; --metal-ink:#B0501D; --metal-tint:#FCEDE4;
+  --non:#2F7FC1; --non-ink:#21609A; --non-tint:#E4EFF9;
+  --a:#2A9D8F; --a-ink:#1D7469; --a-tint:#E0F3F0;
+  --b:#7B5EA7; --b-ink:#5E4590; --b-tint:#EFE9F7;
+  --pre:#C99A12; --pre-ink:#7A5C05; --pre-tint:#FFF3CC;
+  --noble:#7A869A; --noble-ink:#5A6578; --noble-tint:#EEF0F4;
+  --good:#256B43; --good-bg:#E5F3EA; --bad:#A3241C; --bad-bg:#FBE9E7; --note-bg:#FFF6DC; --note:#6B5310;
+  --focus:#1B2A41;
+  --font:"Atkinson Hyperlegible","Segoe UI",Roboto,"Helvetica Neue",Arial,system-ui,sans-serif;
+  --font-display:"Lexend","Trebuchet MS","Segoe UI",Roboto,system-ui,sans-serif;
+  --radius:10px; font-size:17px;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0E1520; --surface:#162131; --surface-2:#1D2A3D; --ink:#E7EDF6; --muted:#A9B6C9; --line:#2C3B51; --ring:#71819A;
+  --metal-ink:#F4A177; --metal-tint:#3A2216; --non-ink:#86BDEB; --non-tint:#152B42;
+  --a-ink:#6FD0C2; --a-tint:#12302C; --b-ink:#C3AEE8; --b-tint:#2A2240; --pre-ink:#F0D488; --pre-tint:#3A300E;
+  --noble-ink:#B4BECD; --noble-tint:#222B38;
+  --good:#79CF9A; --good-bg:#122C1D; --bad:#F2928A; --bad-bg:#3A1714; --note-bg:#33290C; --note:#F0D488;
+  --focus:#E7EDF6; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1520; --surface:#162131; --surface-2:#1D2A3D; --ink:#E7EDF6; --muted:#A9B6C9; --line:#2C3B51; --ring:#71819A;
+  --metal-ink:#F4A177; --metal-tint:#3A2216; --non-ink:#86BDEB; --non-tint:#152B42;
+  --a-ink:#6FD0C2; --a-tint:#12302C; --b-ink:#C3AEE8; --b-tint:#2A2240; --pre-ink:#F0D488; --pre-tint:#3A300E;
+  --noble-ink:#B4BECD; --noble-tint:#222B38;
+  --good:#79CF9A; --good-bg:#122C1D; --bad:#F2928A; --bad-bg:#3A1714; --note-bg:#33290C; --note:#F0D488;
+  --focus:#E7EDF6; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html.projector{font-size:22px}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:1rem;line-height:1.5;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:1.35rem} h2{font-size:1.5rem} h3{font-size:1.15rem} h4{font-size:1rem}
+p{margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-row{display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:1180px;margin:0 auto;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.brand .mark{width:34px;height:34px;flex:none}
+.brand small{display:block;color:var(--muted);font-size:.78rem;font-family:var(--font)}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding:0 16px 8px;max-width:1180px;margin:0 auto;scrollbar-width:thin}
+.tab{flex:none;border:1px solid transparent;background:none;border-radius:999px;padding:8px 14px;cursor:pointer;color:var(--muted);font-size:.92rem;min-height:44px}
+.tab:hover{background:var(--surface-2);color:var(--ink)}
+.tab[aria-current="page"]{background:var(--ink);color:var(--surface)}
+.tab .n{font-size:.8em;opacity:.75;margin-right:6px;font-weight:700}
+main{max-width:1180px;margin:0 auto;padding-block:20px 80px;padding-inline:16px}
+.lede{color:var(--muted);max-width:68ch}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.head{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.head > div{min-width:0}
+.eyebrow{font-size:.85rem;color:var(--muted);font-weight:700;margin-bottom:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:var(--radius);border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font-weight:600;text-align:center}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.btn.small{min-height:40px;padding:6px 12px;font-size:.92rem}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.choice-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.choice-grid .btn{font-size:1.05rem}
+.choice-grid .btn.wrong{border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.choice-grid .btn.right{border-color:var(--good);background:var(--good-bg)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;min-height:44px;cursor:pointer;font-weight:600}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.bench{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:820px){.bench{grid-template-columns:minmax(0,1fr)} .bench > .show{order:-1}}
+.bench > *{min-width:0}
+.fb{border-radius:var(--radius);padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+.fb .ic{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:var(--surface)}
+.fb.ok{background:var(--good-bg)} .fb.ok .ic{background:var(--good)}
+.fb.bad{background:var(--bad-bg)} .fb.bad .ic{background:var(--bad)}
+.fb.info{background:var(--surface-2)} .fb.info .ic{background:var(--muted)}
+.fb ul{margin:4px 0 0;padding-left:20px}
+.fb strong{display:block}
+.note-box{background:var(--note-bg);color:var(--note);border-radius:var(--radius);padding:10px 12px;font-size:.92rem}
+details.why{border:1.5px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+details.why > summary{cursor:pointer;padding:10px 14px;font-weight:700;list-style:none;display:flex;align-items:center;gap:8px;min-height:44px}
+details.why > summary::-webkit-details-marker{display:none}
+details.why > summary::before{content:"?";display:grid;place-items:center;width:24px;height:24px;flex:none;border-radius:50%;background:var(--ink);color:var(--surface);font-size:.85rem}
+details.why[open] > summary{border-bottom:1px solid var(--line)}
+.why-body{padding:12px 14px;display:flex;flex-direction:column;gap:12px}
+.why-body h4{font-size:.95rem;margin-bottom:2px}
+.why-body p{max-width:68ch}
+.steps{display:flex;gap:6px;flex-wrap:wrap}
+.steps span{font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:99px;background:var(--surface-2);color:var(--muted)}
+.steps span.on{background:var(--ink);color:var(--surface)}
+.steps span.past{background:var(--good-bg);color:var(--good)}
+.small{font-size:.88rem;color:var(--muted)}
+.bar{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;max-width:320px}
+.bar > i{display:block;height:100%;background:var(--good)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* the formula and name, colour-matched */
+.f{font-family:var(--font-display);font-weight:700;white-space:nowrap}
+.f sub{font-size:.62em;vertical-align:-.28em;line-height:0}
+.big-f{font-size:3rem;line-height:1.1;text-align:center}
+.e1{color:var(--a-ink)} .e2{color:var(--b-ink)}
+.pfx{background:var(--pre-tint);color:var(--pre-ink);border-radius:5px;padding:0 3px}
+.e1 sub,.e2 sub{background:var(--pre-tint);color:var(--pre-ink);border-radius:4px;padding:0 2px}
+.namestrip{font-family:var(--font-display);font-size:1.6rem;font-weight:700;text-align:center;min-height:2.2em;display:flex;gap:.35em;justify-content:center;flex-wrap:wrap;align-items:baseline}
+.namestrip .slot{border-bottom:3px dashed var(--line);min-width:4em;display:inline-block;color:var(--muted)}
+.namestrip .w1{color:var(--a-ink)} .namestrip .w2{color:var(--b-ink)}
+.namestrip .gone{text-decoration:line-through;color:var(--bad);opacity:.8}
+.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.atoms{width:100%;max-width:420px;height:auto}
+.atoms .a1{fill:var(--a-tint);stroke:var(--a);stroke-width:2.5}
+.atoms .a2{fill:var(--b-tint);stroke:var(--b);stroke-width:2.5}
+.atoms .a3{fill:var(--non-tint);stroke:var(--non);stroke-width:2.5}
+.atoms .a4{fill:var(--metal-tint);stroke:var(--metal);stroke-width:2.5}
+.atoms text{font-family:var(--font-display);font-weight:700;fill:var(--ink);font-size:13px}
+.atoms .cnt{font-size:14px;fill:var(--muted);font-family:var(--font)}
+
+/* home mapping hero */
+.map{display:grid;grid-template-columns:auto auto;justify-content:center;column-gap:4px;row-gap:0;font-family:var(--font-display);font-weight:700;text-align:center;margin:8px auto 4px}
+.map .mt{padding:0 .3em;font-size:clamp(1.3rem,4.6vw,2.4rem);padding:0 2px}
+.map .lnk{height:40px;position:relative}
+.map .lnk::before{content:"";position:absolute;left:50%;top:4px;bottom:4px;border-left:3px dotted var(--pre)}
+.map .bot{font-size:clamp(2.2rem,8vw,4rem);line-height:1.1}
+.map .lbl{font-family:var(--font);font-weight:400;font-size:.82rem;color:var(--muted)}
+.hero{display:grid;gap:10px;text-align:center;padding:24px 18px}
+.hero .lede{margin:0 auto}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:6px}
+.card:hover{border-color:var(--ink)}
+.card .num{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--surface);font-weight:700;font-size:.9rem}
+.card .row{flex-wrap:nowrap}
+.card .done{color:var(--good);font-size:.85rem;font-weight:700}
+.rules{display:grid;gap:8px;counter-reset:r}
+.rules details.why > summary{font-weight:600}
+.rules details.why > summary::before{counter-increment:r;content:counter(r);background:var(--pre-tint);color:var(--pre-ink);border:1.5px solid var(--pre)}
+
+/* prefix table */
+.ptable{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+@media (max-width:620px){.ptable{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pcell{border:1.5px solid var(--pre);background:var(--pre-tint);border-radius:10px;padding:8px 10px;text-align:center}
+.pcell b{display:block;font-family:var(--font-display);font-size:1.25rem;color:var(--pre-ink)}
+.pcell .k{font-size:1.6rem;font-weight:700;font-family:var(--font-display)}
+.pcell small{display:block;color:var(--muted);font-size:.78rem;line-height:1.25}
+.pcell.hid b{visibility:hidden}
+
+/* element tags */
+.els{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.ebox{width:96px;border:2.5px solid var(--ink);border-radius:6px;padding:6px;text-align:center;background:var(--surface)}
+.ebox .sym{font-family:var(--font-display);font-size:1.9rem;font-weight:700;line-height:1.1}
+.ebox .nm{font-size:.8rem}
+.ebox.metal{border-color:var(--metal);background:var(--metal-tint)}
+.ebox.non-metal{border-color:var(--non);background:var(--non-tint)}
+.ebox.metalloid{border-color:var(--non);border-style:dashed;background:var(--non-tint)}
+.tag{display:inline-flex;align-items:center;font-size:.8rem;font-weight:700;border-radius:999px;padding:1px 9px;border:1.5px solid;margin-top:4px}
+.tag.metal{color:var(--metal-ink);border-color:var(--metal)}
+.tag.non-metal,.tag.metalloid{color:var(--non-ink);border-color:var(--non)}
+
+/* practice */
+.ans{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.ans input{flex:1 1 220px;min-height:52px;border:2px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:8px 12px;font-size:1.25rem}
+.ans input:focus{border-color:var(--ink)}
+.preview{min-height:1.6em;color:var(--muted)}
+.prompt{font-family:var(--font-display);font-size:2rem;font-weight:700;text-align:center;padding:10px 0}
+.tally{font-variant-numeric:tabular-nums}
+.steplist{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.qdots{display:flex;gap:5px;flex-wrap:wrap}
+.qdots i{width:14px;height:14px;border-radius:50%;background:var(--surface-2);border:1.5px solid var(--line)}
+.qdots i.ok{background:var(--good);border-color:var(--good)}
+.qdots i.bad{background:var(--bad);border-color:var(--bad)}
+.qdots i.now{border:2.5px solid var(--ink)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto}
+table.t{border-collapse:collapse;width:100%;font-size:.98rem}
+table.t th,table.t td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+table.t th{font-size:.82rem;color:var(--muted)}
+
+/* teacher modal */
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;display:flex;justify-content:flex-end}
+.modal{background:var(--surface);width:min(460px,100%);height:100%;overflow-y:auto;padding:calc(20px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:18px}
+.modal fieldset{border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.modal legend{font-weight:700;padding:0 4px}
+.modal label{display:flex;gap:10px;align-items:center;min-height:36px;cursor:pointer}
+.modal input[type=checkbox]{width:20px;height:20px;flex:none}
+
+/* print sheet */
+.sheet{background:#fff;color:#111;border:1px solid var(--line);padding:24px;max-width:860px}
+.sheet h2{color:#111;font-size:1.3rem}
+.sheet h3{color:#111;font-size:1.02rem;margin:16px 0 6px}
+.sheet .meta{display:flex;justify-content:space-between;margin:6px 0 4px;font-size:.95rem}
+.sheet ol{columns:2;column-gap:30px;margin:0;padding-left:24px}
+.sheet li{break-inside:avoid;padding:7px 0;font-size:.96rem}
+.sheet .bl{display:inline-block;min-width:150px;border-bottom:1px solid #111;margin-left:6px}
+.sheet .k{color:#0b5d33;font-weight:700;margin-left:6px}
+.sheet .f sub{background:none;color:inherit}
+@media print{
+  @page{size:letter portrait;margin:.5in}
+  body{background:#fff}
+  body::before,.top,.noprint{display:none!important}
+  main{padding:0;max-width:none}
+  .sheet{border:0;padding:0;max-width:none}
+}
+@media (prefers-reduced-motion:no-preference){ .pop{animation:pop .25s ease-out} @keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}} }
+</style></head><body>
+<header class="top">
+  <div class="top-row">
+    <button type="button" class="brand" data-act="go" data-v="home" aria-label="Naming Molecular Compounds: home">
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="13" cy="20" r="9" fill="var(--a-tint)" stroke="var(--a)" stroke-width="2.5"/><circle cx="27" cy="13" r="7" fill="var(--b-tint)" stroke="var(--b)" stroke-width="2.5"/><circle cx="27" cy="28" r="7" fill="var(--b-tint)" stroke="var(--b)" stroke-width="2.5"/></svg>
+      <span><h1>Naming Molecular Compounds</h1><small>Science 1206 · Unit 2 · Part 1 guided worksheet</small></span>
+    </button>
+    <button type="button" class="btn small" id="projBtn" data-act="projector" aria-pressed="false">Projector</button>
+    <button type="button" class="btn small" data-act="teacher">Teacher</button>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+</header>
+<main id="main"></main>
+<div id="overlay"></div>
+<script>
+(function(){
+'use strict';
+/* ============ saved progress (this browser only) ============ */
+const STORE_KEY = 'mc-1206-v1';
+const DEFAULTS = { settings: { projector: false, hints: true, allowFullVowel: false,
+  mods: { m1: true, m2: true, m3: true, m4: true, m5: true, m6: true } },
+  done: { m1: 0, m2: 0, m3: 0, m4: 0, m5: 0, m6: 0 }, best: {} };
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+function mergeDeep(base, over) {
+  const out = clone(base);
+  if (!over || typeof over !== 'object') return out;
+  for (const k of Object.keys(over)) {
+    if (out[k] && typeof out[k] === 'object' && !Array.isArray(out[k]) && over[k] && typeof over[k] === 'object') out[k] = mergeDeep(out[k], over[k]);
+    else out[k] = over[k];
+  }
+  return out;
+}
+let P; try { const t = localStorage.getItem(STORE_KEY); P = t ? mergeDeep(DEFAULTS, JSON.parse(t)) : clone(DEFAULTS); } catch (e) { P = clone(DEFAULTS); }
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(P)); } catch (e) {} }
+const inFrame = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+
+/* ============ helpers ============ */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const SUBS = '₀₁₂₃₄₅₆₇₈₉';
+const usub = n => n === 1 ? '' : String(n).split('').map(d => SUBS[+d]).join('');
+
+/* ============ elements ============ */
+// symbol: [name, stem (for -ide), type]
+const EL = {
+  H: ['hydrogen', 'hydr', 'non-metal'], B: ['boron', 'bor', 'metalloid'], C: ['carbon', 'carb', 'non-metal'],
+  N: ['nitrogen', 'nitr', 'non-metal'], O: ['oxygen', 'ox', 'non-metal'], F: ['fluorine', 'fluor', 'non-metal'],
+  Si: ['silicon', 'silic', 'metalloid'], P: ['phosphorus', 'phosph', 'non-metal'], S: ['sulfur', 'sulf', 'non-metal'],
+  Cl: ['chlorine', 'chlor', 'non-metal'], Se: ['selenium', 'selen', 'non-metal'], Br: ['bromine', 'brom', 'non-metal'],
+  I: ['iodine', 'iod', 'non-metal'],
+  Li: ['lithium', '', 'metal'], Na: ['sodium', '', 'metal'], K: ['potassium', '', 'metal'], Mg: ['magnesium', '', 'metal'],
+  Ca: ['calcium', '', 'metal'], Al: ['aluminum', '', 'metal'], Fe: ['iron', '', 'metal'], Cu: ['copper', '', 'metal']
+};
+const nm = s => EL[s][0];
+const ide = s => EL[s][1] + 'ide';
+const isMetal = s => EL[s][2] === 'metal';
+const BY_NAME = {}, BY_IDE = {};
+Object.keys(EL).forEach(s => { BY_NAME[EL[s][0]] = s; if (EL[s][1]) BY_IDE[ide(s)] = s; });
+// look-alike symbols students type by mistake
+const OTHER_SYM = { Co: 'cobalt', Cs: 'cesium', No: 'nobelium', Ni: 'nickel', Sc: 'scandium', Sn: 'tin', Os: 'osmium', Pb: 'lead', Bi: 'bismuth', Ne: 'neon', Nb: 'niobium' };
+
+const PREF = ['', 'mono', 'di', 'tri', 'tetra', 'penta', 'hexa', 'hepta', 'octa', 'nona', 'deca'];
+const HOOK = ['', 'monorail: one rail', 'dilemma: two choices', 'tricycle: three wheels', 'Tetris: blocks made of four squares', 'pentagon: five sides',
+  'hexagon: six sides', 'heptathlon: seven events', 'octopus: eight arms', 'nonagon: nine sides', 'decade: ten years'];
+const ELIDED = { 1: 'mon', 4: 'tetr', 5: 'pent', 6: 'hex', 7: 'hept', 8: 'oct', 9: 'non', 10: 'dec' };
+const needsDrop = (n, sym) => !!ELIDED[n] && ide(sym)[0] === 'o';
+function secondWord(n, sym) { return (needsDrop(n, sym) ? ELIDED[n] : PREF[n]) + ide(sym); }
+
+/* ============ compounds ============ */
+function parts(f) { const out = []; f.replace(/([A-Z][a-z]?)(\d*)/g, (_, s, d) => { out.push([s, d ? +d : 1]); return ''; }); return out; }
+function binName(pp) {
+  const [[s1, n1], [s2, n2]] = pp;
+  if (s1 === 'H') return 'hydrogen ' + ide(s2);
+  return (n1 > 1 ? PREF[n1] : '') + nm(s1) + ' ' + secondWord(n2, s2);
+}
+const BIN = ['CO', 'CO2', 'CCl4', 'CS2', 'CBr4', 'SO2', 'SO3', 'SF6', 'SCl2', 'S2Cl2', 'NO', 'NO2', 'N2O', 'N2O3', 'N2O4', 'N2O5', 'NCl3', 'NF3', 'NI3',
+  'PCl3', 'PCl5', 'PBr3', 'P4O6', 'P4O10', 'P2O5', 'SiO2', 'SiCl4', 'SiF4', 'BF3', 'BCl3', 'ClF3', 'BrF5', 'IF5', 'IF7', 'ICl', 'OF2', 'SeO2'];
+const HYD = ['HF', 'HCl', 'HBr', 'HI', 'H2S'];
+const COMMON = [
+  ['H2O', 'water', 'molecular'], ['H2O2', 'hydrogen peroxide', 'molecular'], ['NH3', 'ammonia', 'molecular'], ['CH4', 'methane', 'molecular'],
+  ['C6H12O6', 'glucose', 'molecular'], ['C12H22O11', 'sucrose', 'molecular'], ['O3', 'ozone', 'element'], ['N2O', 'laughing gas', 'molecular'],
+  ['NaHCO3', 'baking soda', 'ionic'], ['CaCO3', 'limestone', 'ionic']
+];
+const DIATOMIC = [['H2', 'hydrogen', 'gas'], ['N2', 'nitrogen', 'gas'], ['O2', 'oxygen', 'gas'], ['F2', 'fluorine', 'gas'], ['Cl2', 'chlorine', 'gas'], ['Br2', 'bromine', 'liquid'], ['I2', 'iodine', 'solid']];
+
+/* formula html, coloured: first element teal, second purple */
+function fHTML(f, color = true) {
+  const pp = typeof f === 'string' ? parts(f) : f;
+  const two = pp.length === 2 && color;
+  return '<span class="f">' + pp.map(([s, n], i) => {
+    const sb = n > 1 ? `<sub>${n}</sub>` : '';
+    return two ? `<span class="e${i + 1}">${s}${sb}</span>` : `${s}${sb}`;
+  }).join('') + '</span>';
+}
+function fText(f) { return (typeof f === 'string' ? parts(f) : f).map(([s, n]) => s + usub(n)).join(''); }
+/* name html: prefix highlighted, words coloured */
+function nameHTML(pp) {
+  const [[s1, n1], [s2, n2]] = pp;
+  if (s1 === 'H') return `<span class="e1">hydrogen</span> <span class="e2">${ide(s2)}</span>`;
+  const w1 = (n1 > 1 ? `<span class="pfx">${PREF[n1]}</span>` : '') + nm(s1);
+  const pf2 = needsDrop(n2, s2) ? ELIDED[n2] : PREF[n2];
+  return `<span class="e1">${w1}</span> <span class="e2"><span class="pfx">${pf2}</span>${ide(s2)}</span>`;
+}
+
+/* ============ checking a typed NAME ============ */
+function normName(s) { return String(s).toLowerCase().replace(/\((s|l|g|aq)\)/g, '').replace(/[-–]/g, '').replace(/\s+/g, ' ').trim(); }
+const ALL_PFX = [];
+for (let n = 10; n >= 1; n--) { ALL_PFX.push([PREF[n], n, false]); if (ELIDED[n]) ALL_PFX.push([ELIDED[n], n, true]); }
+ALL_PFX.sort((a, b) => b[0].length - a[0].length);
+function parseWord(w) {
+  const tries = ALL_PFX.concat([['', 0, false]]);
+  for (const [p, n, el] of tries) {
+    if (!w.startsWith(p)) continue;
+    const r = w.slice(p.length);
+    if (BY_NAME[r] && !isMetal(BY_NAME[r])) return { n, el, sym: BY_NAME[r], ide: false, pre: p };
+    if (BY_IDE[r]) return { n, el, sym: BY_IDE[r], ide: true, pre: p };
+    const m = r.match(/^([a-z]+)ide$/);
+    if (m && BY_NAME[m[1]]) return { n, el, sym: BY_NAME[m[1]], ide: 'bad', pre: p };
+  }
+  return null;
+}
+const pw = (n) => n ? `<b>${PREF[n]}-</b>` : 'no prefix';
+function checkName(input, pp) {
+  const target = binName(pp);
+  const s = normName(input);
+  if (!s) return { ok: false, issues: ['Type the name first.'] };
+  if (s === target) return { ok: true, issues: [] };
+  const [[s1, n1], [s2, n2]] = pp;
+  if (P.settings.allowFullVowel && s1 !== 'H' && needsDrop(n2, s2) && s === target.split(' ')[0] + ' ' + PREF[n2] + ide(s2)) return { ok: true, issues: [] };
+  const hyd = s1 === 'H';
+  const issues = [];
+  let words = s.split(' ');
+  if (words.length === 1) {
+    for (let i = 2; i < s.length - 2; i++) { if (parseWord(s.slice(0, i)) && parseWord(s.slice(i))) { issues.push('Put a space between the two words. Each element gets its own word.'); words = [s.slice(0, i), s.slice(i)]; break; } }
+    if (words.length === 1) return { ok: false, issues: ['A name for a compound of two elements has two words: one for each element.'] };
+  }
+  if (words.length > 2) return { ok: false, issues: ['Use exactly two words: one for each element.'] };
+  const a = parseWord(words[0]), b = parseWord(words[1]);
+  if (!a) issues.push(`Check the spelling of “${esc(words[0])}”. The first symbol is ${s1}, which is <b>${nm(s1)}</b>.`);
+  if (!b) issues.push(`Check the spelling of “${esc(words[1])}”. The second symbol is ${s2}, which is ${nm(s2)}. As the second word it ends in -ide: <b>${ide(s2)}</b>.`);
+  if (!a || !b) return { ok: false, issues };
+  if (a.sym === s2 && b.sym === s1 && s1 !== s2) return { ok: false, issues: [`The elements are in the wrong order. Keep the same order as the formula: ${nm(s1)} first, then ${nm(s2)}.`] };
+  if (a.sym !== s1) issues.push(`The first symbol is ${s1}. ${s1} is <b>${nm(s1)}</b>, not ${nm(a.sym)}.`);
+  if (b.sym !== s2) issues.push(`The second symbol is ${s2}. ${s2} is ${nm(s2)}, so the second word uses <b>${ide(s2)}</b>.`);
+  // first word
+  if (a.ide) issues.push(`Only the second element ends in -ide. The first element keeps its normal name: <b>${nm(s1)}</b>.`);
+  if (hyd) {
+    if (a.n || b.n) issues.push('When hydrogen is written first (like HCl or H₂S), we use <b>no prefixes</b> at all. ' + (n1 > 1 ? `H₂S is hydrogen sulfide, not dihydrogen sulfide.` : ''));
+  } else {
+    if (a.n === 1) issues.push(`Never put mono- on the first element. No prefix already means one: <b>${nm(s1)}</b>.`);
+    else if (a.n && a.n !== n1) issues.push(`${pw(a.n)} means ${a.n}, but the formula has ${n1} ${s1} atom${n1 > 1 ? 's' : ''}. ` + (n1 === 1 ? 'With one atom, the first element gets no prefix.' : `Use ${pw(n1)}.`));
+    else if (!a.n && n1 > 1) issues.push(`The formula has ${n1} ${s1} atoms, so the first word needs ${pw(n1)}: <b>${PREF[n1]}${nm(s1)}</b>.`);
+  }
+  // second word
+  if (b.ide === false) issues.push(`Change the ending of the second element to -ide: ${nm(s2)} → <b>${ide(s2)}</b>.`);
+  if (b.ide === 'bad') issues.push(`Take off the ending before adding -ide: ${nm(s2)} → ${EL[s2][1]} + ide = <b>${ide(s2)}</b>.`);
+  if (!hyd) {
+    if (!b.n && n2 === 1) issues.push(`The second element keeps mono- when there is one atom: <b>${secondWord(1, s2)}</b>. Without it, the name could mean more than one compound.`);
+    else if (!b.n) issues.push(`Add a prefix to the second word. The formula has ${n2} ${s2} atoms: ${pw(n2)}.`);
+    else if (b.n !== n2) issues.push(`${pw(b.n)} means ${b.n}, but the formula has ${n2} ${s2} atom${n2 > 1 ? 's' : ''}: use ${pw(n2)}.`);
+    else if (b.sym === s2) {
+      const need = needsDrop(n2, s2);
+      if (need && !b.el && !P.settings.allowFullVowel) issues.push(`Drop the last vowel of the prefix before <i>oxide</i>: ${PREF[n2]} + oxide → <b>${secondWord(n2, s2)}</b>. Two vowels together are hard to say.`);
+      if (!need && b.el) issues.push(`Only drop a vowel when the prefix ends in a or o and the next word starts with o (oxide). Here, write the whole prefix: <b>${secondWord(n2, s2)}</b>.`);
+    }
+  }
+  if (!issues.length) issues.push('Close, but not quite. Check each part against the formula.');
+  return { ok: false, issues };
+}
+
+/* ============ checking a typed FORMULA ============ */
+function normF(s) {
+  return String(s).replace(/[₀-₉]/g, c => SUBS.indexOf(c)).replace(/\s+/g, '').replace(/\((s|l|g|aq)\)$/i, '');
+}
+function checkFormula(input, target) {
+  const tp = typeof target === 'string' ? parts(target) : target;
+  const tStr = tp.map(([s, n]) => s + (n > 1 ? n : '')).join('');
+  const s = normF(input);
+  if (!s) return { ok: false, issues: ['Type the formula first.'] };
+  if (s === tStr) return { ok: true, issues: [] };
+  const issues = [];
+  if (s.toLowerCase() === tStr.toLowerCase()) {
+    const found = (s.match(/[A-Z][a-z]/g) || []).find(x => OTHER_SYM[x]);
+    return { ok: false, issues: ['Check your capital letters. Each symbol starts with a capital letter, and a second letter is lowercase.' + (found ? ` <b>${found}</b> is ${OTHER_SYM[found]}, a different element.` : '')] };
+  }
+  if (/[+−-]/.test(s)) return { ok: false, issues: ['Molecular compounds have no charges. Don’t use charges or the criss-cross method here. Read the numbers straight from the prefixes.'] };
+  if (/^\d/.test(s)) issues.push('A number in front means separate molecules. For one molecule, put each number <b>after</b> its symbol, written small (a subscript).');
+  const up = s.replace(/^\d+/, '');
+  if (!/^([A-Z][a-z]?\d*)+$/.test(up)) return { ok: false, issues: issues.concat(['Each symbol starts with a capital letter. Numbers go right after the symbol they count.']) };
+  const got = [];
+  up.replace(/([A-Z][a-z]?)(\d*)/g, (_, sy, d) => { got.push([sy, d === '' ? 1 : +d, d]); return ''; });
+  if (got.some(g => g[2] === '1')) issues.push('Don’t write 1. No number already means one atom.');
+  const gs = got.map(g => g[0]).join(','), ts = tp.map(t => t[0]).join(',');
+  if (gs === ts) {
+    const same = got.every((g, i) => g[1] === tp[i][1]);
+    if (same && issues.length) return { ok: false, issues };
+    if (tp.length === 2 && got[0][1] === tp[1][1] && got[1][1] === tp[0][1]) issues.push(`The numbers are swapped. Each prefix counts the element right after it, and the subscript goes right after that element’s symbol: ${fHTML(tp)}.`);
+    else got.forEach((g, i) => { if (g[1] !== tp[i][1]) issues.push(`You have ${g[1]} ${g[0]}, but the name says ${tp[i][1]}${tp.length === 2 && PREF[tp[i][1]] ? ' (' + PREF[tp[i][1]] + '-)' : ''}.`); });
+  } else if (got.length === tp.length && [...gs.split(',')].sort().join() === [...ts.split(',')].sort().join()) {
+    issues.push('The symbols are in the wrong order. Write them in the same order as the name.');
+  } else {
+    got.forEach(g => { if (!EL[g[0]] && OTHER_SYM[g[0]]) issues.push(`<b>${g[0]}</b> is ${OTHER_SYM[g[0]]}. Check the symbols.`); });
+    tp.forEach(([sy]) => { if (!got.find(g => g[0] === sy)) issues.push(`${cap(nm(sy))} is missing. Its symbol is <b>${sy}</b>.`); });
+    if (!issues.length) issues.push('Check each symbol and number against the name.');
+  }
+  return { ok: false, issues };
+}
+
+/* ============ worked steps ============ */
+function stepsF2N(pp) {
+  const [[s1, n1], [s2, n2]] = pp;
+  if (s1 === 'H') return [`Hydrogen is written first, so use <b>no prefixes</b>.`, `${s2} is ${nm(s2)} → change the ending: <b>${ide(s2)}</b>.`, `Answer: <b>${binName(pp)}</b>`];
+  const out = [];
+  out.push(n1 === 1 ? `${s1} has no number, so 1 atom. One atom on the first element gets <b>no prefix</b>: ${nm(s1)}.` : `${s1}${usub(n1)}: ${n1} ${nm(s1)} atoms → ${PREF[n1]}- + ${nm(s1)} = <b>${PREF[n1]}${nm(s1)}</b>.`);
+  out.push(`${s2}${usub(n2)}: ${n2} ${nm(s2)} atom${n2 > 1 ? 's' : ''} → ${PREF[n2]}- + ${ide(s2)}` + (needsDrop(n2, s2) ? ` → drop the ${PREF[n2].slice(-1)} before oxide → <b>${secondWord(n2, s2)}</b>.` : ` = <b>${secondWord(n2, s2)}</b>.`));
+  out.push(`Answer: <b>${binName(pp)}</b>`);
+  return out;
+}
+function stepsN2F(pp) {
+  const [[s1, n1], [s2, n2]] = pp;
+  if (s1 === 'H') return [`Names that start with hydrogen have no prefixes, so the name does not give the numbers. Learn these ones: ${fHTML(pp)}.`];
+  const w = binName(pp).split(' ');
+  return [
+    `${w[0]}: ${n1 > 1 ? PREF[n1] + '- = ' + n1 + ', ' : 'no prefix = 1, '}${nm(s1)} = ${s1} → <b>${s1}${usub(n1)}</b>`,
+    `${w[1]}: ${needsDrop(n2, s2) ? ELIDED[n2] + '(' + PREF[n2].slice(-1) + ')' : PREF[n2]}- = ${n2}, ${ide(s2)} = ${nm(s2)} = ${s2} → <b>${s2}${usub(n2)}</b>`,
+    `Put them together, same order as the name: ${fHTML(pp)}`
+  ];
+}
+
+/* ============ explanations ("Why?") ============ */
+const WHY = {
+  molecular: ['Molecular compounds', 'A molecular compound is made of only non-metals. Non-metal atoms all need to gain electrons to fill their outer ring, and none of them will give electrons away. So they share electrons instead. Atoms that share electrons stay joined in a small group called a molecule.'],
+  ionic: ['Ionic compounds', 'An ionic compound has a metal and a non-metal. The metal gives electrons to the non-metal. This makes a positive ion and a negative ion, and opposite charges attract.'],
+  metalLine: ['Metal or non-metal?', 'Non-metals are on the right side of the periodic table, plus hydrogen. Metals are on the left and in the middle. Boron (B) and silicon (Si) are metalloids. With non-metals they share electrons, so their compounds are named the molecular way.'],
+  whyPrefix: ['Why molecular names need prefixes', 'Two non-metals can often join in more than one way. Carbon and oxygen make CO and CO₂. These are very different: CO is a poison gas, and CO₂ is the gas you breathe out. The name “carbon oxide” would not tell you which one. Prefixes give the exact number of each atom, so each name means only one compound.'],
+  whyNoPrefixIonic: ['Why ionic names don’t need prefixes', 'In an ionic compound, the charges must add up to zero. Na⁺ and Cl⁻ can only make NaCl. Mg²⁺ and Cl⁻ can only make MgCl₂. The charges decide the numbers, so the name doesn’t have to. Molecular compounds have no ions and no charges, so their names must count the atoms instead.'],
+  noCross: ['No criss-cross here', 'The criss-cross method uses ion charges, so it only works for ionic compounds. Molecular compounds have no charges. Read the numbers straight from the prefixes.'],
+  order: ['Which element goes first', 'The element farther left on the periodic table goes first. If both are in the same column, the one lower down goes first: SO₂, ClF₃. The name and the formula always list the elements in the same order, so when you change one into the other, keep the order.'],
+  ide: ['The -ide ending', 'The second element changes its ending to -ide. Keep the start of the name and add -ide: oxygen → ox + ide = oxide; chlorine → chlor + ide = chloride; sulfur → sulf + ide = sulfide. The first element keeps its normal name.'],
+  prefixes: ['Prefixes count atoms', 'A prefix is a word part added to the front of a word. In these names, each prefix tells how many atoms there are of the element it is attached to: di + nitrogen = 2 nitrogen atoms.'],
+  mono: ['No mono- on the first element', 'If the first element has no prefix, that means one atom. Chemists agreed to leave mono- off the first element to keep names short: CO is carbon monoxide, not monocarbon monoxide. The second element keeps mono-, so you can tell carbon monoxide (CO) from carbon dioxide (CO₂) right away.'],
+  vowel: ['Dropping a vowel before oxide', 'When the second word is oxide and the prefix ends in a or o, drop that a or o. “Mono-oxide” and “penta-oxide” have two vowels together and are hard to say, so they become monoxide and pentoxide. di- and tri- end in i, so they keep it: dioxide, trioxide. With other elements, keep the whole prefix: pentachloride.'],
+  subscript: ['Subscripts', 'A subscript is a small number written low, right after a symbol. It counts the atom just before it. N₂O₄ has 2 N atoms and 4 O atoms. No number means 1 atom, so we never write 1.'],
+  caps: ['Capital letters', 'Every element symbol starts with a capital letter. If there is a second letter, it is lowercase. CO is carbon + oxygen (two elements). Co is cobalt (one metal). The capital letter shows where each new symbol starts.'],
+  hydrogen: ['Hydrogen first: no prefixes', 'When hydrogen is written first (HCl, H₂S), the name uses no prefixes. There is usually only one common compound of hydrogen with each of these elements, so a plain name is enough. H₂S is hydrogen sulfide, not dihydrogen sulfide. Some other hydrogen compounds have common names: H₂O is water, NH₃ is ammonia, CH₄ is methane.'],
+  common: ['Common names', 'Some compounds were named long before the prefix system existed. Everyone still uses those names, so you need to memorize them. Nobody calls water “dihydrogen monoxide”.'],
+  diatomic: ['Elements that come in pairs', 'Seven elements are not found as single atoms at room temperature: H₂, N₂, O₂, F₂, Cl₂, Br₂, I₂. Two atoms of the same element share electrons so both fill their outer ring. So “nitrogen gas” is N₂. These are molecules but not compounds, because a compound needs two or more different elements.'],
+  ozone: ['Ozone', 'Ozone, O₃, is three oxygen atoms joined together. Like O₂, it is only oxygen, so it is a form of the element oxygen, not a compound. It is on the list because you need to know its name.'],
+  states: ['(s), (l), (g), (aq)', 'The letters in brackets show the state: (s) solid, (l) liquid, (g) gas, (aq) dissolved in water. They are not part of the name. NO(g) is just nitrogen monoxide.']
+};
+function whyHTML(keys, title) {
+  const open = P.settings.projector ? ' open' : '';
+  return `<details class="why"${open}><summary>${esc(title || 'Why?')}</summary><div class="why-body">${keys.map(k => `<div><h4>${WHY[k][0]}</h4><p>${WHY[k][1]}</p></div>`).join('')}</div></details>`;
+}
+function fbHTML(fb) {
+  if (!fb) return '<div aria-live="polite"></div>';
+  const ic = fb.kind === 'ok' ? '✓' : fb.kind === 'bad' ? '!' : 'i';
+  const body = fb.msgs.length > 1 ? `<ul>${fb.msgs.map(m => `<li>${m}</li>`).join('')}</ul>` : `<p>${fb.msgs[0] || ''}</p>`;
+  return `<div aria-live="polite"><div class="fb ${fb.kind} pop"><span class="ic" aria-hidden="true">${ic}</span><div>${fb.title ? `<strong>${fb.title}</strong>` : ''}${body}</div></div></div>`;
+}
+const OK = (title, ...msgs) => ({ kind: 'ok', title, msgs });
+const BAD = (title, ...msgs) => ({ kind: 'bad', title, msgs });
+const INFO = (title, ...msgs) => ({ kind: 'info', title, msgs });
+function stepsBar(labels, at) { return `<div class="steps" aria-label="Steps">${labels.map((l, i) => `<span class="${i < at ? 'past' : i === at ? 'on' : ''}">${i < at ? '✓ ' : ''}${l}</span>`).join('')}</div>`; }
+function eboxHTML(sym, showTag) {
+  const t = EL[sym][2];
+  return `<div class="ebox ${showTag ? t : ''}"><div class="sym">${sym}</div><div class="nm">${nm(sym)}</div>${showTag ? `<span class="tag ${t}">${t}</span>` : ''}</div>`;
+}
+
+/* atom-count picture: one circle per atom, grouped by element */
+function atomsSVG(pp, unknown) {
+  const R = 15, D = 34, GAP = 34;
+  let x = 10, maxH = 0;
+  const groups = pp.map(([s, n], i) => {
+    const u = unknown && unknown[i];
+    const cnt = u ? 1 : n, cols = Math.min(cnt, 5), rows = Math.ceil(cnt / 5);
+    const g = { s, n, u, cols, rows, x0: x, w: cols * D, cls: 'a' + (i + 1) };
+    x += g.w + GAP; maxH = Math.max(maxH, rows * D);
+    return g;
+  });
+  const W = x - GAP + 10, H = maxH + 34;
+  let out = `<svg class="atoms" style="max-width:${Math.round(W * 1.25)}px" viewBox="0 0 ${W} ${H}" role="img" aria-label="${pp.map(([s, n], i) => (unknown && unknown[i] ? 'unknown number of' : n) + ' ' + nm(s) + ' atoms').join(', ')}">`;
+  groups.forEach(g => {
+    const cnt = g.u ? 1 : g.n;
+    for (let k = 0; k < cnt; k++) {
+      const cx = g.x0 + (k % 5) * D + D / 2, cy = Math.floor(k / 5) * D + D / 2 + (maxH - g.rows * D) / 2;
+      out += g.u ? `<circle cx="${cx}" cy="${cy}" r="${R}" class="${g.cls}" stroke-dasharray="4 4" fill-opacity=".4"/><text x="${cx}" y="${cy + 5}" text-anchor="middle">?</text>`
+        : `<circle cx="${cx}" cy="${cy}" r="${R}" class="${g.cls}"/><text x="${cx}" y="${cy + 5}" text-anchor="middle">${g.s}</text>`;
+    }
+    out += `<text class="cnt" x="${g.x0 + g.w / 2}" y="${maxH + 24}" text-anchor="middle">${g.u ? '? ' + g.s : g.n + ' ' + g.s}</text>`;
+  });
+  return out + '</svg>';
+}
+const shapeNote = '<p class="small" style="text-align:center">Each circle is one atom. This shows how many, not the real shape.</p>';
+
+const VIEWS = {};
+const ORDER = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6'];
+function bump(k) { P.done[k] = (P.done[k] || 0) + 1; save(); }
+
+/* ============ HOME ============ */
+VIEWS.home = {
+  title: 'Home',
+  html() {
+    const mods = ORDER.filter(k => P.settings.mods[k]);
+    const blurbs = { m1: 'Is it molecular or ionic? Learn why only molecular names use prefixes.', m2: 'Learn the ten counting prefixes, mono- to deca-.',
+      m3: 'Turn a formula into a name, one step at a time.', m4: 'Turn a name into a formula, one step at a time.',
+      m5: 'Type your own answers. Includes the questions from the class slides.', m6: 'Names to memorize, and the elements that come in pairs.' };
+    return `
+    <section class="panel hero">
+      <div class="map" aria-label="dinitrogen tetroxide is N 2 O 4">
+        <div class="mt e1"><span class="pfx">di</span>nitrogen</div><div class="mt e2"><span class="pfx">tetr</span>oxide</div>
+        <div class="lnk"></div><div class="lnk"></div>
+        <div class="bot e1 f">N<sub>2</sub></div><div class="bot e2 f">O<sub>4</sub></div>
+        <div class="lbl">2 nitrogen atoms</div><div class="lbl">4 oxygen atoms</div>
+      </div>
+      <p class="lede">In a molecular compound, the name counts the atoms. Each prefix in the name becomes a small number in the formula. Learn the rules, then practise going both ways.</p>
+    </section>
+    <h2 style="margin:24px 0 10px">Work through these in order</h2>
+    <div class="cards">${mods.map(k => `<button type="button" class="card" data-act="go" data-v="${k}"><span class="row"><span class="num">${k.slice(1)}</span><h3>${VIEWS[k].title}</h3></span><span class="small">${blurbs[k]}</span>${P.done[k] ? `<span class="done">✓ ${P.done[k]} done</span>` : ''}</button>`).join('')}</div>
+    <h2 style="margin:28px 0 6px">The rules</h2>
+    <p class="lede" style="margin-bottom:10px">Tap a rule to see the reason behind it.</p>
+    <div class="rules">
+      ${rule('Molecular compounds contain only non-metals.', ['molecular', 'metalLine', 'whyPrefix'])}
+      ${rule('The element farther left on the periodic table goes first. The name and the formula use the same order.', ['order'])}
+      ${rule('The first element keeps its name. The second element’s name ends in -ide.', ['ide'])}
+      ${rule('Prefixes show how many atoms of each element.', ['prefixes'])}
+      ${rule('Never put mono- on the first element. The second element keeps mono-.', ['mono'])}
+      ${rule('Before oxide, drop the a or o at the end of the prefix: monoxide, pentoxide.', ['vowel'])}
+      ${rule('When hydrogen is first, use no prefixes: HCl is hydrogen chloride.', ['hydrogen'])}
+      ${rule('In a formula, each number goes after its symbol, written small. Never write 1.', ['subscript', 'caps', 'noCross'])}
+    </div>`;
+  }
+};
+function rule(text, keys) {
+  return `<details class="why"><summary>${text}</summary><div class="why-body">${keys.map(k => `<div><h4>${WHY[k][0]}</h4><p>${WHY[k][1]}</p></div>`).join('')}</div></details>`;
+}
+
+/* ============ M1: ionic or molecular ============ */
+const M1_ITEMS = [
+  ['NaCl', 'sodium chloride'], ['MgO', 'magnesium oxide'], ['CaCl2', 'calcium chloride'], ['K2O', 'potassium oxide'], ['Al2O3', 'aluminum oxide'],
+  ['LiF', 'lithium fluoride'], ['KBr', 'potassium bromide'], ['CaF2', 'calcium fluoride'], ['MgCl2', 'magnesium chloride'], ['Na2S', 'sodium sulfide'],
+  ['Fe2O3', 'iron(III) oxide'], ['CuCl2', 'copper(II) chloride'], ['NaHCO3', 'baking soda (sodium hydrogen carbonate)'], ['CaCO3', 'limestone (calcium carbonate)'],
+  ['CO2'], ['H2O', 'water'], ['NH3', 'ammonia'], ['SO2'], ['PCl3'], ['N2O4'], ['CH4', 'methane'], ['CCl4'], ['SiO2'], ['HCl'], ['NF3'], ['SF6'], ['OF2'], ['H2O2', 'hydrogen peroxide']
+];
+const M1 = { item: null, picked: null, streak: 0, last: null };
+function m1Next() { let it; do { it = pick(M1_ITEMS); } while (M1_ITEMS.length > 1 && it === M1.last); M1.item = it; M1.last = it; M1.picked = null; }
+VIEWS.m1 = {
+  title: 'Ionic or molecular?',
+  enter() { if (!M1.item) m1Next(); },
+  html() {
+    const [f, given] = M1.item, pp = parts(f), syms = [...new Set(pp.map(p => p[0]))];
+    const molecular = !syms.some(isMetal), done = M1.picked !== null;
+    const name = given || binName(pp);
+    let fb = null;
+    if (done) {
+      const right = (M1.picked === 'mol') === molecular;
+      const metal = syms.find(isMetal);
+      const ml = syms.find(x => EL[x][2] === 'metalloid');
+      const nameNote = given ? ` Its name: <b>${name}</b>.` : pp[0][0] === 'H' ? ` Hydrogen is first, so the name has no prefixes: <b>${name}</b>.` : ` Its name uses prefixes: <b>${name}</b>.`;
+      const why = molecular
+        ? `${syms.map(s => `${s} (${nm(s)})`).join(' and ')}: no metals. ` + (ml ? `${nm(ml)} is a metalloid, and with non-metals it shares electrons. ` : '') + `Atoms that share electrons make a <b>molecular</b> compound.` + nameNote
+        : `${metal} is ${nm(metal)}, a <b>metal</b>. A metal with non-metals makes an <b>ionic</b> compound` + (pp.length > 2 ? ` (even though the other elements are non-metals).` : '.') + ` Ionic names don’t use prefixes: <b>${name}</b>.`;
+      fb = right ? OK(molecular ? 'Yes, molecular.' : 'Yes, ionic.', why) : BAD(molecular ? 'Not quite. It’s molecular.' : 'Not quite. It’s ionic.', why);
+    }
+    return `
+    <div class="head"><div><div class="eyebrow">Step 1</div><h2>Ionic or molecular?</h2>
+      <p class="lede">Prefixes are only for molecular compounds, so first check what kind of compound you have. Look for a metal.</p></div>
+      <span class="small tally">Streak: <b>${M1.streak}</b></span></div>
+    <div class="bench">
+      <div class="panel stack">
+        <p>Does this compound have a metal in it?</p>
+        <div class="choice-grid" style="grid-template-columns:1fr 1fr">
+          <button type="button" class="btn ${done && !molecular ? 'right' : done && M1.picked === 'ion' ? 'wrong' : ''}" data-act="m1pick" data-v="ion"${done ? ' disabled' : ''}>Ionic<br><span class="small">has a metal</span></button>
+          <button type="button" class="btn ${done && molecular ? 'right' : done && M1.picked === 'mol' ? 'wrong' : ''}" data-act="m1pick" data-v="mol"${done ? ' disabled' : ''}>Molecular<br><span class="small">only non-metals</span></button>
+        </div>
+        ${fbHTML(fb)}
+        ${done ? '<div class="row"><button type="button" class="btn primary" data-act="m1next" id="m1next">Next compound</button></div>' : ''}
+        ${whyHTML(['metalLine', 'molecular', 'ionic', 'whyPrefix', 'whyNoPrefixIonic'])}
+      </div>
+      <div class="panel show">
+        <div class="big-f">${fHTML(f, false)}</div>
+        <div class="els">${syms.map(s => eboxHTML(s, done)).join('')}</div>
+        ${done ? '' : '<p class="small">Find each element on your periodic table.</p>'}
+      </div>
+    </div>`;
+  },
+  act(a, el) {
+    if (a === 'm1pick' && M1.picked === null) {
+      M1.picked = el.dataset.v;
+      const molecular = !parts(M1.item[0]).some(p => isMetal(p[0]));
+      if ((M1.picked === 'mol') === molecular) { M1.streak++; bump('m1'); } else M1.streak = 0;
+      return true;
+    }
+    if (a === 'm1next') { m1Next(); return true; }
+  }
+};
+
+/* ============ M2: prefixes ============ */
+const M2 = { hide: false, q: null, picked: null, streak: 0 };
+function m2New() {
+  const n = 1 + Math.floor(Math.random() * 10);
+  const type = pick(['n2p', 'p2n', 'word']);
+  let q;
+  if (type === 'n2p') {
+    const opts = shuffle([n, ...shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].filter(k => k !== n)).slice(0, 3)]);
+    q = { type, n, ask: `Which prefix means <b>${n}</b>?`, opts: opts.map(k => [k, PREF[k] + '-']), ans: n };
+  } else if (type === 'p2n') {
+    const opts = shuffle([n, ...shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].filter(k => k !== n)).slice(0, 3)]);
+    q = { type, n, ask: `What number does <b>${PREF[n]}-</b> mean?`, opts: opts.map(k => [k, String(k)]), ans: n };
+  } else {
+    const pool = BIN.map(parts).filter(pp => pp[0][0] !== 'H');
+    const pp = pick(pool), which = Math.random() < .5 && pp[0][1] > 1 ? 0 : 1;
+    const word = binName(pp).split(' ')[which], k = pp[which][1];
+    const opts = shuffle([k, ...shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].filter(x => x !== k)).slice(0, 3)]);
+    q = { type, n: k, ask: `How many ${nm(pp[which][0])} atoms does <b>${word}</b> show?`, opts: opts.map(x => [x, String(x)]), ans: k, word, sym: pp[which][0] };
+  }
+  M2.q = q; M2.picked = null;
+}
+VIEWS.m2 = {
+  title: 'The prefixes',
+  enter() { if (!M2.q) m2New(); },
+  html() {
+    const q = M2.q, done = M2.picked !== null;
+    let fb = null;
+    if (done) {
+      const right = M2.picked === q.ans;
+      let why = `${PREF[q.ans]}- = ${q.ans}. Memory hook: ${HOOK[q.ans]}.`;
+      if (q.type === 'word' && ELIDED[q.ans] && q.word.indexOf(PREF[q.ans]) !== 0) why = `<b>${ELIDED[q.ans]}</b> is ${PREF[q.ans]}- with the last letter dropped before oxide. It still means ${q.ans}.`;
+      if (q.type === 'word' && q.ans === 1 && q.word.indexOf('mon') !== 0) why = 'No prefix on the first element means one atom.';
+      fb = right ? OK('Correct.', why) : BAD('Not this time.', why);
+    }
+    return `
+    <div class="head"><div><div class="eyebrow">Step 2</div><h2>The prefixes</h2>
+      <p class="lede">Each prefix is a number. Learn all ten. The memory hooks are everyday words that use the same prefix.</p></div>
+      <button type="button" class="btn small" data-act="m2hide" aria-pressed="${M2.hide}">${M2.hide ? 'Show prefixes' : 'Cover the prefixes'}</button></div>
+    <div class="ptable panel">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => `<div class="pcell${M2.hide ? ' hid' : ''}"><span class="k">${n}</span><b>${PREF[n]}-</b><small>${HOOK[n]}</small></div>`).join('')}</div>
+    <div class="bench" style="margin-top:18px">
+      <div class="panel stack">
+        <div class="row" style="justify-content:space-between"><h3>Quick check</h3><span class="small tally">Streak: <b>${M2.streak}</b></span></div>
+        <p style="font-size:1.2rem">${q.ask}</p>
+        <div class="choice-grid">${q.opts.map(([v, l]) => `<button type="button" class="btn ${done && v === q.ans ? 'right' : done && v === M2.picked ? 'wrong' : ''}" data-act="m2pick" data-v="${v}"${done ? ' disabled' : ''}>${l}</button>`).join('')}</div>
+        ${fbHTML(fb)}
+        ${done ? '<div class="row"><button type="button" class="btn primary" data-act="m2next" id="m2next">Next question</button></div>' : ''}
+      </div>
+      <div class="stack">${whyHTML(['prefixes', 'mono', 'vowel'])}
+        <div class="note-box">Watch for missing letters before <i>oxide</i>: <b>mon</b>oxide = 1, <b>tetr</b>oxide = 4, <b>pent</b>oxide = 5, <b>hex</b>oxide = 6, <b>dec</b>oxide = 10. The prefix still means the same number.</div></div>
+    </div>`;
+  },
+  act(a, el) {
+    if (a === 'm2hide') { M2.hide = !M2.hide; return true; }
+    if (a === 'm2pick' && M2.picked === null) { M2.picked = +el.dataset.v; if (M2.picked === M2.q.ans) { M2.streak++; bump('m2'); } else M2.streak = 0; return true; }
+    if (a === 'm2next') { m2New(); return true; }
+  }
+};
+
+/* ============ M3: formula → name (guided) ============ */
+const SYM_OF = { sodium: 'Na', silicon: 'Si', calcium: 'Ca', chlorine: 'Cl', neon: 'Ne', nickel: 'Ni', osmium: 'Os', selenium: 'Se', potassium: 'K', lead: 'Pb',
+  iron: 'Fe', francium: 'Fr', silver: 'Ag', bromine: 'Br', beryllium: 'Be', indium: 'In', boron: 'B', bismuth: 'Bi', sulfur: 'S', helium: 'He', mercury: 'Hg', carbon: 'C', nitrogen: 'N', oxygen: 'O', fluorine: 'F', phosphorus: 'P', iodine: 'I', hydrogen: 'H' };
+const NAME_CONF = { C: ['calcium', 'chlorine'], N: ['neon', 'nickel'], O: ['osmium', 'selenium'], S: ['sodium', 'silicon'], P: ['potassium', 'lead'], Cl: ['carbon', 'calcium'],
+  F: ['iron', 'francium'], Si: ['sulfur', 'silver'], B: ['bromine', 'beryllium'], I: ['iron', 'indium'], Br: ['boron', 'bismuth'], Se: ['sulfur', 'sodium'] };
+function prefixOpts(n, includeNone) {
+  const set = new Set([n]);
+  const near = [n - 1, n + 1, n + 2, n - 2, 1, 2, 3, 4].filter(k => k >= 1 && k <= 10);
+  for (const k of near) { if (set.size >= (includeNone ? 3 : 4)) break; set.add(k); }
+  const o = shuffle([...set]).map(k => [String(k), PREF[k] + '-']);
+  if (includeNone) o.unshift(['0', 'no prefix']);
+  return o;
+}
+const M3 = { pp: null, step: 0, picks: {}, fb: null, misses: 0, last: null };
+function m3New() {
+  const pool = BIN.filter(f => f !== M3.last);
+  const f = pick(pool); M3.last = f;
+  Object.assign(M3, { pp: parts(f), step: 0, picks: {}, fb: null, misses: 0 });
+  const [[s1, n1], [s2, n2]] = M3.pp;
+  M3.steps = [
+    { key: 'el1', label: 'First element', q: `What element is <b>${s1}</b>?`, opts: shuffle([nm(s1), ...(NAME_CONF[s1] || [])]).map(x => [x, x]), ans: nm(s1) },
+    { key: 'p1', label: 'Its prefix', q: n1 === 1 ? `There is no number after ${s1}, so there is 1 ${s1} atom. What goes in front of “${nm(s1)}”?` : `${s1}<sub>${n1}</sub> means ${n1} ${s1} atoms. What goes in front of “${nm(s1)}”?`,
+      opts: n1 === 1 ? [['0', 'no prefix'], ['1', 'mono-'], ['2', 'di-']] : prefixOpts(n1, true), ans: String(n1 === 1 ? 0 : n1) },
+    { key: 'ide', label: 'Second element', q: `<b>${s2}</b> is ${nm(s2)}. It is the second element, so its name changes. Which is right?`, opts: shuffle([nm(s2), ide(s2), nm(s2) + 'ide']).map(x => [x, x]), ans: ide(s2) },
+    { key: 'p2', label: 'Its prefix', q: n2 === 1 ? `There is 1 ${s2} atom. What goes in front of “${ide(s2)}”?` : `${s2}<sub>${n2}</sub> means ${n2} ${s2} atoms. What goes in front of “${ide(s2)}”?`,
+      opts: n2 === 1 ? [['0', 'no prefix'], ['1', 'mono-'], ['2', 'di-']] : prefixOpts(n2, true), ans: String(n2) }
+  ];
+  if (needsDrop(n2, s2)) M3.steps.push({ key: 'drop', label: 'Spelling', q: `Say it out loud: ${PREF[n2]}-oxide. Which spelling is right?`, opts: shuffle([PREF[n2] + 'oxide', secondWord(n2, s2)]).map(x => [x, x]), ans: secondWord(n2, s2) });
+}
+function m3Wrong(st, v) {
+  const [[s1, n1], [s2, n2]] = M3.pp;
+  if (st.key === 'el1') return SYM_OF[v] ? `${cap(v)}’s symbol is ${SYM_OF[v]}. <b>${s1}</b> is ${nm(s1)}. Check your periodic table.` : `${s1} is ${nm(s1)}.`;
+  if (st.key === 'p1') {
+    if (v === '1') return 'Never put mono- on the first element. No prefix already means one.';
+    if (v === '0') return `No prefix means 1, but there are ${n1} ${s1} atoms. Use ${PREF[n1]}-.`;
+    return `${PREF[+v]}- means ${v}. There ${n1 === 1 ? 'is 1 atom' : 'are ' + n1 + ' atoms'}.`;
+  }
+  if (st.key === 'ide') return v === nm(s2) ? 'The second element always changes its ending to -ide.' : `Take the end off first, then add -ide: ${nm(s2)} → ${EL[s2][1]} + ide = ${ide(s2)}.`;
+  if (st.key === 'p2') {
+    if (v === '0') return n2 === 1 ? 'The second element keeps mono-. Without it, “' + nm(s1) + ' ' + ide(s2) + '” could mean more than one compound.' : `There are ${n2} ${s2} atoms, so the second word needs a prefix.`;
+    return `${PREF[+v]}- means ${v}. There ${n2 === 1 ? 'is 1 atom' : 'are ' + n2 + ' atoms'}.`;
+  }
+  if (st.key === 'drop') return `${PREF[n2]} ends in ${PREF[n2].slice(-1)} and oxide starts with o. Drop the ${PREF[n2].slice(-1)}: ${secondWord(n2, s2)}.`;
+}
+function m3Strip() {
+  const [[s1, n1], [s2, n2]] = M3.pp, p = M3.picks;
+  const w1 = p.el1 ? `<span class="w1">${p.p1 !== undefined && n1 > 1 ? `<span class="pfx">${PREF[n1]}</span>` : ''}${nm(s1)}</span>` : '<span class="slot">&nbsp;</span>';
+  let w2 = '<span class="slot">&nbsp;</span>';
+  if (p.ide) {
+    let pf = '';
+    if (p.p2 !== undefined) pf = p.drop ? `<span class="pfx">${ELIDED[n2]}</span>` : `<span class="pfx">${PREF[n2]}</span>`;
+    w2 = `<span class="w2">${pf}${ide(s2)}</span>`;
+  }
+  return `<div class="namestrip" aria-live="polite">${w1}${w2}</div>`;
+}
+VIEWS.m3 = {
+  title: 'Formula → name',
+  enter() { if (!M3.pp) m3New(); },
+  html() {
+    const st = M3.steps[M3.step], finished = M3.step >= M3.steps.length;
+    return `
+    <div class="head"><div><div class="eyebrow">Step 3 · guided</div><h2>Formula → name</h2>
+      <p class="lede">Build the name one piece at a time. Teal is the first element, purple is the second, and yellow shows the numbers and prefixes.</p></div>
+      <span class="small tally">Names built: <b>${P.done.m3 || 0}</b></span></div>
+    <div class="bench">
+      <div class="panel stack">
+        ${stepsBar(M3.steps.map(s => s.label), M3.step)}
+        ${finished ? `
+          ${fbHTML(OK(M3.misses ? 'Done.' : 'Done, with no mistakes.', `${fHTML(M3.pp)} is <b>${binName(M3.pp)}</b>.`))}
+          <ol class="steplist">${stepsF2N(M3.pp).slice(0, -1).map(x => `<li>${x}</li>`).join('')}</ol>
+          <div class="row"><button type="button" class="btn primary" data-act="m3new" id="m3new">Next formula</button></div>`
+        : `<p style="font-size:1.15rem">${st.q}</p>
+          <div class="choice-grid">${st.opts.map(([v, l]) => `<button type="button" class="btn${M3.fb && M3.fb.v === v ? ' wrong' : ''}" data-act="m3pick" data-v="${esc(v)}">${l}</button>`).join('')}</div>
+          ${M3.fb ? fbHTML(BAD('Try again.', M3.fb.msg)) : ''}`}
+        ${whyHTML(['prefixes', 'ide', 'mono', 'vowel', 'order'])}
+      </div>
+      <div class="panel show">
+        <div class="big-f">${fHTML(M3.pp)}</div>
+        ${atomsSVG(M3.pp)}
+        ${shapeNote}
+        ${m3Strip()}
+      </div>
+    </div>`;
+  },
+  act(a, el) {
+    if (a === 'm3pick') {
+      const st = M3.steps[M3.step], v = el.dataset.v;
+      if (v === st.ans) { M3.picks[st.key] = v; M3.step++; M3.fb = null; if (M3.step >= M3.steps.length) bump('m3'); }
+      else { M3.fb = { v, msg: m3Wrong(st, v) }; M3.misses++; }
+      return true;
+    }
+    if (a === 'm3new') { m3New(); return true; }
+  }
+};
+
+/* ============ M4: name → formula (guided) ============ */
+const SYM_CONF = { N: ['Ni', 'Ne', 'Na'], C: ['Ca', 'Co', 'Cl'], O: ['Os', 'Ox', 'Oz'], S: ['Su', 'Si', 'Na'], P: ['K', 'Ph', 'Po'], Cl: ['CL', 'Ch', 'C'],
+  F: ['Fl', 'Fe', 'Fr'], Si: ['SI', 'S', 'Sl'], B: ['Br', 'Be', 'Bo'], Br: ['BR', 'B', 'Bm'], I: ['Io', 'In', 'Ir'], Se: ['S', 'Sn', 'SE'] };
+const REAL = { Ni: 'nickel', Ne: 'neon', Na: 'sodium', Ca: 'calcium', Co: 'cobalt', Cl: 'chlorine', Os: 'osmium', Si: 'silicon', K: 'potassium', Po: 'polonium',
+  C: 'carbon', Fe: 'iron', Fr: 'francium', S: 'sulfur', Br: 'bromine', Be: 'beryllium', B: 'boron', In: 'indium', Ir: 'iridium', Sn: 'tin' };
+const M4 = { pp: null, step: 0, picks: {}, fb: null, misses: 0, last: null };
+function m4New() {
+  const pool = BIN.filter(f => f !== M4.last);
+  const f = pick(pool); M4.last = f;
+  Object.assign(M4, { pp: parts(f), step: 0, picks: {}, fb: null, misses: 0 });
+  const [[s1, n1], [s2, n2]] = M4.pp, w = binName(M4.pp).split(' ');
+  // assembly choices (as html)
+  const right = fHTML(M4.pp, false);
+  const wrongs = [];
+  if (n1 !== n2) wrongs.push(['swap', fHTML([[s1, n2], [s2, n1]], false)]);
+  wrongs.push(['rev', fHTML([[s2, n2], [s1, n1]], false)]);
+  if (n1 > 1) wrongs.push(['coef', `<span class="f">${n1}${s1}${s2}<sub>${n2}</sub></span>`]);
+  else wrongs.push(['one', `<span class="f">${s1}<sub>1</sub>${s2}${n2 > 1 ? `<sub>${n2}</sub>` : ''}</span>`]);
+  if (n2 > 1) wrongs.push(['big', `<span class="f">${s1}${n1 > 1 ? n1 : ''}${s2}${n2}</span>`]);
+  const ensure = n => { const others = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10].filter(k => k !== n && Math.abs(k - n) <= 4)).slice(0, 3); return [n, ...others].sort((x, y) => x - y).map(k => [String(k), String(k)]); };
+  M4.steps = [
+    { key: 'n1', label: 'First count', q: `First word: <b>${w[0]}</b>. How many ${nm(s1)} atoms?`, opts: ensure(n1), ans: String(n1) },
+    { key: 's1', label: 'First symbol', q: `What is the symbol for ${nm(s1)}?`, opts: shuffle([s1, ...SYM_CONF[s1]]).map(x => [x, x]), ans: s1 },
+    { key: 's2', label: 'Second symbol', q: `Second word: <b>${w[1]}</b>. Ignore the prefix and the -ide ending. Which element is it?`, opts: shuffle([s2, ...SYM_CONF[s2]]).map(x => [x, x]), ans: s2 },
+    { key: 'n2', label: 'Second count', q: `How many ${nm(s2)} atoms does <b>${w[1]}</b> show?`, opts: ensure(n2), ans: String(n2) },
+    { key: 'put', label: 'Write it', q: 'Put it together. Which formula is written correctly?', opts: shuffle([['ok', right], ...wrongs.slice(0, 3)]), ans: 'ok', html: true }
+  ];
+}
+function m4Wrong(st, v) {
+  const [[s1, n1], [s2, n2]] = M4.pp;
+  if (st.key === 'n1') return n1 === 1 ? 'There is no prefix on the first word. No prefix means 1 atom.' : `${PREF[n1]}- means ${n1}.`;
+  if (st.key === 's1' || st.key === 's2') {
+    const want = st.key === 's1' ? s1 : s2;
+    if (REAL[v]) return `${v} is ${REAL[v]}. ${cap(nm(want))} is <b>${want}</b>.`;
+    if (v.toLowerCase() === want.toLowerCase()) return `Watch the capitals. A symbol starts with a capital letter and any second letter is lowercase: <b>${want}</b>.`;
+    return `There is no element with the symbol ${v}. ${cap(nm(want))} is <b>${want}</b>.`;
+  }
+  if (st.key === 'n2') {
+    const p = binName(M4.pp).split(' ')[1].replace(ide(s2), '');
+    return (p !== PREF[n2] ? `<b>${p}</b> is ${PREF[n2]}- with the last letter dropped before oxide. ` : '') + `${PREF[n2]}- means ${n2}.`;
+  }
+  if (st.key === 'put') return ({
+    swap: 'The numbers are swapped. Each number goes right after the symbol it counts.',
+    rev: 'The symbols are in the wrong order. Write them in the same order as the name.',
+    coef: 'A number in front means separate molecules. In one molecule, the number goes after the symbol, written small.',
+    one: 'Don’t write 1. No number already means one atom.',
+    big: 'The numbers must be subscripts: small and low, after the symbol.'
+  })[v];
+}
+VIEWS.m4 = {
+  title: 'Name → formula',
+  enter() { if (!M4.pp) m4New(); },
+  html() {
+    const [[s1, n1], [s2, n2]] = M4.pp, p = M4.picks, st = M4.steps[M4.step], finished = M4.step >= M4.steps.length;
+    const known = [p.n1 === undefined, p.n2 === undefined];
+    const strip = `<div class="namestrip" aria-live="polite"><span class="f">${p.s1 ? `<span class="e1">${s1}${p.n1 && n1 > 1 ? `<sub>${n1}</sub>` : ''}</span>` : '<span class="slot">&nbsp;</span>'}${p.s2 ? `<span class="e2">${s2}${p.n2 && n2 > 1 ? `<sub>${n2}</sub>` : ''}</span>` : '<span class="slot">&nbsp;</span>'}</span></div>`;
+    return `
+    <div class="head"><div><div class="eyebrow">Step 4 · guided</div><h2>Name → formula</h2>
+      <p class="lede">Each word gives you one element. The prefix tells you how many. Molecular compounds have no charges, so there is no criss-cross: just read the prefixes.</p></div>
+      <span class="small tally">Formulas built: <b>${P.done.m4 || 0}</b></span></div>
+    <div class="bench">
+      <div class="panel stack">
+        ${stepsBar(M4.steps.map(s => s.label), M4.step)}
+        ${finished ? `
+          ${fbHTML(OK(M4.misses ? 'Done.' : 'Done, with no mistakes.', `<b>${binName(M4.pp)}</b> is ${fHTML(M4.pp)}.`))}
+          <ol class="steplist">${stepsN2F(M4.pp).map(x => `<li>${x}</li>`).join('')}</ol>
+          <div class="row"><button type="button" class="btn primary" data-act="m4new" id="m4new">Next name</button></div>`
+        : `<p style="font-size:1.15rem">${st.q}</p>
+          <div class="choice-grid">${st.opts.map(([v, l]) => `<button type="button" class="btn${M4.fb && M4.fb.v === v ? ' wrong' : ''}" data-act="m4pick" data-v="${esc(v)}" style="${st.html ? 'font-size:1.5rem' : ''}">${l}</button>`).join('')}</div>
+          ${M4.fb ? fbHTML(BAD('Try again.', M4.fb.msg)) : ''}`}
+        ${whyHTML(['subscript', 'caps', 'noCross', 'vowel'])}
+      </div>
+      <div class="panel show">
+        <div class="namestrip" style="font-size:1.9rem">${nameHTML(M4.pp)}</div>
+        ${atomsSVG(M4.pp, known)}
+        ${shapeNote}
+        ${strip}
+      </div>
+    </div>`;
+  },
+  act(a, el) {
+    if (a === 'm4pick') {
+      const st = M4.steps[M4.step], v = el.dataset.v;
+      if (v === st.ans) { M4.picks[st.key] = v; M4.step++; M4.fb = null; if (M4.step >= M4.steps.length) bump('m4'); }
+      else { M4.fb = { v, msg: m4Wrong(st, v) }; M4.misses++; }
+      return true;
+    }
+    if (a === 'm4new') { m4New(); return true; }
+  }
+};
+
+/* ============ M5: practice (typed answers) ============ */
+const ST = { NO: '(g)', P4O6: '(s)', SO2: '(g)', SO3: '(g)', N2O: '(g)' };
+const SETS = {
+  slideF: { title: 'Slide practice: write the formula', n: 8 },
+  slideN: { title: 'Slide practice: write the name', n: 8 },
+  mixed: { title: 'Mixed practice', n: 10 },
+  common: { title: 'Common names and pairs', n: 10 }
+};
+const qBin = (f, dir) => ({ dir, kind: 'bin', f, pp: parts(f), name: binName(parts(f)) });
+const qCommon = (f, name, dir, alts, kind) => ({ dir, kind: kind || 'common', f, pp: parts(f), name, alts: alts || [] });
+function buildSet(k) {
+  if (k === 'slideF') return [qBin('CO', 'n2f'), qBin('CO2', 'n2f'), qBin('CCl4', 'n2f'), qBin('SO3', 'n2f'), qBin('N2O', 'n2f'), qBin('NCl3', 'n2f'),
+    qCommon('C6H12O6', 'glucose', 'n2f'), qCommon('N2', 'nitrogen gas', 'n2f', [], 'pair')];
+  if (k === 'slideN') return ['NO', 'P4O6', 'SO2', 'SO3', 'N2O', 'PCl5', 'CCl4', 'N2O5'].map(f => { const q = qBin(f, 'f2n'); if (f === 'N2O') q.alts = [['laughing gas', 'That’s its common name. Its prefix name is dinitrogen monoxide.']]; return q; });
+  if (k === 'mixed') {
+    const fs = shuffle(BIN).slice(0, 8).map(f => qBin(f, Math.random() < .5 ? 'n2f' : 'f2n'));
+    fs.push(qBin(pick(HYD), 'f2n'));
+    fs.push(qBin(pick(BIN), 'n2f'));
+    return shuffle(fs);
+  }
+  const pool = [
+    qCommon('H2O', 'water', 'n2f'), qCommon('NH3', 'ammonia', 'n2f'), qCommon('CH4', 'methane', 'n2f'), qCommon('H2O2', 'hydrogen peroxide', 'n2f'),
+    qCommon('C6H12O6', 'glucose', 'n2f'), qCommon('C12H22O11', 'sucrose', 'n2f'), qCommon('O3', 'ozone', 'n2f'), qCommon('NaHCO3', 'baking soda', 'n2f'), qCommon('CaCO3', 'limestone', 'n2f'),
+    qCommon('O2', 'oxygen gas', 'n2f', [], 'pair'), qCommon('Cl2', 'chlorine gas', 'n2f', [], 'pair'), qCommon('H2', 'hydrogen gas', 'n2f', [], 'pair'),
+    qCommon('H2O', 'water', 'f2n'), qCommon('NH3', 'ammonia', 'f2n'), qCommon('CH4', 'methane', 'f2n'), qCommon('H2O2', 'hydrogen peroxide', 'f2n'),
+    qCommon('O3', 'ozone', 'f2n'), qCommon('C6H12O6', 'glucose', 'f2n'),
+    qCommon('N2O', 'laughing gas', 'f2n', [['dinitrogen monoxide', 'Correct. Its common name is laughing gas.']]),
+    qCommon('CaCO3', 'limestone', 'f2n', [['calcium carbonate', 'Correct. That is its ionic name. Its common name is limestone.']]),
+    qCommon('NaHCO3', 'baking soda', 'f2n', [['sodium hydrogen carbonate', 'Correct. That is its ionic name. Its common name is baking soda.'], ['sodium bicarbonate', 'Correct. Its common name is baking soda.']])
+  ];
+  const out = [], seen = new Set();
+  for (const q of shuffle(pool)) { const key = q.f + q.dir; if (seen.has(q.f)) continue; seen.add(q.f); out.push(q); if (out.length === 10) break; }
+  return out;
+}
+const M5 = { set: null, qs: [], i: 0, res: [], input: '', fb: null, tries: 0, steps: false, revealed: false };
+function m5Start(k) { Object.assign(M5, { set: k, qs: buildSet(k), i: 0, res: [], input: '', fb: null, tries: 0, steps: false, revealed: false }); }
+function promptHTML(q) {
+  if (q.dir === 'n2f') return `<div class="prompt">${esc(q.name)}</div>`;
+  return `<div class="prompt">${fHTML(q.pp, q.kind === 'bin')}${ST[q.f] && M5.set === 'slideN' ? `<span class="small" style="font-size:1.1rem"> ${ST[q.f]}</span>` : ''}</div>`;
+}
+function stepsFor(q) {
+  if (q.kind === 'bin') return q.dir === 'f2n' ? stepsF2N(q.pp) : stepsN2F(q.pp);
+  if (q.kind === 'pair') return [`${cap(q.name.split(' ')[0])} is one of the seven elements that come in pairs, so its gas is <b>${fText(q.pp)}</b>.`];
+  return [`This one has a common name you need to memorize: ${fHTML(q.pp, false)} is <b>${q.name}</b>.`];
+}
+function m5Check() {
+  const q = M5.qs[M5.i];
+  let r;
+  if (q.dir === 'n2f') r = checkFormula(M5.input, q.pp);
+  else if (q.kind === 'bin') {
+    r = checkName(M5.input, q.pp);
+    const alt = (q.alts || []).find(a => normName(M5.input) === a[0]);
+    if (!r.ok && alt) r = { ok: true, issues: [], note: alt[1] };
+  } else {
+    const s = normName(M5.input);
+    const alt = q.alts.find(a => s === a[0]);
+    r = s === q.name ? { ok: true, issues: [] } : alt ? { ok: true, issues: [], note: alt[1] } : { ok: false, issues: [s ? 'That’s not it. This compound has a common name. Check the list in Step 6.' : 'Type the name first.'] };
+  }
+  if (!M5.input.trim()) { M5.fb = BAD('', ...r.issues); return; }
+  M5.tries++;
+  if (r.ok) {
+    if (M5.res[M5.i] === undefined) M5.res[M5.i] = 'ok';
+    M5.fb = OK('Correct.', r.note || (q.dir === 'n2f' ? `<b>${esc(q.name)}</b> = ${fHTML(q.pp, q.kind === 'bin')}` : `${fHTML(q.pp, q.kind === 'bin')} = <b>${esc(q.name)}</b>`));
+    M5.revealed = true;
+  } else {
+    if (M5.res[M5.i] === undefined) M5.res[M5.i] = 'bad';
+    M5.fb = BAD('Not yet.', ...r.issues);
+  }
+}
+function m5Preview(v) {
+  if (M5.qs[M5.i] && M5.qs[M5.i].dir === 'n2f') {
+    const t = normF(v);
+    return t ? 'You typed: <span class="f">' + esc(t).replace(/(\d+)/g, (m, d, off, str) => off === 0 ? d : `<sub>${d}</sub>`) + '</span>' : 'Type numbers as normal digits. They will show as subscripts here.';
+  }
+  return '';
+}
+VIEWS.m5 = {
+  title: 'Practice',
+  html() {
+    if (!M5.set) {
+      return `
+      <div class="head"><div><div class="eyebrow">Step 5</div><h2>Practice</h2>
+        <p class="lede">Type your own answers. You get feedback on each mistake, and you can try again. Your score counts answers that were right the first time.</p></div></div>
+      <div class="cards">${Object.keys(SETS).map(k => `<button type="button" class="card" data-act="m5start" data-v="${k}"><h3>${SETS[k].title}</h3><span class="small">${SETS[k].n} questions${k.startsWith('slide') ? ', same as the class slides' : k === 'mixed' ? ', new every time' : ', from Step 6'}</span>${P.best[k] !== undefined ? `<span class="done">Best: ${P.best[k]}/${SETS[k].n}</span>` : ''}</button>`).join('')}</div>
+      <div style="margin-top:16px">${whyHTML(['states', 'caps', 'subscript'], 'Tips before you start')}</div>`;
+    }
+    if (M5.i >= M5.qs.length) {
+      const score = M5.res.filter(r => r === 'ok').length;
+      return `
+      <div class="head"><div><div class="eyebrow">${SETS[M5.set].title}</div><h2>Score: ${score} / ${M5.qs.length}</h2>
+        <p class="lede">${score === M5.qs.length ? 'Every answer right the first time.' : 'Look at the ones marked ✗ and try that set again.'}</p></div></div>
+      <div class="panel tbl-wrap"><table class="t"><thead><tr><th style="width:2.5em"><span class="sr">Result</span></th><th>Question</th><th>Answer</th></tr></thead><tbody>
+        ${M5.qs.map((q, i) => `<tr><td>${M5.res[i] === 'ok' ? '<span style="color:var(--good)">✓</span>' : '<span style="color:var(--bad)">✗</span>'}</td><td>${q.dir === 'n2f' ? esc(q.name) : fHTML(q.pp, false)}</td><td>${q.dir === 'n2f' ? fHTML(q.pp, false) : '<b>' + esc(q.name) + '</b>'}</td></tr>`).join('')}
+      </tbody></table></div>
+      <div class="row" style="margin-top:14px"><button type="button" class="btn primary" data-act="m5start" data-v="${M5.set}">Try this set again</button><button type="button" class="btn" data-act="m5menu">Choose another set</button></div>`;
+    }
+    const q = M5.qs[M5.i];
+    const ask = q.dir === 'n2f' ? 'Write the formula.' : 'Write the name.';
+    return `
+    <div class="head"><div><div class="eyebrow">${SETS[M5.set].title}</div><h2>Question ${M5.i + 1} of ${M5.qs.length}</h2></div>
+      <div class="qdots" aria-hidden="true">${M5.qs.map((_, i) => `<i class="${M5.res[i] || ''}${i === M5.i ? ' now' : ''}"></i>`).join('')}</div></div>
+    <div class="bench">
+      <div class="panel stack">
+        <p>${ask}</p>
+        ${promptHTML(q)}
+        <div class="ans"><label class="sr" for="m5in">${ask}</label>
+          <input id="m5in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(M5.input)}" data-act="m5type"${M5.revealed ? ' readonly' : ''} placeholder="${q.dir === 'n2f' ? 'e.g. N2O4' : 'e.g. dinitrogen tetroxide'}">
+          ${M5.revealed ? `<button type="button" class="btn primary" data-act="m5next" id="m5next">${M5.i + 1 < M5.qs.length ? 'Next question' : 'See my score'}</button>` : '<button type="button" class="btn primary" data-act="m5check">Check</button>'}</div>
+        <p class="preview small" id="m5prev">${m5Preview(M5.input)}</p>
+        ${fbHTML(M5.fb)}
+        ${!M5.revealed && P.settings.hints ? `<div class="row">${!M5.steps ? '<button type="button" class="btn small" data-act="m5steps">Show me the steps</button>' : ''}${M5.tries >= 2 ? '<button type="button" class="btn small" data-act="m5reveal">Show the answer</button>' : ''}</div>` : ''}
+        ${M5.steps || M5.revealed ? `<ol class="steplist">${stepsFor(q).map(x => `<li>${x}</li>`).join('')}</ol>` : ''}
+      </div>
+      <div class="stack">
+        ${q.kind === 'bin' ? whyHTML(q.pp[0][0] === 'H' ? ['hydrogen', 'ide'] : q.dir === 'f2n' ? ['prefixes', 'ide', 'mono', 'vowel'] : ['subscript', 'caps', 'noCross']) : whyHTML(q.kind === 'pair' ? ['diatomic'] : q.f === 'O3' ? ['common', 'ozone'] : ['common'])}
+        ${q.dir === 'f2n' && q.kind === 'bin' && q.pp[0][0] !== 'H' ? `<div class="panel">${atomsSVG(q.pp)}</div>` : ''}
+        <button type="button" class="btn small" data-act="m5menu" style="align-self:flex-start">Leave this set</button>
+      </div>
+    </div>`;
+  },
+  act(a, el) {
+    if (a === 'm5start') { m5Start(el.dataset.v); return true; }
+    if (a === 'm5menu') { M5.set = null; return true; }
+    if (a === 'm5check') { m5Check(); return true; }
+    if (a === 'm5steps') { M5.steps = true; if (M5.res[M5.i] === undefined) M5.res[M5.i] = 'bad'; return true; }
+    if (a === 'm5reveal') { M5.revealed = true; if (M5.res[M5.i] === undefined) M5.res[M5.i] = 'bad'; M5.fb = INFO('Answer', M5.qs[M5.i].dir === 'n2f' ? fHTML(M5.qs[M5.i].pp, false) : `<b>${esc(M5.qs[M5.i].name)}</b>`); return true; }
+    if (a === 'm5next') {
+      M5.i++; Object.assign(M5, { input: '', fb: null, tries: 0, steps: false, revealed: false });
+      if (M5.i >= M5.qs.length) { const sc = M5.res.filter(r => r === 'ok').length; if (P.best[M5.set] === undefined || sc > P.best[M5.set]) P.best[M5.set] = sc; P.done.m5 = (P.done.m5 || 0) + 1; save(); }
+      return true;
+    }
+  }
+};
+
+/* ============ M6: common names and pairs ============ */
+const M6 = { q: null, picked: null, streak: 0 };
+function m6New() {
+  const pool = COMMON.map(c => ({ f: c[0], name: c[1] })).concat(DIATOMIC.map(d => ({ f: d[0], name: d[1] + ' gas' })));
+  const it = pick(pool), dir = Math.random() < .5 ? 'n2f' : 'f2n';
+  const others = shuffle(pool.filter(p => p.f !== it.f)).slice(0, 3);
+  M6.q = { it, dir, opts: shuffle([it, ...others]) };
+  M6.picked = null;
+}
+VIEWS.m6 = {
+  title: 'Common names',
+  enter() { if (!M6.q) m6New(); },
+  html() {
+    const q = M6.q, done = M6.picked !== null;
+    const right = done && M6.picked === q.it.f;
+    return `
+    <div class="head"><div><div class="eyebrow">Step 6</div><h2>Common names and pairs</h2>
+      <p class="lede">These don’t follow the prefix rules. Memorize them.</p></div></div>
+    <div class="bench">
+      <div class="stack">
+        <div class="panel tbl-wrap"><table class="t"><thead><tr><th>Name</th><th>Formula</th><th>Note</th></tr></thead><tbody>
+          ${COMMON.map(([f, n, t]) => `<tr><td><b>${n}</b></td><td>${fHTML(f, false)}</td><td class="small">${t === 'ionic' ? 'ionic (has a metal), but know this name' : t === 'element' ? 'only oxygen: an element, not a compound' : 'molecular'}</td></tr>`).join('')}
+        </tbody></table></div>
+        <div class="panel stack">
+          <h3>Seven elements that come in pairs</h3>
+          <div class="els">${DIATOMIC.map(([f, n, st]) => `<div class="ebox non-metal"><div class="sym f">${f.replace(/2$/, '<sub>2</sub>')}</div><div class="nm">${n}</div><div class="small">${st}</div></div>`).join('')}</div>
+          <p class="small">To remember them, take the symbols H, O, F, Br, I, N, Cl and say “HOFBrINCl” (“hof-brinkle”) OR Honklebrif(HONClBrIF). When you see “oxygen gas” or “nitrogen gas”, write O₂ or N₂.</p>
+          ${whyHTML(['diatomic', 'common', 'ozone'])}
+        </div>
+      </div>
+      <div class="panel stack">
+        <div class="row" style="justify-content:space-between"><h3>Flash check</h3><span class="small tally">Streak: <b>${M6.streak}</b></span></div>
+        <p>${q.dir === 'n2f' ? 'Which formula is this?' : 'What is this called?'}</p>
+        <div class="prompt">${q.dir === 'n2f' ? esc(q.it.name) : fHTML(q.it.f, false)}</div>
+        <div class="choice-grid">${q.opts.map(o => `<button type="button" class="btn ${done && o.f === q.it.f ? 'right' : done && o.f === M6.picked ? 'wrong' : ''}" data-act="m6pick" data-v="${o.f}"${done ? ' disabled' : ''}>${q.dir === 'n2f' ? fHTML(o.f, false) : esc(o.name)}</button>`).join('')}</div>
+        ${done ? fbHTML(right ? OK('Correct.', `${fHTML(q.it.f, false)} is ${q.it.name}.`) : BAD('Not this one.', `${fHTML(q.it.f, false)} is <b>${q.it.name}</b>.`)) : ''}
+        ${done ? '<div class="row"><button type="button" class="btn primary" data-act="m6next" id="m6next">Next</button></div>' : ''}
+      </div>
+    </div>`;
+  },
+  act(a, el) {
+    if (a === 'm6pick' && M6.picked === null) { M6.picked = el.dataset.v; if (M6.picked === M6.q.it.f) { M6.streak++; bump('m6'); } else M6.streak = 0; return true; }
+    if (a === 'm6next') { m6New(); return true; }
+  }
+};
+
+/* ============ printable worksheet ============ */
+const PR = { kind: 'ws' };
+const PRINT = {
+  A: ['carbon disulfide', 'sulfur hexafluoride', 'dinitrogen trioxide', 'phosphorus pentachloride', 'silicon dioxide', 'tetraphosphorus decoxide', 'nitrogen trifluoride', 'boron trichloride', 'iodine heptafluoride', 'diphosphorus pentoxide', 'carbon tetrabromide', 'sulfur dichloride'],
+  B: ['SiCl4', 'BF3', 'ClF3', 'PBr3', 'S2Cl2', 'N2O4', 'CO', 'SeO2', 'HBr', 'OF2', 'IF5', 'NI3'],
+  C1: [['water', 'H2O'], ['ammonia', 'NH3'], ['methane', 'CH4'], ['chlorine gas', 'Cl2']],
+  C2: [['O3', 'ozone'], ['H2O2', 'hydrogen peroxide'], ['C6H12O6', 'glucose'], ['CaCO3', 'limestone']],
+  D: ['KCl', 'MgO', 'NF3', 'CaCl2', 'SO2', 'Na2O', 'CH4', 'PCl3']
+};
+const nameToF = n => BIN.concat(HYD).find(f => binName(parts(f)) === n);
+function sheetHTML(key) {
+  const K = (x) => key ? `<span class="k">${x}</span>` : '<span class="bl">&nbsp;</span>';
+  return `<div class="sheet">
+    <h2>Naming Molecular Compounds${key ? ': Answer Key' : ''}</h2>
+    <div class="meta"><span>Science 1206 · Unit 2 · Part 1</span><span>Name: ______________________</span></div>
+    <h3>A. Write the formula for each molecular compound.</h3>
+    <ol>${PRINT.A.map(n => `<li>${n} ${K(fHTML(nameToF(n), false))}</li>`).join('')}</ol>
+    <h3>B. Write the name of each compound.</h3>
+    <ol>${PRINT.B.map(f => `<li>${fHTML(f, false)} ${K(binName(parts(f)))}</li>`).join('')}</ol>
+    <h3>C. Common names. Write the formula (1–4) or the name (5–8).</h3>
+    <ol>${PRINT.C1.map(([n, f]) => `<li>${n} ${K(fHTML(f, false))}</li>`).join('')}${PRINT.C2.map(([f, n]) => `<li>${fHTML(f, false)} ${K(n)}</li>`).join('')}</ol>
+    <h3>D. Ionic or molecular? Write I or M.</h3>
+    <ol>${PRINT.D.map(f => `<li>${fHTML(f, false)} ${K(parts(f).some(p => isMetal(p[0])) ? 'I' : 'M')}</li>`).join('')}</ol>
+  </div>`;
+}
+
+VIEWS.print = {
+  title: 'Print',
+  html() {
+    return `
+    <div class="head noprint"><div><div class="eyebrow">Teacher</div><h2>Printable worksheet</h2>
+      <p class="lede">A paper version that matches this tool, with an answer key.</p></div>
+      ${inFrame ? '' : '<button type="button" class="btn primary" data-act="doprint">Print this sheet</button>'}</div>
+    ${inFrame ? '<p class="note-box noprint" style="margin-bottom:12px">Printing is blocked inside this viewer. Open the artifact link in its own browser tab, then come back to this screen and print.</p>' : ''}
+    <div class="chips noprint" style="margin-bottom:14px">
+      <button type="button" class="chip" data-act="prkind" data-v="ws" aria-pressed="${PR.kind === 'ws'}">Student sheet</button>
+      <button type="button" class="chip" data-act="prkind" data-v="key" aria-pressed="${PR.kind === 'key'}">Answer key</button></div>
+    ${sheetHTML(PR.kind === 'key')}`;
+  },
+  act(a, el) {
+    if (a === 'prkind') { PR.kind = el.dataset.v; return true; }
+    if (a === 'doprint') { try { window.print(); } catch (e) {} return false; }
+  }
+};
+
+/* ============ app shell ============ */
+let current = 'home', teacherOpen = false, confirmReset = false;
+function teacherHTML() {
+  const s = P.settings;
+  return `<div class="modal-back" data-act="tclose-back"><div class="modal" role="dialog" aria-modal="true" aria-label="Teacher settings">
+    <div class="row" style="justify-content:space-between"><h2>Teacher settings</h2><button type="button" class="btn small" data-act="tclose" id="tclose">Close</button></div>
+    <fieldset><legend>Class display</legend>
+      <label><input type="checkbox" data-act="set" data-v="projector"${s.projector ? ' checked' : ''}> Projector mode (bigger text, “Why?” panels open)</label>
+      <div><button type="button" class="btn small" data-act="open-print">Printable worksheet and answer key</button></div></fieldset>
+    <fieldset><legend>Help and marking</legend>
+      <label><input type="checkbox" data-act="set" data-v="hints"${s.hints ? ' checked' : ''}> Show “Show me the steps” in Practice</label>
+      <label><input type="checkbox" data-act="set" data-v="allowFullVowel"${s.allowFullVowel ? ' checked' : ''}> Accept names without the dropped vowel (tetraoxide for tetroxide)</label></fieldset>
+    <fieldset><legend>Sections students can see</legend>
+      ${ORDER.map(k => `<label><input type="checkbox" data-act="setmod" data-v="${k}"${s.mods[k] ? ' checked' : ''}> ${k.slice(1)}. ${VIEWS[k].title}</label>`).join('')}</fieldset>
+    <fieldset><legend>Progress</legend>
+      <p class="small">Progress is saved only in this browser, on this device.</p>
+      ${confirmReset ? '<div class="row"><button type="button" class="btn small" data-act="reset-yes">Yes, erase it</button><button type="button" class="btn small" data-act="reset-no">Cancel</button></div>' : '<div><button type="button" class="btn small" data-act="reset">Erase progress</button></div>'}</fieldset>
+  </div></div>`;
+}
+function go(view) {
+  if (!VIEWS[view]) view = 'home';
+  current = view;
+  if (VIEWS[view].enter) VIEWS[view].enter();
+  render();
+  try { history.replaceState(null, '', '#' + view); } catch (e) {}
+  try { window.scrollTo(0, 0); } catch (e) {}
+}
+function render(focusSel) {
+  document.documentElement.classList.toggle('projector', !!P.settings.projector);
+  $('#tabs').innerHTML = `<button type="button" class="tab" data-act="go" data-v="home"${current === 'home' ? ' aria-current="page"' : ''}>Home</button>` +
+    ORDER.filter(k => P.settings.mods[k]).map(k => `<button type="button" class="tab" data-act="go" data-v="${k}"${current === k ? ' aria-current="page"' : ''}><span class="n">${k.slice(1)}</span>${VIEWS[k].title}</button>`).join('');
+  $('#projBtn').setAttribute('aria-pressed', String(!!P.settings.projector));
+  $('#main').innerHTML = VIEWS[current].html();
+  $('#overlay').innerHTML = teacherOpen ? teacherHTML() : '';
+  if (focusSel) { const el = $(focusSel); if (el) try { el.focus({ preventScroll: true }); } catch (e) {} }
+}
+function dispatch(a, el) {
+  switch (a) {
+    case 'go': go(el.dataset.v); return;
+    case 'projector': P.settings.projector = !P.settings.projector; save(); render('#projBtn'); return;
+    case 'teacher': teacherOpen = true; confirmReset = false; render('#tclose'); return;
+    case 'tclose': teacherOpen = false; render(); return;
+    case 'tclose-back': return;
+    case 'open-print': teacherOpen = false; go('print'); return;
+    case 'reset': confirmReset = true; render(); return;
+    case 'reset-no': confirmReset = false; render(); return;
+    case 'reset-yes': P.done = clone(DEFAULTS.done); P.best = {}; save(); confirmReset = false; render(); return;
+  }
+  const v = VIEWS[current];
+  if (v && v.act && v.act(a, el)) {
+    // keep keyboard flow: after an answer, focus the next useful control
+    render();
+    const target = ['#m5next', '#m1next', '#m2next', '#m3new', '#m4new', '#m6next'].map(s => $(s)).find(Boolean)
+      || (current === 'm5' && $('#m5in') && !$('#m5in').readOnly ? $('#m5in') : null);
+    if (target) try { target.focus({ preventScroll: true }); } catch (e) {}
+  }
+}
+document.addEventListener('click', ev => {
+  if (ev.target.classList && ev.target.classList.contains('modal-back')) { teacherOpen = false; render(); return; }
+  const el = ev.target.closest('[data-act]');
+  if (!el || el.tagName === 'INPUT') return;
+  dispatch(el.dataset.act, el);
+});
+document.addEventListener('change', ev => {
+  const el = ev.target;
+  if (el.dataset.act === 'set') { P.settings[el.dataset.v] = el.checked; save(); render(); }
+  if (el.dataset.act === 'setmod') { P.settings.mods[el.dataset.v] = el.checked; save(); render(); }
+});
+document.addEventListener('input', ev => {
+  const el = ev.target;
+  if (el.dataset.act === 'm5type') { M5.input = el.value; const p = $('#m5prev'); if (p) p.innerHTML = m5Preview(el.value); }
+});
+document.addEventListener('keydown', ev => {
+  if (ev.key === 'Escape' && teacherOpen) { teacherOpen = false; render(); return; }
+  if (ev.key === 'Enter' && ev.target.id === 'm5in' && !M5.revealed) { ev.preventDefault(); M5.input = ev.target.value; m5Check(); render(); const b = $('#m5next') || $('#m5in'); if (b) b.focus(); }
+});
+const start = (location.hash || '').slice(1);
+go(VIEWS[start] ? start : 'home');
+})();
+
+</script>
+</body></html>

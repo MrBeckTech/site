@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thunderstorms and Tornadoes | Science 1206</title>
+<meta name="tw-titlecard" content="WEATHER · SIM 16|THUNDERSTORMS|AND TORNADOES.">
+<style>:root{
+  --bg:#f4f7fb; --card:#ffffff; --ink:#14202e; --ink2:#465569; --line:#d6dfea;
+  --brand:#1d5fbf; --brand2:#e4eefc; --cool:#2a78d6; --warm:#eb6834; --good:#137a3a; --bad:#b42318;
+  --radius:14px; --focus:#ffb000;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.app{max-width:1120px;margin:0 auto;padding:12px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 10px}
+.hd h1{font-size:1.45rem;line-height:1.2;margin:0}
+.pill{font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--brand2);color:#174a94;border-radius:99px;padding:3px 10px;white-space:nowrap}
+.lead{flex-basis:100%;margin:2px 0 0;color:var(--ink2)}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:12px;align-items:start}
+@media(max-width:1080px){.main{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px}
+.stagecard{padding:8px}
+.stage{position:relative}
+.stage canvas,.stage svg{display:block;width:100%;height:auto;border-radius:10px;background:#eaf3fb;touch-action:none;user-select:none;-webkit-user-select:none}
+.caption{margin:8px 4px 2px;font-size:.92rem;color:var(--ink2);min-height:1.3em}
+.caption b{color:var(--ink)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.tab{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-weight:650;padding:8px 14px;border-radius:10px;cursor:pointer;min-height:40px}
+.tab[aria-selected=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+.ctlcard{display:flex;flex-direction:column;gap:8px}
+.ctl-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ctl-head h2,.learn h2{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2);margin:0}
+.ctl-actions{display:flex;gap:6px}
+.ctl{margin:6px 0 10px}
+.ctl.off{opacity:.45}
+.ctl-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-weight:600;font-size:.94rem}
+.ctl-row output{font-variant-numeric:tabular-nums;color:var(--brand);font-weight:700;white-space:nowrap}
+.hint{font-size:.82rem;color:var(--ink2);margin-top:1px}
+input[type=range]{width:100%;height:30px;margin:2px 0 0;accent-color:var(--brand);cursor:pointer}
+.btn,.segbtn{appearance:none;font:inherit;font-weight:650;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 12px;min-height:40px;cursor:pointer}
+.btn:hover,.segbtn:hover,.tab:hover{border-color:#9db4d3}
+.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn.small{padding:5px 10px;min-height:34px;font-size:.88rem}
+.btn.wide{width:100%}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.segbtn{flex:1 1 auto;padding:7px 10px;font-size:.92rem}
+.segbtn[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+.chk{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.94rem;margin:6px 0;cursor:pointer;min-height:32px}
+.chk input{width:20px;height:20px;accent-color:var(--brand)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.ro{display:grid;grid-template-columns:1fr auto;gap:3px 10px;font-size:.93rem;background:#f3f7fc;border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-variant-numeric:tabular-nums}
+.ro .k{color:var(--ink2)} .ro .v{text-align:right}
+.callout{border-left:5px solid var(--brand);background:#eef4fd;border-radius:8px;padding:9px 12px;font-size:.94rem;margin:8px 0}
+.callout.warm{border-color:var(--warm);background:#fff3ec}
+.callout.good{border-color:var(--good);background:#eefaf1}
+.callout.bad{border-color:var(--bad);background:#fdf0ee}
+.callout b{display:block}
+.sub{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin:10px 0 2px}
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;margin-top:12px}
+.learn .card{padding:12px 14px}
+.learn ul{margin:8px 0 0;padding-left:1.15rem}
+.learn li{margin:5px 0}
+.learn dl{margin:8px 0 0}
+.learn dt{font-weight:700;margin-top:8px}
+.learn dd{margin:1px 0 0;color:var(--ink2);font-size:.94rem}
+.learn details{border:1px solid var(--line);border-radius:10px;margin:8px 0;background:#fbfcfe}
+.learn summary{cursor:pointer;padding:9px 12px;font-weight:600;list-style:none}
+.learn summary::-webkit-details-marker{display:none}
+.learn summary::before{content:"?";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;font-size:.8rem;margin-right:8px;font-weight:800}
+.learn details[open] summary::before{content:"✓";background:var(--good)}
+.learn .ans{margin:0;padding:2px 12px 12px 40px;color:var(--ink2);font-size:.95rem}
+.foot{margin:14px 4px 0;font-size:.82rem;color:var(--ink2)}
+[hidden]{display:none!important}
+@media(max-width:520px){.app{padding:8px 8px 20px}.hd h1{font-size:1.25rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin:8px 2px 2px;align-items:start}.info:empty{display:none}.info .callout{margin:0}.info .ro{margin:0}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body><div id="app" class="app"></div>
+<script>/* Shared helpers for the Science 1206 Weather Dynamics simulations. Self-contained: no external libraries. */
+(function(){
+'use strict';
+const NS='http://www.w3.org/2000/svg', G=window;
+G.TAU=Math.PI*2;
+G.clamp=(v,a,b)=>v<a?a:v>b?b:v;
+G.lerp=(a,b,t)=>a+(b-a)*t;
+G.rand=(a,b)=>a+Math.random()*(b-a);
+G.$=(s,r)=>(r||document).querySelector(s);
+G.smooth=(t)=>{t=clamp(t,0,1);return t*t*(3-2*t);};
+
+function setAttrs(e,a){
+  for(const k in a){const v=a[k]; if(v==null||v===false)continue;
+    if(k==='class')e.setAttribute('class',v);
+    else if(k==='style'&&typeof v==='object')Object.assign(e.style,v);
+    else if(k==='html')e.innerHTML=v;
+    else if(k.slice(0,2)==='on'&&typeof v==='function')e.addEventListener(k.slice(2),v);
+    else e.setAttribute(k,v===true?'':v);}
+}
+function addKids(e,kids){for(const k of kids.flat(Infinity)){if(k==null||k===false)continue;e.append(k.nodeType?k:document.createTextNode(k));}}
+G.h=(t,a,...k)=>{const e=document.createElement(t);if(a)setAttrs(e,a);addKids(e,k);return e;};
+G.s=(t,a,...k)=>{const e=document.createElementNS(NS,t);if(a)setAttrs(e,a);addKids(e,k);return e;};
+
+/* colour: cold blue -> pale -> warm orange -> hot red (never the only cue: sims also label) */
+const STOPS=[[42,120,214],[160,200,236],[246,240,222],[245,170,92],[212,58,38]];
+G.heatRGB=(t)=>{t=clamp(t,0,1);const p=t*(STOPS.length-1),i=Math.min(STOPS.length-2,Math.floor(p)),f=p-i,a=STOPS[i],b=STOPS[i+1];
+  return [Math.round(lerp(a[0],b[0],f)),Math.round(lerp(a[1],b[1],f)),Math.round(lerp(a[2],b[2],f))];};
+G.heat=(t,al)=>{const c=heatRGB(t);return al==null?`rgb(${c})`:`rgba(${c},${al})`;};
+
+/* canvas drawing helpers */
+const FONT='system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans","Noto Sans Symbols 2","DejaVu Sans","Segoe UI Symbol",sans-serif';
+G.txt=(g,str,x,y,o)=>{o=o||{};const size=o.size||16,lines=String(str).split('\n');
+  g.font=`${o.weight||600} ${size}px ${FONT}`;g.textAlign=o.align||'left';g.textBaseline=o.base||'alphabetic';g.lineJoin='round';
+  lines.forEach((ln,i)=>{const yy=y+i*size*1.2;
+    if(o.halo!==false){g.lineWidth=o.haloW||4;g.strokeStyle=o.haloColor||'rgba(255,255,255,.88)';g.strokeText(ln,x,yy);}
+    g.fillStyle=o.color||'#14202e';g.fillText(ln,x,yy);});};
+G.rr=(g,x,y,w,hh,r)=>{g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+hh,r);g.arcTo(x+w,y+hh,x,y+hh,r);g.arcTo(x,y+hh,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();};
+G.arrow=(g,x0,y0,x1,y1,o)=>{o=o||{};const c=o.color||'#14202e',w=o.w||3,hd=o.head||w*3.4,a=Math.atan2(y1-y0,x1-x0);
+  g.save();g.strokeStyle=c;g.fillStyle=c;g.lineWidth=w;g.lineCap='round';g.globalAlpha=o.alpha==null?1:o.alpha;
+  g.beginPath();g.moveTo(x0,y0);g.lineTo(x1-Math.cos(a)*hd*.6,y1-Math.sin(a)*hd*.6);g.stroke();
+  g.beginPath();g.moveTo(x1,y1);g.lineTo(x1-Math.cos(a-.42)*hd,y1-Math.sin(a-.42)*hd);g.lineTo(x1-Math.cos(a+.42)*hd,y1-Math.sin(a+.42)*hd);g.closePath();g.fill();g.restore();};
+G.wavy=(g,x0,y0,x1,y1,o)=>{o=o||{};const amp=o.amp||5,wl=o.wl||16,n=Math.max(2,Math.hypot(x1-x0,y1-y0)/3|0),a=Math.atan2(y1-y0,x1-x0),L=Math.hypot(x1-x0,y1-y0);
+  g.save();g.strokeStyle=o.color||'#d43a26';g.lineWidth=o.w||2.5;g.lineCap='round';g.globalAlpha=o.alpha==null?1:o.alpha;g.beginPath();
+  for(let i=0;i<=n;i++){const d=i/n*L,off=Math.sin(d/wl*TAU+(o.phase||0))*amp,x=x0+Math.cos(a)*d-Math.sin(a)*off,y=y0+Math.sin(a)*d+Math.cos(a)*off;i?g.lineTo(x,y):g.moveTo(x,y);}
+  g.stroke();g.restore();};
+G.cloud=(g,x,y,sc,color)=>{g.save();g.translate(x,y);g.scale(sc,sc);g.fillStyle=color||'#fff';g.beginPath();
+  g.arc(0,0,22,0,TAU);g.arc(26,-10,28,0,TAU);g.arc(56,0,24,0,TAU);g.arc(28,10,26,0,TAU);g.fill();g.restore();};
+
+/* polyline path follower: PolyPath(pts).at(distance) -> [x,y,segmentIndex], wraps around */
+G.PolyPath=(pts)=>{const cum=[0];for(let i=1;i<pts.length;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));const len=cum[cum.length-1];
+  return{len,at(d,wrap){d=wrap===false?clamp(d,0,len):((d%len)+len)%len;let i=1;while(i<cum.length-1&&cum[i]<d)i++;const a=pts[i-1],b=pts[i],sg=(cum[i]-cum[i-1])||1,u=(d-cum[i-1])/sg;return[a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u,i];}};};
+
+/* ---------- controls ---------- */
+G.Slider=(o)=>{const id='s'+Math.random().toString(36).slice(2,8),fmt=o.fmt||(v=>v);
+  const out=h('output',{for:id}),inp=h('input',{type:'range',id,min:o.min,max:o.max,step:o.step||1,value:o.value});
+  const upd=()=>{out.textContent=fmt(+inp.value)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();o.onInput&&o.onInput(+inp.value);});upd();
+  const el=h('div',{class:'ctl'},h('div',{class:'ctl-row'},h('label',{for:id},o.label),out),inp,o.hint?h('div',{class:'hint'},o.hint):null);
+  el.set=(v,silent)=>{inp.value=v;upd();if(!silent&&o.onInput)o.onInput(+inp.value);};
+  el.get=()=>+inp.value;el.enable=(b)=>{inp.disabled=!b;el.classList.toggle('off',!b);};return el;};
+G.Seg=(o)=>{const btns={};let cur=o.value;const wrap=h('div',{class:'seg',role:'group','aria-label':o.label||''});
+  const set=(id,silent)=>{cur=id;for(const k in btns)btns[k].setAttribute('aria-pressed',String(k===String(id)));if(!silent&&o.onChange)o.onChange(id);};
+  for(const [id,label] of o.options){btns[id]=h('button',{type:'button',class:'segbtn','aria-pressed':String(String(id)===String(cur)),onclick:()=>set(id)},label);wrap.append(btns[id]);}
+  const el=h('div',{class:'ctl'},o.label?h('div',{class:'ctl-row'},h('span',null,o.label)):null,wrap);
+  el.set=set;el.get=()=>cur;return el;};
+G.Btn=(label,onClick,cls)=>h('button',{type:'button',class:'btn '+(cls||''),onclick:onClick},label);
+G.Check=(o)=>{const inp=h('input',{type:'checkbox'});inp.checked=!!o.value;inp.addEventListener('change',()=>o.onChange&&o.onChange(inp.checked));
+  const el=h('label',{class:'chk'},inp,o.label);el.set=(v,silent)=>{inp.checked=v;if(!silent&&o.onChange)o.onChange(v);};el.get=()=>inp.checked;return el;};
+G.Readout=(rows)=>{const el=h('div',{class:'ro'}),v={};
+  for(const [k,l,init] of rows){el.append(h('span',{class:'k'},l));v[k]=h('b',{class:'v'},init==null?'–':init);el.append(v[k]);}
+  el.set=(k,val)=>{val=String(val);if(v[k].textContent!==val)v[k].textContent=val;};return el;};
+G.Callout=(cls)=>{const el=h('div',{class:'callout '+(cls||''),'aria-live':'polite'});el.say=(title,body,c)=>{el.className='callout '+(c||cls||'');el.innerHTML=(title?'<b>'+title+'</b>':'')+(body||'');};return el;};
+
+G.dragger=(el,posfn,o)=>{let on=false;
+  el.addEventListener('pointerdown',e=>{const p=posfn(e);if(o.down&&o.down(p,e)===false)return;on=true;try{el.setPointerCapture(e.pointerId);}catch(_){}e.preventDefault();});
+  el.addEventListener('pointermove',e=>{const p=posfn(e);if(on){o.move&&o.move(p,e);}else if(o.hover)o.hover(p,e);});
+  const end=e=>{if(on){on=false;o.up&&o.up(posfn(e),e);}};
+  el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);};
+
+/* ---------- the page scaffold ---------- */
+G.Sim=(cfg)=>{
+  document.title=cfg.title+' | Science 1206 Weather Dynamics';
+  const app=$('#app'),state={paused:matchMedia('(prefers-reduced-motion: reduce)').matches};
+  const stageBox=h('div',{class:'stage'}),info=h('div',{class:'info'}),caption=h('p',{class:'caption','aria-live':'polite'});
+  const tabBar=h('div',{class:'tabs',role:'tablist'}),ctlBody=h('div',{class:'ctlbody'});
+  const panels=[];let curTab=cfg.tabs?cfg.tabs[0][0]:null;
+  const ctx={stageBox,info,controls:ctlBody,state,get tab(){return curTab;},onTab:null,onReset:null,
+    setCaption(t){caption.innerHTML=t;},
+    panel(ids){const d=h('div',{class:'panel'});d._ids=ids==null||ids==='*'?null:[].concat(ids);panels.push(d);ctlBody.append(d);d.hidden=!!d._ids&&!d._ids.includes(curTab);return d;},
+    canvas(W,H){const cv=h('canvas',{role:'img','aria-label':cfg.alt||cfg.title});const g=cv.getContext('2d');cv.style.aspectRatio=W+' / '+H;stageBox.append(cv);
+      const C={cv,g,W,H,k:1,begin(){g.setTransform(C.k,0,0,C.k,0,0);g.clearRect(0,0,W,H);},
+        pos(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height};}};
+      const fit=()=>{const w=stageBox.clientWidth||W,dpr=Math.min(window.devicePixelRatio||1,2);cv.width=Math.round(w*dpr);cv.height=Math.round(w*H/W*dpr);C.k=cv.width/W;};
+      new ResizeObserver(fit).observe(stageBox);fit();return C;},
+    svg(W,H){const el=s('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':cfg.alt||cfg.title});stageBox.append(el);
+      el.pos=(e)=>{const r=el.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height};};return el;},
+    loop(fn){let last=performance.now();const tick=(now)=>{const dt=Math.min(.05,(now-last)/1000);last=now;
+      try{fn(state.paused?0:dt,now/1000);}catch(err){console.error(err);}requestAnimationFrame(tick);};requestAnimationFrame(tick);}
+  };
+  const playBtn=h('button',{type:'button',class:'btn small',onclick:()=>{state.paused=!state.paused;syncPlay();}});
+  const syncPlay=()=>{playBtn.textContent=state.paused?'Play':'Pause';};syncPlay();
+  const resetBtn=h('button',{type:'button',class:'btn small',onclick:()=>ctx.onReset&&ctx.onReset()},'↺ Reset');
+  const ctlCard=h('aside',{class:'card ctlcard','aria-label':'Controls'},
+    h('div',{class:'ctl-head'},h('h2',null,'Controls'),h('div',{class:'ctl-actions'},cfg.static?null:playBtn,resetBtn)),ctlBody);
+  if(cfg.tabs){cfg.tabs.forEach(([id,label])=>{const b=h('button',{type:'button',class:'tab',role:'tab','aria-selected':String(id===curTab),onclick:()=>{
+      curTab=id;[...tabBar.children].forEach(x=>x.setAttribute('aria-selected',String(x===b)));
+      panels.forEach(p=>{p.hidden=!!p._ids&&!p._ids.includes(curTab);});ctx.onTab&&ctx.onTab(id);}},label);b._id=id;tabBar.append(b);});}
+  const card=(t,...k)=>h('div',{class:'card'},h('h2',null,t),...k);
+  const learn=h('section',{class:'learn'},
+    card('What to notice',h('ul',null,(cfg.notice||[]).map(n=>h('li',{html:n})))),
+    card('Key terms',h('dl',null,(cfg.terms||[]).map(([t,d])=>[h('dt',null,t),h('dd',{html:d})]))),
+    card('Check your understanding',(cfg.questions||[]).map(([q,a])=>h('details',null,h('summary',{html:q}),h('p',{class:'ans',html:a})))));
+  app.append(
+    h('header',{class:'hd'},h('span',{class:'pill'},cfg.tag),h('h1',null,cfg.title),h('p',{class:'lead'},cfg.lead)),
+    h('main',{class:'main'},h('section',{class:'card stagecard'},cfg.tabs?tabBar:null,stageBox,caption,info),ctlCard),
+    learn,
+    h('p',{class:'foot'},cfg.source+' Simplified models for learning: real weather is messier. Numbers marked “about” are estimates.'));
+  cfg.init(ctx);
+  if(!ctx.onReset)resetBtn.hidden=true;
+  if(state.paused)ctx.setCaption((cfg.paused||'')+' <i>Animation is paused because your device prefers reduced motion. Press Play to start it.</i>');
+  return ctx;
+};
+})();
+
+Sim({
+  title:'Thunderstorms and Tornadoes',
+  tag:'Section 1.2 · Extreme Weather',
+  lead:'Watch a thunderstorm grow, mature and die. Find out why some air keeps rising, how lightning and thunder are linked, and how wind shear can twist a storm into a tornado.',
+  source:'Based on Science 1206, Chapter 1, p. 34 (thunderstorms and tornadoes, Figure 1.21). Values are typical and simplified. Real tornado strength depends on many factors besides wind shear.',
+  alt:'Four views: the three life-cycle stages of a thunderstorm, a temperature graph showing why air rises, a lightning and thunder distance tool, and a diagram of how wind shear forms a tornado.',
+  tabs:[['life','Thunderstorm life cycle'],['lift','Why air keeps rising'],['light','Lightning and thunder'],['tor','How a tornado forms']],
+  notice:[
+    '<b>Three stages.</b> <i>Cumulus:</i> warm, moist air rises. <i>Mature:</i> updraft and downdraft together, with the worst lightning, hail and rain. <i>Dissipating:</i> the downdraft cuts off the warm air.',
+    '<b>Why air rises.</b> A rising parcel cools. If it stays warmer than the air around it, it keeps going. Raise the ground temperature or the <b>instability</b> for a taller storm.',
+    '<b>What sets one off.</b> Unstable air lifted by an advancing cold front (less often a warm front), by a mountain slope, or by strong heating inside a cold air mass.',
+    '<b>Lightning</b> is a giant electric spark. Count the seconds between flash and thunder and divide by 3 for the distance in kilometres.',
+    '<b>Tornado.</b> Wind shear makes a horizontal spinning tube of air; the updraft tilts it upright and a funnel can reach the ground. Surface winds can hit <b>400 km/h</b>.',
+    'Tornadoes are <b>rare</b> here. The cold ocean cools the air near the ground, so we get fewer thunderstorms than central Canada.'],
+  terms:[
+    ['Cumulonimbus','A tall thundercloud that can reach the top of the troposphere. It often has a flat anvil top.'],
+    ['Updraft and downdraft','Rising and sinking columns of air inside a storm.'],
+    ['Unstable air','Air that keeps rising once it starts, because it stays warmer than its surroundings.'],
+    ['Wind shear','A change in wind speed or direction with height.'],
+    ['Enhanced Fujita (EF) scale','A scale from EF0 to EF5 that rates tornadoes by the damage they cause and the wind speeds that damage implies.']],
+  questions:[
+    ['During which stage of a thunderstorm are heavy rain and lightning strongest?','The mature stage, when the updraft and downdraft are both active.'],
+    ['You see a flash of lightning and count 9 seconds before you hear thunder. About how far away is the strike?','About 3 km (9 s ÷ 3 s/km).'],
+    ['What kinds of atmospheric conditions often result in thunderstorms?','Unstable air, where warm moist air keeps rising. Moist air rising quickly up a mountain or inside a cold air mass can produce intense thunderstorms, and so can an advancing cold front (or, less often, an advancing warm front).'],
+    ['What is wind shear and why does it matter for tornadoes?','Wind shear is a change in wind speed or direction with height. It creates a horizontal spinning tube of air that an updraft can tilt upright, forming a rotating column in the storm.']],
+  init(ctx){
+    const C=ctx.canvas(800,430),g=C.g;
+    const tt=12;   /* top of the troposphere, km (textbook p. 12) */
+    const G=392,S=smooth;
+    let clock=0,life=.18,lift={T:28,Td:19,L:7.5},light={d:5},dist=null,tor={s:0,shear:.5},play={life:true,tor:false};
+    const mk=(rows)=>Readout(rows);
+    const roLife=mk([['a','Stage'],['b','Updraft'],['c','Downdraft'],['d','Precipitation'],['e','Lightning']]);
+    const roLift=mk([['a','Cloud base'],['b','Cloud top'],['c','Air stability'],['d','Storm strength'],['e','Fastest updraft']]);
+    const roLight=mk([['a','Storm distance'],['b','Flash to thunder'],['c','Rule of thumb']]);
+    const roTor=mk([['a','Stage'],['b','Wind shear'],['c','Estimated wind speed'],['d','EF rating']]);
+    const note=Callout();
+    ctx.info.append(roLife,roLift,roLight,roTor,note);
+    const rosByTab={life:roLife,lift:roLift,light:roLight,tor:roTor};
+    /* controls */
+    const sLife=Slider({label:'Storm stage',min:0,max:1,step:.005,value:.18,fmt:v=>v<.33?'1 · Cumulus':v<.66?'2 · Mature':'3 · Dissipating',onInput:v=>{life=v;play.life=false;}});
+    const bLife=Btn('▶ Play the life cycle',()=>{life=0;play.life=true;},'wide');
+    ctx.panel(['life']).append(sLife,bLife);
+    const sT=Slider({label:'Ground temperature',min:10,max:38,step:1,value:28,fmt:v=>v,unit:' °C',onInput:v=>{lift.T=v;if(lift.Td>v)lift.Td=v;sD.set(Math.min(lift.Td,v),true);}});
+    const sD=Slider({label:'Dew point (moisture)',min:0,max:26,step:1,value:19,fmt:v=>v,unit:' °C',onInput:v=>{lift.Td=Math.min(v,lift.T);},hint:'Higher dew point = more moisture'});
+    const sL=Slider({label:'Air stability',min:4,max:9,step:.1,value:7.5,fmt:v=>v<5.5?'Very stable':v<6.5?'Stable':v<8?'Unstable':'Very unstable',onInput:v=>{lift.L=v;},hint:'How quickly the surrounding air cools with height'});
+    ctx.panel(['lift']).append(sT,sD,sL);
+    const sDist=Slider({label:'Distance to the storm',min:.5,max:15,step:.5,value:5,fmt:v=>v.toFixed(1),unit:' km',onInput:v=>{light.d=v;dist=null;}});
+    const bFl=Btn('Lightning strike!',()=>{dist={t:0,d:light.d,seed:Math.random()*1000};},'primary wide');
+    ctx.panel(['light']).append(sDist,bFl,h('p',{class:'hint'},'The waves you see spreading are sound travelling (shown 6 times faster than real time).'));
+    const sShear=Slider({label:'Wind shear',min:.1,max:1,step:.05,value:.35,fmt:v=>v<.35?'Weak':v<.7?'Moderate':'Strong',onInput:v=>{tor.shear=v;}});
+    const sStage=Slider({label:'Stage',min:0,max:1,step:.005,value:0,fmt:v=>v<.3?'A · Spinning tube':v<.6?'B · Tilting':v<.8?'C · Rotating storm':'D · Funnel',onInput:v=>{tor.s=v;play.tor=false;}});
+    const bTor=Btn('▶ Play the formation',()=>{tor.s=0;play.tor=true;},'wide');
+    ctx.panel(['tor']).append(sStage,sShear,bTor);
+    const tabs=['life','lift','light','tor'];
+    function showRo(){for(const k in rosByTab)rosByTab[k].hidden=ctx.tab!==k;}
+    const CAP={life:'<b>Thunderstorm life cycle.</b> Press play or drag the stage slider. The arrows show air moving up (red) and down (blue).',lift:'<b>Air parcel graph.</b> The orange line is a rising parcel of air. The blue line is the temperature of the surrounding air. Where orange is to the right of blue, the parcel is warmer and keeps rising.',light:'<b>Count the seconds.</b> Set the distance, press the button, and see how long the thunder takes.',tor:'<b>How a tornado forms.</b> Stage A to D. Wind shear spins a horizontal tube, the updraft tilts it, and a funnel descends.'};
+    ctx.onTab=(id)=>{showRo();ctx.setCaption(CAP[id]);noteKey='';};
+    ctx.setCaption(CAP.life);showRo();
+    let noteKey='';const say=(key,t,b,c)=>{if(key!==noteKey){noteKey=key;note.say(t,b,c);}};
+    ctx.onReset=()=>{life=.18;sLife.set(.18,true);play.life=true;lift={T:28,Td:19,L:7.5};sT.set(28,true);sD.set(19,true);sL.set(7.5,true);light.d=5;sDist.set(5,true);dist=null;tor={s:0,shear:.5};sStage.set(0,true);sShear.set(.5,true);play.tor=false;noteKey='';};
+    /* ---- shared drawing ---- */
+    const hash=(i)=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x);};
+    const puff=(x,y,r,f)=>{const c=Math.round(lerp(120,248,f));g.fillStyle='rgb('+c+','+Math.round(c+4)+','+Math.round(Math.min(255,c+10))+')';g.beginPath();g.arc(x,y,r,0,TAU);g.fill();};
+    function stormCloud(cx,base,top,w,anv,dark){
+      const n=Math.max(8,Math.round((base-top)/6));
+      for(let i=0;i<n;i++){const f=i/(n-1),y=lerp(base-14,top+18,f),wr=w*(1-.25*Math.pow(f,1.5))+ (f>.85?(f-.85)*w*1.4:0);
+        for(let k=0;k<4;k++){const hh=hash(i*4+k),x=cx+(hh-.5)*wr*1.1+Math.sin(clock*.8+i+k)*2,r=lerp(24,34,hash(i+k*7))*(1-.2*f);puff(x,y+(hash(k+i*3)-.5)*12,r,clamp(f*1.05+.05-dark*(1-f)*.3,0,1));}}
+      if(anv>0.02){const ay=top+8,aw=lerp(20,190,anv);g.save();g.globalAlpha=Math.min(1,anv*1.2);for(let i=0;i<18;i++){const x=cx+lerp(-aw*.6,aw,i/17),r=14+hash(i)*8;puff(x,ay+hash(i+5)*6,r,.93);}g.restore();}
+    }
+    function bolt(x0,y0,x1,y1,seed,w){let x=x0,y=y0;const pts=[[x,y]];const n=12;for(let i=1;i<=n;i++){const t=i/n;x=lerp(x0,x1,t)+(hash(seed+i)-.5)*34*(1-t*.3);y=lerp(y0,y1,t);pts.push([x,y]);}
+      g.lineJoin='round';g.lineCap='round';const draw=(pp,lw,col)=>{g.beginPath();pp.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.lineWidth=lw;g.strokeStyle=col;g.stroke();};
+      draw(pts,(w||3)+6,'rgba(255,230,120,.45)');draw(pts,w||3,'#fff');
+      const b=pts[5],br=[[b[0],b[1]],[b[0]+28,b[1]+30],[b[0]+22,b[1]+64]];draw(br,(w||3)*.6+3,'rgba(255,230,120,.35)');draw(br,(w||3)*.6,'#fff');return pts;}
+    const ground=()=>{g.fillStyle='#6f9a4c';g.fillRect(0,G,800,40);g.fillStyle='#5a8040';g.fillRect(0,G,800,5);};
+    const skyBg=(dark)=>{const sk=g.createLinearGradient(0,0,0,G);const a=Math.round(lerp(210,110,dark)),b=Math.round(lerp(232,128,dark)),c=Math.round(lerp(248,150,dark));sk.addColorStop(0,'rgb('+(a-20)+','+(b-10)+','+c+')');sk.addColorStop(1,'rgb('+a+','+b+','+c+')');g.fillStyle=sk;g.fillRect(0,0,800,G+4);};
+    /* rain particles */
+    const rain=Array.from({length:220},(_,i)=>({u:hash(i),f:hash(i+50)}));
+    const drawRain=(x0,x1,top,dt,str)=>{g.strokeStyle='rgba(28,88,184,.8)';g.lineWidth=1.6;g.lineCap='round';const n=Math.round(rain.length*str);for(let i=0;i<n;i++){const r=rain[i];if(dt>0)r.f=(r.f+dt*1.4)%1;const x=lerp(x0,x1,r.u),y=top+r.f*(G-top);g.beginPath();g.moveTo(x,y);g.lineTo(x-3,Math.min(G,y+12));g.stroke();}};
+    /* ============ TAB 1: life cycle ============ */
+    let flash=0,nextF=1.5,flashSeed=1,flashX=400;
+    function drawLife(dt){
+      if(play.life&&dt>0){life+=dt/16;if(life>1.08)life=0;life=Math.min(life,1);sLife.set(life,true);}
+      const t=life,st=t<.33?1:t<.66?2:3;
+      const up=t<.33?S(t/.12):1-S((t-.55)/.18),down=S((t-.33)/.07)*(1-S((t-.9)/.1));
+      const topKm=t<.33?lerp(2.4,7,t/.33):t<.66?lerp(7,11.5,(t-.33)/.33):11.5;
+      const kmPx=27,base=G-1.6*kmPx,top=Math.max(60,G-topKm*kmPx-1);
+      const anv=clamp((t-.36)/.25,0,1)*(t>.85?1-.3*S((t-.85)/.15):1);
+      skyBg(down*.6);
+      ground();
+      const cx=400,w=lerp(58,95,S(t/.5));
+      stormCloud(cx,base,top,w,anv,down);
+      /* rain */
+      const rs=down*(t>.8?lerp(1,.45,(t-.8)/.2):1);
+      if(rs>.05)drawRain(cx-70-30*rs,cx+70+30*rs,base+8,dt,rs);
+      /* lightning */
+      if(dt>0){if(st===2){nextF-=dt;if(nextF<0){nextF=rand(.8,2.4);flash=.22;flashSeed=Math.random()*999;flashX=cx+rand(-50,50);}}flash=Math.max(0,flash-dt);}
+      if(st!==2)flash=0;
+      if(flash>0){g.fillStyle='rgba(255,255,240,'+flash*.9+')';g.fillRect(0,0,800,G);bolt(flashX,base+10,flashX+rand(-8,8)*0+hash(flashSeed)*30-15,G,flashSeed,3.5);}
+      /* updraft arrows */
+      g.globalAlpha=up;for(let i=0;i<3;i++){const x=cx-20+i*28,off=((clock*60+i*40)%80);arrow(g,x,G-6-off*.2,x,G-50-(base-top)*.55*S(t/.5)-off*.0,{color:'#d02f10',w:5,head:15});}g.globalAlpha=1;
+      if(up>.05){txt(g,'Updraft',cx+62,G-70,{size:13,color:'#a01f06',weight:800});}
+      /* downdraft */
+      if(down>.05){g.globalAlpha=down;for(let i=0;i<2;i++){const x=cx-70+i*140;arrow(g,x,base+6,x,G-26,{color:'#1a56b0',w:5,head:15});}g.globalAlpha=1;txt(g,'Downdraft',cx-160,base+70,{size:13,color:'#0f3f96',weight:800});
+        g.globalAlpha=down;arrow(g,cx-90,G-8,cx-240,G-8,{color:'#1a56b0',w:4,head:12});arrow(g,cx+90,G-8,cx+240,G-8,{color:'#1a56b0',w:4,head:12});g.globalAlpha=1;txt(g,'Cold gust of wind',cx+250,G-14,{size:12,color:'#0f3f96',weight:700});}
+      /* warm air rising at the ground in stage 1 */
+      if(st===1){g.globalAlpha=1;for(let i=0;i<5;i++){const x=cx-150+i*75,ph=(clock*.6+i*.3)%1;wavy(g,x,G-4,x,G-4-46,{color:'rgba(230,110,30,.8)',w:3,amp:4,wl:12,phase:clock*4}) ;}
+        txt(g,'Sun heats the ground',cx-200,G+24,{size:12,color:'#fff',weight:700,haloColor:'rgba(0,0,0,.35)'});}
+      /* labels */
+      const names=['1 · Cumulus stage','2 · Mature stage','3 · Dissipating stage'],desc=['Warm, moist air rises. Only updrafts.','Updrafts and downdrafts. Heavy rain, hail, lightning.','Downdraft takes over. The storm fades.'];
+      txt(g,names[st-1],20,30,{size:20,color:'#14202e',weight:800,halo:false});txt(g,desc[st-1],20,52,{size:14,color:'#34465c',weight:500,halo:false});
+      /* height scale */
+      for(const km of [0,4,8,12]){const y=G-km*kmPx;g.strokeStyle='rgba(30,50,80,.25)';g.lineWidth=1;g.setLineDash([3,5]);g.beginPath();g.moveTo(696,y);g.lineTo(800,y);g.stroke();g.setLineDash([]);txt(g,km+' km',796,y-3,{size:10,align:'right',color:'#465569',weight:600,halo:false});}
+      if(anv>.4)txt(g,'Anvil top',cx+140*anv+30,top-6,{size:12,color:'#465569',weight:800});
+      /* progress dots */
+      [.17,.5,.83].forEach((p,i)=>{g.fillStyle=st===i+1?'#1d5fbf':'#c5d2e2';g.beginPath();g.arc(20+i*22,80,7,0,TAU);g.fill();});
+      roLife.set('a',['Cumulus','Mature','Dissipating'][st-1]);roLife.set('b',up>.7?'Strong':up>.1?'Building':'None');roLife.set('c',down>.7?'Strong':down>.1?'Starting':'None');
+      roLife.set('d',rs>.6?'Heavy rain, maybe hail':rs>.05?'Light rain':'None');roLife.set('e',st===2?'Yes: frequent':'No');
+      say('life'+st,names[st-1].slice(4),st===1?'Sunlight heats the ground. Warm, moist air rises and water vapour condenses into a growing cumulus cloud. Only updrafts are present.':st===2?'The cloud reaches the top of the troposphere and spreads into an anvil. Falling rain drags cold air down, so there is a downdraft beside the updraft. Lightning, hail and gusty winds are strongest now.':'The downdraft spreads across the ground and cuts off the supply of warm, moist air. Without an updraft, the cloud thins out and the rain weakens.',st===2?'bad':'');
+    }
+    /* ============ TAB 2: lift graph ============ */
+    function calc(){
+      const {T,Td,L}=lift,lcl=Math.max(.05,.125*(T-Td));
+      const env=z=>T-L*Math.min(z,tt)+(z>tt?4*(z-tt):0),par=z=>z<=lcl?T-9.8*z:T-9.8*lcl-6*(z-lcl);
+      let lfc=null,el=null,cape=0;const dz=.05;
+      for(let z=0;z<16;z+=dz){const d=par(z)-env(z);
+        if(lfc===null&&z>=lcl&&d>0)lfc=z;
+        if(lfc!==null&&el===null){if(d<=0&&z>lfc+.1)el=z;else cape+=9.81*(d/(env(z)+273.15))*dz*1000;}}
+      if(lfc!==null&&el===null)el=16;
+      return{lcl,lfc,el,cape,env,par,w:Math.round(.5*Math.sqrt(2*Math.max(0,cape))*3.6)};
+    }
+    const GX0=440,GX1=770,GY0=42,GY1=380,ZMAX=14,TMIN=-70,TMAX=40;
+    const gx=T=>GX0+(T-TMIN)/(TMAX-TMIN)*(GX1-GX0),gy=z=>GY1-z/ZMAX*(GY1-GY0);
+    let parc=0;
+    function drawLift(dt){
+      const R=calc();parc=(parc+dt*1.6);
+      g.fillStyle='#f4f8fc';g.fillRect(0,0,800,430);
+      /* left: sky column */
+      const sk=g.createLinearGradient(0,GY0,0,GY1);sk.addColorStop(0,'#cfdaf1');sk.addColorStop(1,'#eaf4fb');g.fillStyle=sk;g.fillRect(20,GY0,380,GY1-GY0);
+      g.fillStyle='#6f9a4c';g.fillRect(20,GY1,380,16);
+      g.fillStyle='rgba(60,70,100,.15)';g.fillRect(20,gy(tt),380,3);txt(g,'Top of troposphere (about '+tt+' km)',396,gy(tt)-6,{size:11,align:'right',color:'#4a4f78',weight:700,haloColor:'rgba(255,255,255,.85)',haloW:5});
+      /* cloud */
+      const stormy=R.lfc!==null,cbase=gy(R.lcl),ctop=stormy?gy(R.el):cbase-14;
+      if(R.lcl<9){
+        if(stormy){const dark=clamp(R.cape/2500,0,1);stormCloud(200,cbase,ctop,54+30*clamp(R.cape/3000,0,1),R.el>10.5?clamp((R.cape-800)/1500,0,1):0,dark*.7);}
+        else{for(let i=0;i<4;i++)puff(160+i*28,cbase-6-hash(i)*8,20,.85);txt(g,'Fair-weather cloud',200,cbase-38,{size:11,align:'center',color:'#465569',weight:700});}
+      }else txt(g,'No cloud: the air is too dry',200,gy(3),{size:12,align:'center',color:'#465569',weight:700});
+      /* parcel bubble */
+      const zmax=stormy?R.el:Math.min(R.lcl+.3,3),zz=(parc*1.4)%(zmax+1.2),zc=Math.min(zz,zmax);
+      const bx=110;g.fillStyle='rgba(235,104,52,.75)';g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.arc(bx,gy(zc),9,0,TAU);g.fill();g.stroke();
+      txt(g,'Air parcel',bx+14,gy(zc)+4,{size:11,color:'#8f3a08',weight:800});
+      /* cloud base line */
+      g.strokeStyle='rgba(30,50,90,.5)';g.setLineDash([5,4]);g.lineWidth=1.5;g.beginPath();g.moveTo(20,gy(R.lcl));g.lineTo(GX1,gy(R.lcl));g.stroke();g.setLineDash([]);
+      txt(g,'Cloud base: '+R.lcl.toFixed(1)+' km',24,gy(R.lcl)-5,{size:11,color:'#1a3f80',weight:800});
+      /* graph */
+      g.fillStyle='#fff';g.fillRect(GX0,GY0,GX1-GX0,GY1-GY0);g.strokeStyle='#8494a8';g.lineWidth=1.5;g.strokeRect(GX0,GY0,GX1-GX0,GY1-GY0);
+      g.strokeStyle='rgba(60,80,110,.15)';g.lineWidth=1;for(let z=0;z<=ZMAX;z+=2){g.beginPath();g.moveTo(GX0,gy(z));g.lineTo(GX1,gy(z));g.stroke();txt(g,z+' km',GX0-6,gy(z)+4,{size:10,align:'right',color:'#465569',weight:600,halo:false});}
+      for(let T=-60;T<=40;T+=20){g.beginPath();g.moveTo(gx(T),GY0);g.lineTo(gx(T),GY1);g.stroke();txt(g,T+'',gx(T),GY1+14,{size:10,align:'center',color:'#465569',weight:600,halo:false});}
+      txt(g,'Temperature (°C)',(GX0+GX1)/2,GY1+30,{size:12,align:'center',color:'#465569',weight:700,halo:false});
+      /* CAPE shading */
+      if(stormy){g.beginPath();for(let z=R.lfc;z<=R.el;z+=.1)g.lineTo(gx(R.par(z)),gy(z));for(let z=R.el;z>=R.lfc;z-=.1)g.lineTo(gx(R.env(z)),gy(z));g.closePath();g.fillStyle='rgba(235,104,52,.28)';g.fill();}
+      /* lines */
+      const line=(f,col,dash,wd)=>{g.beginPath();for(let z=0;z<=ZMAX;z+=.1)z?g.lineTo(gx(f(z)),gy(z)):g.moveTo(gx(f(z)),gy(z));g.strokeStyle=col;g.lineWidth=wd;g.setLineDash(dash||[]);g.stroke();g.setLineDash([]);};
+      line(R.env,'#1f63c9',null,3.5);line(R.par,'#e2571f',[8,5],3.5);
+      g.beginPath();g.arc(gx(R.par(zc)),gy(zc),6,0,TAU);g.fillStyle='#e2571f';g.fill();g.strokeStyle='#fff';g.lineWidth=2;g.stroke();
+      txt(g,'Surrounding air',GX1-8,GY0+20,{size:12,align:'right',color:'#1a4faa',weight:800});txt(g,'Rising parcel',GX1-8,GY0+38,{size:12,align:'right',color:'#b3400f',weight:800});
+      if(stormy){txt(g,'Parcel warmer: keeps rising',gx(R.par((R.lfc+R.el)/2))+8,gy((R.lfc+R.el)/2),{size:11,color:'#8f3a08',weight:800});}
+      /* readouts */
+      const cs=R.cape;const str=!stormy?0:cs<300?1:cs<1500?2:cs<3000?3:4;
+      roLift.set('a',R.lcl.toFixed(1)+' km');roLift.set('b',stormy?R.el.toFixed(1)+' km':'stays low');
+      roLift.set('c',lift.L<6.5?'Stable':lift.L<8?'Unstable':'Very unstable');roLift.set('d',['No storm','Weak','Moderate','Strong','Severe'][str]);roLift.set('e',stormy?R.w+' km/h':'none');
+      say('lift'+str+(R.lcl>9?'d':''),['Stable air: no thunderstorm','Weak storm','A moderate storm','A strong thunderstorm','A severe thunderstorm'][str],
+        str===0?(R.lcl>9?'The air is too dry for cloud to form. Raise the dew point.':'The parcel is colder than its surroundings, so it sinks back. Only shallow cloud forms. Make the air more unstable.'):'Above the cloud base, the rising parcel is warmer than the surrounding air, so it keeps accelerating upward. The bigger the orange area, the stronger the updrafts.',str>=3?'bad':str===0?'good':'');
+    }
+    /* ============ TAB 3: lightning ============ */
+    function drawLight(dt){
+      if(dist)dist.t+=dt;
+      const fl=dist&&dist.t<.5?1-dist.t/.5:0;
+      skyBg(.55);ground();
+      const cx=215,base=190,top=60;
+      stormCloud(cx,base,top,60,.45,.6);
+      /* charges */
+      const ch=(x,y,s,c)=>txt(g,s,x,y,{size:20,align:'center',color:c,weight:800,haloColor:'rgba(255,255,255,.85)'});
+      for(let i=0;i<4;i++)ch(cx-40+i*26,top+30+(i%2)*10,'+','#c8321c');for(let i=0;i<4;i++){const yy=base-8-(i%2)*8;g.strokeStyle='#1a56b0';g.lineWidth=3.5;g.lineCap='round';g.beginPath();g.moveTo(cx-46+i*26,yy-6);g.lineTo(cx-34+i*26,yy-6);g.stroke();}
+      for(let i=0;i<5;i++)ch(cx-70+i*36,G+22,'+','#c8321c');
+      txt(g,'Positive charge collects at the top',cx+80,top+30,{size:12,color:'#fff',weight:700,haloColor:'rgba(0,0,0,.4)',align:'left'});
+      txt(g,'Negative charge at the bottom',cx+80,base-6,{size:12,color:'#fff',weight:700,haloColor:'rgba(0,0,0,.4)'});
+      txt(g,'The ground becomes positive',cx+90,G+22,{size:12,color:'#fff',weight:700,haloColor:'rgba(0,0,0,.4)'});
+      /* observer */
+      const ox=170+ (light.d)*38;const oy=G;
+      g.fillStyle='#fff';g.strokeStyle='#14202e';g.lineWidth=2;g.beginPath();g.moveTo(ox-16,oy);g.lineTo(ox-16,oy-16);g.lineTo(ox,oy-30);g.lineTo(ox+16,oy-16);g.lineTo(ox+16,oy);g.closePath();g.fill();g.stroke();g.fillStyle='#14202e';g.fillRect(ox-4,oy-14,8,14);
+      txt(g,'You',ox,oy-38,{size:12,align:'center',color:'#fff',weight:800,haloColor:'rgba(0,0,0,.45)'});
+      /* distance scale */
+      g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=2;g.beginPath();g.moveTo(cx,G-8);g.lineTo(ox,G-8);g.stroke();
+      txt(g,(dist?dist.d:light.d).toFixed(1)+' km',(cx+ox)/2,G-14,{size:13,align:'center',color:'#fff',weight:800,haloColor:'rgba(0,0,0,.45)'});
+      /* bolt + waves */
+      if(dist){const bx=cx;if(dist.t<.6){if(fl>0){g.fillStyle='rgba(255,255,240,'+fl*.7+')';g.fillRect(0,0,800,G);}bolt(bx,base+8,bx+10,G,dist.seed,4);}
+        const tk=dist.t*6*.343*38;/* px travelled by sound (6x fast) */
+        for(let k=0;k<3;k++){const r=tk-k*22;if(r>4&&r<ox-cx+30){g.strokeStyle='rgba(255,255,255,'+(.7-k*.2)+')';g.lineWidth=3;g.beginPath();g.arc(cx+8,G-24,r,-1.1,1.1);g.stroke();}}
+        const arrived=tk>=(ox-cx);
+        const realDelay=dist.d/.343;
+        if(arrived){txt(g,'BOOM!  (thunder)',ox,oy-64,{size:20,align:'center',color:'#ffec99',weight:800,haloColor:'rgba(0,0,0,.6)'});}
+        else if(dist.t>.3)txt(g,'Counting…  '+Math.min(realDelay,dist.t*6).toFixed(0)+' s',ox,oy-64,{size:17,align:'center',color:'#fff',weight:800,haloColor:'rgba(0,0,0,.6)'});
+        roLight.set('a',dist.d.toFixed(1)+' km');roLight.set('b',arrived?realDelay.toFixed(0)+' seconds':'counting…');
+        roLight.set('c',arrived?'Divide by 3: '+realDelay.toFixed(0)+' ÷ 3 = '+(realDelay/3).toFixed(1)+' km':'Count seconds, divide by 3');
+      }else{roLight.set('a',light.d.toFixed(1)+' km');roLight.set('b','press the button');roLight.set('c','Count seconds, divide by 3');}
+      const d=dist?dist.d:light.d,delay=d/.343;
+      say('light'+(delay<=30?'a':'b'),delay<=30?'Go indoors!':'Storm is farther away',delay<=30?'If you hear thunder within 30 seconds of a flash (about 10 km), the storm is close enough to be dangerous. Go inside a building or a hard-topped vehicle and stay there for 30 minutes after the last thunder. “When thunder roars, go indoors.”':'This storm is far enough away that the thunder takes more than 30 seconds to arrive. Lightning can still strike many kilometres from a storm, so keep watching the sky.',delay<=30?'bad':'good');
+    }
+    /* ============ TAB 4: tornado ============ */
+    const EF=[['EF0','105–137 km/h','Light: branches broken, signs damaged'],['EF1','138–177 km/h','Moderate: roof shingles peeled off'],['EF2','178–217 km/h','Considerable: roofs torn off houses'],['EF3','218–266 km/h','Severe: walls of houses collapse'],['EF4','267–322 km/h','Devastating: well-built houses leveled'],['EF5','over 322 km/h','Incredible: houses swept away']];
+    const efOf=v=>v<105?-1:v<138?0:v<178?1:v<218?2:v<267?3:v<=322?4:5;
+    function drawTor(dt){
+      if(play.tor&&dt>0){tor.s+=dt/15;if(tor.s>1.1){tor.s=0;}tor.s=Math.min(tor.s,1);sStage.set(tor.s,true);}
+      const s=tor.s,sh=tor.shear;
+      skyBg(clamp(s*1.6,0,1)*.6);ground();
+      const cloudGrow=S(clamp(s/.55,0,1)),base=232,top=lerp(200,64,cloudGrow),cx=260;
+      const spin=(.8+3*sh)*clock;
+      /* wind shear arrows (left) */
+      if(s<.65){g.globalAlpha=1-S((s-.4)/.25);
+        arrow(g,120,352,70,352,{color:'#2f4c73',w:4,head:12});txt(g,'Slow, from the east',30,376,{size:11,color:'#1e3556',weight:700});
+        const L=40+120*sh;arrow(g,90,262,90+L,262,{color:'#2f4c73',w:6,head:16});txt(g,'Faster, from the west',30,246,{size:11,color:'#1e3556',weight:700});
+        g.globalAlpha=1;}
+      if(s<.65)txt(g,'WIND SHEAR',44,300,{size:13,color:'#0f2a55',weight:800});
+      /* cloud */
+      stormCloud(cx,base,top,lerp(50,84,cloudGrow),clamp((s-.5)*1.2,0,1)*.7,.6*S(s));
+      /* updraft */
+      if(s>.15){g.globalAlpha=S((s-.15)/.2);for(let i=0;i<3;i++){const x=cx+90+i*22;arrow(g,x,G-10,x,base+30,{color:'#d02f10',w:5,head:14});}g.globalAlpha=1;txt(g,'Updraft',cx+150,G-40,{size:12,color:'#a01f06',weight:800});}
+      /* tube */
+      const px=cx,py=316,len=170;
+      if(s<.62){const a=-S(clamp((s-.25)/.35,0,1))*Math.PI/2;const al=S(clamp(s/.15,0,1));g.save();g.globalAlpha=al;g.translate(px,py);g.rotate(a);
+        /* capsule */
+        g.fillStyle='rgba(255,255,255,.55)';rr(g,0,-18,len,36,18);g.fill();g.strokeStyle='#5a2b86';g.lineWidth=3;g.stroke();
+        g.save();rr(g,0,-18,len,36,18);g.clip();g.strokeStyle='rgba(90,43,134,.75)';g.lineWidth=3;const off=(clock*(30+130*sh))%22;for(let x=-44+off;x<len+44;x+=22){g.beginPath();g.moveTo(x,-18);g.lineTo(x+14,18);g.stroke();}g.restore();
+        g.restore();g.globalAlpha=1;
+        if(s<.3)txt(g,'Rolling tube of air',px+len/2,py-30,{size:12,align:'center',color:'#3a1a5e',weight:800});
+        if(s>=.3)txt(g,'The updraft tilts the tube upright',px+len+40,py-80,{size:12,color:'#3a1a5e',weight:800});}
+      /* mesocyclone */
+      const mx=px;
+      if(s>=.58){const a=S(clamp((s-.58)/.1,0,1));g.globalAlpha=a;
+        for(let i=0;i<7;i++){const y=lerp(base-8,top+30,i/6),w2=lerp(30,44,Math.sin(i/6*Math.PI));g.strokeStyle='rgba(80,40,120,.8)';g.lineWidth=3;g.beginPath();g.ellipse(mx,y,w2,9,0,0,TAU);g.stroke();const ph=spin*2+i;g.fillStyle='#5a2b86';g.beginPath();g.arc(mx+Math.cos(ph)*w2,y+Math.sin(ph)*9,4,0,TAU);g.fill();}
+        g.globalAlpha=1;txt(g,'Rotating updraft (mesocyclone)',mx+60,top+50,{size:12,color:'#3a1a5e',weight:800});}
+      /* funnel */
+      const ff=S(clamp((s-.72)/.28,0,1));
+      if(ff>0.02){const ty=base,by=lerp(base,G,ff),w0=lerp(34,46,sh),w1=lerp(4,10+12*sh,ff);
+        g.beginPath();g.moveTo(mx-w0,ty);g.lineTo(mx+w0,ty);g.lineTo(mx+w1,by);g.lineTo(mx-w1,by);g.closePath();const fg=g.createLinearGradient(0,ty,0,by);fg.addColorStop(0,'rgba(90,96,108,.95)');fg.addColorStop(1,'rgba(60,66,76,.95)');g.fillStyle=fg;g.fill();
+        g.save();g.clip();g.strokeStyle='rgba(255,255,255,.4)';g.lineWidth=3;const o2=(clock*(80+200*sh))%20;for(let y=ty-20+o2;y<by+20;y+=20){g.beginPath();g.moveTo(mx-60,y);g.lineTo(mx+60,y+14);g.stroke();}g.restore();
+        if(ff>.97){for(let i=0;i<14;i++){const ang=spin*2+i,r=18+i*4+(i%3)*8,x=mx+Math.cos(ang)*r,y=G-6-Math.abs(Math.sin(ang*1.3+i))*(20+40*sh);g.fillStyle=i%3?'#6b5b3e':'#8a7a56';g.fillRect(x-2,y-2,5,5);}
+          txt(g,'TORNADO: funnel reaches the ground',mx,G+26,{size:13,align:'center',color:'#fff',weight:800,haloColor:'rgba(0,0,0,.5)'});}
+        else txt(g,'Funnel cloud',mx+w0+8,(ty+by)/2,{size:12,color:'#fff',weight:800,haloColor:'rgba(0,0,0,.5)'});}
+      /* EF scale panel */
+      const V=Math.round(80+320*sh),ef=efOf(V),touch=ff>.97;
+      g.fillStyle='rgba(255,255,255,.92)';rr(g,470,18,316,232,12);g.fill();g.strokeStyle='#c9d6e6';g.lineWidth=1.5;g.stroke();
+      txt(g,'Enhanced Fujita (EF) scale',486,42,{size:14,color:'#14202e',weight:800,halo:false});
+      EF.forEach(([n,v,d],i)=>{const y=54+i*30,on=touch&&i===ef;g.fillStyle=on?'#fde7c8':'#f3f7fc';rr(g,478,y,300,26,7);g.fill();if(on){g.strokeStyle='#e2571f';g.lineWidth=2.5;g.stroke();}
+        txt(g,n,488,y+18,{size:13,color:on?'#8f3a08':'#14202e',weight:800,halo:false});txt(g,v,528,y+18,{size:11,color:'#34465c',weight:700,halo:false});txt(g,d.split(':')[0],640,y+18,{size:11,color:'#34465c',weight:500,halo:false});});
+      txt(g,'Rating in this model: '+(touch?'EF'+Math.max(0,ef):'not yet a tornado'),486,244,{size:12,color:'#8f3a08',weight:800,halo:false});
+      const stage=s<.3?'A · Spinning tube':s<.6?'B · Tilting':s<.8?'C · Rotating storm':s<.97?'D · Funnel descending':'D · Tornado';
+      roTor.set('a',stage);roTor.set('b',sh<.35?'Weak':sh<.7?'Moderate':'Strong');roTor.set('c',touch?'about '+V+' km/h':'—');roTor.set('d',touch?'EF'+Math.max(0,ef):'—');
+      say('tor'+(s<.3?'a':s<.6?'b':s<.8?'c':'d')+(touch?'t':''),s<.3?'Stage A: wind shear':s<.6?'Stage B: the updraft tilts the tube':s<.8?'Stage C: a rotating storm':touch?'A tornado!':'Stage D: the funnel descends',
+        s<.3?'Winds that change speed and direction with height make a horizontal tube of rotating air.':s<.6?'Rising warm air in a thunderstorm lifts one end of the tube and tips it upright.':s<.8?'The upright, rotating column (a mesocyclone) is now inside the storm.':touch?'The rotating funnel touches the ground. Real strength depends on many things besides wind shear, and most tornadoes are weak. They are rare in Newfoundland and Labrador.':'A funnel cloud grows down from the base of the storm.',touch?'bad':'');
+    }
+    ctx.loop((dt)=>{
+      if(dt>0)clock+=dt;
+      C.begin();g.fillStyle='#f4f8fc';g.fillRect(0,0,800,430);
+      const tab=ctx.tab;
+      if(tab==='life')drawLife(dt);else if(tab==='lift')drawLift(dt);else if(tab==='light')drawLight(dt);else drawTor(dt);
+    });
+  }
+});
+</script>
+</body></html>

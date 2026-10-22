@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weather Fronts | Science 1206</title>
+<meta name="tw-titlecard" content="WEATHER · SIM 12|WEATHER FRONTS|WHERE AIR MASSES MEET.">
+<style>:root{
+  --bg:#f4f7fb; --card:#ffffff; --ink:#14202e; --ink2:#465569; --line:#d6dfea;
+  --brand:#1d5fbf; --brand2:#e4eefc; --cool:#2a78d6; --warm:#eb6834; --good:#137a3a; --bad:#b42318;
+  --radius:14px; --focus:#ffb000;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.app{max-width:1120px;margin:0 auto;padding:12px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 10px}
+.hd h1{font-size:1.45rem;line-height:1.2;margin:0}
+.pill{font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--brand2);color:#174a94;border-radius:99px;padding:3px 10px;white-space:nowrap}
+.lead{flex-basis:100%;margin:2px 0 0;color:var(--ink2)}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:12px;align-items:start}
+@media(max-width:1080px){.main{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px}
+.stagecard{padding:8px}
+.stage{position:relative}
+.stage canvas,.stage svg{display:block;width:100%;height:auto;border-radius:10px;background:#eaf3fb;touch-action:none;user-select:none;-webkit-user-select:none}
+.caption{margin:8px 4px 2px;font-size:.92rem;color:var(--ink2);min-height:1.3em}
+.caption b{color:var(--ink)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.tab{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-weight:650;padding:8px 14px;border-radius:10px;cursor:pointer;min-height:40px}
+.tab[aria-selected=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+.ctlcard{display:flex;flex-direction:column;gap:8px}
+.ctl-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ctl-head h2,.learn h2{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2);margin:0}
+.ctl-actions{display:flex;gap:6px}
+.ctl{margin:6px 0 10px}
+.ctl.off{opacity:.45}
+.ctl-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-weight:600;font-size:.94rem}
+.ctl-row output{font-variant-numeric:tabular-nums;color:var(--brand);font-weight:700;white-space:nowrap}
+.hint{font-size:.82rem;color:var(--ink2);margin-top:1px}
+input[type=range]{width:100%;height:30px;margin:2px 0 0;accent-color:var(--brand);cursor:pointer}
+.btn,.segbtn{appearance:none;font:inherit;font-weight:650;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 12px;min-height:40px;cursor:pointer}
+.btn:hover,.segbtn:hover,.tab:hover{border-color:#9db4d3}
+.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn.small{padding:5px 10px;min-height:34px;font-size:.88rem}
+.btn.wide{width:100%}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.segbtn{flex:1 1 auto;padding:7px 10px;font-size:.92rem}
+.segbtn[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+.chk{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.94rem;margin:6px 0;cursor:pointer;min-height:32px}
+.chk input{width:20px;height:20px;accent-color:var(--brand)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.ro{display:grid;grid-template-columns:1fr auto;gap:3px 10px;font-size:.93rem;background:#f3f7fc;border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-variant-numeric:tabular-nums}
+.ro .k{color:var(--ink2)} .ro .v{text-align:right}
+.callout{border-left:5px solid var(--brand);background:#eef4fd;border-radius:8px;padding:9px 12px;font-size:.94rem;margin:8px 0}
+.callout.warm{border-color:var(--warm);background:#fff3ec}
+.callout.good{border-color:var(--good);background:#eefaf1}
+.callout.bad{border-color:var(--bad);background:#fdf0ee}
+.callout b{display:block}
+.sub{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin:10px 0 2px}
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;margin-top:12px}
+.learn .card{padding:12px 14px}
+.learn ul{margin:8px 0 0;padding-left:1.15rem}
+.learn li{margin:5px 0}
+.learn dl{margin:8px 0 0}
+.learn dt{font-weight:700;margin-top:8px}
+.learn dd{margin:1px 0 0;color:var(--ink2);font-size:.94rem}
+.learn details{border:1px solid var(--line);border-radius:10px;margin:8px 0;background:#fbfcfe}
+.learn summary{cursor:pointer;padding:9px 12px;font-weight:600;list-style:none}
+.learn summary::-webkit-details-marker{display:none}
+.learn summary::before{content:"?";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;font-size:.8rem;margin-right:8px;font-weight:800}
+.learn details[open] summary::before{content:"✓";background:var(--good)}
+.learn .ans{margin:0;padding:2px 12px 12px 40px;color:var(--ink2);font-size:.95rem}
+.foot{margin:14px 4px 0;font-size:.82rem;color:var(--ink2)}
+[hidden]{display:none!important}
+@media(max-width:520px){.app{padding:8px 8px 20px}.hd h1{font-size:1.25rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin:8px 2px 2px;align-items:start}.info:empty{display:none}.info .callout{margin:0}.info .ro{margin:0}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body><div id="app" class="app"></div>
+<script>/* Shared helpers for the Science 1206 Weather Dynamics simulations. Self-contained: no external libraries. */
+(function(){
+'use strict';
+const NS='http://www.w3.org/2000/svg', G=window;
+G.TAU=Math.PI*2;
+G.clamp=(v,a,b)=>v<a?a:v>b?b:v;
+G.lerp=(a,b,t)=>a+(b-a)*t;
+G.rand=(a,b)=>a+Math.random()*(b-a);
+G.$=(s,r)=>(r||document).querySelector(s);
+G.smooth=(t)=>{t=clamp(t,0,1);return t*t*(3-2*t);};
+
+function setAttrs(e,a){
+  for(const k in a){const v=a[k]; if(v==null||v===false)continue;
+    if(k==='class')e.setAttribute('class',v);
+    else if(k==='style'&&typeof v==='object')Object.assign(e.style,v);
+    else if(k==='html')e.innerHTML=v;
+    else if(k.slice(0,2)==='on'&&typeof v==='function')e.addEventListener(k.slice(2),v);
+    else e.setAttribute(k,v===true?'':v);}
+}
+function addKids(e,kids){for(const k of kids.flat(Infinity)){if(k==null||k===false)continue;e.append(k.nodeType?k:document.createTextNode(k));}}
+G.h=(t,a,...k)=>{const e=document.createElement(t);if(a)setAttrs(e,a);addKids(e,k);return e;};
+G.s=(t,a,...k)=>{const e=document.createElementNS(NS,t);if(a)setAttrs(e,a);addKids(e,k);return e;};
+
+/* colour: cold blue -> pale -> warm orange -> hot red (never the only cue: sims also label) */
+const STOPS=[[42,120,214],[160,200,236],[246,240,222],[245,170,92],[212,58,38]];
+G.heatRGB=(t)=>{t=clamp(t,0,1);const p=t*(STOPS.length-1),i=Math.min(STOPS.length-2,Math.floor(p)),f=p-i,a=STOPS[i],b=STOPS[i+1];
+  return [Math.round(lerp(a[0],b[0],f)),Math.round(lerp(a[1],b[1],f)),Math.round(lerp(a[2],b[2],f))];};
+G.heat=(t,al)=>{const c=heatRGB(t);return al==null?`rgb(${c})`:`rgba(${c},${al})`;};
+
+/* canvas drawing helpers */
+const FONT='system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans","Noto Sans Symbols 2","DejaVu Sans","Segoe UI Symbol",sans-serif';
+G.txt=(g,str,x,y,o)=>{o=o||{};const size=o.size||16,lines=String(str).split('\n');
+  g.font=`${o.weight||600} ${size}px ${FONT}`;g.textAlign=o.align||'left';g.textBaseline=o.base||'alphabetic';g.lineJoin='round';
+  lines.forEach((ln,i)=>{const yy=y+i*size*1.2;
+    if(o.halo!==false){g.lineWidth=o.haloW||4;g.strokeStyle=o.haloColor||'rgba(255,255,255,.88)';g.strokeText(ln,x,yy);}
+    g.fillStyle=o.color||'#14202e';g.fillText(ln,x,yy);});};
+G.rr=(g,x,y,w,hh,r)=>{g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+hh,r);g.arcTo(x+w,y+hh,x,y+hh,r);g.arcTo(x,y+hh,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();};
+G.arrow=(g,x0,y0,x1,y1,o)=>{o=o||{};const c=o.color||'#14202e',w=o.w||3,hd=o.head||w*3.4,a=Math.atan2(y1-y0,x1-x0);
+  g.save();g.strokeStyle=c;g.fillStyle=c;g.lineWidth=w;g.lineCap='round';g.globalAlpha=o.alpha==null?1:o.alpha;
+  g.beginPath();g.moveTo(x0,y0);g.lineTo(x1-Math.cos(a)*hd*.6,y1-Math.sin(a)*hd*.6);g.stroke();
+  g.beginPath();g.moveTo(x1,y1);g.lineTo(x1-Math.cos(a-.42)*hd,y1-Math.sin(a-.42)*hd);g.lineTo(x1-Math.cos(a+.42)*hd,y1-Math.sin(a+.42)*hd);g.closePath();g.fill();g.restore();};
+G.wavy=(g,x0,y0,x1,y1,o)=>{o=o||{};const amp=o.amp||5,wl=o.wl||16,n=Math.max(2,Math.hypot(x1-x0,y1-y0)/3|0),a=Math.atan2(y1-y0,x1-x0),L=Math.hypot(x1-x0,y1-y0);
+  g.save();g.strokeStyle=o.color||'#d43a26';g.lineWidth=o.w||2.5;g.lineCap='round';g.globalAlpha=o.alpha==null?1:o.alpha;g.beginPath();
+  for(let i=0;i<=n;i++){const d=i/n*L,off=Math.sin(d/wl*TAU+(o.phase||0))*amp,x=x0+Math.cos(a)*d-Math.sin(a)*off,y=y0+Math.sin(a)*d+Math.cos(a)*off;i?g.lineTo(x,y):g.moveTo(x,y);}
+  g.stroke();g.restore();};
+G.cloud=(g,x,y,sc,color)=>{g.save();g.translate(x,y);g.scale(sc,sc);g.fillStyle=color||'#fff';g.beginPath();
+  g.arc(0,0,22,0,TAU);g.arc(26,-10,28,0,TAU);g.arc(56,0,24,0,TAU);g.arc(28,10,26,0,TAU);g.fill();g.restore();};
+
+/* polyline path follower: PolyPath(pts).at(distance) -> [x,y,segmentIndex], wraps around */
+G.PolyPath=(pts)=>{const cum=[0];for(let i=1;i<pts.length;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));const len=cum[cum.length-1];
+  return{len,at(d,wrap){d=wrap===false?clamp(d,0,len):((d%len)+len)%len;let i=1;while(i<cum.length-1&&cum[i]<d)i++;const a=pts[i-1],b=pts[i],sg=(cum[i]-cum[i-1])||1,u=(d-cum[i-1])/sg;return[a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u,i];}};};
+
+/* ---------- controls ---------- */
+G.Slider=(o)=>{const id='s'+Math.random().toString(36).slice(2,8),fmt=o.fmt||(v=>v);
+  const out=h('output',{for:id}),inp=h('input',{type:'range',id,min:o.min,max:o.max,step:o.step||1,value:o.value});
+  const upd=()=>{out.textContent=fmt(+inp.value)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();o.onInput&&o.onInput(+inp.value);});upd();
+  const el=h('div',{class:'ctl'},h('div',{class:'ctl-row'},h('label',{for:id},o.label),out),inp,o.hint?h('div',{class:'hint'},o.hint):null);
+  el.set=(v,silent)=>{inp.value=v;upd();if(!silent&&o.onInput)o.onInput(+inp.value);};
+  el.get=()=>+inp.value;el.enable=(b)=>{inp.disabled=!b;el.classList.toggle('off',!b);};return el;};
+G.Seg=(o)=>{const btns={};let cur=o.value;const wrap=h('div',{class:'seg',role:'group','aria-label':o.label||''});
+  const set=(id,silent)=>{cur=id;for(const k in btns)btns[k].setAttribute('aria-pressed',String(k===String(id)));if(!silent&&o.onChange)o.onChange(id);};
+  for(const [id,label] of o.options){btns[id]=h('button',{type:'button',class:'segbtn','aria-pressed':String(String(id)===String(cur)),onclick:()=>set(id)},label);wrap.append(btns[id]);}
+  const el=h('div',{class:'ctl'},o.label?h('div',{class:'ctl-row'},h('span',null,o.label)):null,wrap);
+  el.set=set;el.get=()=>cur;return el;};
+G.Btn=(label,onClick,cls)=>h('button',{type:'button',class:'btn '+(cls||''),onclick:onClick},label);
+G.Check=(o)=>{const inp=h('input',{type:'checkbox'});inp.checked=!!o.value;inp.addEventListener('change',()=>o.onChange&&o.onChange(inp.checked));
+  const el=h('label',{class:'chk'},inp,o.label);el.set=(v,silent)=>{inp.checked=v;if(!silent&&o.onChange)o.onChange(v);};el.get=()=>inp.checked;return el;};
+G.Readout=(rows)=>{const el=h('div',{class:'ro'}),v={};
+  for(const [k,l,init] of rows){el.append(h('span',{class:'k'},l));v[k]=h('b',{class:'v'},init==null?'–':init);el.append(v[k]);}
+  el.set=(k,val)=>{val=String(val);if(v[k].textContent!==val)v[k].textContent=val;};return el;};
+G.Callout=(cls)=>{const el=h('div',{class:'callout '+(cls||''),'aria-live':'polite'});el.say=(title,body,c)=>{el.className='callout '+(c||cls||'');el.innerHTML=(title?'<b>'+title+'</b>':'')+(body||'');};return el;};
+
+G.dragger=(el,posfn,o)=>{let on=false;
+  el.addEventListener('pointerdown',e=>{const p=posfn(e);if(o.down&&o.down(p,e)===false)return;on=true;try{el.setPointerCapture(e.pointerId);}catch(_){}e.preventDefault();});
+  el.addEventListener('pointermove',e=>{const p=posfn(e);if(on){o.move&&o.move(p,e);}else if(o.hover)o.hover(p,e);});
+  const end=e=>{if(on){on=false;o.up&&o.up(posfn(e),e);}};
+  el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);};
+
+/* ---------- the page scaffold ---------- */
+G.Sim=(cfg)=>{
+  document.title=cfg.title+' | Science 1206 Weather Dynamics';
+  const app=$('#app'),state={paused:matchMedia('(prefers-reduced-motion: reduce)').matches};
+  const stageBox=h('div',{class:'stage'}),info=h('div',{class:'info'}),caption=h('p',{class:'caption','aria-live':'polite'});
+  const tabBar=h('div',{class:'tabs',role:'tablist'}),ctlBody=h('div',{class:'ctlbody'});
+  const panels=[];let curTab=cfg.tabs?cfg.tabs[0][0]:null;
+  const ctx={stageBox,info,controls:ctlBody,state,get tab(){return curTab;},onTab:null,onReset:null,
+    setCaption(t){caption.innerHTML=t;},
+    panel(ids){const d=h('div',{class:'panel'});d._ids=ids==null||ids==='*'?null:[].concat(ids);panels.push(d);ctlBody.append(d);d.hidden=!!d._ids&&!d._ids.includes(curTab);return d;},
+    canvas(W,H){const cv=h('canvas',{role:'img','aria-label':cfg.alt||cfg.title});const g=cv.getContext('2d');cv.style.aspectRatio=W+' / '+H;stageBox.append(cv);
+      const C={cv,g,W,H,k:1,begin(){g.setTransform(C.k,0,0,C.k,0,0);g.clearRect(0,0,W,H);},
+        pos(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height};}};
+      const fit=()=>{const w=stageBox.clientWidth||W,dpr=Math.min(window.devicePixelRatio||1,2);cv.width=Math.round(w*dpr);cv.height=Math.round(w*H/W*dpr);C.k=cv.width/W;};
+      new ResizeObserver(fit).observe(stageBox);fit();return C;},
+    svg(W,H){const el=s('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':cfg.alt||cfg.title});stageBox.append(el);
+      el.pos=(e)=>{const r=el.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height};};return el;},
+    loop(fn){let last=performance.now();const tick=(now)=>{const dt=Math.min(.05,(now-last)/1000);last=now;
+      try{fn(state.paused?0:dt,now/1000);}catch(err){console.error(err);}requestAnimationFrame(tick);};requestAnimationFrame(tick);}
+  };
+  const playBtn=h('button',{type:'button',class:'btn small',onclick:()=>{state.paused=!state.paused;syncPlay();}});
+  const syncPlay=()=>{playBtn.textContent=state.paused?'Play':'Pause';};syncPlay();
+  const resetBtn=h('button',{type:'button',class:'btn small',onclick:()=>ctx.onReset&&ctx.onReset()},'↺ Reset');
+  const ctlCard=h('aside',{class:'card ctlcard','aria-label':'Controls'},
+    h('div',{class:'ctl-head'},h('h2',null,'Controls'),h('div',{class:'ctl-actions'},cfg.static?null:playBtn,resetBtn)),ctlBody);
+  if(cfg.tabs){cfg.tabs.forEach(([id,label])=>{const b=h('button',{type:'button',class:'tab',role:'tab','aria-selected':String(id===curTab),onclick:()=>{
+      curTab=id;[...tabBar.children].forEach(x=>x.setAttribute('aria-selected',String(x===b)));
+      panels.forEach(p=>{p.hidden=!!p._ids&&!p._ids.includes(curTab);});ctx.onTab&&ctx.onTab(id);}},label);b._id=id;tabBar.append(b);});}
+  const card=(t,...k)=>h('div',{class:'card'},h('h2',null,t),...k);
+  const learn=h('section',{class:'learn'},
+    card('What to notice',h('ul',null,(cfg.notice||[]).map(n=>h('li',{html:n})))),
+    card('Key terms',h('dl',null,(cfg.terms||[]).map(([t,d])=>[h('dt',null,t),h('dd',{html:d})]))),
+    card('Check your understanding',(cfg.questions||[]).map(([q,a])=>h('details',null,h('summary',{html:q}),h('p',{class:'ans',html:a})))));
+  app.append(
+    h('header',{class:'hd'},h('span',{class:'pill'},cfg.tag),h('h1',null,cfg.title),h('p',{class:'lead'},cfg.lead)),
+    h('main',{class:'main'},h('section',{class:'card stagecard'},cfg.tabs?tabBar:null,stageBox,caption,info),ctlCard),
+    learn,
+    h('p',{class:'foot'},cfg.source+' Simplified models for learning: real weather is messier. Numbers marked “about” are estimates.'));
+  cfg.init(ctx);
+  if(!ctx.onReset)resetBtn.hidden=true;
+  if(state.paused)ctx.setCaption((cfg.paused||'')+' <i>Animation is paused because your device prefers reduced motion. Press Play to start it.</i>');
+  return ctx;
+};
+})();
+
+Sim({
+  title:'Weather Fronts',
+  tag:'Section 1.2 · Figure 1.18',
+  lead:'A front is the boundary between two air masses. See each kind from the side: how the air is lifted, what clouds and precipitation form, and what an observer on the ground experiences as it passes.',
+  source:'Based on Science 1206, Chapter 1, p. 31 (fronts, Figure 1.18). Front slopes are exaggerated (real cold fronts slope about 1 : 50 and warm fronts about 1 : 200) so that they are visible.',
+  alt:'Cross-section of the atmosphere showing cold air, warm air, cloud and precipitation for a cold front, warm front, stationary front and occluded front, with an observer on the ground.',
+  tabs:[['cold','Cold front'],['warm','Warm front'],['stat','Stationary front'],['occl','Occluded front']],
+  notice:[
+    '<b>Cold front:</b> dense cold air wedges under warm air and lifts it <i>steeply</i>. Tall cumulonimbus, short heavy showers, then clearing and colder.',
+    '<b>Warm front:</b> warm air slides up a <i>gentle</i> slope over cold air. Cloud thickens slowly and steady rain or snow can last for hours.',
+    '<b>Stationary front:</b> neither air mass wins, so cloudy, drizzly weather can sit over you for days.',
+    '<b>Occluded front:</b> a fast cold front catches a slower warm front and lifts the warm air right off the ground.',
+    'Drag <b>Time</b> to move the front past the observer and watch temperature, pressure and wind change. Tick <b>Winter</b> for snow.'],
+  terms:[
+    ['Front','The boundary between two air masses of different temperature and moisture.'],
+    ['Cold front','Cold air replaces warm air. Marked by blue triangles on a weather map. Cold fronts move faster than warm fronts.'],
+    ['Warm front','Warm air replaces cold air. Marked by red semicircles.'],
+    ['Stationary front','A boundary that is not moving. Marked by blue triangles and red semicircles on opposite sides.'],
+    ['Occluded front','Formed when a cold front overtakes a warm front. Marked by purple triangles and semicircles on the same side.']],
+  questions:[
+    ['Why does a cold front usually cause a short burst of heavy precipitation, while a warm front causes long periods of steady precipitation?','A cold front is steep, so the warm air is lifted quickly and forms towering clouds over a narrow zone. A warm front has a gentle slope, so the warm air rises slowly over a wide area and produces layered clouds and a wide band of steady precipitation.'],
+    ['What happens to the temperature and air pressure after a cold front passes?','The temperature drops and the air pressure rises. The wind also shifts, usually from the southwest to the northwest.'],
+    ['Which front forms when a cold front catches up to a warm front?','An occluded front. The warm air is lifted completely off the ground.']],
+  init(ctx){
+    const C=ctx.canvas(800,500),g=C.g;
+    /* meteorological wind-direction symbols, drawn (not font glyphs) */
+    const windSym=(x,y,into,col)=>{const r=12;
+      g.fillStyle='rgba(255,255,255,.9)';g.beginPath();g.arc(x,y,r,0,TAU);g.fill();
+      g.strokeStyle=col;g.lineWidth=2.6;g.lineCap='round';g.stroke();
+      if(into){const d=r*.58;g.beginPath();g.moveTo(x-d,y-d);g.lineTo(x+d,y+d);g.moveTo(x+d,y-d);g.lineTo(x-d,y+d);g.stroke();}
+      else{g.fillStyle=col;g.beginPath();g.arc(x,y,3.6,0,TAU);g.fill();}};
+    const G=420,H=330,TOP=G-H,OBS=560,SC=.35,SW=3.0,SS=4.2;
+    const COLD='#9ec5f0',COOL='#cfe3f8',WARM='#f8c8a2';
+    const S=t=>smooth(t);
+    let t01={cold:.22,warm:.4,occl:.3,stat:0},winter=false,arrows=true,clock=0;
+    const tabDur={cold:14,warm:20,occl:18};
+    const tim=Slider({label:'Time',min:0,max:1,step:.005,value:.22,fmt:v=>v<.02?'start':v>.98?'end':Math.round(v*100)+' %',hint:'Drag to move the front past the observer',onInput:v=>{if(ctx.tab!=='stat')t01[ctx.tab]=v;}});
+    const chW=Check({label:'Winter (snow, not rain)',value:false,onChange:v=>{winter=v;}});
+    const chA=Check({label:'Show air movement',value:true,onChange:v=>{arrows=v;}});
+    const pT=ctx.panel(['cold','warm','occl']);pT.append(tim);
+    const pS=ctx.panel(['stat']);pS.append(h('p',{class:'hint'},'A stationary front barely moves, so there is no time control. Air on either side flows parallel to the front in opposite directions.'));
+    const pA=ctx.panel('*');pA.append(chW,chA);
+    const rows=Readout([['a','Air mass'],['b','Sky'],['c','Precipitation'],['d','Temperature'],['e','Air pressure'],['f','Wind']]),note=Callout();
+    const symBox=h('div',{class:'callout'});
+    ctx.info.append(rows,note,symBox);
+    /* --- geometry --- */
+    const cfn=(xc)=>hh=>xc-SC*hh, wfn=(xw,k)=>hh=>xw+k*hh;
+    let X={xc:0,xw:0};
+    function model(tab){
+      const tt=t01[tab];
+      if(tab==='cold'){X.xc=lerp(-80,760,tt);return{c:cfn(X.xc),w:null,ahead:'WARM AIR',mode:'cold'};}
+      if(tab==='warm'){X.xw=lerp(-420,720,tt);return{c:null,w:wfn(X.xw,SW),ahead:'COLD AIR',mode:'warm'};}
+      if(tab==='stat'){X.xw=400+16*Math.sin(clock*.5);return{c:null,w:wfn(X.xw,SS),ahead:'COLD AIR',mode:'stat'};}
+      X.xc=lerp(60,700,tt);X.xw=lerp(380,440,tt);return{c:cfn(X.xc),w:wfn(X.xw,SW),ahead:'COOL AIR',mode:'occl'};
+    }
+    let M=model('cold');
+    const cAt=hh=>M.c?M.c(hh):-1e4, wAt=hh=>M.w?M.w(hh):1e4;
+    const region=(x,hh)=>x<cAt(hh)?'cold':x<wAt(hh)?'warm':'ahead';
+    const baseH=(x)=>{for(let hh=0;hh<=H;hh+=3)if(region(x,hh)==='warm')return hh;return null;};
+    const cl=v=>clamp(v,-30,830);
+    const HS=[];for(let hh=0;hh<=H;hh+=6)HS.push(hh);
+    const bandPath=(la,ra)=>{g.beginPath();HS.forEach(hh=>{const x=cl(ra(hh));g.lineTo(x,G-hh);});for(let i=HS.length-1;i>=0;i--){g.lineTo(cl(la(HS[i])),G-HS[i]);}g.closePath();};
+    /* --- particles --- */
+    const NP=260,drops=[];for(let i=0;i<NP;i++)drops.push({z:Math.random(),u:Math.random(),f:Math.random(),j:rand(-4,4)});
+    const flow=[];for(let i=0;i<46;i++)flow.push({u:Math.random(),hh:rand(0,H),off:rand(10,55),k:Math.random()});
+    function zones(){
+      const z=[];const m=M.mode;
+      if(m==='cold'||(m==='occl'&&X.xc<X.xw))z.push({x0:X.xc-110,x1:X.xc+30,top:()=>G-90,w:1});
+      if(m==='warm')z.push({x0:X.xw,x1:X.xw+300,top:x=>G-(x-X.xw)/SW,w:1});
+      if(m==='stat')z.push({x0:X.xw-10,x1:X.xw+300,top:x=>G-(x-X.xw)/SS,w:.55});
+      if(m==='occl'){if(X.xc<X.xw)z.push({x0:X.xw,x1:X.xw+300,top:x=>G-(x-X.xw)/SW,w:1});
+        else z.push({x0:X.xc-100,x1:X.xc+300,top:x=>{const b=baseH(x);return b==null?G+1:G-b;},w:1});}
+      return z;
+    }
+    /* --- observer readings --- */
+    const T=(a,b,k)=>Math.round(lerp(a,b,k));
+    function reading(){
+      const m=M.mode,W=winter,ppt=W?'snow':'rain',Ppt=W?'Snow':'Rain';
+      let air,sky,pr,temp,pres,wind,head,body,cls='';
+      if(m==='cold'){const d=OBS-X.xc,Tw=W?4:17,Tc=W?-9:6;temp=T(Tc,Tw,S((d+50)/130));
+        if(d>260){air='Warm, humid';sky='Clear or a few small cumulus';pr='None';pres='Falling slowly';wind='Southwest, light';head='Before the front: warm sector';body='Warm, moist air. The cold front is still far away.';cls='warm';}
+        else if(d>60){air='Warm, humid';sky='Towering cumulus building and darkening';pr=ppt==='rain'?'Showers may begin':'Flurries may begin';pres='Falling';wind='Southwest, getting gusty';head='The front is approaching';body='Warm air is being pushed up ahead of the cold wedge.';cls='warm';}
+        else if(d>-60){air='Right at the front';sky='Cumulonimbus overhead, dark, thunder possible';pr=W?'Heavy snow squall, short-lived':'Heavy rain or hail, short-lived';pres='Lowest, then rising fast';wind='Shifts from southwest to northwest, strong gusts';head='The cold front is passing';body='A steep front lifts the air quickly. Heavy precipitation falls in a narrow band.';cls='bad';}
+        else if(d>-260){air='Cold';sky='Clearing, some cumulus';pr='Showers ending';pres='Rising';wind='Northwest, gusty';head='Just after the front';body='The temperature has dropped sharply. Skies clear.';cls='';}
+        else{air='Cold, dry';sky='Clear, deep blue';pr='None';pres='High and steady';wind='Northwest, steady';head='Cold air mass';body='Cold, dry air behind the front. The pressure is high.';cls='';}}
+      else if(m==='warm'){const e=OBS-X.xw,Tc=W?-5:5,Tw=W?3:14;temp=T(Tc,Tw,S((-e+30)/320));
+        if(e>560){air='Cold';sky='Thin, wispy cirrus high up';pr='None';pres='Falling slowly';wind='East to southeast, light';head='Front is far away';body='Cirrus clouds are the first sign. The warm air is almost 10 km up over you.';cls='';}
+        else if(e>330){air='Cold';sky='Cirrostratus, then altostratus: the sun dims';pr='None yet';pres='Falling';wind='Southeast, increasing';head='The front is approaching';body='The sky thickens gradually. The warm air is lifted along a gentle slope.';cls='';}
+        else if(e>110){air='Cold';sky='Thick gray nimbostratus';pr=ppt==='rain'?'Steady rain, light to moderate':'Steady snow, light to moderate';pres='Falling steadily';wind='East to southeast, moderate';head='Steady precipitation';body='Warm air is over you, only a few kilometres up. Precipitation can last many hours.';cls='';}
+        else if(e>0){air='Cold, but the front is almost here';sky='Low, dark cloud, poor visibility';pr=W?'Heavy snow or freezing rain':'Steady, heavier rain';pres='Lowest';wind='Strong, backing to south';head='The warm front is arriving';body='Cloud is at its lowest and thickest.';cls='bad';}
+        else if(e>-150){air='Warm, humid';sky='Low stratus, breaking';pr=W?'Flurries ending':'Drizzle ending';pres='Levelling off';wind='South to southwest';head='Just after the front';body='The temperature has risen. The wind has shifted to the south or southwest.';cls='warm';}
+        else{air='Warm, humid';sky='Broken stratus, hazy';pr='None';pres='Steady';wind='Southwest';head='Warm sector';body='Warm, humid air fills the area.';cls='warm';}}
+      else if(m==='stat'){const e=OBS-X.xw,Tc=W?-6:4,Tw=W?1:11;temp=T(Tc,Tw,S(-e/80));
+        if(e>0){air='Cold';sky='Overcast, gray';pr=W?'Light snow or freezing drizzle':'Light steady rain or drizzle';pres='Steady';wind='East, light (parallel to the front)';}
+        else{air='Milder';sky='Cloudy';pr='Mostly dry, some drizzle';pres='Steady';wind='West, light (parallel to the front)';}
+        head='A front that stays put';body='Winds blow along the front in opposite directions, so neither air mass advances. The weather can stay cloudy and wet for days.';cls='';}
+      else{const xf=X.xc>=X.xw?X.xc:X.xw,e=OBS-xf,Tcool=W?-4:6,Tcold=W?-10:2;temp=T(Tcool,Tcold,S((-e+30)/150));
+        const occ=X.xc>=X.xw;
+        if(e>330){air='Cool';sky='Cirrus, then altostratus';pr='None yet';pres='Falling';wind='Southeast, increasing';head='Front is approaching';body=occ?'The warm air is already lifted well off the ground.':'The warm front arrives first.';cls='';}
+        else if(e>0){air='Cool';sky='Thick nimbostratus, low';pr=Ppt+', steady';pres='Falling';wind='Southeast, moderate';head=occ?'Occluded front is approaching':'Warm front is approaching';body='Steady precipitation comes from lifted warm air overhead.';cls='';}
+        else if(e>-120){air='At the occluded front';sky='Thick cloud, then breaks';pr=ppt==='rain'?'Steady rain changing to showers':'Steady snow changing to flurries';pres='Lowest, then rising';wind='Shifting to west or northwest';head='The occluded front is passing';body='Weather is a mix of warm-front and cold-front weather.';cls='bad';}
+        else{air='Cold';sky='Clearing, some cumulus';pr='Showers ending';pres='Rising';wind='Northwest, gusty';head='After the front';body='Cold air behind the front has arrived and the warm air is now far above.';cls='';}
+        if(!occ&&e<=0){air='Cool';sky='Thick nimbostratus, low';pr=Ppt+', steady';pres='Falling';wind='Southeast, moderate';head='Warm front has passed the area';body='Warm air has just been lifted up.';}}
+      rows.set('a',air);rows.set('b',sky);rows.set('c',pr);rows.set('d',temp+' °C');rows.set('e',pres);rows.set('f',wind);
+      if(note._h!==head+body){note._h=head+body;note.say(head,body,cls);}
+    }
+    /* --- weather-map symbol card --- */
+    /* Drawn horizontally, the way a front appears in a map legend.
+       Cold: triangles. Warm: semicircles. Stationary: triangles one side,
+       semicircles the other. Occluded: both on the SAME side. */
+    function symbols(){
+      const m=ctx.tab,BLUE='#1d4fd0',RED='#d62d2d',PURPLE='#7b2fb5';
+      const W=228,H=42,Y=26,X0=8,X1=W-8,SLOTS=[32,71,110,149,188];
+      const sv=s('svg',{viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'xMinYMid meet','aria-hidden':'true',
+        style:{display:'block',width:'100%',maxWidth:W+'px',height:'auto',marginTop:'6px'}});
+      const seg=(a,b,c)=>sv.append(s('line',{x1:a,y1:Y,x2:b,y2:Y,stroke:c,'stroke-width':3.5,'stroke-linecap':'butt'}));
+      const tri=(x,up,c)=>sv.append(s('path',{d:`M${x-9} ${Y} L${x} ${Y+(up?-16:16)} L${x+9} ${Y} Z`,fill:c}));
+      const semi=(x,up,c)=>sv.append(s('path',{d:`M${x-10} ${Y} A10 10 0 0 ${up?1:0} ${x+10} ${Y} Z`,fill:c}));
+      if(m==='cold'){seg(X0,X1,BLUE);SLOTS.forEach(x=>tri(x,true,BLUE));}
+      else if(m==='warm'){seg(X0,X1,RED);SLOTS.forEach(x=>semi(x,true,RED));}
+      else if(m==='stat'){
+        SLOTS.forEach((x,i)=>{const c=i%2?RED:BLUE;
+          seg(i?x-19:X0, i===SLOTS.length-1?X1:x+19, c);
+          if(i%2)semi(x,false,RED);else tri(x,true,BLUE);});}
+      else{seg(X0,X1,PURPLE);
+        SLOTS.forEach((x,i)=>{if(i%2)semi(x,true,PURPLE);else tri(x,true,PURPLE);});}
+      const name={cold:'Cold front',warm:'Warm front',stat:'Stationary front',occl:'Occluded front'}[m];
+      const dsc={cold:'Blue line with triangles. They point the way the front is moving.',
+        warm:'Red line with semicircles. They bulge the way the front is moving.',
+        stat:'Blue triangles on one side, red semicircles on the other. It is not moving.',
+        occl:'Purple line with triangles and semicircles together on the same side.'}[m];
+      symBox.replaceChildren(h('div',null,
+        h('b',null,'On a weather map: '+name),
+        h('div',{style:{fontSize:'.9rem',marginTop:'2px'}},dsc),
+        sv));
+    }
+    symbols();
+    ctx.onTab=(id)=>{symbols();note._h='';ctx.setCaption(id==='stat'?'<b>Side view of a stationary front.</b> There is no time control because the front barely moves. Compare the weather with the cold and warm fronts.':'<b>Side view of a front.</b> The house is an observer on the ground. Drag <b>Time</b> to move the front across and read the weather changes below.');};
+    ctx.onReset=()=>{t01={cold:.22,warm:.4,occl:.3,stat:0};tim.set(t01[ctx.tab]||0,true);winter=false;chW.set(false,true);arrows=true;chA.set(true,true);};
+    /* --- drawing helpers --- */
+    const drawCloudBlob=(x,y,sc,c)=>cloud(g,x-28*sc,y,sc,c);
+    function towerCloud(xc,strong){
+      for(let k=0;k<6;k++){const hh=35+k*50,x=xc-SC*hh+24,sc=(.95-k*.04)*(strong?1:.7),c=k<2?'#66717f':k<4?'#98a3b1':'#e6ebf1';drawCloudBlob(x,G-hh-8,sc,c);}
+      g.fillStyle='#eef2f7';g.beginPath();g.ellipse(xc-SC*300+80,G-306,140,15,0,0,TAU);g.fill();
+      drawCloudBlob(xc-SC*300+10,G-316,.9,'#f6f8fb');
+    }
+    function deck(xfn,thk){
+      const gr=g.createLinearGradient(xfn(0),0,xfn(H),0);gr.addColorStop(0,'rgba(78,88,102,.95)');gr.addColorStop(.3,'rgba(120,130,144,.9)');gr.addColorStop(.65,'rgba(176,186,198,.85)');gr.addColorStop(1,'rgba(224,231,240,.8)');
+      g.beginPath();for(let hh=0;hh<=H;hh+=6)g.lineTo(xfn(hh),G-hh);for(let hh=H;hh>=0;hh-=6)g.lineTo(xfn(hh),G-hh-thk);g.closePath();g.fillStyle=gr;g.fill();
+    }
+    function cirrus(xfn){g.strokeStyle='rgba(255,255,255,.95)';g.lineWidth=2;g.lineCap='round';for(let i=0;i<7;i++){const hh=285+i*6,x=xfn(hh)+i*34;g.beginPath();g.moveTo(x,G-hh-i*3);g.quadraticCurveTo(x+22,G-hh-i*3-12,x+50,G-hh-i*3-3);g.stroke();}}
+    /* --- main loop --- */
+    ctx.loop((dt)=>{
+      if(dt>0){clock+=dt;const tab=ctx.tab;
+        if(tab!=='stat'){t01[tab]+=dt/tabDur[tab];if(t01[tab]>1.06)t01[tab]=0;t01[tab]=Math.min(t01[tab],1);tim.set(t01[tab],true);}
+      }
+      const tab=ctx.tab;M=model(tab);
+      C.begin();
+      const sk=g.createLinearGradient(0,0,0,G);sk.addColorStop(0,'#dcd8ef');sk.addColorStop(.2,'#e7e9f6');sk.addColorStop(1,'#f4f8fd');g.fillStyle=sk;g.fillRect(0,0,800,500);
+      /* strat */
+      g.fillStyle='#e6e2f3';g.fillRect(0,0,800,TOP);
+      /* air masses */
+      const cA=hh=>cAt(hh),mA=hh=>Math.max(cAt(hh),wAt(hh));
+      const fillR=(la,ra,col)=>{bandPath(la,ra);g.fillStyle=col;g.fill();};
+      fillR(()=>-30,cA,COLD);fillR(cA,mA,WARM);fillR(mA,()=>830,M.mode==='occl'?COOL:COLD);
+      /* height ticks */
+      g.strokeStyle='rgba(60,70,90,.25)';g.lineWidth=1;g.setLineDash([3,5]);
+      for(let km=3;km<12;km+=3){const y=G-km*H/12;g.beginPath();g.moveTo(34,y);g.lineTo(800,y);g.stroke();}g.setLineDash([]);
+      g.strokeStyle='#6b7a8c';g.lineWidth=2;g.setLineDash([8,5]);g.beginPath();g.moveTo(0,TOP);g.lineTo(800,TOP);g.stroke();g.setLineDash([]);
+      txt(g,'Top of the troposphere (about 12 km)',790,TOP-8,{size:12,align:'right',color:'#4a4f78',weight:700,halo:false});
+      for(let km=0;km<=12;km+=3){const y=G-km*H/12;txt(g,km+' km',6,y-4,{size:11,color:'#465569',weight:600});}
+      /* ground */
+      g.fillStyle='#8a6a48';g.fillRect(0,G,800,36);g.fillStyle='#6f9a4c';g.fillRect(0,G,800,7);
+      const m=M.mode;
+      const BN={cold:['Cold front','Cold, dense air wedges under warm air and forces it up steeply.'],warm:['Warm front','Warm air slides up and over the cold air along a gentle slope.'],stat:['Stationary front','Neither air mass is winning, so the boundary stays in place.'],occl:['','']}[m];
+      let b0=BN[0],b1=BN[1];
+      if(m==='occl'){const gap=X.xw-X.xc;if(gap>150){b0='Occluded front, stage 1';b1='A fast cold front is chasing a slower warm front.';}else if(gap>0){b0='Occluded front, stage 2';b1='The cold front is almost catching up. The warm sector is being squeezed.';}else{b0='Occluded front, stage 3';b1='The cold front has caught up. Warm air is lifted completely off the ground.';}}
+      txt(g,b0,180,30,{size:17,color:'#2a2f5c',weight:800,halo:false});txt(g,b1,180,52,{size:13,color:'#3a4068',weight:500,halo:false});
+      /* clouds */
+      if(m==='cold'){for(let k=0;k<4;k++){const x=X.xc+110+k*100;if(x<860)drawCloudBlob(x,G-70-k*4,.55-k*.06,'#fff');}towerCloud(X.xc,true);}
+      if(m==='warm'){deck(hh=>X.xw+SW*hh,38);cirrus(hh=>X.xw+SW*hh);}
+      if(m==='stat'){deck(hh=>X.xw+SS*hh,30);}
+      if(m==='occl'){
+        if(X.xc<X.xw){towerCloud(X.xc,false);deck(hh=>X.xw+SW*hh,38);cirrus(hh=>X.xw+SW*hh);}
+        else{g.save();bandPath(cA,mA);g.clip();const gr=g.createLinearGradient(0,TOP,0,G);gr.addColorStop(0,'rgba(232,238,245,.85)');gr.addColorStop(1,'rgba(92,102,116,.9)');g.fillStyle=gr;g.fillRect(0,TOP,800,H);g.restore();
+          const hs=(X.xc-X.xw)/(SC+SW);for(let hh=hs+20;hh<H-20;hh+=44){const x=(cA(hh)+wAt(hh))/2;if(x>-30&&x<830)drawCloudBlob(x,G-hh,.8,hh<150?'#8a95a3':'#d5dce6');}}}
+      /* boundaries */
+      const ln=(fn,col,from,to,dash)=>{g.beginPath();let st=false;for(let hh=from;hh<=to;hh+=3){const x=fn(hh);if(!st){g.moveTo(x,G-hh);st=true;}else g.lineTo(x,G-hh);}g.strokeStyle=col;g.lineWidth=4;g.lineCap='round';g.setLineDash(dash||[]);g.stroke();g.setLineDash([]);};
+      if(m==='cold')ln(cAt,'#1d4fd0',0,H);
+      else if(m==='warm')ln(wAt,'#d62d2d',0,H);
+      else if(m==='stat'){ln(wAt,'#d62d2d',0,H);ln(wAt,'#1d4fd0',0,H,[14,14]);}
+      else{
+        if(X.xc<X.xw){ln(cAt,'#1d4fd0',0,H);ln(wAt,'#d62d2d',0,H);}
+        else{const hs=(X.xc-X.xw)/(SC+SW);ln(cAt,'#7b2fb5',0,hs);ln(cAt,'#1d4fd0',hs,H);ln(wAt,'#d62d2d',hs,H);}}
+      /* precipitation */
+      const zs=zones();
+      if(zs.length){
+        g.lineCap='round';
+        for(const d of drops){
+          const z=zs[Math.floor(d.z*zs.length)%zs.length],x=z.x0+d.u*(z.x1-z.x0)+d.j;if(x<0||x>800)continue;
+          if(d.u>z.w+.0001&&z.w<1)continue;
+          const top=z.top(x);if(top>G-6)continue;
+          if(dt>0)d.f+=dt*(winter?.25:1.3)*260/Math.max(60,G-top);if(d.f>1)d.f-=1;
+          const y=top+d.f*(G-top);
+          if(winter){const sw=Math.sin(clock*2+d.j*3)*4;g.fillStyle='rgba(255,255,255,.98)';g.strokeStyle='rgba(80,100,130,.55)';g.lineWidth=.8;g.beginPath();g.arc(x+sw,y,2.2,0,TAU);g.fill();g.stroke();}
+          else{g.strokeStyle='rgba(28,88,184,.85)';g.lineWidth=1.6;g.beginPath();g.moveTo(x,y);g.lineTo(x-3,Math.min(G,y+11));g.stroke();}
+        }}
+      /* air movement */
+      if(arrows){
+        const lines=[];
+        if(m==='cold')lines.push({f:cAt,side:1,sp:110});
+        else if(m==='warm')lines.push({f:wAt,side:-1,sp:70});
+        else if(m==='stat')lines.push({f:wAt,side:-1,sp:22});
+        else{if(X.xc<X.xw)lines.push({f:cAt,side:1,sp:100},{f:wAt,side:-1,sp:70});else{const hs=(X.xc-X.xw)/(SC+SW);lines.push({f:cAt,side:1,sp:100,h0:hs},{f:wAt,side:-1,sp:70,h0:hs});}}
+        for(const p of flow){const L=lines[Math.floor(p.k*lines.length)%lines.length],h0=L.h0||0;
+          if(dt>0){p.hh+=L.sp*dt;if(p.hh>H){p.hh=h0;p.off=rand(10,55);}}
+          if(p.hh<h0)p.hh=h0+p.hh%40;
+          const x=L.f(p.hh)+L.side*p.off,y=G-p.hh;if(x<0||x>800)continue;
+          const x2=L.f(p.hh+9)+L.side*p.off;
+          arrow(g,L.f(p.hh-14)+L.side*p.off,G-p.hh+14,x2,G-p.hh-9,{color:'rgba(150,55,10,.8)',w:2,head:8});}
+        if(m==='stat'){/* opposite winds parallel to front */
+          const wx=(dx)=>clamp(X.xw+dx,130,670);
+          windSym(wx(-155),128,false,'#9a3c0c');
+          txt(g,'Wind blows toward you',wx(-155),154,{size:11,align:'center',color:'#9a3c0c',weight:700,haloColor:'rgba(255,255,255,.85)',haloW:5});
+          windSym(wx(155),128,true,'#1a3f80');
+          txt(g,'Wind blows away from you',wx(155),154,{size:11,align:'center',color:'#1a3f80',weight:700,haloColor:'rgba(255,255,255,.85)',haloW:5});}
+      }
+      /* labels of air masses */
+      const lab=(type,name,color)=>{let best=null;for(const hh of [30,100,190,270]){let run=null,bw=0,s0=null;for(let x=0;x<=800;x+=8){const r=region(x,hh)===type;if(r&&s0==null)s0=x;if((!r||x>=800)&&s0!=null){const w=x-s0;if(w>bw){bw=w;run=[s0,x,hh];}s0=null;}}
+        if(run&&(!best||(run[1]-run[0])>(best[1]-best[0])))best=run;}
+        if(best&&best[1]-best[0]>110){txt(g,name,(best[0]+best[1])/2,G-best[2]+6,{size:15,align:'center',color,weight:800,haloColor:'rgba(255,255,255,.6)'});}};
+      lab('cold',m==='occl'?'COLD AIR':'COLD AIR','#1a3f80');lab('warm','WARM AIR','#9a3c0c');lab('ahead',M.ahead,m==='cold'?'#9a3c0c':'#1a3f80');
+      /* surface front markers */
+      const pin=(x,name,col)=>{if(x<-10||x>810)return;g.fillStyle=col;g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.moveTo(x,G+2);g.lineTo(x-9,G+20);g.lineTo(x+9,G+20);g.closePath();g.fill();g.stroke();
+        txt(g,name,clamp(x,60,740),G+37,{size:12,align:'center',color:col,weight:800,haloW:5,haloColor:'rgba(255,255,255,.95)'});};
+      g.fillStyle='#8a6a48';
+      if(m==='cold')pin(X.xc,'Cold front','#1d4fd0');
+      if(m==='warm')pin(X.xw,'Warm front','#d62d2d');
+      if(m==='stat')pin(X.xw,'Stationary front','#6b5bd6');
+      if(m==='occl'){if(X.xc<X.xw){pin(X.xc,'Cold front','#1d4fd0');pin(X.xw,'Warm front','#d62d2d');}else pin(X.xc,'Occluded front','#7b2fb5');}
+      /* ground labels */
+      txt(g,'West',10,486,{size:12,color:'#465569',weight:700,halo:false});txt(g,'East',790,486,{size:12,align:'right',color:'#465569',weight:700,halo:false});
+      if(m!=='stat'){arrow(g,300,480,360,480,{color:'#465569',w:3,head:11});txt(g,'Front moves east',370,485,{size:12,color:'#465569',weight:700,halo:false});}
+      txt(g,'Vertical scale exaggerated',790,TOP+16,{size:11,align:'right',color:'#4a4f78',weight:500,halo:false});
+      /* observer */
+      g.strokeStyle='rgba(20,32,46,.35)';g.lineWidth=1.5;g.setLineDash([3,4]);g.beginPath();g.moveTo(OBS,G);g.lineTo(OBS,TOP+30);g.stroke();g.setLineDash([]);
+      g.fillStyle='#fff';g.strokeStyle='#14202e';g.lineWidth=2;g.beginPath();g.moveTo(OBS-16,G);g.lineTo(OBS-16,G-16);g.lineTo(OBS,G-30);g.lineTo(OBS+16,G-16);g.lineTo(OBS+16,G);g.closePath();g.fill();g.stroke();
+      g.fillStyle='#14202e';g.fillRect(OBS-4,G-14,8,14);
+      txt(g,'Observer',OBS,G-38,{size:12,align:'center',color:'#14202e',weight:800});
+      reading();
+    });
+    ctx.setCaption('<b>Side view of a front.</b> The house is an observer on the ground. Drag <b>Time</b> to move the front across and read the weather changes below.');
+  }
+});
+</script>
+</body></html>

@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Element Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#1b1030; --panel:#2c1a4d; --panel2:#3a2463; --edge:#000; --rim:#6b4fa8;
+  --ink:#f6efff; --mute:#c3b2e6; --gold:#ffd23f; --mint:#5df2a4; --coral:#ff5d73; --sky:#6ad3ff;
+  --pix:'Press Start 2P', 'Courier New', monospace;
+  --txt:'VT323', 'Courier New', monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--night);color:var(--ink)}
+body{font-family:var(--txt);font-size:22px;line-height:1.25;
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+#app{max-width:920px;margin:0 auto;padding:10px;min-height:600px}
+h1,h2,h3,.pix{font-family:var(--pix);font-weight:400;letter-spacing:0}
+h2{font-size:15px;margin:0 0 10px;color:var(--gold);line-height:1.5}
+h3{font-size:11px;margin:16px 0 6px;color:var(--sky);line-height:1.6}
+sub,sup{font-size:.7em;line-height:0}
+b{color:var(--gold);font-weight:400}
+.box{background:var(--panel);border:4px solid var(--edge);box-shadow:inset 0 0 0 3px var(--rim),5px 5px 0 #000;padding:14px 16px}
+.btn{font-family:var(--pix);font-size:11px;line-height:1.4;background:var(--gold);color:#241500;border:4px solid #000;
+  box-shadow:inset -4px -4px 0 #c99500,inset 4px 4px 0 #fff2a8;padding:12px 14px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translate(2px,2px)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.alt{background:var(--sky);box-shadow:inset -4px -4px 0 #2f8fbf,inset 4px 4px 0 #d4f4ff}
+.btn.ghost{background:var(--panel2);color:var(--ink);box-shadow:inset -4px -4px 0 #20123a,inset 4px 4px 0 #5a3d8f}
+button:focus-visible,input:focus-visible{outline:3px dashed var(--mint);outline-offset:3px}
+img.spr{image-rendering:pixelated;image-rendering:crisp-edges;display:block}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--mute)}
+.hp{height:12px;border:3px solid #000;background:#14091f;position:relative}
+.hp>i{display:block;height:100%;background:var(--mint);transition:width .45s steps(8)}
+.hp.mid>i{background:var(--gold)} .hp.low>i{background:var(--coral)}
+.xp{height:6px;border:2px solid #000;background:#14091f;margin-top:3px}
+.xp>i{display:block;height:100%;background:var(--sky)}
+.sym{font-family:var(--pix);font-size:10px;background:#000;color:var(--gold);padding:4px 6px;display:inline-block;line-height:1.4}
+
+/* title */
+.title{text-align:center}
+.logo{font-family:var(--pix);font-size:clamp(26px,7vw,52px);line-height:1.15;margin:18px 0 6px;color:var(--gold);
+  text-shadow:4px 4px 0 #b3256b,8px 8px 0 #000}
+.tag{color:var(--mute);margin:0 0 16px}
+.parade{display:flex;justify-content:center;gap:6px;margin:6px 0 16px;flex-wrap:wrap}
+.parade img{width:64px;animation:bob 1.2s steps(2) infinite}
+.parade img:nth-child(2n){animation-delay:.6s}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.field{display:block;max-width:420px;margin:0 auto 14px;text-align:left}
+.field label{font-family:var(--pix);font-size:10px;display:block;margin-bottom:6px;color:var(--sky)}
+.field input{width:100%;font-family:var(--txt);font-size:26px;padding:8px 10px;background:#120a22;color:var(--ink);border:4px solid #000;box-shadow:inset 0 0 0 3px var(--rim)}
+.starters{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0 16px}
+.starter{background:var(--panel2);border:4px solid #000;padding:10px 8px;cursor:pointer;color:var(--ink);font-family:var(--txt);font-size:20px;text-align:center}
+.starter img{width:88px;margin:0 auto 6px}
+.starter.on{box-shadow:inset 0 0 0 4px var(--gold);background:#4a2f7d}
+.starter .nm{font-family:var(--pix);font-size:10px;margin:6px 0;color:var(--gold)}
+.err{color:var(--coral);min-height:26px}
+
+/* dialogue */
+.talk{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start}
+.talk img{width:96px}
+.talk .who{font-family:var(--pix);font-size:10px;color:var(--sky);margin-bottom:6px}
+
+/* map */
+.hud{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.hud .stat{font-family:var(--pix);font-size:10px;line-height:1.6}
+.team{display:flex;gap:8px;flex-wrap:wrap}
+.mem{background:var(--panel2);border:3px solid #000;padding:6px;width:96px;text-align:center;font-size:18px}
+.mem img{width:48px;margin:0 auto}
+button.mem{cursor:pointer;color:var(--ink);font-family:var(--txt)}
+.mem.inp{box-shadow:inset 0 0 0 3px var(--gold)}
+.mem .hp{height:8px;border-width:2px;margin-top:3px}
+.zone{margin-top:12px;position:relative}
+.zone .zt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.zone.lock{opacity:.5}
+.path{display:flex;align-items:center;gap:0;margin-top:10px;flex-wrap:wrap}
+.node{width:96px;height:96px;background:#120a22;border:4px solid #000;display:grid;place-items:center;position:relative;cursor:pointer;padding:0;color:var(--ink)}
+.node img{width:64px}
+.node .lbl{position:absolute;bottom:-4px;left:-4px;right:-4px;background:#000;font-family:var(--pix);font-size:8px;padding:3px 0;color:var(--mute)}
+.node.cur{box-shadow:inset 0 0 0 4px var(--gold);animation:pulse 1s steps(2) infinite}
+.node.done .lbl{color:var(--mint)}
+.node:disabled{cursor:default}
+.node.lockn img{filter:brightness(0) opacity(.6)}
+@keyframes pulse{50%{box-shadow:inset 0 0 0 4px #fff}}
+.link{width:28px;height:8px;background:repeating-linear-gradient(90deg,var(--rim) 0 6px,transparent 6px 10px)}
+
+/* battle */
+.arena{position:relative;height:250px;border:4px solid #000;overflow:hidden;box-shadow:5px 5px 0 #000}
+.arena .ground{position:absolute;left:0;right:0;bottom:0;height:70px;background:repeating-linear-gradient(90deg,#0003 0 16px,transparent 16px 32px)}
+.ehud,.phud{position:absolute;width:min(46%,280px);padding:8px 10px}
+.ehud{left:10px;top:10px} .phud{right:10px;bottom:10px}
+.hn{display:flex;justify-content:space-between;align-items:center;gap:6px;font-family:var(--pix);font-size:10px;margin-bottom:6px;line-height:1.5}
+.espr{position:absolute;right:8%;top:22px;width:120px}
+.espr.big{width:150px;top:10px}
+.pspr{position:absolute;left:8%;bottom:14px;width:120px}
+.shadow{position:absolute;height:14px;background:#0005;border-radius:50%}
+.lunge-r{animation:lr .35s steps(3)} @keyframes lr{50%{transform:translate(40px,-14px)}}
+.lunge-l{animation:ll .35s steps(3)} @keyframes ll{50%{transform:translate(-40px,14px)}}
+.hurt{animation:hurt .5s steps(2)} @keyframes hurt{0%,50%{opacity:.2;transform:translateX(-6px)}25%,75%{opacity:1;transform:translateX(6px)}}
+.faint{animation:faint .6s steps(4) forwards} @keyframes faint{to{transform:translateY(60px);opacity:0}}
+.dmg{position:absolute;font-family:var(--pix);font-size:16px;color:#fff;text-shadow:3px 3px 0 #000;animation:up 1s steps(6) forwards;pointer-events:none}
+.dmg.crit{color:var(--gold);font-size:20px}
+@keyframes up{to{transform:translateY(-40px);opacity:0}}
+.msg{margin-top:10px;min-height:56px;font-size:24px}
+.qbox{margin-top:10px}
+.prompt{font-size:26px;margin:0 0 10px}
+.prompt .muted{font-size:21px}
+.visual{display:flex;justify-content:center;margin:0 0 10px}
+.visual svg{max-width:100%;height:auto}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opts.pics{grid-template-columns:1fr 1fr!important}
+.opt svg{width:100%;max-width:190px;height:auto;display:block;margin:0 auto}
+.opts.pics .opt{flex-direction:column;align-items:center}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;background:var(--panel2);color:var(--ink);border:4px solid #000;
+  box-shadow:inset -4px -4px 0 #20123a,inset 4px 4px 0 #5a3d8f;padding:10px 12px;font-family:var(--txt);font-size:26px;cursor:pointer;min-height:58px}
+.opt:hover:not(:disabled){background:#4a2f7d}
+.opt .k{font-family:var(--pix);font-size:10px;background:#000;color:var(--gold);padding:4px 6px;flex:none}
+.opt.right{background:#1f6b4a;box-shadow:inset 0 0 0 4px var(--mint)}
+.opt.wrong{background:#7a1f33;box-shadow:inset 0 0 0 4px var(--coral)}
+.opt.gone{opacity:.15}
+.opt:disabled{cursor:default}
+.fb{margin-top:12px;border-top:4px dashed var(--rim);padding-top:10px}
+.fb .head{font-family:var(--pix);font-size:12px;line-height:1.6;margin-bottom:6px}
+.fb .head.ok{color:var(--mint)} .fb .head.no{color:var(--coral)}
+.why{font-size:22px;background:#120a22;border:3px solid #000;padding:10px 12px;margin:8px 0 12px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.swap{display:flex;gap:6px;flex-wrap:wrap}
+.swap button{background:var(--panel2);border:3px solid #000;padding:3px;cursor:pointer;position:relative}
+.swap button.on{box-shadow:inset 0 0 0 3px var(--gold)}
+.swap button:disabled{opacity:.35;cursor:default}
+.swap img{width:36px}
+
+/* modal */
+.veil{position:fixed;inset:0;background:#0b0616e0;display:grid;place-items:center;padding:12px;z-index:50}
+.modal{max-width:760px;width:100%;max-height:92vh;overflow:auto}
+.modal ul{margin:6px 0;padding-left:22px}
+.modal li{margin:4px 0}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button{font-size:9px;padding:8px 10px}
+table.t{border-collapse:collapse;width:100%;font-size:21px;margin:6px 0}
+table.t td,table.t th{border:2px solid #000;padding:3px 8px;text-align:left;background:#120a22}
+table.t th{background:#000;color:var(--sky);font-family:var(--pix);font-size:9px;font-weight:400}
+.join{text-align:center}
+.join img{width:140px;margin:6px auto;animation:bob 1.2s steps(2) infinite}
+.diag{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:8px 0}
+.diag figure{margin:0;text-align:center;font-size:19px;color:var(--mute)}
+
+/* end */
+.cert{text-align:center;border-width:6px}
+.grade{background:#120a22;border:4px solid #000;box-shadow:inset 0 0 0 3px var(--gold);padding:10px;margin:10px auto;max-width:360px}
+.grade .gl{font-family:var(--pix);font-size:10px;color:var(--sky)}
+.grade .gv{font-family:var(--pix);font-size:clamp(34px,9vw,54px);color:var(--gold);text-shadow:4px 4px 0 #b3256b;margin:8px 0 2px}
+.grade .rank{margin:6px 0 0}
+.bonus.low{color:#2b0a10;background:var(--coral)}
+.bonus{font-family:var(--pix);font-size:10px;line-height:1.6;color:#052b18;background:var(--mint);border:4px solid #000;padding:8px;margin:8px auto;max-width:520px}
+.code{font-family:var(--pix);font-size:12px;margin:8px 0;line-height:1.6}.code b{font-size:16px;letter-spacing:3px;background:#000;padding:4px 8px}
+.cert .rank{font-family:var(--pix);font-size:clamp(16px,4vw,26px);color:var(--gold);text-shadow:3px 3px 0 #b3256b;margin:10px 0}
+.big3{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.big3 div{background:#120a22;border:3px solid #000;padding:8px}
+.big3 .v{font-family:var(--pix);font-size:16px;color:var(--mint);margin-top:6px}
+.endteam{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:10px 0}
+.endteam div{font-size:17px}
+.endteam img{width:56px;margin:0 auto}
+@media (max-width:620px){.endteam img{width:40px}.endteam div{font-size:14px}.cert .snap{margin-top:8px}}
+.snap{font-family:var(--pix);font-size:11px;line-height:1.7;color:#241500;background:var(--gold);border:4px solid #000;padding:10px;margin-top:12px}
+
+@media (max-width:620px){
+  .rpt .big3,.cert .big3{grid-template-columns:repeat(4,1fr);gap:4px}.rpt .big3 div,.cert .big3 div{padding:4px;font-size:15px}.rpt .big3 .v,.cert .big3 .v{font-size:11px}
+  .rpt table.t,.cert table.t{font-size:18px}.rpt p{font-size:19px}
+  body{font-size:20px}
+  .opts{grid-template-columns:1fr}
+  .arena{height:220px}
+  .espr{width:92px;right:4%} .espr.big{width:110px}
+  .pspr{width:92px;left:4%}
+  .ehud,.phud{width:58%}
+  .starters{grid-template-columns:1fr}
+  .starter{display:grid;grid-template-columns:72px 1fr;text-align:left;gap:10px;align-items:center}
+  .starter img{width:64px;margin:0}
+  .node{width:78px;height:78px} .node img{width:50px} .link{width:14px}
+  .big3{grid-template-columns:1fr 1fr}
+  .talk{grid-template-columns:64px 1fr} .talk img{width:64px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+(function(){
+"use strict";
+/* ============ helpers ============ */
+const $=s=>document.querySelector(s);
+const R=a=>a[Math.floor(Math.random()*a.length)];
+const rint=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const gcd=(a,b)=>b?gcd(b,a%b):a, lcm=(a,b)=>a*b/gcd(a,b);
+const fm=f=>String(f).replace(/(\d+)/g,'<sub>$1</sub>');
+const chg=c=>{const m=Math.abs(c);return (m===1?'':m)+(c>0?'+':'−')};
+const chgTxt=c=>Math.abs(c)+(c>0?'+':'−');
+const ion=(f,c)=>fm(f)+'<sup>'+chg(c)+'</sup>';
+const ROMAN=['','I','II','III','IV','V','VI','VII'];
+const PREF=['','mono','di','tri','tetra','penta','hexa','hepta','octa','nona','deca'];
+const strip=h=>/<svg/.test(h)?String(h):String(h).replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function mc(correct,distract,n){
+  n=n||4;const seen=new Set([strip(correct)]),ops=[correct];
+  for(const d of shuffle(distract)){if(ops.length>=n)break;if(d===''||d==null)continue;const k=strip(d);if(!seen.has(k)){seen.add(k);ops.push(d)}}
+  const sh=shuffle(ops);return {options:sh,ans:sh.indexOf(correct)};
+}
+function Q(key,prompt,visual,correct,distract,why,n){const m=mc(correct,distract,n);return {key,prompt,visual,options:m.options,ans:m.ans,why}}
+const nums=(ans,list)=>list.concat([ans+1,ans+2,ans-1,ans+3,ans-2,ans+4]).filter(x=>x>=0&&x!==ans).map(String);
+
+/* ============ chemistry data ============ */
+const EL=[null,['H','hydrogen',1],['He','helium',4],['Li','lithium',7],['Be','beryllium',9],['B','boron',11],['C','carbon',12],['N','nitrogen',14],['O','oxygen',16],['F','fluorine',19],['Ne','neon',20],['Na','sodium',23],['Mg','magnesium',24],['Al','aluminum',27],['Si','silicon',28],['P','phosphorus',31],['S','sulfur',32],['Cl','chlorine',35],['Ar','argon',40],['K','potassium',39],['Ca','calcium',40]];
+const ZOF={};EL.forEach((e,i)=>{if(e)ZOF[e[0]]=i});
+function shells(n){const cap=[2,8,8,8];const r=[];for(const c of cap){if(n<=0)break;const t=Math.min(c,n);r.push(t);n-=t}return r}
+const arrStr=a=>a.join(', ');
+const ION={Li:1,Be:2,N:-3,O:-2,F:-1,Na:1,Mg:2,Al:3,P:-3,S:-2,Cl:-1,K:1,Ca:2};
+const ionList=Object.keys(ION);
+const NOBLE={2:['He','helium'],10:['Ne','neon'],18:['Ar','argon']};
+const ROOT={N:'nitr',O:'ox',F:'fluor',P:'phosph',S:'sulf',Cl:'chlor'};
+
+function bohrSVG(o){
+  const sh=o.sh,N=sh.length,r0=44,st=22,rmax=r0+st*(N-1),pad=o.bracket?34:12;
+  const W=2*(rmax+pad)+(o.bracket?18:0),H=2*(rmax+12),cx=W/2-(o.bracket?9:0),cy=H/2;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="${Math.min(W,300)}" role="img" aria-label="${o.label||'Bohr-Rutherford diagram'}" xmlns="http://www.w3.org/2000/svg" font-family="VT323,monospace">`;
+  sh.forEach((cnt,i)=>{const r=r0+st*i;s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#8f78c4" stroke-width="2"/>`;
+    for(let k=0;k<cnt;k++){const a=(-90+360*k/cnt)*Math.PI/180;s+=`<rect x="${(cx+r*Math.cos(a)-5).toFixed(1)}" y="${(cy+r*Math.sin(a)-5).toFixed(1)}" width="10" height="10" fill="#ffd23f" stroke="#000" stroke-width="2"/>`}});
+  s+=`<circle cx="${cx}" cy="${cy}" r="27" fill="#ff5d73" stroke="#000" stroke-width="3"/>`;
+  if(o.hide){s+=`<text x="${cx}" y="${cy+9}" text-anchor="middle" font-size="28" fill="#fff">?</text>`}
+  else{s+=`<text x="${cx}" y="${cy-2}" text-anchor="middle" font-size="19" fill="#fff">${o.p}p</text><text x="${cx}" y="${cy+16}" text-anchor="middle" font-size="19" fill="#fff">${o.n}n</text>`}
+  if(o.bracket){const L=cx-rmax-16,Rr=cx+rmax+16,T=cy-rmax-6,B=cy+rmax+6;
+    s+=`<polyline points="${L+10},${T} ${L},${T} ${L},${B} ${L+10},${B}" fill="none" stroke="#f6efff" stroke-width="4"/>`;
+    s+=`<polyline points="${Rr-10},${T} ${Rr},${T} ${Rr},${B} ${Rr-10},${B}" fill="none" stroke="#f6efff" stroke-width="4"/>`;
+    s+=`<text x="${Rr+4}" y="${T+14}" font-size="26" fill="#ffd23f">${o.charge}</text>`}
+  return s+'</svg>';
+}
+
+/* ============ zone 1: atoms, Bohr & ion diagrams ============ */
+function g_pne(){
+  const z=rint(1,20),[s,nm,A]=EL[z],kind=R(['protons','neutrons','electrons']),n=A-z,ans={protons:z,neutrons:n,electrons:z}[kind];
+  return Q('pne'+z+kind,`A neutral atom of <b>${nm}-${A}</b> (<sup>${A}</sup>${s}). How many <b>${kind}</b> does it have?`,'',String(ans),nums(ans,[z,n,A,A+z]),
+  `${nm[0].toUpperCase()+nm.slice(1)} has atomic number <b>${z}</b>, and the atomic number is the proton count → <b>${z} proton${z>1?'s':''}</b>.<br>Neutral atom → electrons = protons = <b>${z}</b>.<br>The mass number (${A}) counts protons + neutrons together, so neutrons = ${A} − ${z} = <b>${n}</b>.`);
+}
+function arrWhy(z,nm,e,lead){const sh=shells(e);return `${lead||`${nm} has atomic number ${z} → ${z} protons, and an atom has the same number of electrons → <b>${e} electrons</b>.`}<br>Fill energy levels from the inside out: level 1 holds up to 2, level 2 up to 8, level 3 up to 8, then level 4.<br>${sh.join(' + ')} = ${e} → <b>${arrStr(sh)}</b>`}
+function g_arr(){
+  const z=rint(3,20),[s,nm]=EL[z],sh=shells(z);
+  const ds=[shells(z-1),shells(z+1),shells(z+2),shells(z-2)].map(arrStr);
+  if(sh.length>1)ds.push(arrStr(sh.slice().reverse()));
+  if(z>10)ds.push(arrStr([2,z-2]));
+  return Q('arr'+z,`What is the electron arrangement of ${/^[aeiou]/.test(nm)?'an':'a'} <b>${nm}</b> atom?`,'',arrStr(sh),ds,arrWhy(z,nm,z));
+}
+function g_val(){
+  const z=rint(1,20),[s,nm]=EL[z],sh=shells(z),v=sh[sh.length-1];
+  return Q('val'+z,`How many <b>valence electrons</b> does a <b>${nm}</b> atom have?`,'',String(v),nums(v,[z,sh.length,8-v>0?8-v:9]),
+  `Valence electrons are the electrons in the <b>outermost</b> energy level.<br>${nm} (${z} electrons) → ${arrStr(sh)}. The outer level holds <b>${v}</b>.`);
+}
+function g_bohrId(){
+  const z=rint(3,20),[s,nm,A]=EL[z],sh=shells(z);
+  const ds=[z-1,z+1,z+2,z-2,z+8,z-8].filter(x=>x>=1&&x<=20).map(x=>`${EL[x][1]} (${EL[x][0]})`);
+  return Q('bid'+z,'Which element does this Bohr-Rutherford diagram show? (It is a neutral atom.)',bohrSVG({sh,hide:true}),`${nm} (${s})`,ds,
+  `Count the electrons level by level: ${sh.join(' + ')} = <b>${z}</b>.<br>A neutral atom has equal protons and electrons, so it has ${z} protons → atomic number ${z} → <b>${nm}</b>.`);
+}
+function ionWhy(s){
+  const z=ZOF[s],c=ION[s],nm=EL[z][1],sh=shells(z),v=sh[sh.length-1],e=z-c,metal=c>0;
+  return `<b>${nm}</b>: ${z} electrons → ${arrStr(sh)}, so <b>${v} valence electron${v>1?'s':''}</b>.<br>`+
+  (metal?`It is a metal. Losing ${v} electron${v>1?'s':''} is far easier than gaining ${8-v}, and losing them leaves the full level underneath as the outer level (${arrStr(shells(e))}).`
+        :`It is a non-metal. Gaining ${-c} electron${-c>1?'s':''} is far easier than losing ${v}, and gaining them fills the outer level (${arrStr(shells(e))}).`)+
+  `<br>Charge = protons − electrons = ${z} − ${e} = <b>${c>0?'+':'−'}${Math.abs(c)}</b> → ${ion(s,c)}, a${metal?' cation (positive ion)':'n anion (negative ion)'} with the same arrangement as ${NOBLE[e][1]}.`;
+}
+function g_ionCharge(){
+  const s=R(ionList),z=ZOF[s],c=ION[s],nm=EL[z][1],sh=shells(z),v=sh[sh.length-1],sg=Math.sign(c);
+  return Q('ich'+s,`Which ion does a <b>${nm}</b> atom form?`,'',ion(s,c),[ion(s,-c),c<0?ion(s,v):ion(s,-(8-v)),ion(s,c+sg),c-sg!==0?ion(s,c-sg):ion(s,c+2*sg),fm(s)+' (stays neutral)'],ionWhy(s));
+}
+function g_ionArr(){
+  const s=R(ionList),z=ZOF[s],c=ION[s],nm=EL[z][1],e=z-c;
+  return Q('iar'+s,`What is the electron arrangement of the <b>${ion(s,c)}</b> ion?`,'',arrStr(shells(e)),[arrStr(shells(z)),arrStr(shells(z+c)),arrStr(shells(e+1)),arrStr(shells(e-1))],
+  `A neutral ${nm} atom has ${z} electrons (${arrStr(shells(z))}).<br>${ion(s,c)} has ${c>0?`lost ${c}`:`gained ${-c}`} electron${Math.abs(c)>1?'s':''} → ${z} ${c>0?'−':'+'} ${Math.abs(c)} = <b>${e} electrons</b>.<br>Arrange ${e} electrons: <b>${arrStr(shells(e))}</b> — the same as ${NOBLE[e][1]}. The protons (${z}) never change.`);
+}
+function g_ionCount(){
+  const s=R(ionList),z=ZOF[s],c=ION[s],nm=EL[z][1],e=z-c,isP=Math.random()<.3;
+  if(isP)return Q('ipc'+s,`How many <b>protons</b> are in one <b>${ion(s,c)}</b> ion?`,'',String(z),nums(z,[e,z+c,Math.abs(c)]),
+    `Forming an ion only moves <b>electrons</b>. The protons stay the same as the atom: ${nm} has atomic number ${z} → <b>${z} protons</b> (the ion has ${e} electrons).`);
+  return Q('iec'+s,`How many <b>electrons</b> are in one <b>${ion(s,c)}</b> ion?`,'',String(e),nums(e,[z,z+c,Math.abs(c)]),
+  `${nm} has ${z} protons, so a neutral atom has ${z} electrons.<br>The charge ${chgTxt(c)} means it ${c>0?`lost ${c}`:`gained ${-c}`} electron${Math.abs(c)>1?'s':''} (charge = protons − electrons).<br>${z} ${c>0?'−':'+'} ${Math.abs(c)} = <b>${e} electrons</b>.`);
+}
+function drawWhy(z){const [s,nm,A]=EL[z],sh=shells(z),v=sh[sh.length-1];
+  return `How to draw ${nm} (${s}):<br>1) Atomic number ${z} → <b>${z} protons</b>.<br>2) Mass number ${A} (rounded atomic mass) − ${z} → <b>${A-z} neutrons</b>.<br>3) An atom has as many electrons as protons → <b>${z} electrons</b>. Fill the rings from the inside out (up to 2, then 8, then 8) → <b>${arrStr(sh)}</b>.<br>4) The outer level holds <b>${v} valence electron${v>1?'s':''}</b>.`}
+const art=w=>/^[aeiou]/.test(w)?'an':'a';
+function bAtom(z){const [s,nm,A]=EL[z];return bohrSVG({p:z,n:A-z,sh:shells(z),label:nm+' Bohr-Rutherford diagram'})}
+function g_bValence(){
+  const z=rint(3,20),[s,nm]=EL[z],sh=shells(z),v=sh[sh.length-1];
+  return Q('bv'+z,`Here is ${nm} (${s}). How many <b>valence electrons</b> does it have?<br><span class="muted">Hint: count the dots on the outermost ring only.</span>`,bAtom(z),String(v),nums(v,[z,sh.length,sh[0]]),
+  `Valence electrons are the ones on the <b>outermost ring</b>. ${nm}'s rings hold ${arrStr(sh)}, so the outer ring has <b>${v}</b>.`);
+}
+function g_bNeutron(){
+  const z=rint(3,20),[s,nm,A]=EL[z],n=A-z;
+  return Q('bn'+z,`You're drawing ${nm} (${s}). Atomic number <b>${z}</b>, mass number <b>${A}</b>. How many <b>neutrons</b> go in the nucleus?<br><span class="muted">Hint: neutrons = mass number − atomic number.</span>`,'',String(n),nums(n,[A,z,A+z]),
+  `The mass number counts protons + neutrons together. The atomic number is the protons.<br>${A} − ${z} = <b>${n} neutrons</b>. The nucleus is labelled ${z}p, ${n}n.`);
+}
+function g_bArr(){
+  const z=rint(3,20),[s,nm]=EL[z],sh=shells(z);
+  const ds=[shells(z-1),shells(z+1)].map(arrStr);if(sh.length>1)ds.push(arrStr(sh.slice().reverse()));if(z>10)ds.push(arrStr([2,z-2]));if(z>2&&z<=10)ds.push(arrStr([z]));ds.push(arrStr(shells(z+2)));
+  return Q('ba'+z,`${nm[0].toUpperCase()+nm.slice(1)} has <b>${z} electrons</b>. How do they fill the rings?<br><span class="muted">Hint: inner ring holds 2, the next two hold 8 each.</span>`,'',arrStr(sh),ds,
+  `Fill from the inside out: up to 2 on ring 1, up to 8 on ring 2, up to 8 on ring 3, the rest on ring 4.<br>${sh.join(' + ')} = ${z} → <b>${arrStr(sh)}</b>.`);
+}
+function g_bLoseGain(){
+  const s=R(ionList),z=ZOF[s],c=ION[s],nm=EL[z][1],sh=shells(z),v=sh[sh.length-1],metal=c>0;
+  const right=metal?`lose ${v}`:`gain ${8-v}`;
+  return Q('blg'+s,`Here is ${nm} (${s}) with <b>${v} valence electron${v>1?'s':''}</b>. To get a full outer ring, it will…`,bAtom(z),right,
+  [metal?`gain ${8-v}`:`lose ${v}`,metal?`lose ${v+1}`:`gain ${9-v}`,metal?`gain ${v}`:`lose ${8-v}`,metal?`lose ${Math.max(1,v-1)===v?v+2:v-1}`:`gain ${8-v===1?2:7-v}`],
+  metal?`With only ${v} valence electron${v>1?'s':''}, it is much easier to <b>lose ${v}</b> than to gain ${8-v}. Losing them leaves the full ring underneath as the new outer ring (${arrStr(shells(z-c))}). Losing electrons makes it <b>positive</b>: ${ion(s,c)}.`
+       :`With ${v} valence electrons, it is much easier to <b>gain ${8-v}</b> than to lose ${v}. Gaining them fills the outer ring to 8 (${arrStr(shells(z-c))}). Gaining electrons makes it <b>negative</b>: ${ion(s,c)}.`);
+}
+function g_drawBohr(){
+  const z=rint(3,20),[s,nm,A]=EL[z],n=A-z,sh=shells(z),d=o=>bohrSVG(Object.assign({p:z,n,sh},o));
+  const ds=[d({sh:shells(z+1)}),d({sh:shells(z-1)}),z>10?d({sh:[2,z-2]}):d({sh:sh.slice().reverse()})];
+  if(n!==z)ds.push(d({p:n,n:z}));else ds.push(d({n:n+1}));
+  ds.push(d({p:z,n:A}));
+  return Q('drb'+z,`Which is the correct Bohr-Rutherford diagram for <b>${nm} (${s})</b>?`,'',d({}),ds,drawWhy(z));
+}
+function g_drawIon(){
+  const s=R(ionList),z=ZOF[s],c=ION[s],nm=EL[z][1],A=EL[z][2],n=A-z,e=z-c,sh=shells(z),v=sh[sh.length-1];
+  const d=o=>bohrSVG(Object.assign({p:z,n,sh:shells(e),bracket:true,charge:chg(c)},o));
+  const ds=[d({sh:shells(z)}),d({charge:chg(-c)}),d({sh:shells(z+c)}),d({p:e}),d({charge:'0'})];
+  return Q('dri'+s,`Which is the correct ion diagram for the ion that <b>${nm}</b> forms?`,'',d({}),ds,
+  `1) ${nm} atom: ${z}p, ${n}n, electrons ${arrStr(sh)} → <b>${v} valence electron${v>1?'s':''}</b>.<br>2) ${c>0?`It's a metal, so it <b>loses</b> its ${v} valence electron${v>1?'s':''}`:`It's a non-metal, so it <b>gains</b> ${-c} electron${-c>1?'s':''} to fill the outer level to 8`} → ${e} electrons → <b>${arrStr(shells(e))}</b>.<br>3) The nucleus does not change: still ${z}p and ${n}n.<br>4) Draw it in <b>square brackets</b> with the charge at the top right: ${z} − ${e} = <b>${chgTxt(c)}</b> → ${ion(s,c)}.`);
+}
+function g_ionLabel(){
+  const s=R(ionList),z=ZOF[s],c=ION[s],nm=EL[z][1],A=EL[z][2],e=z-c,sh=shells(e);
+  return Q('ilb'+s,`This is the ion diagram for <b>${nm}</b>. What charge goes in the top right corner?<br><span class="muted">Hint: charge = protons − electrons.</span>`,bohrSVG({p:z,n:A-z,sh,bracket:true,charge:'?',label:'ion diagram'}),chgTxt(c),['1+','2+','3+','1−','2−','3−'],
+  `Count the protons in the nucleus: <b>${z}</b>. Count the electrons: ${sh.length>1?sh.join(' + ')+' = ':''}<b>${e}</b>.<br>Charge = protons − electrons = ${z} − ${e} = <b>${chgTxt(c)}</b>. ${c>0?`More protons than electrons → positive (it lost ${c} electron${c>1?'s':''}).`:`More electrons than protons → negative (it gained ${-c} electron${-c>1?'s':''}).`}`);
+}
+function g_ionDiagram(){
+  const s=R(ionList),z=ZOF[s],c=ION[s],nm=EL[z][1],A=EL[z][2],e=z-c,sh=shells(e);
+  const iso=ionList.filter(t=>t!==s&&ZOF[t]-ION[t]===e).map(t=>ion(t,ION[t]));
+  return Q('idg'+s,'This ion diagram is missing its charge. Which ion is it?',bohrSVG({p:z,n:A-z,sh,bracket:true,charge:'?',label:'ion diagram'}),ion(s,c),
+  [fm(s)+' (neutral atom)',ion(s,-c),NOBLE[e][0]+' (noble gas)'].concat(iso),
+  `The nucleus shows <b>${z} protons</b> → atomic number ${z} → ${nm}.<br>Count electrons: ${sh.length>1?sh.join(' + ')+' = ':''}<b>${e}</b>.<br>Charge = protons − electrons = ${z} − ${e} = ${c>0?'+':'−'}${Math.abs(c)} → <b>${ion(s,c)}</b>. (Square brackets around a diagram mean it is an ion.)`);
+}
+
+/* ============ zone 2: ionic ============ */
+const METALS=[['Li','lithium',1],['Na','sodium',1],['K','potassium',1],['Rb','rubidium',1],['Cs','cesium',1],['Ag','silver',1],['Be','beryllium',2],['Mg','magnesium',2],['Ca','calcium',2],['Sr','strontium',2],['Ba','barium',2],['Zn','zinc',2],['Cd','cadmium',2],['Al','aluminum',3]];
+const ANIONS=[['F','fluor',-1,'fluorine'],['Cl','chlor',-1,'chlorine'],['Br','brom',-1,'bromine'],['I','iod',-1,'iodine'],['O','ox',-2,'oxygen'],['S','sulf',-2,'sulfur'],['Se','selen',-2,'selenium'],['N','nitr',-3,'nitrogen'],['P','phosph',-3,'phosphorus'],['H','hydr',-1,'hydrogen']];
+const GRP={Li:1,Na:1,K:1,Rb:1,Cs:1,Be:2,Mg:2,Ca:2,Sr:2,Ba:2,Al:13,Zn:0,Ag:0,Cd:0,Se:16,F:17,Cl:17,Br:17,I:17,O:16,S:16,N:15,P:15};
+const catM=m=>({s:m[0],nm:m[1],c:m[2],poly:false});
+const anS=a=>({s:a[0],nm:a[1]+'ide',c:a[2],poly:false,el:a[3],root:a[1]});
+const part=(sym,n,poly)=>n===1?sym:(poly?`(${sym})${n}`:sym+n);
+function cnt(cat,an){const a=Math.abs(an.c),l=lcm(cat.c,a);return [l/cat.c,l/a]}
+const fml=(cat,an,n1,n2)=>part(cat.s,n1,cat.poly)+part(an.s,n2,an.poly);
+const noBr=(cat,an,n1,n2)=>cat.s+(n1>1?n1:'')+an.s+(n2>1?n2:'');
+function balWhy(cat,an,n1,n2){
+  const a=Math.abs(an.c),T=n1*cat.c,f=fml(cat,an,n1,n2);
+  let w=`Ions: <b>${ion(cat.s,cat.c)}</b> (${cat.nm}) and <b>${ion(an.s,an.c)}</b> (${an.nm}). The total charge must be zero.<br>`;
+  if(cat.c===a){w+=`The charges are equal and opposite (+${a} and −${a}), so one of each balances → <b>${fm(f)}</b>.`;if(a>1)w+=` (Criss-crossing would give ${fm(fml(cat,an,a,a))} — always reduce to the lowest ratio.)`}
+  else{w+=`Lowest common multiple of ${cat.c} and ${a} is <b>${T}</b>: ${n1} × (+${cat.c}) = +${T} and ${n2} × (−${a}) = −${T}.<br>Ratio ${n1} : ${n2} → <b>${fm(f)}</b> (a subscript of 1 is not written).`;
+    if(gcd(cat.c,a)>1)w+=`<br>Criss-crossing gives ${fm(fml(cat,an,a,cat.c))}, which must be reduced to the lowest ratio.`}
+  if((an.poly&&n2>1)||(cat.poly&&n1>1))w+=`<br>Brackets keep the polyatomic ion together: the subscript outside the bracket multiplies the whole ion. The subscripts inside it never change.`;
+  return w;
+}
+function g_charge(){
+  if(Math.random()<.55){const m=R(METALS),g=GRP[m[0]],c=m[2];
+    const why=g===0?`${m[1]} is a transition metal with only one common charge: <b>${ion(m[0],c)}</b>. Silver (Ag⁺), zinc (Zn²⁺) and cadmium (Cd²⁺) are the transition metals with only one charge, so they never get a Roman numeral.`
+      :`${m[1]} is in <b>Group ${g}</b>, so its atom has ${g===13?3:g} valence electron${g===1?'':'s'}. Metals lose their valence electrons → charge <b>${chgTxt(c)}</b> (${ion(m[0],c)}).`;
+    return Q('chm'+m[0],`What is the charge on the <b>${m[1]} ion</b>?`,'',chgTxt(c),['1+','2+','3+','1−','2−','4+'],why);}
+  const a=R(ANIONS.filter(x=>x[0]!=='H')),g=GRP[a[0]],c=a[2];
+  return Q('cha'+a[0],`What is the charge on the <b>${a[1]}ide ion</b>?`,'',chgTxt(c),['1−','2−','3−','1+','2+','4−'],
+  `${a[3]} is in <b>Group ${g}</b>, so its atom has ${g-10} valence electrons. Non-metals gain electrons until the outer level holds 8: 8 − ${g-10} = ${-c} gained → charge <b>${chgTxt(c)}</b> (${ion(a[0],c)}). The "-ide" ending names the ion.`);
+}
+function g_ionN2F(){
+  const cat=catM(R(METALS)),an=anS(R(ANIONS)),[n1,n2]=cnt(cat,an),f=fml(cat,an,n1,n2),a=Math.abs(an.c);
+  const ds=[fml(cat,an,a,cat.c),fml(cat,an,n2,n1),fml(cat,an,1,1),part(an.s,n2)+part(cat.s,n1),fml(cat,an,n1+1,n2),fml(cat,an,n1,n2+1)].map(fm);
+  ds.push(ion(cat.s,cat.c)+ion(an.s,an.c));
+  return Q('in2f'+cat.s+an.s,`Write the formula for <b>${cat.nm} ${an.nm}</b>.`,'',fm(f),ds,balWhy(Object.assign({},cat,{nm:cat.nm+' ion'}),Object.assign({},an,{nm:an.nm+' ion'}),n1,n2));
+}
+function preName(n,root){let p=PREF[n];if(root[0]==='o'&&/[ao]$/.test(p))p=p.slice(0,-1);return p+root}
+function g_ionF2N(){
+  const cat=catM(R(METALS)),an=anS(R(ANIONS)),[n1,n2]=cnt(cat,an),f=fml(cat,an,n1,n2),name=`${cat.nm} ${an.nm}`;
+  const ds=[`${cat.nm} ${an.el}`,`${n1>1?PREF[n1]:''}${cat.nm} ${preName(n2,an.nm)}`,`${an.nm} ${cat.nm}`,`${cat.nm} ${an.root}ate`,`${cat.nm} ${an.root}ite`];
+  return Q('if2n'+cat.s+an.s,`Name the compound <b>${fm(f)}</b>.`,'',name,ds,
+  `${cat.s} is a metal and ${an.s} is a non-metal → <b>ionic</b>.<br>1) Cation: use the metal's full name → ${cat.nm}.<br>2) Anion: root of ${an.el} + "-ide" → ${an.nm}.<br>Ionic names never use prefixes — the ion charges already fix the ${n1}:${n2} ratio. → <b>${name}</b>`);
+}
+const MULTI=[['Fe','iron',[2,3]],['Cu','copper',[1,2]],['Pb','lead',[2,4]],['Sn','tin',[2,4]],['Ni','nickel',[2,3]],['Co','cobalt',[2,3]],['Cr','chromium',[2,3]],['Au','gold',[1,3]],['Pd','palladium',[2,4]]];
+const MAN=ANIONS.filter(a=>['F','Cl','Br','O','S'].includes(a[0]));
+function multiPick(){const m=R(MULTI),c=R(m[2]),an=anS(R(MAN)),cat={s:m[0],nm:`${m[1]}(${ROMAN[c]})`,c,poly:false},[n1,n2]=cnt(cat,an);return {m,c,an,cat,n1,n2,other:m[2].find(x=>x!==c)}}
+function g_multiF2N(){
+  const {m,c,an,cat,n1,n2,other}=multiPick(),f=fml(cat,an,n1,n2),a=Math.abs(an.c),name=`${cat.nm} ${an.nm}`;
+  const ds=[`${m[1]}(${ROMAN[other]}) ${an.nm}`,`${m[1]} ${an.nm}`,`${m[1]}(${ROMAN[n2]}) ${an.nm}`,`${m[1]}(${ROMAN[n1]}) ${an.nm}`,`${m[1]} ${preName(n2,an.nm)}`];
+  return Q('mf2n'+m[0]+c+an.s,`Name the compound <b>${fm(f)}</b>.`,'',name,ds,
+  `${m[1]} is <b>multivalent</b> (it can be ${m[2].map(x=>ion(m[0],x)).join(' or ')}), so the name needs a Roman numeral showing its charge.<br>Work backwards from the anion: ${n2} × (−${a}) = −${n2*a}.<br>The ${n1} ${m[1]} ion${n1>1?'s':''} must add up to +${n2*a}, so each is <b>+${c}</b> → ${m[1]}(${ROMAN[c]}).${n2!==c?`<br>Trap: reading the subscripts backwards would suggest ${m[1]}(${ROMAN[n2]}), but ${fm(f)} was reduced — always use the anion's total charge.`:''}<br>Name: <b>${name}</b>`);
+}
+function g_multiN2F(){
+  const {m,c,an,cat,n1,n2,other}=multiPick(),f=fml(cat,an,n1,n2),a=Math.abs(an.c);
+  const oc=Object.assign({},cat,{c:other}),[o1,o2]=cnt(oc,an);
+  const ds=[fml(cat,an,o1,o2),fml(cat,an,a,c),fml(cat,an,n2,n1),m[0]+ROMAN[c]+an.s,fml(cat,an,1,1),fml(cat,an,n1,n2+1),fml(cat,an,n1+1,n2),fml(cat,an,c,1)].map(fm);
+  return Q('mn2f'+m[0]+c+an.s,`Write the formula for <b>${cat.nm} ${an.nm}</b>.`,'',fm(f),ds,
+  `The Roman numeral (${ROMAN[c]}) <b>is the charge</b>: ${ion(m[0],c)}. It is not a subscript.<br>`+balWhy({s:m[0],nm:cat.nm+' ion',c,poly:false},Object.assign({},an,{nm:an.nm+' ion'}),n1,n2));
+}
+
+/* ============ zone 3: polyatomic ============ */
+const POLY=[
+ {s:'NH4',nm:'ammonium',c:1,ide:'nitride',alt:'NH3',altnm:'ammonia',tip:'Ammonium is the main <b>positive</b> polyatomic ion (hydronium H₃O⁺ is the other one on your table). It takes the metal’s place, so its compounds are ionic.'},
+ {s:'OH',nm:'hydroxide',c:-1,ide:'oxide',alt:'HO2',altnm:'hydrogen oxide',tip:'Hydroxide ends in "-ide" even though it is polyatomic (cyanide does too).'},
+ {s:'CN',nm:'cyanide',c:-1,ide:'carbon nitride',alt:'CNO',altnm:'cyanate',tip:'Cyanide ends in "-ide" even though it is polyatomic (hydroxide does too).'},
+ {s:'NO3',nm:'nitrate',c:-1,ide:'nitride',alt:'NO2',altnm:'nitrite',tip:'ate'},
+ {s:'NO2',nm:'nitrite',c:-1,ide:'nitride',alt:'NO3',altnm:'nitrate',tip:'ite'},
+ {s:'ClO4',nm:'perchlorate',c:-1,ide:'chloride',alt:'ClO3',altnm:'chlorate',tip:'"per-…-ate" has one <b>more</b> oxygen than "-ate": perchlorate ClO₄⁻, chlorate ClO₃⁻ (same charge).'},
+ {s:'ClO3',nm:'chlorate',c:-1,ide:'chloride',alt:'ClO2',altnm:'chlorite',tip:'ate'},
+ {s:'ClO2',nm:'chlorite',c:-1,ide:'chloride',alt:'ClO3',altnm:'chlorate',tip:'ite'},
+ {s:'ClO',nm:'hypochlorite',c:-1,ide:'chloride',alt:'ClO2',altnm:'chlorite',tip:'"hypo-…-ite" has one <b>less</b> oxygen than "-ite": chlorite ClO₂⁻, hypochlorite ClO⁻ (same charge).'},
+ {s:'HCO3',nm:'hydrogen carbonate',c:-1,ide:'hydrogen carbide',alt:'CO3',altnm:'carbonate',tip:'Adding a hydrogen to carbonate (CO₃²⁻) makes the ion one less negative: hydrogen carbonate HCO₃⁻.'},
+ {s:'HSO4',nm:'hydrogen sulfate',c:-1,ide:'hydrogen sulfide',alt:'SO4',altnm:'sulfate',tip:'Adding a hydrogen to sulfate (SO₄²⁻) makes the ion one less negative: hydrogen sulfate HSO₄⁻.'},
+ {s:'MnO4',nm:'permanganate',c:-1,ide:'manganese oxide',alt:'MnO3',altnm:'manganate',tip:''},
+ {s:'CH3COO',nm:'acetate',c:-1,ide:'carbide',alt:'CO3',altnm:'carbonate',tip:''},
+ {s:'CO3',nm:'carbonate',c:-2,ide:'carbide',alt:'HCO3',altnm:'hydrogen carbonate',tip:''},
+ {s:'SO4',nm:'sulfate',c:-2,ide:'sulfide',alt:'SO3',altnm:'sulfite',tip:'ate'},
+ {s:'SO3',nm:'sulfite',c:-2,ide:'sulfide',alt:'SO4',altnm:'sulfate',tip:'ite'},
+ {s:'CrO4',nm:'chromate',c:-2,ide:'chromide',alt:'Cr2O7',altnm:'dichromate',tip:''},
+ {s:'Cr2O7',nm:'dichromate',c:-2,ide:'chromide',alt:'CrO4',altnm:'chromate',tip:''},
+ {s:'PO4',nm:'phosphate',c:-3,ide:'phosphide',alt:'PO3',altnm:'phosphite',tip:'ate'},
+ {s:'PO3',nm:'phosphite',c:-3,ide:'phosphide',alt:'PO4',altnm:'phosphate',tip:'ite'}];
+const NEG=POLY.filter(p=>p.c<0);
+const atoms=f=>{let t=0;f.replace(/([A-Z][a-z]?)(\d*)/g,(m,e,n)=>{t+=n?+n:1});return t};
+function ateTip(p){
+  if(p.tip==='ate')return `<br>Tip: an "-ate" ion has one more oxygen than the matching "-ite" ion, with the same charge (${p.nm} ${ion(p.s,p.c)} vs ${p.altnm} ${ion(p.alt,p.c)}).`;
+  if(p.tip==='ite')return `<br>Tip: an "-ite" ion has one less oxygen than the matching "-ate" ion, with the same charge (${p.nm} ${ion(p.s,p.c)} vs ${p.altnm} ${ion(p.alt,p.c)}).`;
+  return p.tip?'<br>Tip: '+p.tip:'';
+}
+function g_polyName2Ion(){
+  const p=R(POLY),others=shuffle(POLY.filter(x=>x!==p));
+  const ds=[1,-1,-2,-3].filter(x=>x!==p.c).map(x=>ion(p.s,x)).concat([ion(p.alt,p.c),ion(others[0].s,others[0].c)]);
+  return Q('pn2i'+p.s,`What is the formula and charge of the <b>${p.nm}</b> ion?`,'',ion(p.s,p.c),ds,
+  `<b>${p.nm}</b> = ${ion(p.s,p.c)} (from the polyatomic ion table). All ${atoms(p.s)} atoms are bonded together, and the whole group carries the ${chgTxt(p.c)} charge as one unit.`+ateTip(p));
+}
+function g_polyIon2Name(){
+  const p=R(POLY),others=shuffle(POLY.filter(x=>x!==p&&x.nm!==p.altnm&&x.s!==p.alt)).map(x=>x.nm);
+  return Q('pi2n'+p.s,`What is the name of the <b>${ion(p.s,p.c)}</b> ion?`,'',p.nm,[p.altnm,p.ide].concat(others.slice(0,3)),
+  `${ion(p.s,p.c)} is <b>${p.nm}</b>. Polyatomic ions have their own names from the table.<br>"-ide" is for single-element ions like S²⁻ (sulfide). Hydroxide (OH⁻) and cyanide (CN⁻) are the exceptions.`+ateTip(p));
+}
+function polyPair(){
+  if(Math.random()<.3){const cat={s:'NH4',nm:'ammonium',c:1,poly:true};
+    if(Math.random()<.5){const p=R(NEG);return [cat,{s:p.s,nm:p.nm,c:p.c,poly:true,p}]}
+    return [cat,anS(R(ANIONS.filter(a=>['Cl','Br','I','F','S'].includes(a[0]))))];}
+  const p=R(NEG);return [catM(R(METALS)),{s:p.s,nm:p.nm,c:p.c,poly:true,p}];
+}
+function g_polyN2F(){
+  const [cat,an]=polyPair(),[n1,n2]=cnt(cat,an),f=fml(cat,an,n1,n2);
+  let ds=[noBr(cat,an,n1,n2),fml(cat,an,n2,n1),noBr(cat,an,n2,n1)];
+  [[1,1],[1,2],[2,1],[1,3],[3,1],[3,2],[2,3]].forEach(([a,b])=>ds.push(fml(cat,an,a,b)));
+  if(an.p)ds.push(fml(cat,Object.assign({},an,{s:an.p.alt}),n1,n2));
+  ds=ds.map(fm);
+  return Q('pn2f'+cat.s+an.s,`Write the formula for <b>${cat.nm} ${an.nm}</b>.`,'',fm(f),ds,balWhy(cat,an,n1,n2));
+}
+function g_polyF2N(){
+  const [cat,an]=polyPair(),[n1,n2]=cnt(cat,an),f=fml(cat,an,n1,n2),name=`${cat.nm} ${an.nm}`;
+  const ds=[`${an.nm} ${cat.nm}`,`${n1>1?PREF[n1]:''}${cat.nm} ${n2>1?PREF[n2]:''}${an.nm}`];
+  if(an.p)ds.push(`${cat.nm} ${an.p.altnm}`,`${cat.nm} ${an.p.ide}`);else ds.push(`${cat.nm} ${an.el}`,`${cat.nm} ${an.root}ate`);
+  if(cat.poly)ds.push(`ammonia ${an.nm}`,`nitrogen tetrahydride ${an.nm}`);else ds.push(`${cat.nm} ${R(NEG.filter(x=>x.s!==an.s)).nm}`);
+  return Q('pf2n'+cat.s+an.s,`Name the compound <b>${fm(f)}</b>.`,'',name,ds,
+  `Split the formula into its ions — treat a polyatomic group as one unit and don't break it into separate elements:<br>${fm(cat.s)} → ${ion(cat.s,cat.c)} = <b>${cat.nm}</b>${cat.poly?' (polyatomic)':' (metal: full name)'}<br>${fm(an.s)} → ${ion(an.s,an.c)} = <b>${an.nm}</b>${an.poly?' (polyatomic)':''}<br>Name = cation + anion, no prefixes (the brackets and subscripts just balance the charges) → <b>${name}</b>`);
+}
+
+function mpPick(){const m=R(MULTI.filter(x=>x[0]!=='Au')),c=R(m[2]),p=R(NEG),an={s:p.s,nm:p.nm,c:p.c,poly:true,p},cat={s:m[0],nm:`${m[1]}(${ROMAN[c]})`,c,poly:false},[n1,n2]=cnt(cat,an);return {m,c,an,cat,n1,n2,other:m[2].find(x=>x!==c)}}
+function g_mpF2N(){
+  const {m,c,an,cat,n1,n2,other}=mpPick(),f=fml(cat,an,n1,n2),a=Math.abs(an.c),name=`${cat.nm} ${an.nm}`;
+  return Q('mpf'+m[0]+c+an.s,`Name the compound <b>${fm(f)}</b>.`,'',name,[`${m[1]}(${ROMAN[other]}) ${an.nm}`,`${m[1]} ${an.nm}`,`${m[1]}(${ROMAN[n2]}) ${an.nm}`,`${m[1]}(${ROMAN[n1]}) ${an.nm}`,`${cat.nm} ${an.p.altnm}`,`${cat.nm} ${an.p.ide}`],
+  `Find the polyatomic ion first: ${fm(an.s)} = ${ion(an.s,an.c)}, <b>${an.nm}</b> (keep its name — never change it to "-ide").<br>${m[1]} is <b>multivalent</b>, so use the ion's <b>total</b> charge: ${n2} × (−${a}) = −${n2*a}.<br>The ${n1} ${m[1]} ion${n1>1?'s':''} must add up to +${n2*a}, so each is <b>+${c}</b> → ${m[1]}(${ROMAN[c]}).<br>Name: <b>${name}</b>`);
+}
+function g_mpN2F(){
+  const {m,c,an,cat,n1,n2,other}=mpPick(),f=fml(cat,an,n1,n2),a=Math.abs(an.c),oc=Object.assign({},cat,{c:other}),[o1,o2]=cnt(oc,an);
+  let ds=[fml(cat,an,o1,o2),noBr(cat,an,n1,n2),fml(cat,an,n2,n1),fml(cat,an,a,c),fml(cat,an,1,1),fml(cat,an,1,c),fml(cat,an,n1+1,n2),fml(cat,an,1,2),fml(cat,an,2,1),fml(cat,Object.assign({},an,{s:an.p.alt}),n1,n2)].map(fm);
+  return Q('mpn'+m[0]+c+an.s,`Write the formula for <b>${cat.nm} ${an.nm}</b>.`,'',fm(f),ds,
+  `The Roman numeral (${ROMAN[c]}) <b>is the charge</b>: ${ion(m[0],c)}. ${an.nm} is ${ion(an.s,an.c)} from the polyatomic ion table.<br>`+balWhy({s:m[0],nm:cat.nm+' ion',c,poly:false},Object.assign({},an,{nm:an.nm+' ion'}),n1,n2));
+}
+
+/* ============ zone 4: molecular ============ */
+const NM={H:['hydrogen','hydr'],B:['boron','bor'],C:['carbon','carb'],N:['nitrogen','nitr'],O:['oxygen','ox'],F:['fluorine','fluor'],Si:['silicon','silic'],P:['phosphorus','phosph'],S:['sulfur','sulf'],Cl:['chlorine','chlor'],Br:['bromine','brom'],I:['iodine','iod'],Se:['selenium','selen']};
+const MOLS=[['C',1,'O',1],['C',1,'O',2],['N',2,'O',1],['N',1,'O',1],['N',1,'O',2],['N',2,'O',4],['N',2,'O',5],['N',2,'O',3],['S',1,'O',2],['S',1,'O',3],['C',1,'Cl',4],['P',1,'Cl',3],['P',1,'Cl',5],['P',2,'O',5],['P',4,'O',10],['S',1,'F',6],['B',1,'F',3],['Si',1,'O',2],['C',1,'S',2],['Si',1,'Cl',4],['B',1,'Br',3],['N',1,'Br',3],['N',1,'Cl',3],['P',4,'O',6],['S',2,'O',5],['S',2,'Cl',2],['P',1,'Br',5],['S',1,'Cl',2],['N',1,'F',3]];
+const molF=(e1,n1,e2,n2)=>e1+(n1>1?n1:'')+e2+(n2>1?n2:'');
+function molName(e1,n1,e2,n2,o){o=o||{};const p1=(n1>1||o.mono1)?PREF[n1]:'';let p2=o.noPre?'':PREF[n2];const r=NM[e2][1]+'ide';
+  if(!o.noDrop&&p2&&/[ao]$/.test(p2)&&r[0]==='o')p2=p2.slice(0,-1);return p1+NM[e1][0]+' '+p2+r}
+function g_molF2N(){
+  const [e1,n1,e2,n2]=R(MOLS),name=molName(e1,n1,e2,n2),r=NM[e2][1]+'ide',p2=PREF[n2],drop=r[0]==='o'&&/[ao]$/.test(p2);
+  const ds=[molName(e1,n1,e2,n2,{noPre:true}),molName(e1,n1,e2,n2,{mono1:true}),molName(e1,n2,e2,n1),molName(e2,n2,e1,n1),`${n1>1?PREF[n1]:''}${NM[e1][0]} ${PREF[n2]}${NM[e2][0]}`];
+  return Q('mlf'+e1+n1+e2+n2,`Name the compound <b>${fm(molF(e1,n1,e2,n2))}</b>.`,'',name,ds,
+  `${NM[e1][0]} and ${NM[e2][0]} are both non-metals → <b>molecular</b> → use prefixes.<br>• ${n1} ${NM[e1][0]} → ${n1>1?`"${PREF[n1]}" → ${PREF[n1]}${NM[e1][0]}`:`${NM[e1][0]} (the first element never gets "mono")`}<br>• ${n2} ${NM[e2][0]} → "${p2}" + ${r}${drop?` → drop the final "${p2.slice(-1)}" of the prefix before "oxide" → ${p2.slice(0,-1)}${r}`:''}<br>Name: <b>${name}</b>`);
+}
+function g_molN2F(){
+  const [e1,n1,e2,n2]=R(MOLS),name=molName(e1,n1,e2,n2),f=molF(e1,n1,e2,n2),g=gcd(n1,n2);
+  const ds=[molF(e1,n2,e2,n1),molF(e2,n2,e1,n1),molF(e1,n1,e2,n2+1),n2>1?molF(e1,n1,e2,n2-1):molF(e1,n1+1,e2,n2),g>1?molF(e1,n1/g,e2,n2/g):molF(e1,n1+1,e2,n2+1)].map(fm);
+  return Q('mln'+e1+n1+e2+n2,`Write the formula for <b>${name}</b>.`,'',fm(f),ds,
+  `Molecular compound → the prefixes <b>are</b> the subscripts.<br>${n1>1?`"${PREF[n1]}" ${NM[e1][0]} = ${n1}`:`${NM[e1][0]} has no prefix = 1 (not written)`}, "${PREF[n2]}" ${NM[e2][0]} = ${n2}.<br>Write the elements in the same order as the name. Molecular formulas are never criss-crossed or reduced${g>1?` (${fm(f)} stays ${fm(f)}, not ${fm(molF(e1,n1/g,e2,n2/g))})`:''}. → <b>${fm(f)}</b>`);
+}
+function g_prefix(){
+  const n=rint(1,10),list=PREF.slice(1).map((p,i)=>`${p} ${i+1}`).join(', ');
+  if(Math.random()<.5)return Q('pf'+n,`What number does the prefix <b>${PREF[n]}-</b> mean?`,'',String(n),nums(n,[]),`The ten prefixes: ${list}. So <b>${PREF[n]}- = ${n}</b>.`);
+  return Q('pfr'+n,`Which prefix means <b>${n}</b>?`,'',PREF[n]+'-',PREF.slice(1).filter((p,i)=>i+1!==n).map(p=>p+'-'),`The ten prefixes: ${list}. So <b>${n} = ${PREF[n]}-</b>.`);
+}
+const DI=[['H','hydrogen','gas'],['N','nitrogen','gas'],['O','oxygen','gas'],['F','fluorine','gas'],['Cl','chlorine','gas'],['Br','bromine','liquid'],['I','iodine','solid']];
+const DIWHY='Seven elements exist as <b>diatomic</b> molecules (two atoms bonded together) when pure: <b>H₂, O₂, N₂, Cl₂, Br₂, I₂, F₂</b> — remember "HONClBrIF".';
+function g_diatomic(){
+  if(Math.random()<.6){const [s,nm,st]=R(DI),ch=ION[s]||(s==='Br'||s==='I'?-1:-1);
+    return Q('di'+s,`What is the formula for pure <b>${nm} ${st}</b>?`,'',fm(s+'2'),[fm(s),s==='O'?fm('O4'):fm(s+'3'),ion(s,ch),'2'+s],
+    DIWHY+`<br>Pure ${nm} is ${fm(s+'2')}. The "2" means each molecule is two ${nm} atoms sharing electrons — it is not an ion, so it has no charge.`);}
+  const [s,nm]=R(DI);
+  return Q('dq'+s,'Which of these elements exists as <b>diatomic molecules</b> when pure?','',nm,['helium','sodium','carbon','neon','argon','magnesium'],DIWHY+` Of the choices, only <b>${nm}</b> is on that list.`);
+}
+const COMMON=[['water','H2O'],['ammonia','NH3'],['methane','CH4'],['ozone','O3'],['hydrogen peroxide','H2O2'],['glucose','C6H12O6'],['sucrose','C12H22O11'],['laughing gas','N2O']];
+function g_common(){
+  const [nm,f]=R(COMMON),others=COMMON.filter(x=>x[1]!==f).map(x=>fm(x[1]));
+  return Q('cm'+f,`What is the formula for <b>${nm}</b>?`,'',fm(f),others,`Some molecular substances are known by <b>common names</b> instead of prefix names, so they must be memorized: water H₂O, hydrogen peroxide H₂O₂, ammonia NH₃, methane CH₄, glucose C₆H₁₂O₆, sucrose C₁₂H₂₂O₁₁, ozone O₃ (a form of the element oxygen), laughing gas N₂O (also called dinitrogen monoxide).<br><b>${nm}</b> = ${fm(f)}.`);
+}
+const HYD=[['Cl','chloride',1],['Br','bromide',1],['F','fluoride',1],['I','iodide',1],['S','sulfide',2]];
+function g_hydrogen(){
+  const [x,nm,n]=R(HYD),f='H'+(n>1?n:'')+x,name='hydrogen '+nm;
+  if(Math.random()<.5)return Q('hy'+x,`Name the compound <b>${fm(f)}</b>.`,'',name,[`hydrogen ${PREF[n===1?1:n]}${nm}`,`${n>1?'di':'mono'}hydrogen ${nm}`,`${n>1?'di':'mono'}hydrogen ${PREF[1]}${nm}`,`hydro${nm}`],
+    `Rule 6: compounds with <b>hydrogen first</b> don't use prefixes. ${fm(f)} is just <b>${name}</b> — not ${n>1?'dihydrogen':'hydrogen mono'}${n>1?' '+nm:nm}.`);
+  return Q('hyf'+x,`Write the formula for <b>${name}</b>.`,'',fm(f),[fm('H'+x),fm('H2'+x),fm('H'+x+'2'),fm(x+'H'+(n>1?n:''))],
+    `Rule 6: hydrogen-first compounds have no prefixes, so the name doesn't tell you the number. Work out the ratio by treating hydrogen as 1+ and ${x} as ${chgTxt(-n)} (its usual ion charge) — the compound is still molecular, this is just a way to count: ${n} hydrogen${n>1?'s balance':' balances'} one ${x} → <b>${fm(f)}</b>.`);
+}
+function g_classify(){
+  if(Math.random()<.5){let f,why;
+    if(Math.random()<.5){const cat=catM(R(METALS)),an=anS(R(ANIONS)),[a,b]=cnt(cat,an);f=fml(cat,an,a,b);why=`${fm(f)} contains the metal <b>${cat.nm}</b> and a non-metal → electrons are transferred → <b>ionic</b>. Ionic names use ion names with no prefixes (${cat.nm} ${an.nm}).`}
+    else{const [cat,an]=polyPair(),[a,b]=cnt(cat,an);f=fml(cat,an,a,b);why=`${fm(f)} contains ${cat.poly?'the ammonium ion (NH₄⁺)':`the metal <b>${cat.nm}</b>`} and ${an.poly?`the polyatomic ion ${an.nm}`:`the non-metal ion ${an.nm}`} → made of ions → <b>ionic</b>. Ionic names use ion names with no prefixes (${cat.nm} ${an.nm}).`}
+    return Q('cl'+f,`Is <b>${fm(f)}</b> an ionic or a molecular compound?`,'','Ionic',['Molecular'],why,2);}
+  const [e1,n1,e2,n2]=R(MOLS),f=molF(e1,n1,e2,n2);
+  return Q('cl'+f,`Is <b>${fm(f)}</b> an ionic or a molecular compound?`,'','Molecular',['Ionic'],
+  `${fm(f)} contains only non-metals (${NM[e1][0]} and ${NM[e2][0]}) → electrons are <b>shared</b> → <b>molecular</b>. Molecular names use prefixes (${molName(e1,n1,e2,n2)}).`,2);
+}
+
+/* ============ question pools ============ */
+const Z1A=[g_bValence,g_bNeutron,g_bArr,g_bValence],Z1B=[g_bLoseGain,g_ionLabel];
+const POOLS=[
+ [Z1A,Z1B,Z1A.concat(Z1B)],
+ [[g_charge,g_ionN2F,g_ionF2N],[g_ionN2F,g_ionF2N,g_ionN2F,g_ionF2N,g_charge],[g_ionN2F,g_ionF2N,g_multiF2N,g_multiN2F]],
+ [[g_polyName2Ion,g_polyIon2Name],[g_polyN2F,g_polyF2N],[g_polyName2Ion,g_polyIon2Name,g_polyN2F,g_polyF2N,g_mpF2N,g_mpN2F]],
+ [[g_prefix,g_molF2N,g_molN2F],[g_molF2N,g_molN2F,g_diatomic,g_common,g_hydrogen],[g_molF2N,g_molN2F,g_diatomic,g_common,g_classify,g_hydrogen]]];
+const TOPIC=new Map();POOLS.forEach((zp,z)=>zp.forEach(p=>p.forEach(g=>TOPIC.set(g,z))));
+TOPIC.set(g_classify,3);
+const ALLG=[...new Set(POOLS.flat(2))];
+const FINALG=[g_ionN2F,g_ionF2N,g_multiF2N,g_multiN2F,g_polyN2F,g_polyF2N,g_mpF2N,g_mpN2F,g_polyName2Ion,g_molF2N,g_molN2F,g_diatomic,g_common,g_classify,g_ionN2F,g_polyN2F,g_molF2N,g_bValence,g_ionLabel];
+
+/* ============ sprites ============ */
+const TPL={
+blob:["................","................","................","......oooo......","....oollbboo....","...olllbbbbbo...","..ollbbbbbbbbo..","..obbwwbbbwwbo..",".obbbwkbbbwkbbo.",".obbbbbbbbbbbbo.",".obbbbbkkkbbbbo.",".obbbbbbbbbbbdo.","..obbbbbbbbbddo.","..oddbbbbbbddo..","...oooooooooo...","................"],
+bird:["................",".....oooo.......","....obbbbo......","...obwkbbbo.....","..aaobbbbbo.....","...oobbbbbo.....",".....obbbbboo...","....obllbbbbbo..","...obllllbbbbbo.","...obllllbbbbddo","...obbllbbbbddo.","....obbbbbbddo..",".....oobbbbdo...",".......oooo.....","........a.a.....",".......aa.aa...."],
+golem:["................","....oooooooo....","...obbbbbbbbo...","...obwkbbwkbo...","...obbbbbbbbo...","...obbkkkkbbo...","..oooobbbboooo..",".obbobbllbbobbo.",".obbobllllbobbo.",".obbobbllbbobbo.",".oddobbbbbbobddo","..oo.obbbbbo.oo.",".....obbobbo....",".....obbobbo....","....oddooddo....","....oooooooo...."],
+dragon:["..o..........o..",".obo........obo.",".obbo......obbo.","..obboooooobbo..","..obbbbbbbbbbo..",".obbwwbbbbwwbbo.",".obbwkbbbbwkbbo.",".obbbbbbbbbbbbo.",".obbbkwkwkkbbbo.","..obbbbbbbbbbo..","oaoobllllllbooao","oaaobllllllboaao",".oaobbllllbboao.","..oobbbbbbbboo..","...obdo..odbo...","...ooo....ooo..."]};
+const CR={
+ natrix:{name:'Natrix',sym:'Na',tpl:'blob',p:['#ff8a3d','#ffc38a','#c4521a','#ffe14d'],d:'Sodium slime. Can’t wait to lose its one outer electron.'},
+ oxyfin:{name:'Oxyfin',sym:'O',tpl:'bird',p:['#4cc9f0','#bdf3ff','#1f7fae','#ffb703'],d:'Oxygen bird. Always hungry for two more electrons.'},
+ carbro:{name:'Carbro',sym:'C',tpl:'golem',p:['#8d8d9e','#c9c9d6','#545467','#5df2a4'],d:'Carbon golem. Shares electrons with everyone.'},
+ helia:{name:'Helia',sym:'He',tpl:'bird',p:['#ff9ecf','#ffd6ec','#c25b93','#ffd23f']},
+ lithling:{name:'Lithling',sym:'Li',tpl:'blob',p:['#ff4d6d','#ff9cad','#a3203a','#fff']},
+ magnox:{name:'Magnox',sym:'Mg',tpl:'dragon',p:['#e2e2ee','#ffffff','#9090b0','#ffd23f'],boss:1},
+ chlorp:{name:'Chlorp',sym:'Cl',tpl:'blob',p:['#a6e22e','#e0ff9e','#5f8a12','#fff']},
+ calcite:{name:'Calcite',sym:'Ca',tpl:'golem',p:['#f2e3c6','#fff8ea','#b69e74','#6ad3ff']},
+ ferrex:{name:'Ferrex',sym:'Fe',tpl:'dragon',p:['#c0532d','#f08a5d','#7a2a12','#ffd23f'],boss:1},
+ ammo:{name:'Ammo',sym:'NH₄⁺',tpl:'blob',p:['#b388ff','#e2d2ff','#6a3fc0','#fff']},
+ sulfa:{name:'Sulfa',sym:'SO₄²⁻',tpl:'bird',p:['#ffe14d','#fff6b0','#c9a400','#ff6b6b']},
+ phosphyx:{name:'Phosphyx',sym:'PO₄³⁻',tpl:'dragon',p:['#ff4fd8','#ffa6ee','#a01c8a','#6ad3ff'],boss:1},
+ fluora:{name:'Fluora',sym:'F',tpl:'blob',p:['#d8ff6b','#f4ffc7','#8fae1f','#ff5d73']},
+ nitro:{name:'Nitro',sym:'N',tpl:'golem',p:['#5b7cfa','#a9b9ff','#2b3fa8','#ffd23f']},
+ sulfurion:{name:'Sulfurion',sym:'SF₆',tpl:'dragon',p:['#ffbf3d','#ffe7a8','#b07a00','#7a3cff'],boss:1},
+ unbond:{name:'Unbondium',sym:'Ub',tpl:'dragon',p:['#3b1f5c','#7a3cff','#1a0b2e','#ff5d73'],boss:1},
+ prof:{name:'Prof. Proton',sym:'p⁺',tpl:'golem',p:['#e9eef5','#ffffff','#9aa7b8','#ff5d73']}};
+const SPC={};
+function spr(id,flip){const k=id+(flip?'f':'');if(SPC[k])return SPC[k];const c=CR[id],t=TPL[c.tpl],cv=document.createElement('canvas');cv.width=cv.height=16;const x=cv.getContext('2d');
+  const pal={o:'#14081f',w:'#ffffff',k:'#120a12',b:c.p[0],l:c.p[1],d:c.p[2],a:c.p[3]};
+  t.forEach((row,y)=>{row=(row+'................').slice(0,16);for(let i=0;i<16;i++){const ch=row[i];if(pal[ch]){x.fillStyle=pal[ch];x.fillRect(flip?15-i:i,y,1,1)}}});
+  return SPC[k]=cv.toDataURL();}
+const img=(id,cls,flip,alt)=>`<img class="spr ${cls||''}" src="${spr(id,flip)}" alt="${esc(alt||CR[id].name)}">`;
+
+/* ============ world ============ */
+const ZONES=[
+ {name:'Bohr Burrow',sub:'Warm-up: Bohr-Rutherford & ion diagrams',bg:'linear-gradient(#3a1f6e,#5b2f8f)',gr:'#2a174f'},
+ {name:'Ion Caverns',sub:'Ionic compounds & multivalent metals',bg:'linear-gradient(#123a52,#1f6b74)',gr:'#0e2a3a'},
+ {name:'Polyatomic Peaks',sub:'Polyatomic ions & their compounds',bg:'linear-gradient(#5a1e4a,#a8456b)',gr:'#3e1434'},
+ {name:'Covalent Citadel',sub:'Molecular compounds & prefixes',bg:'linear-gradient(#3d3a12,#7a6a1c)',gr:'#2b2709'},
+ {name:'The Unbonded Void',sub:'Final boss: everything mixed',bg:'linear-gradient(#0a0414,#33124d)',gr:'#05020a'}];
+const TOPICS=['Bohr & ion diagrams','Ionic (Types 1 & 2)','Polyatomic (Type 3)','Molecular'];
+const NODES=[{z:0,t:'wild',c:'helia'},{z:0,t:'boss',c:'magnox'},
+ {z:1,t:'wild',c:'chlorp'},{z:1,t:'wild',c:'calcite'},{z:1,t:'boss',c:'ferrex'},
+ {z:2,t:'wild',c:'ammo'},{z:2,t:'wild',c:'sulfa'},{z:2,t:'boss',c:'phosphyx'},
+ {z:3,t:'wild',c:'fluora'},{z:3,t:'wild',c:'nitro'},{z:3,t:'boss',c:'sulfurion'},
+ {z:4,t:'final',c:'unbond'}];
+
+/* ============ notes ============ */
+const ex1=`<div class="diag"><figure>${bohrSVG({p:13,n:14,sh:[2,8,3]})}<figcaption>aluminum atom: 2, 8, 3</figcaption></figure><figure>${bohrSVG({p:12,n:12,sh:[2,8],bracket:true,charge:'2+'})}<figcaption>Mg²⁺ ion diagram: 2, 8</figcaption></figure></div>`;
+const polyTable=`<table class="t"><tr><th>Name</th><th>Ion</th><th>Name</th><th>Ion</th></tr>`+(()=>{let h='';for(let i=0;i<POLY.length;i+=2){const a=POLY[i],b=POLY[i+1];h+=`<tr><td>${a.nm}</td><td>${ion(a.s,a.c)}</td><td>${b?b.nm:''}</td><td>${b?ion(b.s,b.c):''}</td></tr>`}return h})()+`</table>`;
+const NOTES=[
+`<h2>Bohr Burrow notes</h2>
+<h3>Drawing a Bohr-Rutherford diagram</h3><ul>
+<li><b>Protons</b> = atomic number. Write them in the nucleus as "__p".</li>
+<li><b>Neutrons</b> = mass number (atomic mass rounded) − atomic number. Write them in the nucleus as "__n". Sodium: 23 − 11 = 12n.</li>
+<li><b>Electrons</b>: an atom has the same number of electrons as protons (so the charges cancel). Draw them on rings around the nucleus, filling from the inside out: 1st ring up to 2, 2nd up to 8, 3rd up to 8, 4th gets the rest (for the first 20 elements).</li>
+<li><b>Valence electrons</b> are the electrons on the outermost ring. Aluminum: 2, 8, 3 → 3 valence electrons.</li></ul>
+<h3>Drawing an ion diagram</h3><p>Atoms gain or lose electrons so their outer ring is full, like the nearest noble gas. The nucleus never changes — only electrons move.</p><ul>
+<li><b>Metals</b> (few valence electrons) lose them → positive ion. Mg: 2, 8, 2 loses 2 → 2, 8.</li>
+<li><b>Non-metals</b> (many valence electrons) gain until the outer ring holds 8 → negative ion. O: 2, 6 gains 2 → 2, 8.</li>
+<li>Redraw with the new electrons, put the whole diagram in <b>square brackets</b>, and write the charge at the top right. <b>Charge = protons − electrons</b>: Mg 12 − 10 = 2+, O 8 − 10 = 2−.</li></ul>${ex1}`,
+`<h2>Ion Caverns notes</h2>
+<h3>What makes a compound ionic?</h3><p>This zone covers <b>Type 1</b> (binary, metal with one charge) and <b>Type 2</b> (multivalent metals). Polyatomic Peaks is <b>Type 3</b>.</p>
+<p>A <b>metal</b> transfers electrons to a <b>non-metal</b>. The metal becomes a positive ion, the non-metal a negative ion, and the opposite charges attract.</p>
+<h3>Common charges</h3>
+<table class="t"><tr><th>Group</th><th>Charge</th><th>Examples</th></tr>
+<tr><td>Group 1</td><td>1+</td><td>Li⁺ Na⁺ K⁺</td></tr><tr><td>Group 2</td><td>2+</td><td>Mg²⁺ Ca²⁺ Ba²⁺</td></tr>
+<tr><td>Al (Group 13)</td><td>3+</td><td>Al³⁺</td></tr><tr><td>Ag, Zn, Cd</td><td>one charge each</td><td>Ag⁺ Zn²⁺ Cd²⁺</td></tr>
+<tr><td>Group 15</td><td>3−</td><td>N³⁻ nitride, P³⁻ phosphide</td></tr><tr><td>Group 16</td><td>2−</td><td>O²⁻ oxide, S²⁻ sulfide, Se²⁻ selenide</td></tr>
+<tr><td>Group 17</td><td>1−</td><td>F⁻ Cl⁻ Br⁻ I⁻ (…ide)</td></tr><tr><td>hydrogen (with a metal)</td><td>1−</td><td>H⁻ hydride, e.g. MgH₂</td></tr></table>
+<h3>Naming (formula → name)</h3><p>Metal's full name + non-metal root + <b>"-ide"</b>. CaCl₂ → calcium chloride. <b>Never use prefixes</b> for ionic compounds — the charges already decide the ratio.</p>
+<h3>Formulas (name → formula)</h3><p>Write both ions with charges, then find how many of each make the total charge zero (criss-cross the charge numbers and <b>reduce</b>). Aluminum oxide: Al³⁺ and O²⁻ → 2 × (+3) = +6 and 3 × (−2) = −6 → Al₂O₃. Magnesium oxide: Mg²⁺ and O²⁻ already balance → MgO (not Mg₂O₂).</p>
+<h3>Multivalent metals</h3><p>Some metals have more than one possible charge (Fe²⁺/Fe³⁺, Cu⁺/Cu²⁺, Pb²⁺/Pb⁴⁺, Sn²⁺/Sn⁴⁺, Ni²⁺/Ni³⁺, Co²⁺/Co³⁺, Cr³⁺/Cr²⁺, Au³⁺/Au⁺, Pd²⁺/Pd⁴⁺ — check the ion chart on the back of your periodic table). The <b>Roman numeral</b> in the name is the charge on one ion, not how many: iron(III) = Fe³⁺, so Fe₂O₃ is iron(III) oxide. Ag⁺, Zn²⁺ and Cd²⁺ have only one charge, so they never get a numeral. Don't just read the subscripts backwards: PbO₂ has 2 × O²⁻ = 4−, so it's lead(IV) oxide, not lead(II). To name FeCl₃, work backwards: 3 Cl⁻ = 3−, so the one iron must be 3+ → iron(III) chloride.</p>`,
+`<h2>Polyatomic Peaks notes</h2>
+<h3>What is a polyatomic ion? (Type 3)</h3><p>A group of atoms bonded together that carries <b>one overall charge</b> and acts like a single ion. You never change the atoms inside it.</p>${polyTable}
+<p>The positive ones are ammonium NH₄⁺ (used in this game) and hydronium H₃O⁺. Your periodic table's back page has the full list.</p><h3>Naming</h3><p>Name the cation, then the anion — exactly like binary ionic compounds, using the ion's name from the table. NaOH → sodium hydroxide. NH₄Cl → ammonium chloride. No prefixes. With a multivalent metal, use the polyatomic ion's <b>total</b> charge to find the numeral: Fe(OH)₃ → 3 × OH⁻ = 3− → iron(III) hydroxide.</p>
+<p>"-ate" ions have one more oxygen than the matching "-ite" ion (nitrate NO₃⁻, nitrite NO₂⁻). "per-…-ate" has one more than "-ate"; "hypo-…-ite" has one less than "-ite". Adding "hydrogen" makes an ion one less negative (SO₄²⁻ → HSO₄⁻). "-ide" is for single-element ions, except hydroxide and cyanide. Watch the look-alikes: phosphate PO₄³⁻ vs phosphide P³⁻.</p>
+<h3>Formulas</h3><p>Balance charges like any ionic compound. If you need <b>more than one</b> polyatomic ion, put it in <b>brackets</b> with the number outside: calcium hydroxide → Ca²⁺ and OH⁻ → Ca(OH)₂. Without brackets, CaOH₂ would mean one O and two H — a different thing.</p>`,
+`<h2>Covalent Citadel notes</h2>
+<h3>What makes a compound molecular?</h3><p>Only <b>non-metals</b>. They <b>share</b> electrons instead of transferring them, so there are no ion charges to balance. Instead, prefixes tell you how many atoms of each.</p>
+<table class="t"><tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr><tr><td>mono</td><td>di</td><td>tri</td><td>tetra</td><td>penta</td></tr>
+<tr><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr><tr><td>hexa</td><td>hepta</td><td>octa</td><td>nona</td><td>deca</td></tr></table>
+<h3>Naming rules</h3><ul>
+<li>The element farther <b>left</b> on the periodic table goes first.</li>
+<li>First element: full name, with a prefix only if there are 2 or more (never "mono" on the first element).</li>
+<li>Second element: always a prefix + root + "-ide".</li>
+<li>Before "oxide", drop the final "a" or "o" of the prefix: monoxide, tetroxide, pentoxide (but dioxide and trioxide keep their "i").</li>
+<li>Compounds with hydrogen first use <b>no prefixes</b>: HCl = hydrogen chloride, H₂S = hydrogen sulfide.</li>
+<li>Formulas: prefixes become subscripts directly. Never criss-cross or reduce: dinitrogen tetroxide is N₂O₄.</li></ul>
+<h3>Diatomic elements</h3><p>H₂, O₂, N₂, Cl₂, Br₂, I₂, F₂ exist as pairs when pure — "HONClBrIF".</p>
+<h3>Common names to memorize</h3><p>water H₂O, hydrogen peroxide H₂O₂, ammonia NH₃, methane CH₄, glucose C₆H₁₂O₆, sucrose C₁₂H₂₂O₁₁, ozone O₃, laughing gas N₂O.</p>`];
+
+/* ============ sound ============ */
+let AC=null;
+const LOCK=location.hash==='#qa'?1:4;
+function tone(f,d,type,t0,vol){if(S&&S.mute)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+(t0||0),o=AC.createOscillator(),g=AC.createGain();o.type=type||'square';o.frequency.value=f;g.gain.setValueAtTime(vol||.045,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
+const sfx={good(){[523,659,784].forEach((f,i)=>tone(f,.12,'square',i*.08))},bad(){tone(196,.2,'sawtooth');tone(147,.3,'sawtooth',.12)},
+ hit(){tone(110,.1,'square');tone(70,.12,'square',.05)},lvl(){[523,659,784,1047].forEach((f,i)=>tone(f,.1,'triangle',i*.07))},
+ win(){[392,523,659,784,659,784,1047].forEach((f,i)=>tone(f,.14,'square',i*.11))},blip(){tone(880,.05,'square')}};
+
+/* ============ state ============ */
+const KEY='elementQuest_v2';
+let S=null,B=null;
+const maxHP=m=>28+6*m.lvl;
+function newState(name,starter){return {name,team:[{id:starter,lvl:1,xp:0,hp:34}],party:[0],act:0,prog:0,hints:2,score:0,correct:0,total:0,streak:0,best:0,ko:0,
+  stats:[0,1,2,3].map(()=>({c:0,t:0})),seen:[],used:[],t0:Date.now(),mute:false,done:false,pts:0,hu:0,fin:0}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.team){if(s.pts==null)s.pts=s.correct;if(s.hu==null)s.hu=0;if(!s.party)s.party=s.team.slice(0,3).map((_,i)=>i);}return s&&s.team?s:null}catch(e){return null}}
+function clearSave(){try{localStorage.removeItem(KEY)}catch(e){}}
+
+const app=$('#app');
+function view(h){app.innerHTML=h;window.scrollTo(0,0)}
+function modal(h,onClose){const v=document.createElement('div');v.className='veil';v.innerHTML=`<div class="modal box" role="dialog" aria-modal="true">${h}</div>`;document.body.appendChild(v);
+  const close=()=>{v.remove();onClose&&onClose()};v.querySelectorAll('[data-close]').forEach(b=>b.onclick=close);const f=v.querySelector('button');f&&f.focus({preventScroll:true});v.querySelector('.modal').scrollTop=0;return {v,close}}
+
+/* ============ title ============ */
+function title(){
+  const sv=load();
+  let pick='natrix';
+  view(`<div class="title">
+   <div class="logo">ELEMENT<br>QUEST</div>
+   <p class="tag">An atoms, ions & bonds RPG</p>
+   <div class="parade">${['helia','lithling','magnox','chlorp','ferrex','sulfa','nitro','sulfurion'].map(i=>img(i)).join('')}</div>
+   <div class="box" style="text-align:left">
+    ${sv&&!sv.done?`<p>Saved game found for <b>${esc(sv.name)}</b> (zone ${Math.min(5,NODES[Math.min(sv.prog,NODES.length-1)].z+1)} of 5).</p><div class="row" style="margin-bottom:14px"><button class="btn alt" id="cont">Continue saved game</button></div><p class="muted" style="margin:0 0 10px">Or start a new game:</p>`:''}
+    <div class="field"><label for="nm">Your name (shown on your score screen)</label><input id="nm" maxlength="28" autocomplete="off"></div>
+    <h2 style="text-align:center">Choose your partner</h2>
+    <div class="starters">${['natrix','oxyfin','carbro'].map(id=>`<button class="starter${id===pick?' on':''}" data-st="${id}">${img(id,'',true)}<div><div class="nm">${CR[id].name} (${CR[id].sym})</div>${CR[id].d}</div></button>`).join('')}</div>
+    <div class="err" id="err"></div>
+    <div class="row" style="justify-content:center"><button class="btn" id="go">Start new game</button></div>
+    <p style="text-align:center;margin:14px 0 0"><button class="btn ghost" id="tchk" style="font-size:9px">Teacher: verify a result</button></p>
+   </div></div>`);
+  app.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{pick=b.dataset.st;app.querySelectorAll('[data-st]').forEach(x=>x.classList.toggle('on',x===b));sfx.blip()});
+  $('#go').onclick=()=>{const n=$('#nm').value.trim();if(!n){$('#err').textContent='Type your name first — it goes on your score screen.';$('#nm').focus();return}
+    S=newState(n,pick);save();intro()};
+  $('#tchk').onclick=teacherCheck;const c=$('#cont');if(c)c.onclick=()=>{S=sv;map()};
+}
+function intro(){
+  const lines=[`Welcome to the Periodic Realm, <b>${esc(S.name)}</b>! I'm Prof. Proton.`,
+   `The wicked <b>Unbondium</b> has scrambled every atom in the land. You and ${CR[S.team[0].id].name} will set things right.`,
+   `In battle, I'll ask a chemistry question. <b>Right answer</b> → your partner attacks. <b>Wrong answer</b> → the enemy hits back, and I'll explain the chemistry so you get the next one.`,
+   `Your <b>grade</b> is the share of questions you get right. A right answer after a 🧪 Hint or my help counts as half. Get <b>3 in a row</b> for critical hits. Beat wild elements to <b>collect</b> them — up to 3 fight in your party. Use 🧪 Hints to remove two wrong answers, and once per battle I'll help if you miss two in a row.`,
+   `Careful: if your <b>whole party faints</b>, the battle starts over from full HP. Guessing won't get you through — read each explanation. Finish with a grade of <b>${PASS}% or higher</b> to earn the QUEST COMPLETE badge.`,
+   `Clear all four zones, then face Unbondium. At the end you'll get a score screen with your grade. Good luck!`];
+  let i=0;const show=()=>{view(`<div class="box talk" style="margin-top:20px">${img('prof','',true)}<div><div class="who">Prof. Proton</div><p style="margin:0 0 14px;min-height:80px">${lines[i]}</p>
+   <div class="row"><button class="btn" id="nx">${i<lines.length-1?'Next':'Open the map'}</button><span class="muted">${i+1}/${lines.length}</span></div></div></div>`);
+   $('#nx').onclick=()=>{sfx.blip();i++;i<lines.length?show():map()};$('#nx').focus()};show();
+}
+
+/* ============ map ============ */
+function teamHTML(){
+  const P=S.party,card=(m,i,inP)=>{const mx=maxHP(m),pc=m.hp/mx*100;return `<button class="mem${inP?' inp':''}" data-pt="${i}" aria-pressed="${inP}" aria-label="${CR[m.id].name}, level ${m.lvl}${inP?', in party':', in collection'}">${img(m.id,'',true)}<div>${CR[m.id].name}</div><div class="muted">Lv ${m.lvl}</div><div class="hp ${pc<20?'low':pc<50?'mid':''}"><i style="width:${pc}%"></i></div></button>`};
+  return `<div class="zt"><h2 style="margin:0">Battle party ${P.length}/3</h2><span class="muted">${S.team.length>1?'Tap a creature to move it in or out of your party.':'Win battles to collect more creatures.'}</span></div>
+  <div class="team" style="margin-top:8px">${P.map(i=>card(S.team[i],i,true)).join('')}</div>
+  ${S.team.length>P.length?`<h3>Collection (not in battle)</h3><div class="team">${S.team.map((m,i)=>P.includes(i)?'':card(m,i,false)).join('')}</div>`:''}
+  <p class="muted" id="pmsg" style="margin:6px 0 0;min-height:24px"></p>`}
+function bindParty(){app.querySelectorAll('[data-pt]').forEach(b=>b.onclick=()=>{const i=+b.dataset.pt,P=S.party,msg=$('#pmsg');
+  if(P.includes(i)){if(P.length===1){msg.textContent='You need at least one creature in your party.';return}P.splice(P.indexOf(i),1)}
+  else{if(P.length>=3){msg.textContent='Your party is full (3 max). Tap a party member to move it to your collection first.';return}P.push(i)}
+  sfx.blip();save();const y=window.scrollY;map();window.scrollTo(0,y)})}
+function hudHTML(){const acc=S.total?Math.round(S.correct/S.total*100):0;return `<div class="hud"><div class="stat">${esc(S.name)}</div><div class="stat" id="hs">⭐ ${S.score} &nbsp; ✔ ${acc}% &nbsp; 🧪 ${S.hints}</div><button class="btn ghost" id="mute" aria-label="Toggle sound">${S.mute?'🔇':'🔊'}</button></div>`}
+function bindMute(){const m=$('#mute');if(m)m.onclick=()=>{S.mute=!S.mute;m.textContent=S.mute?'🔇':'🔊';save()}}
+function map(){
+  if(S.prog>=NODES.length)return endGame();
+  save();
+  let h=hudHTML()+`<div class="box">${teamHTML()}</div>`;
+  ZONES.forEach((Z,z)=>{const idx=NODES.map((n,i)=>i).filter(i=>NODES[i].z===z),open=idx[0]<=S.prog;
+    h+=`<div class="zone box${open?'':' lock'}" style="background:${Z.bg}"><div class="zt"><div><h2 style="margin:0">${Z.name}</h2><div class="muted">${Z.sub}</div></div>${open&&z<4?`<button class="btn ghost" data-notes="${z}">📖 Notes</button>`:''}</div><div class="path">`;
+    idx.forEach((i,k)=>{const n=NODES[i],st=i<S.prog?'done':i===S.prog?'cur':'lockn';
+      if(k)h+='<span class="link"></span>';
+      h+=`<button class="node ${st}" ${i===S.prog?'':'disabled'} data-node="${i}" aria-label="${i<S.prog?'Cleared':i===S.prog?'Battle':'Locked'}: ${n.t==='wild'?'wild element':'boss'}">${img(n.c,'',false,i<=S.prog?CR[n.c].name:'unknown')}<span class="lbl">${i<S.prog?'✓ cleared':n.t==='wild'?'wild':n.t==='boss'?'BOSS':'FINAL'}</span></button>`});
+    h+='</div></div>'});
+  h+=`<div class="row" style="justify-content:center;margin-top:14px"><button class="btn alt" id="rep">📸 Progress report (out of time?)</button></div>`;
+  view(h);bindMute();bindParty();$('#rep').onclick=report;
+  app.querySelectorAll('[data-notes]').forEach(b=>b.onclick=()=>notes(+b.dataset.notes));
+  const cur=app.querySelector('.node.cur');if(cur){cur.onclick=()=>{const z=NODES[S.prog].z;if(z<4&&!S.seen.includes(z)){S.seen.push(z);save();notes(z,()=>battle(S.prog),true)}else battle(S.prog)};cur.focus()}
+}
+function notes(z,after,first){
+  z=Math.min(z,3);const maxz=Math.min(3,NODES[Math.min(S.prog,NODES.length-1)].z);
+  const draw=zz=>`<div class="tabs">${[0,1,2,3].filter(i=>i<=maxz).map(i=>`<button class="btn ${i===zz?'':'ghost'}" data-tab="${i}">${ZONES[i].name}</button>`).join('')}</div>${first?`<p class="muted">Read these before your first battle here. You can reopen them any time with 📖 Notes.</p>`:''}${NOTES[zz]}<div class="row" style="margin-top:14px"><button class="btn" data-close>${after?'Start battle':'Close notes'}</button></div>`;
+  const m=modal(draw(z),after);
+  const wire=()=>m.v.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{m.v.querySelector('.modal').innerHTML=draw(+b.dataset.tab);wire();m.v.querySelectorAll('[data-close]').forEach(c=>c.onclick=m.close)});wire();
+}
+
+/* ============ battle ============ */
+function ensureActive(){if(!S.party.includes(S.act)||S.team[S.act].hp<=0){const i=S.party.find(j=>S.team[j].hp>0);S.act=i==null?S.party[0]:i}}
+function battle(i){
+  const nd=NODES[i],z=nd.z,c=CR[nd.c],mx=nd.t==='final'?150:(nd.t==='wild'?[24,50,56,62]:[36,80,88,96])[z];
+  B={i,nd,c,hp:mx,max:mx,q:null,answered:true};ensureActive();
+  const Z=ZONES[z];
+  view(hudHTML()+`<div class="arena" style="background:${Z.bg}"><div class="ground" style="background-color:${Z.gr}"></div>
+   <div class="ehud box"><div class="hn"><span>${c.name}</span><span class="sym">${c.sym}</span></div><div class="hp" id="ehp"><i></i></div></div>
+   <div id="espr"></div><div id="pspr"></div>
+   <div class="phud box"><div class="hn"><span id="pn"></span><span id="pl"></span></div><div class="hp" id="php"><i></i></div><div class="xp" id="pxp"><i></i></div></div></div>
+   <div class="box msg" id="msg" aria-live="polite"></div>
+   <div class="box qbox" id="qb"></div>
+   <div class="tools"><button class="btn alt" id="hint">🧪 Hint (${S.hints})</button><button class="btn ghost" id="bnotes">📖 Notes</button><span class="muted">Switch:</span><div class="swap" id="swap"></div></div>`);
+  bindMute();
+  $('#espr').innerHTML=img(nd.c,'espr'+(c.boss?' big':''),false);
+  $('#hint').onclick=useHint;$('#bnotes').onclick=()=>notes(z<4?z:3);
+  drawPlayer();updHUD();
+  say(nd.t==='wild'?`A wild ${c.name} (${c.sym}) appeared!`:nd.t==='boss'?`Zone boss ${c.name} (${c.sym}) blocks the path!`:`UNBONDIUM rises from the Void! Every topic counts now.`);
+  nextQ();
+}
+function drawPlayer(){const m=S.team[S.act];$('#pspr').innerHTML=img(m.id,'pspr',true);drawSwap();updHUD()}
+function drawSwap(){const sw=$('#swap');if(!sw)return;sw.innerHTML=S.party.map(i=>[S.team[i],i]).map(([m,i])=>`<button data-sw="${i}" class="${i===S.act?'on':''}" ${m.hp<=0||i===S.act?'disabled':''} title="${CR[m.id].name} Lv ${m.lvl}" aria-label="Switch to ${CR[m.id].name}">${img(m.id,'',true)}</button>`).join('');
+  sw.querySelectorAll('[data-sw]').forEach(b=>b.onclick=()=>{if(B.answered&&B.q)return;S.act=+b.dataset.sw;sfx.blip();drawPlayer();say(`Go, ${CR[S.team[S.act].id].name}!`)})}
+function setBar(el,v,mx){const pc=Math.max(0,v/mx*100);el.querySelector('i').style.width=pc+'%';el.classList.toggle('mid',pc<50&&pc>=20);el.classList.toggle('low',pc<20)}
+function updHUD(){if(!B)return;const m=S.team[S.act];setBar($('#ehp'),B.hp,B.max);setBar($('#php'),m.hp,maxHP(m));$('#pxp i').style.width=(m.xp/4*100)+'%';
+  $('#pn').textContent=CR[m.id].name;const hs=$('#hs');if(hs)hs.innerHTML=`⭐ ${S.score} &nbsp; ✔ ${S.total?Math.round(S.correct/S.total*100):0}% &nbsp; 🧪 ${S.hints}`;$('#pl').textContent='Lv '+m.lvl;const h=$('#hint');if(h){h.textContent=`🧪 Hint (${S.hints})`;h.disabled=!S.hints||B.answered||(B.q&&B.q.options.length<3)||B.hinted}}
+function say(t){const m=$('#msg');if(m)m.innerHTML=t}
+function anim(sel,cls){const e=app.querySelector(sel);if(!e)return;e.classList.remove(cls);void e.offsetWidth;e.classList.add(cls)}
+function floatDmg(who,d,crit){const a=app.querySelector('.arena'),e=app.querySelector(who==='e'?'.espr':'.pspr');if(!a||!e)return;const r=e.getBoundingClientRect(),ar=a.getBoundingClientRect();
+  const s=document.createElement('div');s.className='dmg'+(crit?' crit':'');s.textContent='-'+d+(crit?'!':'');s.style.left=(r.left-ar.left+r.width/2-20)+'px';s.style.top=(r.top-ar.top)+'px';a.appendChild(s);setTimeout(()=>s.remove(),1000)}
+function pickQ(){
+  const pool=B.nd.t==='final'?FINALG:(B.nd.t==='boss'?POOLS[B.nd.z][2]:POOLS[B.nd.z][B.nd.t==='wild'&&NODES[B.i-1]&&NODES[B.i-1].z===B.nd.z?1:0]);
+  let q,g;for(let k=0;k<25;k++){g=R(pool);q=g();if(!S.used.includes(q.key))break}
+  S.used.push(q.key);if(S.used.length>400)S.used=S.used.slice(-300);q.topic=TOPIC.get(g);return q;
+}
+function nextQ(){
+  B.q=pickQ();B.answered=false;B.hinted=false;const q=B.q;
+  $('#qb').innerHTML=`<p class="prompt">${q.prompt}</p>${q.visual?`<div class="visual">${q.visual}</div>`:''}<div class="opts${/<svg/.test(q.options[0])?' pics':''}">${q.options.map((o,i)=>`<button class="opt" data-o="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div><div id="fb"></div>`;
+  app.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>answer(+b.dataset.o));
+  if((S.miss||0)>=2&&q.options.length>2&&!B.assisted){B.assisted=true;B.hinted=true;shuffle(q.options.map((o,i)=>i).filter(i=>i!==q.ans)).slice(0,2).forEach(i=>{const b=app.querySelector(`[data-o="${i}"]`);b.classList.add('gone');b.disabled=true});say('Prof. Proton steps in (once per battle): two wrong answers are crossed out!')}
+  updHUD();drawSwap();
+}
+function useHint(){if(!S.hints||B.answered||B.hinted||B.q.options.length<3)return;S.hints--;S.hu++;B.hinted=true;
+  const wrong=shuffle(B.q.options.map((o,i)=>i).filter(i=>i!==B.q.ans)).slice(0,2);
+  wrong.forEach(i=>{const b=app.querySelector(`[data-o="${i}"]`);b.classList.add('gone');b.disabled=true});sfx.blip();updHUD()}
+function answer(k){
+  if(B.answered)return;B.answered=true;const q=B.q,ok=k===q.ans,m=S.team[S.act],nm=CR[m.id].name,z=B.nd.z;
+  app.querySelectorAll('[data-o]').forEach(b=>{b.disabled=true;const i=+b.dataset.o;if(i===q.ans)b.classList.add('right');else if(i===k)b.classList.add('wrong')});
+  S.stats[q.topic].t++;S.total++;let extra='';
+  if(ok){S.miss=0;S.correct++;S.pts+=B.hinted?0.5:1;S.stats[q.topic].c++;S.streak++;S.best=Math.max(S.best,S.streak);
+    const crit=S.streak>=3;let d=10+(m.lvl-1);if(crit)d=Math.round(d*1.25);S.score+=100+(crit?50:0);
+    B.hp=Math.max(0,B.hp-d);sfx.good();anim('.pspr','lunge-r');setTimeout(()=>{anim('.espr','hurt');floatDmg('e',d,crit);sfx.hit();updHUD()},300);
+    say(crit?`🔥 ${S.streak} in a row! ${nm} lands a critical hit for ${d}!`:`${nm} attacks for ${d} damage!`);
+    m.xp++;if(m.xp>=4){m.xp=0;m.lvl++;m.hp=Math.min(maxHP(m),m.hp+12);extra=`⭐ ${nm} grew to Lv ${m.lvl}!`;setTimeout(sfx.lvl,500)}
+  }else{S.streak=0;S.miss=(S.miss||0)+1;const d=B.nd.t==='final'?16:9+3*z+(B.nd.t==='boss'?5:0);m.hp=Math.max(0,m.hp-d);sfx.bad();
+    anim('.espr','lunge-l');setTimeout(()=>{anim('.pspr','hurt');floatDmg('p',d);updHUD()},300);
+    say(`${B.c.name} strikes back for ${d} damage!`);if(m.hp<=0)extra=`💫 ${nm} fainted!`}
+  const right=q.options[q.ans];
+  $('#fb').innerHTML=`<div class="fb"><div class="head ${ok?'ok':'no'}">${ok?'✓ Correct!':'✗ Not quite. The answer is: '+right}</div>${extra?`<p style="margin:4px 0">${extra}</p>`:''}<div class="why">${q.why}</div><button class="btn" id="go">${B.hp<=0?'Finish the battle':'Next question'}</button></div>`;
+  $('#go').onclick=cont;
+  const gb=$('#go'),label=gb.textContent;
+  if(!ok){let t=LOCK;gb.disabled=true;gb.textContent=`Read the explanation… ${t}`;const iv=setInterval(()=>{t--;if(!document.body.contains(gb)){clearInterval(iv);return}if(t<=0){clearInterval(iv);gb.disabled=false;gb.textContent=label;gb.focus({preventScroll:true})}else gb.textContent=`Read the explanation… ${t}`},LOCK>1?1000:150)}
+  setTimeout(()=>{const g=$('#go');if(g){if(!g.disabled)g.focus({preventScroll:true});g.scrollIntoView({block:'nearest',behavior:'smooth'})}},50);updHUD();
+}
+function cont(){
+  if(B.over)return;const g=$('#go');if(g)g.disabled=true;
+  if(B.hp<=0){B.over=true;return victory()}
+  const m=S.team[S.act];
+  if(m.hp<=0){const nx=S.party.find(j=>S.team[j].hp>0);
+    if(nx==null){S.ko++;S.party.forEach(j=>{S.team[j].hp=maxHP(S.team[j])});S.act=S.party[0];B.hp=B.max;B.assisted=false;drawPlayer();anim('.espr','lunge-l');
+      say(`💫 Your whole party fainted! Prof. Proton heals your team, but ${B.c.name} is back to full HP and the battle starts over. Read the explanations — guessing won't get you through.`)}
+    else{S.act=nx;drawPlayer();say(`Go, ${CR[S.team[nx].id].name}!`)}}
+  save();nextQ();
+}
+function victory(){
+  sfx.win();anim('.espr','faint');const nd=B.nd,z=nd.z;S.prog=B.i+1;
+  if(nd.t==='final'){S.done=true;S.fin=Date.now();save();setTimeout(endGame,700);return}
+  let join='';
+  if(!S.team.some(t=>t.id===nd.c)){const nm={id:nd.c,lvl:z+2,xp:0,hp:0};nm.hp=maxHP(nm);S.team.push(nm);const inP=S.party.length<3;if(inP)S.party.push(S.team.length-1);
+    join=`<div class="join">${img(nd.c,'',true)}<p><b>${CR[nd.c].name} (${CR[nd.c].sym})</b> ${inP?'joined your battle party':'joined your collection — swap it into your party on the map'} at Lv ${nm.lvl}!</p></div>`}
+  let heal;
+  if(nd.t==='boss'){S.team.forEach(t=>t.hp=maxHP(t));S.hints++;heal=`Zone cleared! Everyone is fully healed and you found a 🧪 Hint (now ${S.hints}).`}
+  else{S.team.forEach(t=>t.hp=Math.min(maxHP(t),t.hp+Math.ceil(maxHP(t)/2)));heal='Your team rests and recovers half their HP.'}
+  save();
+  setTimeout(()=>modal(`<h2>${CR[nd.c].name} was defeated!</h2>${join}<p>${heal}</p><div class="row"><button class="btn" data-close>Back to the map</button></div>`,map),650);
+}
+
+/* ============ grade ============ */
+const PASS=50;
+const gradeOf=st=>st.total?Math.round(st.pts/st.total*100):0;
+const rankOf=g=>g>=90?'Grand Alchemist':g>=80?'Element Master':g>=70?'Bond Builder':g>=60?'Ion Apprentice':'Atom Cadet';
+function h32(str,seed){let h=seed>>>0;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return h>>>0}
+function checkCode(name,grade,correct,total,best){const k=['eq',String(name).trim().toLowerCase().replace(/\s+/g,' '),grade,correct,total,best,'nd-1206'].join('|');
+  const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let n=(h32(k,2166136261)^h32(k.split('').reverse().join(''),374761393))>>>0,o='';for(let i=0;i<6;i++){o+=A[n%A.length];n=Math.floor(n/A.length)+h32(o+k,i+7)%97}return o}
+const fmtDate=t=>{const d=new Date(t);return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})+', '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})};
+function teacherCheck(){
+  const m=modal(`<h2>Teacher: verify a result</h2><p class="muted">Copy these from the student's screenshot. If anything on the screen was edited, the code won't match.</p>
+   <div class="field"><label for="tn">Name (as shown)</label><input id="tn"></div>
+   <div class="row"><div class="field" style="flex:1"><label for="tg">Grade %</label><input id="tg" inputmode="numeric"></div><div class="field" style="flex:1"><label for="tc">Correct</label><input id="tc" inputmode="numeric"></div><div class="field" style="flex:1"><label for="tt">Questions</label><input id="tt" inputmode="numeric"></div></div>
+   <div class="row"><div class="field" style="flex:1"><label for="tb">Best streak</label><input id="tb" inputmode="numeric"></div><div class="field" style="flex:1"><label for="tk">Check code</label><input id="tk" style="text-transform:uppercase"></div></div>
+   <p id="tr" style="min-height:30px"></p>
+   <div class="row"><button class="btn" id="tv">Check</button><button class="btn ghost" data-close>Close</button></div>`);
+  m.v.querySelector('#tv').onclick=()=>{const g=id=>m.v.querySelector(id).value.trim();
+    const ok=checkCode(g('#tn'),+g('#tg'),+g('#tc'),+g('#tt'),+g('#tb'))===g('#tk').toUpperCase();
+    const gg=+g('#tg');m.v.querySelector('#tr').innerHTML=ok?`<b style="color:var(--mint)">✓ Valid — these numbers match the code.</b><br>${gg>=PASS?`Grade ${gg}% → QUEST COMPLETE badge earned.`:`Grade ${gg}% → finished, but below ${PASS}% (no QUEST COMPLETE badge).`}`:'<b style="color:var(--coral)">✗ Doesn’t match. Check for typos; otherwise the screenshot may have been edited.</b>'};
+}
+
+/* ============ end ============ */
+function report(){
+  const acc=S.total?Math.round(S.correct/S.total*100):0,mins=Math.max(1,Math.round((Date.now()-S.t0)/60000));
+  const d=new Date(),ds=d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})+', '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+  const cleared=NODES.slice(0,S.prog).filter(n=>n.t!=='wild').length;
+  modal(`<div style="text-align:center" class="rpt"><h2>PROGRESS REPORT — NOT FINISHED</h2><p style="margin:4px 0;font-size:28px">${esc(S.name)}</p><p class="muted" style="margin:0">${ds}</p>
+   <p>Now in: <b>${ZONES[NODES[Math.min(S.prog,NODES.length-1)].z].name}</b> · Zones cleared: <b>${cleared} of 4</b> · Battles won: <b>${S.prog} of ${NODES.length}</b></p>
+   <div class="big3"><div>Grade so far<div class="v">${gradeOf(S)}%</div></div><div>Correct<div class="v">${S.correct}/${S.total}</div></div><div>Hints used<div class="v">${S.hu}</div></div><div>Play time<div class="v">${mins}m</div></div></div>
+   <table class="t"><tr><th>Topic</th><th>Correct</th><th>Accuracy</th></tr>${S.stats.map((x,i)=>`<tr><td>${TOPICS[i]}</td><td>${x.c}/${x.t}</td><td>${x.t?Math.round(x.c/x.t*100)+'%':'—'}</td></tr>`).join('')}</table>
+   <div class="snap">Quest not finished yet. Finish with a grade of ${PASS}% or higher to earn the QUEST COMPLETE badge. Screenshot this if class is ending, then press Continue next time.</div>
+   <div class="row" style="justify-content:center;margin-top:12px"><button class="btn" data-close>Back to the map</button></div></div>`);
+}
+function endGame(){
+  S.done=true;if(!S.fin)S.fin=Date.now();save();
+  const g=gradeOf(S),acc=S.total?Math.round(S.correct/S.total*100):0,mins=Math.max(1,Math.round((S.fin-S.t0)/60000)),code=checkCode(S.name,g,S.correct,S.total,S.best);
+  view(`<div class="box cert">
+   <div class="logo" style="font-size:clamp(20px,5vw,34px);margin:6px 0">${g>=PASS?'QUEST COMPLETE':'QUEST FINISHED'}</div>
+   <p style="margin:4px 0;font-size:28px">${esc(S.name)}</p><p class="muted" style="margin:0">Finished ${fmtDate(S.fin)}</p>
+   <div class="grade"><div class="gl">GRADE</div><div class="gv">${g}%</div><div class="rank">${rankOf(g)}</div></div>
+   ${g>=PASS?`<div class="bonus">✓ QUEST COMPLETE — all zones cleared with a grade of ${PASS}% or higher</div>`:`<div class="bonus low">Finished, but the grade is below ${PASS}% — not a full completion. Start a new game to try for ${PASS}% or higher.</div>`}
+   <div class="big3"><div>Correct<div class="v">${S.correct}/${S.total}</div></div><div>Hints used<div class="v">${S.hu}</div></div><div>Best streak<div class="v">${S.best}</div></div><div>Score<div class="v">${S.score}</div></div></div>
+   <table class="t"><tr><th>Topic</th><th>Correct</th><th>Accuracy</th></tr>${S.stats.map((s,i)=>`<tr><td>${TOPICS[i]}</td><td>${s.c}/${s.t}</td><td>${s.t?Math.round(s.c/s.t*100):0}%</td></tr>`).join('')}</table>
+   <p class="muted" style="margin:6px 0">Raw accuracy ${acc}% · Play time ${mins} min · Team wipe-outs ${S.ko}</p>
+   <div class="code">Check code: <b>${code}</b></div>
+   <div class="snap">📸 If your teacher asks for your result, screenshot from your name down to here, including the check code.</div>
+   <div class="endteam">${S.team.map(m=>`<div>${img(m.id,'',true)}${CR[m.id].name}<br>Lv ${m.lvl}</div>`).join('')}</div>
+   <div class="row" style="justify-content:center;margin-top:14px"><button class="btn ghost" id="again">Start a new game</button></div></div>`);
+  $('#again').onclick=()=>{const m=modal(`<h2>Start over?</h2><p>This clears your score screen. Make sure you've taken your screenshot first.</p><div class="row"><button class="btn" id="yes">Yes, start over</button><button class="btn ghost" data-close>Cancel</button></div>`);
+    m.v.querySelector('#yes').onclick=()=>{m.close();clearSave();S=null;title()}};
+}
+
+/* ============ keyboard ============ */
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'){if(e.key==='Enter'){const g=$('#go');g&&g.click()}return}
+  if(document.querySelector('.veil'))return;
+  if(B&&!B.answered&&/^[1-4]$/.test(e.key)){const b=app.querySelector(`[data-o="${+e.key-1}"]`);if(b&&!b.disabled){e.preventDefault();b.click()}}
+});
+
+if(location.hash==='#qa')window.__EQ={get S(){return S},get B(){return B},ALLG,POOLS,checkCode,gradeOf};
+const sv=load();if(sv&&sv.done){S=sv;endGame()}else title();
+})();
+</script>
+</body>
+</html>

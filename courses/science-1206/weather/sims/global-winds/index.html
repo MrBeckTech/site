@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Global Wind Systems | Science 1206</title>
+<meta name="tw-titlecard" content="WEATHER · SIM 10|GLOBAL WINDS|CELLS AND BELTS.">
+<meta name="tw-white" content="panel">
+<style>:root{
+  --bg:#f4f7fb; --card:#ffffff; --ink:#14202e; --ink2:#465569; --line:#d6dfea;
+  --brand:#1d5fbf; --brand2:#e4eefc; --cool:#2a78d6; --warm:#eb6834; --good:#137a3a; --bad:#b42318;
+  --radius:14px; --focus:#ffb000;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.app{max-width:1120px;margin:0 auto;padding:12px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 10px}
+.hd h1{font-size:1.45rem;line-height:1.2;margin:0}
+.pill{font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--brand2);color:#174a94;border-radius:99px;padding:3px 10px;white-space:nowrap}
+.lead{flex-basis:100%;margin:2px 0 0;color:var(--ink2)}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:12px;align-items:start}
+@media(max-width:1080px){.main{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px}
+.stagecard{padding:8px}
+.stage{position:relative}
+.stage canvas,.stage svg{display:block;width:100%;height:auto;border-radius:10px;background:#eaf3fb;touch-action:none;user-select:none;-webkit-user-select:none}
+.caption{margin:8px 4px 2px;font-size:.92rem;color:var(--ink2);min-height:1.3em}
+.caption b{color:var(--ink)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.tab{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-weight:650;padding:8px 14px;border-radius:10px;cursor:pointer;min-height:40px}
+.tab[aria-selected=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+.ctlcard{display:flex;flex-direction:column;gap:8px}
+.ctl-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ctl-head h2,.learn h2{font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2);margin:0}
+.ctl-actions{display:flex;gap:6px}
+.ctl{margin:6px 0 10px}
+.ctl.off{opacity:.45}
+.ctl-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-weight:600;font-size:.94rem}
+.ctl-row output{font-variant-numeric:tabular-nums;color:var(--brand);font-weight:700;white-space:nowrap}
+.hint{font-size:.82rem;color:var(--ink2);margin-top:1px}
+input[type=range]{width:100%;height:30px;margin:2px 0 0;accent-color:var(--brand);cursor:pointer}
+.btn,.segbtn{appearance:none;font:inherit;font-weight:650;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 12px;min-height:40px;cursor:pointer}
+.btn:hover,.segbtn:hover,.tab:hover{border-color:#9db4d3}
+.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn.small{padding:5px 10px;min-height:34px;font-size:.88rem}
+.btn.wide{width:100%}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.segbtn{flex:1 1 auto;padding:7px 10px;font-size:.92rem}
+.segbtn[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+.chk{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.94rem;margin:6px 0;cursor:pointer;min-height:32px}
+.chk input{width:20px;height:20px;accent-color:var(--brand)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.ro{display:grid;grid-template-columns:1fr auto;gap:3px 10px;font-size:.93rem;background:#f3f7fc;border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-variant-numeric:tabular-nums}
+.ro .k{color:var(--ink2)} .ro .v{text-align:right}
+.callout{border-left:5px solid var(--brand);background:#eef4fd;border-radius:8px;padding:9px 12px;font-size:.94rem;margin:8px 0}
+.callout.warm{border-color:var(--warm);background:#fff3ec}
+.callout.good{border-color:var(--good);background:#eefaf1}
+.callout.bad{border-color:var(--bad);background:#fdf0ee}
+.callout b{display:block}
+.sub{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin:10px 0 2px}
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;margin-top:12px}
+.learn .card{padding:12px 14px}
+.learn ul{margin:8px 0 0;padding-left:1.15rem}
+.learn li{margin:5px 0}
+.learn dl{margin:8px 0 0}
+.learn dt{font-weight:700;margin-top:8px}
+.learn dd{margin:1px 0 0;color:var(--ink2);font-size:.94rem}
+.learn details{border:1px solid var(--line);border-radius:10px;margin:8px 0;background:#fbfcfe}
+.learn summary{cursor:pointer;padding:9px 12px;font-weight:600;list-style:none}
+.learn summary::-webkit-details-marker{display:none}
+.learn summary::before{content:"?";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;font-size:.8rem;margin-right:8px;font-weight:800}
+.learn details[open] summary::before{content:"✓";background:var(--good)}
+.learn .ans{margin:0;padding:2px 12px 12px 40px;color:var(--ink2);font-size:.95rem}
+.foot{margin:14px 4px 0;font-size:.82rem;color:var(--ink2)}
+[hidden]{display:none!important}
+@media(max-width:520px){.app{padding:8px 8px 20px}.hd h1{font-size:1.25rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin:8px 2px 2px;align-items:start}.info:empty{display:none}.info .callout{margin:0}.info .ro{margin:0}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body><div id="app" class="app"></div>
+<script>/* Shared helpers for the Science 1206 Weather Dynamics simulations. Self-contained: no external libraries. */
+(function(){
+'use strict';
+const NS='http://www.w3.org/2000/svg', G=window;
+G.TAU=Math.PI*2;
+G.clamp=(v,a,b)=>v<a?a:v>b?b:v;
+G.lerp=(a,b,t)=>a+(b-a)*t;
+G.rand=(a,b)=>a+Math.random()*(b-a);
+G.$=(s,r)=>(r||document).querySelector(s);
+G.smooth=(t)=>{t=clamp(t,0,1);return t*t*(3-2*t);};
+
+function setAttrs(e,a){
+  for(const k in a){const v=a[k]; if(v==null||v===false)continue;
+    if(k==='class')e.setAttribute('class',v);
+    else if(k==='style'&&typeof v==='object')Object.assign(e.style,v);
+    else if(k==='html')e.innerHTML=v;
+    else if(k.slice(0,2)==='on'&&typeof v==='function')e.addEventListener(k.slice(2),v);
+    else e.setAttribute(k,v===true?'':v);}
+}
+function addKids(e,kids){for(const k of kids.flat(Infinity)){if(k==null||k===false)continue;e.append(k.nodeType?k:document.createTextNode(k));}}
+G.h=(t,a,...k)=>{const e=document.createElement(t);if(a)setAttrs(e,a);addKids(e,k);return e;};
+G.s=(t,a,...k)=>{const e=document.createElementNS(NS,t);if(a)setAttrs(e,a);addKids(e,k);return e;};
+
+/* colour: cold blue -> pale -> warm orange -> hot red (never the only cue: sims also label) */
+const STOPS=[[42,120,214],[160,200,236],[246,240,222],[245,170,92],[212,58,38]];
+G.heatRGB=(t)=>{t=clamp(t,0,1);const p=t*(STOPS.length-1),i=Math.min(STOPS.length-2,Math.floor(p)),f=p-i,a=STOPS[i],b=STOPS[i+1];
+  return [Math.round(lerp(a[0],b[0],f)),Math.round(lerp(a[1],b[1],f)),Math.round(lerp(a[2],b[2],f))];};
+G.heat=(t,al)=>{const c=heatRGB(t);return al==null?`rgb(${c})`:`rgba(${c},${al})`;};
+
+/* canvas drawing helpers */
+const FONT='system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans","Noto Sans Symbols 2","DejaVu Sans","Segoe UI Symbol",sans-serif';
+G.txt=(g,str,x,y,o)=>{o=o||{};const size=o.size||16,lines=String(str).split('\n');
+  g.font=`${o.weight||600} ${size}px ${FONT}`;g.textAlign=o.align||'left';g.textBaseline=o.base||'alphabetic';g.lineJoin='round';
+  lines.forEach((ln,i)=>{const yy=y+i*size*1.2;
+    if(o.halo!==false){g.lineWidth=o.haloW||4;g.strokeStyle=o.haloColor||'rgba(255,255,255,.88)';g.strokeText(ln,x,yy);}
+    g.fillStyle=o.color||'#14202e';g.fillText(ln,x,yy);});};
+G.rr=(g,x,y,w,hh,r)=>{g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+hh,r);g.arcTo(x+w,y+hh,x,y+hh,r);g.arcTo(x,y+hh,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();};
+G.arrow=(g,x0,y0,x1,y1,o)=>{o=o||{};const c=o.color||'#14202e',w=o.w||3,hd=o.head||w*3.4,a=Math.atan2(y1-y0,x1-x0);
+  g.save();g.strokeStyle=c;g.fillStyle=c;g.lineWidth=w;g.lineCap='round';g.globalAlpha=o.alpha==null?1:o.alpha;
+  g.beginPath();g.moveTo(x0,y0);g.lineTo(x1-Math.cos(a)*hd*.6,y1-Math.sin(a)*hd*.6);g.stroke();
+  g.beginPath();g.moveTo(x1,y1);g.lineTo(x1-Math.cos(a-.42)*hd,y1-Math.sin(a-.42)*hd);g.lineTo(x1-Math.cos(a+.42)*hd,y1-Math.sin(a+.42)*hd);g.closePath();g.fill();g.restore();};
+G.wavy=(g,x0,y0,x1,y1,o)=>{o=o||{};const amp=o.amp||5,wl=o.wl||16,n=Math.max(2,Math.hypot(x1-x0,y1-y0)/3|0),a=Math.atan2(y1-y0,x1-x0),L=Math.hypot(x1-x0,y1-y0);
+  g.save();g.strokeStyle=o.color||'#d43a26';g.lineWidth=o.w||2.5;g.lineCap='round';g.globalAlpha=o.alpha==null?1:o.alpha;g.beginPath();
+  for(let i=0;i<=n;i++){const d=i/n*L,off=Math.sin(d/wl*TAU+(o.phase||0))*amp,x=x0+Math.cos(a)*d-Math.sin(a)*off,y=y0+Math.sin(a)*d+Math.cos(a)*off;i?g.lineTo(x,y):g.moveTo(x,y);}
+  g.stroke();g.restore();};
+G.cloud=(g,x,y,sc,color)=>{g.save();g.translate(x,y);g.scale(sc,sc);g.fillStyle=color||'#fff';g.beginPath();
+  g.arc(0,0,22,0,TAU);g.arc(26,-10,28,0,TAU);g.arc(56,0,24,0,TAU);g.arc(28,10,26,0,TAU);g.fill();g.restore();};
+
+/* polyline path follower: PolyPath(pts).at(distance) -> [x,y,segmentIndex], wraps around */
+G.PolyPath=(pts)=>{const cum=[0];for(let i=1;i<pts.length;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));const len=cum[cum.length-1];
+  return{len,at(d,wrap){d=wrap===false?clamp(d,0,len):((d%len)+len)%len;let i=1;while(i<cum.length-1&&cum[i]<d)i++;const a=pts[i-1],b=pts[i],sg=(cum[i]-cum[i-1])||1,u=(d-cum[i-1])/sg;return[a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u,i];}};};
+
+/* ---------- controls ---------- */
+G.Slider=(o)=>{const id='s'+Math.random().toString(36).slice(2,8),fmt=o.fmt||(v=>v);
+  const out=h('output',{for:id}),inp=h('input',{type:'range',id,min:o.min,max:o.max,step:o.step||1,value:o.value});
+  const upd=()=>{out.textContent=fmt(+inp.value)+(o.unit||'');};
+  inp.addEventListener('input',()=>{upd();o.onInput&&o.onInput(+inp.value);});upd();
+  const el=h('div',{class:'ctl'},h('div',{class:'ctl-row'},h('label',{for:id},o.label),out),inp,o.hint?h('div',{class:'hint'},o.hint):null);
+  el.set=(v,silent)=>{inp.value=v;upd();if(!silent&&o.onInput)o.onInput(+inp.value);};
+  el.get=()=>+inp.value;el.enable=(b)=>{inp.disabled=!b;el.classList.toggle('off',!b);};return el;};
+G.Seg=(o)=>{const btns={};let cur=o.value;const wrap=h('div',{class:'seg',role:'group','aria-label':o.label||''});
+  const set=(id,silent)=>{cur=id;for(const k in btns)btns[k].setAttribute('aria-pressed',String(k===String(id)));if(!silent&&o.onChange)o.onChange(id);};
+  for(const [id,label] of o.options){btns[id]=h('button',{type:'button',class:'segbtn','aria-pressed':String(String(id)===String(cur)),onclick:()=>set(id)},label);wrap.append(btns[id]);}
+  const el=h('div',{class:'ctl'},o.label?h('div',{class:'ctl-row'},h('span',null,o.label)):null,wrap);
+  el.set=set;el.get=()=>cur;return el;};
+G.Btn=(label,onClick,cls)=>h('button',{type:'button',class:'btn '+(cls||''),onclick:onClick},label);
+G.Check=(o)=>{const inp=h('input',{type:'checkbox'});inp.checked=!!o.value;inp.addEventListener('change',()=>o.onChange&&o.onChange(inp.checked));
+  const el=h('label',{class:'chk'},inp,o.label);el.set=(v,silent)=>{inp.checked=v;if(!silent&&o.onChange)o.onChange(v);};el.get=()=>inp.checked;return el;};
+G.Readout=(rows)=>{const el=h('div',{class:'ro'}),v={};
+  for(const [k,l,init] of rows){el.append(h('span',{class:'k'},l));v[k]=h('b',{class:'v'},init==null?'–':init);el.append(v[k]);}
+  el.set=(k,val)=>{val=String(val);if(v[k].textContent!==val)v[k].textContent=val;};return el;};
+G.Callout=(cls)=>{const el=h('div',{class:'callout '+(cls||''),'aria-live':'polite'});el.say=(title,body,c)=>{el.className='callout '+(c||cls||'');el.innerHTML=(title?'<b>'+title+'</b>':'')+(body||'');};return el;};
+
+G.dragger=(el,posfn,o)=>{let on=false;
+  el.addEventListener('pointerdown',e=>{const p=posfn(e);if(o.down&&o.down(p,e)===false)return;on=true;try{el.setPointerCapture(e.pointerId);}catch(_){}e.preventDefault();});
+  el.addEventListener('pointermove',e=>{const p=posfn(e);if(on){o.move&&o.move(p,e);}else if(o.hover)o.hover(p,e);});
+  const end=e=>{if(on){on=false;o.up&&o.up(posfn(e),e);}};
+  el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);};
+
+/* ---------- the page scaffold ---------- */
+G.Sim=(cfg)=>{
+  document.title=cfg.title+' | Science 1206 Weather Dynamics';
+  const app=$('#app'),state={paused:matchMedia('(prefers-reduced-motion: reduce)').matches};
+  const stageBox=h('div',{class:'stage'}),info=h('div',{class:'info'}),caption=h('p',{class:'caption','aria-live':'polite'});
+  const tabBar=h('div',{class:'tabs',role:'tablist'}),ctlBody=h('div',{class:'ctlbody'});
+  const panels=[];let curTab=cfg.tabs?cfg.tabs[0][0]:null;
+  const ctx={stageBox,info,controls:ctlBody,state,get tab(){return curTab;},onTab:null,onReset:null,
+    setCaption(t){caption.innerHTML=t;},
+    panel(ids){const d=h('div',{class:'panel'});d._ids=ids==null||ids==='*'?null:[].concat(ids);panels.push(d);ctlBody.append(d);d.hidden=!!d._ids&&!d._ids.includes(curTab);return d;},
+    canvas(W,H){const cv=h('canvas',{role:'img','aria-label':cfg.alt||cfg.title});const g=cv.getContext('2d');cv.style.aspectRatio=W+' / '+H;stageBox.append(cv);
+      const C={cv,g,W,H,k:1,begin(){g.setTransform(C.k,0,0,C.k,0,0);g.clearRect(0,0,W,H);},
+        pos(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height};}};
+      const fit=()=>{const w=stageBox.clientWidth||W,dpr=Math.min(window.devicePixelRatio||1,2);cv.width=Math.round(w*dpr);cv.height=Math.round(w*H/W*dpr);C.k=cv.width/W;};
+      new ResizeObserver(fit).observe(stageBox);fit();return C;},
+    svg(W,H){const el=s('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':cfg.alt||cfg.title});stageBox.append(el);
+      el.pos=(e)=>{const r=el.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height};};return el;},
+    loop(fn){let last=performance.now();const tick=(now)=>{const dt=Math.min(.05,(now-last)/1000);last=now;
+      try{fn(state.paused?0:dt,now/1000);}catch(err){console.error(err);}requestAnimationFrame(tick);};requestAnimationFrame(tick);}
+  };
+  const playBtn=h('button',{type:'button',class:'btn small',onclick:()=>{state.paused=!state.paused;syncPlay();}});
+  const syncPlay=()=>{playBtn.textContent=state.paused?'Play':'Pause';};syncPlay();
+  const resetBtn=h('button',{type:'button',class:'btn small',onclick:()=>ctx.onReset&&ctx.onReset()},'↺ Reset');
+  const ctlCard=h('aside',{class:'card ctlcard','aria-label':'Controls'},
+    h('div',{class:'ctl-head'},h('h2',null,'Controls'),h('div',{class:'ctl-actions'},cfg.static?null:playBtn,resetBtn)),ctlBody);
+  if(cfg.tabs){cfg.tabs.forEach(([id,label])=>{const b=h('button',{type:'button',class:'tab',role:'tab','aria-selected':String(id===curTab),onclick:()=>{
+      curTab=id;[...tabBar.children].forEach(x=>x.setAttribute('aria-selected',String(x===b)));
+      panels.forEach(p=>{p.hidden=!!p._ids&&!p._ids.includes(curTab);});ctx.onTab&&ctx.onTab(id);}},label);b._id=id;tabBar.append(b);});}
+  const card=(t,...k)=>h('div',{class:'card'},h('h2',null,t),...k);
+  const learn=h('section',{class:'learn'},
+    card('What to notice',h('ul',null,(cfg.notice||[]).map(n=>h('li',{html:n})))),
+    card('Key terms',h('dl',null,(cfg.terms||[]).map(([t,d])=>[h('dt',null,t),h('dd',{html:d})]))),
+    card('Check your understanding',(cfg.questions||[]).map(([q,a])=>h('details',null,h('summary',{html:q}),h('p',{class:'ans',html:a})))));
+  app.append(
+    h('header',{class:'hd'},h('span',{class:'pill'},cfg.tag),h('h1',null,cfg.title),h('p',{class:'lead'},cfg.lead)),
+    h('main',{class:'main'},h('section',{class:'card stagecard'},cfg.tabs?tabBar:null,stageBox,caption,info),ctlCard),
+    learn,
+    h('p',{class:'foot'},cfg.source+' Simplified models for learning: real weather is messier. Numbers marked “about” are estimates.'));
+  cfg.init(ctx);
+  if(!ctx.onReset)resetBtn.hidden=true;
+  if(state.paused)ctx.setCaption((cfg.paused||'')+' <i>Animation is paused because your device prefers reduced motion. Press Play to start it.</i>');
+  return ctx;
+};
+})();
+
+Sim({
+  title:'Global Wind Systems',
+  tag:'Section 1.2 · Figures 1.13–1.16 and Table 1.3',
+  lead:'First see why moving air curves when the ground turns underneath it. Then build the three wind belts: trade winds, prevailing westerlies and polar easterlies.',
+  source:'Based on Science 1206, Chapter 1, pp. 28–29 (Figures 1.13–1.16, Table 1.3). Belt boundaries at 30° and 60° follow the textbook. The curve is exaggerated so that it is easy to see, and the air is drawn as a straight line through space, the same model as Activity 1-2A.',
+  alt:'Two views of the northern hemisphere from above the North Pole showing a parcel of air travelling straight through space while its track over the rotating ground curves, and a latitude map of the three global wind belts with a side view of the convection cells.',
+  tabs:[['why','Why the wind curves'],['belts','The three wind belts']],
+  notice:[
+    '<b>Two views of one parcel.</b> Through space the air travels in a <b>straight line</b>. But the ground turns underneath it, so its <b>track over the ground curves</b>. Nothing pushes the air sideways.',
+    'Set <b>Earth’s spin to 0</b> and the two views become identical: the air would blow straight north or south and there would be no belts.',
+    'Air heading <b>toward the equator</b> ends up coming from the north-east: the <b>trade winds</b> and the <b>polar easterlies</b>. Air heading <b>toward the pole</b> ends up coming from the south-west: the <b>prevailing westerlies</b>.',
+    'On the belt tab, step from a small non-spinning Earth (one cell) to real size (air sinks at <b>30°</b> and <b>60°</b>, three cells) to real size with spin (the belts get their names).',
+    'At <b>St. John’s</b> (47.5° N) we sit in the prevailing westerlies, which is why most of our weather arrives from the west.'],
+  terms:[
+    ['Coriolis effect','The curving of moving air, water or objects because Earth rotates underneath them. Right in the northern hemisphere, left in the southern.'],
+    ['Prevailing wind','The usual direction from which a wind blows.'],
+    ['Trade winds','Between the equator and 30° N/S. Air sinks at 30°, moves toward the equator and is deflected west.'],
+    ['Prevailing westerlies','Between 30° and 60° N/S. Surface winds blow from west to east toward the poles.'],
+    ['Polar easterlies','Between 60° N/S and the poles. Cold polar winds blowing from east to west.'],
+    ['Doldrums','A belt of low pressure within 5° of the equator where air rises and winds are light or absent.']],
+  questions:[
+    ['Air leaves 30° N heading south toward the equator. Which way does its track over the ground bend, and what is the wind called?','It bends to the right, so the air ends up travelling toward the south-west. A wind is named for where it comes from, so this is a north-east wind: the trade winds.'],
+    ['Which global wind system is responsible for much of the weather experienced in Canada?','The prevailing westerlies (between 30° and 60° N).'],
+    ['From which direction do the polar easterlies blow in the northern hemisphere?','From the east (more exactly, the north-east). They flow toward the equator, so they bend the same way as the trade winds.'],
+    ['If Earth rotated in the opposite direction, what would the prevailing winds in the province be like?','The deflection would reverse, so winds in the northern hemisphere would bend left instead of right. At our latitude the prevailing winds would come from the south-east instead of the south-west, so the westerlies would become easterlies. Set the spin slider to “Reversed” to see it.']],
+  init(ctx){
+    const C=ctx.canvas(800,500),g=C.g;
+    const S=t=>{t=clamp(t,0,1);return t*t*(3-2*t);};
+
+    /* ================= tab 1: why the wind curves ================= */
+    let flow='trade',spin=1,theta=0,theta0=0,s=0,flying=false,hold=0,trA=[],trB=[];
+    const FLOW={
+      trade:{lab:'From 30° N toward the equator',from:30,to:3,out:true,belt:'Trade winds'},
+      west :{lab:'From 30° N toward the pole',   from:30,to:58,out:false,belt:'Prevailing westerlies'},
+      polar:{lab:'From the pole toward 60° N',   from:88,to:60,out:true,belt:'Polar easterlies'}};
+    const FLIGHT=4.2, TOT=1.15;                     /* seconds, radians of spin during one flight */
+    const launch=()=>{s=0;flying=true;hold=0;theta0=theta;trA=[];trB=[];};
+    const sF=Seg({label:'Which air flow?',value:'trade',options:[['trade','Toward the equator, from 30° N'],['west','Toward the pole, from 30° N'],['polar','Toward the equator, from the pole']],onChange:v=>{flow=v;launch();updWhy();}});
+    const sSp=Slider({label:'Earth’s spin',min:-1,max:1,step:.1,value:1,
+      fmt:v=>Math.abs(v)<.05?'Not spinning':(v<0?'Reversed '+Math.round(-v*100)+'%':Math.round(v*100)+'%'),
+      onInput:v=>{spin=v;updWhy();},hint:'0 % = a still Earth. Reversed = Earth turning the other way.'});
+    const bL=Btn('▶ Launch the air again',()=>{launch();updWhy();},'primary wide');
+    ctx.panel(['why']).append(sF,sSp,bL);
+
+    /* ================= tab 2: the belts ================= */
+    let mode='C',nk='';
+    const sM=Seg({label:'Earth model',value:'C',options:[['A','1 · Small, no spin'],['B','2 · Real size, no spin'],['C','3 · Real size + spin']],onChange:v=>{mode=v;upd();}});
+    ctx.panel(['belts']).append(sM);
+
+    const roW=Readout([['a','Air flow'],['b','Spin'],['c','In space'],['d','Over the ground'],['e','Wind from']]);
+    const roB=Readout([['a','Model'],['b','Cells'],['c','Wind at St. John’s']]);
+    const note=Callout();
+    ctx.info.append(roW,roB,note);
+    const ros={why:roW,belts:roB};
+    const showRo=()=>{for(const k in ros)ros[k].hidden=ctx.tab!==k;};
+    const CAP={
+      why:'<b>The same parcel of air, drawn twice.</b> On the left you float in space and watch Earth turn. On the right you stand on the ground and turn with it.',
+      belts:'<b>Surface winds on a map of latitude bands.</b> The strip on the right is a side view of the rising and sinking air. Use “Earth model” to build the pattern up in three steps.'};
+
+    /* wording */
+    const sgn=()=>Math.abs(spin)<.05?0:(spin>0?1:-1);
+    const bendTxt=()=>sgn()===0?'Stays straight':(sgn()>0?'Curves to the right':'Curves to the left');
+    const fromTxt=()=>{const o=FLOW[flow].out,k=sgn();
+      if(k===0)return o?'the north':'the south';
+      if(o)return k>0?'the north-east':'the north-west';
+      return k>0?'the south-west':'the south-east';};
+    const beltTxt=()=>sgn()>0?FLOW[flow].belt:(sgn()<0?FLOW[flow].belt+', reversed':'No belt: the air would blow straight north–south');
+
+    function updWhy(){
+      roW.set('a',FLOW[flow].lab);
+      roW.set('b',Math.abs(spin)<.05?'Not spinning':(spin<0?'Reversed, '+Math.round(-spin*100)+' %':Math.round(spin*100)+' %'));
+      roW.set('c','Straight');roW.set('d',sgn()===0?'Straight':(sgn()>0?'Bends right':'Bends left'));roW.set('e',fromTxt().replace('the ',''));
+      if(ctx.tab!=='why')return;
+      const key='w'+flow+sgn();if(key===nk)return;nk=key;
+      if(sgn()===0)note.say('No spin, no curve. ','With Earth still the two views are identical. The air blows straight north or south, and there are no wind belts at all.','');
+      else note.say('The ground turns under the air. ',
+        'Nothing pushes the air sideways. It travels in a straight line, but the ground rotates underneath, so its track over the ground bends to the '+(sgn()>0?'right':'left')+
+        '. A wind is named for where it comes from, so this one is a '+fromTxt().replace('the ','')+' wind: the '+FLOW[flow].belt.toLowerCase()+'.'+
+        (sgn()<0?' Earth really turns the other way; a left-hand curve is what the southern hemisphere looks like.':''),
+        sgn()>0?'good':'warm');}
+
+    const beltAt=(l)=>{const a=Math.abs(l);return a<5?'Doldrums':a<30?'Trade winds':a<60?'Prevailing westerlies':'Polar easterlies';};
+    function upd(){
+      if(ctx.tab==='why'){updWhy();return;}
+      roB.set('a',mode==='A'?'Small, no spin':mode==='B'?'Real size, no spin':'Real size + spin');
+      roB.set('b',mode==='A'?'One per hemisphere':'Three per hemisphere');
+      roB.set('c',mode==='C'?'From the south-west':(vec(47.56)[1]>0?'Straight toward the pole':'Straight toward the equator'));
+      nk='';const T={A:['Step 1 · One cell in each hemisphere','Warm air rises at the equator, flows to the poles high up, cools, sinks and returns along the surface. The surface wind blows straight from each pole to the equator.'],
+        B:['Step 2 · Three cells in each hemisphere','On an Earth of actual size, air sinks at 30° and 60°, long before it reaches the poles. Surface winds still blow straight north or south.'],
+        C:['Step 3 · The Coriolis effect names the belts','Winds swerve right in the northern hemisphere and left in the southern. The trade winds and polar easterlies come from the east; the prevailing westerlies come from the west.']}[mode];
+      note.say(T[0],T[1],mode==='C'?'good':'');}
+
+    ctx.onTab=()=>{showRo();ctx.setCaption(CAP[ctx.tab]);nk='';upd();if(ctx.tab==='why')launch();};
+    showRo();ctx.setCaption(CAP.why);upd();launch();
+    ctx.onReset=()=>{flow='trade';sF.set('trade',true);spin=1;sSp.set(1,true);mode='C';sM.set('C',true);theta=0;launch();upd();};
+
+    /* ---------------- drawing: tab 1 ---------------- */
+    const RD=140;
+    const PH0=2.2,pos=(cx,cy,r,ph)=>[cx+r*Math.sin(ph),cy+r*Math.cos(ph)];
+    const rLat=(l)=>RD*(90-l)/90;
+    function disk(cx,cy,rot,home,title,sub){
+      g.fillStyle='#dceaf7';g.beginPath();g.arc(cx,cy,RD,0,TAU);g.fill();
+      /* latitude rings */
+      g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=1.5;
+      [30,60].forEach(l=>{g.beginPath();g.arc(cx,cy,rLat(l),0,TAU);g.stroke();});
+      /* meridians rotate with the ground */
+      g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=1.5;
+      for(let k=0;k<12;k++){const a=k*Math.PI/6+rot,p=pos(cx,cy,RD,a);g.beginPath();g.moveTo(cx,cy);g.lineTo(p[0],p[1]);g.stroke();}
+      /* the home meridian: the line the air started on */
+      const hp=pos(cx,cy,RD,home);g.strokeStyle='#e0761c';g.lineWidth=3.5;g.beginPath();g.moveTo(cx,cy);g.lineTo(hp[0],hp[1]);g.stroke();
+      g.strokeStyle='#8494a8';g.lineWidth=2;g.beginPath();g.arc(cx,cy,RD,0,TAU);g.stroke();
+      g.fillStyle='#14202e';g.beginPath();g.arc(cx,cy,4,0,TAU);g.fill();
+      txt(g,'North Pole',cx,cy-10,{size:11,align:'center',color:'#14202e',weight:700,haloColor:'rgba(255,255,255,.85)'});
+      txt(g,'Equator',cx,cy+RD+16,{size:11,align:'center',color:'#465569',weight:700,halo:false});
+      txt(g,'30° N',cx-rLat(30)+4,cy+4,{size:10,color:'#5b6b7d',weight:600,haloColor:'rgba(255,255,255,.8)'});
+      txt(g,'60° N',cx-rLat(60)+4,cy+4,{size:10,color:'#5b6b7d',weight:600,haloColor:'rgba(255,255,255,.8)'});
+      txt(g,title,cx,cy-RD-34,{size:13,align:'center',color:'#14202e',weight:800,halo:false});
+      txt(g,sub,cx,cy-RD-17,{size:11.5,align:'center',color:'#465569',weight:600,halo:false});
+    }
+    function drawWhy(dt){
+      if(dt>0){if(flying){theta+=spin*(TOT/FLIGHT)*dt;s+=dt/FLIGHT;if(s>=1){s=1;flying=false;hold=1.6;}}else if(hold>0){hold-=dt;if(hold<=0)launch();}}
+      g.fillStyle='#f4f8fc';g.fillRect(0,0,800,500);
+      const f=FLOW[flow],r=lerp(rLat(f.from),rLat(f.to),s),d=theta-theta0;
+      const AX=207,BX=593,CY=250;
+      g.fillStyle='#fff';rr(g,14,26,378,404,12);g.fill();g.strokeStyle='#d6dfea';g.lineWidth=1;g.stroke();
+      g.fillStyle='#fff';rr(g,408,26,378,404,12);g.fill();g.strokeStyle='#d6dfea';g.lineWidth=1;g.stroke();
+      /* LEFT: from space. grid turns, air goes straight */
+      disk(AX,CY,PH0+d,PH0+d,'VIEW FROM SPACE','you float still and watch Earth turn');
+      /* RIGHT: from the ground. grid fixed, air curves */
+      disk(BX,CY,PH0,PH0,'VIEW FROM THE GROUND','you turn with Earth, like we do');
+      /* trails */
+      const pA=pos(AX,CY,r,PH0),pB=pos(BX,CY,r,PH0-d);
+      if(flying||s>0){trA.push(pA[0],pA[1]);trB.push(pB[0],pB[1]);if(trA.length>1400){trA.splice(0,2);trB.splice(0,2);}}
+      const stroke=(tr,col,dash)=>{if(tr.length<4)return;g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=3.5;g.lineCap='round';g.lineJoin='round';
+        g.beginPath();g.moveTo(tr[0],tr[1]);for(let i=2;i<tr.length;i+=2)g.lineTo(tr[i],tr[i+1]);g.stroke();g.setLineDash([]);};
+      stroke(trA,'#b42318',[9,6]);
+      stroke(trB,'#b42318');
+      /* the parcel */
+      const blob=(p)=>{g.fillStyle='#fff';g.strokeStyle='#b42318';g.lineWidth=3;g.beginPath();g.arc(p[0],p[1],8,0,TAU);g.fill();g.stroke();};
+      blob(pA);blob(pB);
+      if(trB.length>=8&&sgn()!==0){
+        const n=trB.length,ux=trB[n-2]-trB[n-8],uy=trB[n-1]-trB[n-7],m=Math.hypot(ux,uy)||1,hx=ux/m,hy=uy/m;
+        arrow(g,pB[0],pB[1],pB[0]+hx*30,pB[1]+hy*30,{color:'#8f1a10',w:2.5,head:10});
+        const sx=-hy*sgn(),sy=hx*sgn();
+        arrow(g,pB[0]+hx*16,pB[1]+hy*16,pB[0]+hx*16+sx*26,pB[1]+hy*16+sy*26,{color:'#1d5fbf',w:2.5,head:10});
+        txt(g,sgn()>0?'right':'left',pB[0]+hx*16+sx*34,pB[1]+hy*16+sy*34+4,{size:11,color:'#1d5fbf',weight:800,haloColor:'rgba(255,255,255,.9)',haloW:5});}
+      txt(g,'the air never turns',AX,CY+RD+34,{size:12,align:'center',color:'#8f1a10',weight:800,halo:false});
+      txt(g,'orange = the line it set off along',BX,CY+RD+34,{size:12,align:'center',color:'#8f1a10',weight:800,halo:false});
+      /* spin arrows around the space disk */
+      if(sgn()!==0){const sw=.42*sgn();
+        for(const b of [-2.55,0.6]){const p1=pos(AX,CY,RD+14,b),p2=pos(AX,CY,RD+14,b+sw);
+          arrow(g,p1[0],p1[1],p2[0],p2[1],{color:'#1d5fbf',w:3,head:11});}
+        txt(g,spin>0?'Earth turns this way':'Earth turns this way (reversed)',AX,26+14,{size:11,align:'center',color:'#1d5fbf',weight:700,halo:false});}
+      else txt(g,'Earth is not turning',AX,26+14,{size:11,align:'center',color:'#5b6b7d',weight:700,halo:false});
+      /* result banner */
+      const by=440,bh=48;
+      const box=(x,w,k,v,col)=>{g.fillStyle='#fff';rr(g,x,by,w,bh,10);g.fill();g.strokeStyle='#d6dfea';g.lineWidth=1;g.stroke();
+        txt(g,k,x+12,by+18,{size:10,color:'#465569',weight:800,halo:false});
+        txt(g,v,x+12,by+37,{size:14,color:col||'#14202e',weight:800,halo:false});};
+      box(14,214,'PATH THROUGH SPACE','Straight line','#14202e');
+      box(240,214,'TRACK OVER THE GROUND',bendTxt(),sgn()===0?'#5b6b7d':'#8f1a10');
+      box(466,320,'SO THE WIND COMES FROM',fromTxt().replace('the ','')+(sgn()>0?' · '+FLOW[flow].belt.toLowerCase():''),sgn()>0?'#1d5fbf':'#5b6b7d');
+      [232,458].forEach(x=>txt(g,'→',x,by+32,{size:17,align:'center',color:'#8494a8',weight:800,halo:false}));
+    }
+
+    /* ---------------- drawing: tab 2 ---------------- */
+    const MX=20,MY=44,MW=428,MH=416,latY=l=>MY+(90-l)/180*MH;
+    const cell=(l)=>{l=Math.abs(l);if(mode==='A')return-1;const a=S((l-27)/6),b=S((l-57)/6);return-1+2*a-2*b;};
+    const vec=(lat)=>{let vn=cell(lat)*(lat>=0?1:-1);if(mode!=='A')vn*=S(Math.abs(lat)/8);let ve=0;
+      if(mode==='C'){const th=.95*(lat>=0?1:-1),c=Math.cos(th),s2=Math.sin(th);ve=vn*s2;vn=vn*c;}return[ve,vn];};
+    const N=150,ps=[];const spawn=p=>{p.x=rand(MX,MX+MW);p.lat=rand(-88,88);p.age=0;p.life=rand(2.5,5);p.tr=[];return p;};
+    for(let i=0;i<N;i++){const p=spawn({});p.age=rand(0,p.life);ps.push(p);}
+    const SX=506,TX=640;
+    const loop=(latR,latS)=>{const a=latY(latS),b=latY(latR);return PolyPath([[SX,a],[SX,b],[TX,b],[TX,a],[SX,a]]);};
+    const dots=Array.from({length:9},(_,i)=>i/9);
+    function drawBelts(dt,tm){
+      g.fillStyle='#f4f8fc';g.fillRect(0,0,800,500);
+      g.fillStyle='#e6f0f9';g.fillRect(MX,MY,MW,MH);
+      const tint=(l0,l1,c)=>{g.fillStyle=c;g.fillRect(MX,latY(l1),MW,latY(l0)-latY(l1));};
+      if(mode==='A'){tint(0,90,'rgba(235,150,70,.10)');tint(-90,0,'rgba(235,150,70,.10)');}
+      else[[0,30,'rgba(235,150,70,.14)'],[30,60,'rgba(60,120,220,.13)'],[60,90,'rgba(30,160,150,.16)'],[-30,0,'rgba(235,150,70,.14)'],[-60,-30,'rgba(60,120,220,.13)'],[-90,-60,'rgba(30,160,150,.16)']].forEach(a=>tint(...a));
+      g.fillStyle='rgba(120,130,140,.16)';g.fillRect(MX,latY(5),MW,latY(-5)-latY(5));
+      const lines=mode==='A'?[0]:[0,30,60,-30,-60];
+      g.setLineDash([6,5]);g.strokeStyle='#5b6b7d';g.lineWidth=1.5;lines.forEach(l=>{g.beginPath();g.moveTo(MX,latY(l));g.lineTo(MX+MW,latY(l));g.stroke();});g.setLineDash([]);
+      /* faint moving streaks */
+      g.lineCap='round';g.lineJoin='round';g.strokeStyle='rgba(14,36,90,.28)';g.lineWidth=2;g.beginPath();
+      for(const p of ps){if(dt>0){const[ve,vn]=vec(p.lat),k=75;p.x+=ve*k*dt;p.lat+=vn*k*dt*180/MH;p.age+=dt*(Math.hypot(ve,vn)<.3?5:1);
+          if(p.x>MX+MW){p.x-=MW;p.tr=[];}if(p.x<MX){p.x+=MW;p.tr=[];}
+          p.tr.push(p.x,latY(p.lat));if(p.tr.length>30)p.tr.splice(0,2);if(p.age>p.life||Math.abs(p.lat)>89)spawn(p);}
+        if(p.tr.length>3){g.moveTo(p.tr[0],p.tr[1]);for(let i=2;i<p.tr.length;i+=2)g.lineTo(p.tr[i],p.tr[i+1]);}}
+      g.stroke();
+      /* the message: a clean grid of big arrows */
+      const cols=[.17,.42,.67],LAT=[82.5,67.5,52.5,37.5,22.5,7.5,-7.5,-22.5,-37.5,-52.5,-67.5,-82.5];
+      const colOf=l=>{const a=Math.abs(l);return a<5?'#5b6b7d':a<30?'#a04012':a<60?'#1d5fbf':'#0c6f68';};
+      LAT.forEach(l=>{const[ve,vn]=vec(l),m=Math.hypot(ve,vn);if(m<.12)return;
+        const ux=ve/m,uy=-vn/m,L=21+12*m,y=latY(l);
+        cols.forEach(fx=>{const x=MX+MW*fx;arrow(g,x-ux*L/2,y-uy*L/2,x+ux*L/2,y+uy*L/2,{color:colOf(l),w:3,head:11});});});
+      g.strokeStyle='#8494a8';g.lineWidth=1.5;g.strokeRect(MX,MY,MW,MH);
+      g.font='600 11px system-ui';g.fillStyle='#465569';g.textAlign='left';
+      [[90,'90° N'],[60,'60° N'],[30,'30° N'],[0,'0°'],[-30,'30° S'],[-60,'60° S'],[-90,'90° S']].forEach(([l,t])=>g.fillText(t,MX+5,latY(l)+(l===90?13:l===-90?-5:-4)));
+      /* belt names, inside the map on the right */
+      const lab=(l,t,c)=>txt(g,t,MX+MW-10,latY(l)+4,{size:12.5,align:'right',color:c,weight:800,haloColor:'rgba(255,255,255,.88)',haloW:5});
+      if(mode==='C'){lab(75,'Polar easterlies','#0c6f68');lab(45,'Prevailing westerlies','#1d5fbf');lab(16,'Trade winds','#a04012');lab(0,'Doldrums','#5b6b7d');
+        lab(-16,'Trade winds','#a04012');lab(-45,'Prevailing westerlies','#1d5fbf');lab(-75,'Polar easterlies','#0c6f68');
+        const sy2=latY(47.56),sx2=MX+MW*.17;g.fillStyle='#b42318';g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.arc(sx2,sy2,5,0,TAU);g.fill();g.stroke();
+        txt(g,'St. John’s',sx2+9,sy2+16,{size:11.5,color:'#8f1a10',weight:800,haloColor:'rgba(255,255,255,.85)'});}
+      else if(mode==='B'){lab(75,'toward the equator','#0c6f68');lab(45,'toward the pole','#1d5fbf');lab(16,'toward the equator','#a04012');
+        lab(-16,'toward the equator','#a04012');lab(-45,'toward the pole','#1d5fbf');lab(-75,'toward the equator','#0c6f68');}
+      else{lab(45,'toward the equator','#a04012');lab(-45,'toward the equator','#a04012');}
+      /* side view card */
+      g.fillStyle='#fff';rr(g,460,MY,330,MH,12);g.fill();g.strokeStyle='#d6dfea';g.lineWidth=1;g.stroke();
+      txt(g,'SIDE VIEW OF THE AIR',625,MY-12,{size:11,align:'center',color:'#465569',weight:800,halo:false});
+      g.fillStyle='#e8eee5';g.fillRect(SX-14,MY+8,14,MH-16);
+      g.save();g.translate(SX-5,MY+MH/2);g.rotate(-Math.PI/2);txt(g,'THE SURFACE',0,0,{size:9.5,align:'center',halo:false,color:'#5b6b7d',weight:700});g.restore();
+      g.fillStyle='#eef2f7';g.fillRect(TX,MY+8,12,MH-16);
+      g.save();g.translate(TX+9,MY+MH/2);g.rotate(-Math.PI/2);txt(g,'TOP OF THE TROPOSPHERE',0,0,{size:9.5,align:'center',halo:false,color:'#5b6b7d',weight:700});g.restore();
+      const cells=mode==='A'?[loop(0,90),loop(0,-90)]:[loop(0,30),loop(0,-30),loop(60,30),loop(-60,-30),loop(60,90),loop(-60,-90)];
+      cells.forEach(lp=>{
+        g.strokeStyle='rgba(90,107,125,.45)';g.lineWidth=2;g.beginPath();
+        for(let i=0;i<=60;i++){const p=lp.at(lp.len*i/60);i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]);}g.stroke();
+        for(const d of [.12,.38,.62,.88]){const a=lp.at(d*lp.len),b=lp.at(d*lp.len+9);arrow(g,a[0],a[1],b[0],b[1],{color:'rgba(70,85,105,.8)',w:2,head:8});}
+        for(const d of dots){const p=lp.at(d*lp.len+tm*55),f=(p[0]-SX)/(TX-SX);
+          g.beginPath();g.arc(p[0],p[1],4.5,0,TAU);g.fillStyle=heat(clamp(.25+.5*f,0,1));g.fill();g.strokeStyle='rgba(20,32,46,.55)';g.lineWidth=1;g.stroke();}});
+      const mk=(l,t,c)=>{const y=latY(l);g.fillStyle='#fff';g.strokeStyle=c;g.lineWidth=2;g.beginPath();g.arc(TX+28,y,11,0,TAU);g.fill();g.stroke();
+        txt(g,t,TX+28,y+5,{size:13,align:'center',color:c,weight:800,halo:false});};
+      (mode==='A'?[[0,'L','#2a3fa8'],[90,'H','#b5480f'],[-90,'H','#b5480f']]
+        :[[0,'L','#2a3fa8'],[30,'H','#b5480f'],[-30,'H','#b5480f'],[60,'L','#2a3fa8'],[-60,'L','#2a3fa8'],[90,'H','#b5480f'],[-90,'H','#b5480f']]).forEach(a=>mk(...a));
+      const lx=TX+48,ly=MY+MH/2;
+      txt(g,'L = low pressure',lx,ly-26,{size:10,color:'#2a3fa8',weight:800,halo:false});
+      txt(g,'air is rising',lx,ly-13,{size:10,color:'#5b6b7d',weight:600,halo:false});
+      txt(g,'H = high pressure',lx,ly+13,{size:10,color:'#b5480f',weight:800,halo:false});
+      txt(g,'air is sinking',lx,ly+26,{size:10,color:'#5b6b7d',weight:600,halo:false});
+    }
+
+    ctx.loop((dt,tm)=>{
+      C.begin();
+      if(ctx.tab==='why')drawWhy(dt);else drawBelts(dt,tm);
+    });
+  }
+});
+</script>
+</body></html>
