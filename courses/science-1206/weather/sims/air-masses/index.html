@@ -481,7 +481,7 @@ Sim({
     ['The maritime polar (Atlantic) air mass that affects the province is cold and humid. Why does it have these properties?','It forms over the cold North Atlantic Ocean. Being <i>polar</i> makes it cold. Being <i>maritime</i> (over water) means it picks up plenty of water vapour, so it is humid.'],
     ['How would the weather in Newfoundland change if it were affected by maritime tropical (Atlantic) air instead of maritime polar (Atlantic) air?','It would be much warmer, still humid, so more like mild, muggy or foggy weather with a chance of rain even in winter, instead of cold, damp conditions.']],
   init(ctx){
-    const W=640,H=520,svg=ctx.svg(W,H);svg.style.background='#cfe6f6';
+    const W=640,H=520,svg=ctx.svg(W,H);svg.style.background='#173a5e';
     const P=Geo.proj({lon0:-172,lon1:-28,lat0:8,lat1:82,x:0,y:0,w:W,h:H});
     const TV={'bitter cold':.02,'very cold':.08,'cold':.2,'cool':.38,'warm':.68,'hot':.9};
     const M=[
@@ -505,25 +505,25 @@ Sim({
     const defs=s('defs',null,
       s('pattern',{id:'drops',width:22,height:22,patternUnits:'userSpaceOnUse'},s('path',{d:'M6 3 C4 7 3 8 3 10 a3 3 0 0 0 6 0 C9 8 8 7 6 3Z',fill:'#fff','fill-opacity':.85}),s('path',{d:'M17 13 C15 17 14 18 14 20 a3 3 0 0 0 6 0 C20 18 19 17 17 13Z',fill:'#fff','fill-opacity':.85})),
       s('pattern',{id:'dry',width:10,height:10,patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'},s('line',{x1:0,y1:0,x2:0,y2:10,stroke:'#fff','stroke-opacity':.55,'stroke-width':2})),
-      s('marker',{id:'ah',viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:5,markerHeight:5,orient:'auto-start-reverse'},s('path',{d:'M0 0L10 5L0 10z',fill:'#14202e'})));
+      s('marker',{id:'ah',viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:5,markerHeight:5,orient:'auto-start-reverse'},s('path',{d:'M0 0L10 5L0 10z',fill:'#f6efff'})));
     svg.append(defs);
-    svg.append(s('path',{d:Geo.pathD(P),fill:'#eef2e6',stroke:'#93a087','stroke-width':1.2,'stroke-linejoin':'round'}));
-    for(let la=20;la<=80;la+=10){const y=P(-100,la)[1];svg.append(s('line',{x1:0,x2:W,y1:y,y2:y,stroke:'#fff','stroke-opacity':.45}),s('text',{x:6,y:y-3,'font-size':11,fill:'#5b6b7d'},la+'°N'));}
+    svg.append(s('path',{d:Geo.pathD(P),fill:'#2f3a2c',stroke:'#8aa07a','stroke-width':1.2,'stroke-linejoin':'round'}));
+    for(let la=20;la<=80;la+=10){const y=P(-100,la)[1];svg.append(s('line',{x1:0,x2:W,y1:y,y2:y,stroke:'#fff','stroke-opacity':.18}),s('text',{x:6,y:y-3,'font-size':11,fill:'#c3b2e6'},la+'°N'));}
     const groups={},arrows={};
     M.forEach(m=>{const c=P(m.lon,m.lat);const gp=s('g',{tabindex:0,role:'button','aria-label':m.name+' air mass',style:{cursor:'pointer'}});
       const e1=s('ellipse',{cx:c[0],cy:c[1],rx:m.rx,ry:m.ry,'stroke-width':2.5,stroke:'#14202e'});const e2=s('ellipse',{cx:c[0],cy:c[1],rx:m.rx,ry:m.ry,'pointer-events':'none'});
       const t1=s('text',{x:c[0],y:c[1]-2,'text-anchor':'middle','font-size':13,'font-weight':700,fill:'#14202e','paint-order':'stroke',stroke:'#fff','stroke-width':3.5,'pointer-events':'none'},m.short);
       const t2=s('text',{x:c[0],y:c[1]+14,'text-anchor':'middle','font-size':12,'font-weight':600,fill:'#14202e','paint-order':'stroke',stroke:'#fff','stroke-width':3.5,'pointer-events':'none'});
       gp.append(e1,e2,t1,t2);groups[m.id]={g:gp,e1,e2,t2};gp.addEventListener('click',()=>pick(m.id));gp.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(m.id);}});
-      const a=m.dx,p0=P(a[0],a[1]),p1=P(a[2],a[3]);const ar=s('path',{d:`M${p0[0]},${p0[1]}L${p1[0]},${p1[1]}`,stroke:'#14202e','stroke-width':4,'stroke-dasharray':'12 9','marker-end':'url(#ah)','stroke-linecap':'round',fill:'none','pointer-events':'none'});arrows[m.id]=ar;svg.append(ar);});
+      const a=m.dx,p0=P(a[0],a[1]),p1=P(a[2],a[3]);const ar=s('path',{d:`M${p0[0]},${p0[1]}L${p1[0]},${p1[1]}`,stroke:'#f6efff','stroke-width':4,'stroke-dasharray':'12 9','marker-end':'url(#ah)','stroke-linecap':'round',fill:'none','pointer-events':'none'});arrows[m.id]=ar;svg.append(ar);});
     M.forEach(m=>svg.append(groups[m.id].g));
-    const sj=P(...Geo.STJOHNS);svg.append(s('circle',{cx:sj[0],cy:sj[1],r:6,fill:'#b42318',stroke:'#fff','stroke-width':2}),s('text',{x:sj[0]-9,y:sj[1]-9,'text-anchor':'end','font-size':13,'font-weight':700,fill:'#14202e','paint-order':'stroke',stroke:'#fff','stroke-width':3.5},"St. John's"));
+    const sj=P(...Geo.STJOHNS);svg.append(s('circle',{cx:sj[0],cy:sj[1],r:6,fill:'#b42318',stroke:'#fff','stroke-width':2}),s('text',{x:sj[0]-9,y:sj[1]-9,'text-anchor':'end','font-size':13,'font-weight':700,fill:'#f6efff','paint-order':'stroke',stroke:'#160d2b','stroke-width':3.5},"St. John's"));
     /* legend */
-    const lg=s('g',{transform:'translate(432,8)'},s('rect',{width:196,height:98,rx:8,fill:'#fff','fill-opacity':.92,stroke:'#9db4d3'}),
-      s('text',{x:10,y:20,'font-size':12,'font-weight':700,fill:'#14202e'},'Colour = temperature'));
-    ['bitter cold','cold','cool','warm','hot'].forEach((k,i)=>lg.append(s('rect',{x:10+i*36,y:28,width:36,height:12,fill:heat(TV[k])}),s('text',{x:28+i*36,y:52,'font-size':9,'text-anchor':'middle',fill:'#465569'},['bitter','cold','cool','warm','hot'][i])));
-    lg.append(s('rect',{x:10,y:62,width:22,height:14,fill:'#8fb6e0'}),s('rect',{x:10,y:62,width:22,height:14,fill:'url(#drops)'}),s('text',{x:38,y:74,'font-size':12,fill:'#14202e'},'droplets = humid'),
-      s('rect',{x:10,y:80,width:22,height:14,fill:'#e2b46a'}),s('rect',{x:10,y:80,width:22,height:14,fill:'url(#dry)'}),s('text',{x:38,y:92,'font-size':12,fill:'#14202e'},'stripes = dry'));
+    const lg=s('g',{transform:'translate(432,8)'},s('rect',{width:196,height:98,rx:6,fill:'#160d2b','fill-opacity':.94,stroke:'#000','stroke-width':3}),
+      s('text',{x:10,y:20,'font-size':12,'font-weight':700,fill:'#5df2a4'},'Colour = temperature'));
+    ['bitter cold','cold','cool','warm','hot'].forEach((k,i)=>lg.append(s('rect',{x:10+i*36,y:28,width:36,height:12,fill:heat(TV[k])}),s('text',{x:28+i*36,y:52,'font-size':9,'text-anchor':'middle',fill:'#c3b2e6'},['bitter','cold','cool','warm','hot'][i])));
+    lg.append(s('rect',{x:10,y:62,width:22,height:14,fill:'#8fb6e0'}),s('rect',{x:10,y:62,width:22,height:14,fill:'url(#drops)'}),s('text',{x:38,y:74,'font-size':12,fill:'#f6efff'},'droplets = humid'),
+      s('rect',{x:10,y:80,width:22,height:14,fill:'#e2b46a'}),s('rect',{x:10,y:80,width:22,height:14,fill:'url(#dry)'}),s('text',{x:38,y:92,'font-size':12,fill:'#f6efff'},'stripes = dry'));
     svg.append(lg);
     /* controls */
     let season='winter',surf='any',latc='any',sel='mPa',showArrows=true;

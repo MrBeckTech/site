@@ -129,6 +129,62 @@ dl.parts{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:10px 0 
 .jetstreak{fill:none;stroke:#fff;stroke-opacity:.5;stroke-width:17;stroke-linecap:butt;stroke-linejoin:round}.jethead{fill:#fff;fill-opacity:.5}
 .provlab text{font:700 15px Barlow,system-ui,sans-serif;fill:#58603f;fill-opacity:.55;text-anchor:middle;letter-spacing:.08em;pointer-events:none}
 </style>
+<!--pagetheme:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme for the Canada Weather Map Lab. The page is built on CSS variables with a dark palette,
+   so this pins them to the Twilight colours and turns panels, buttons and tabs into Twilight windows.
+   The map itself keeps its real map colours (sea, land, fronts, H/L) on purpose. Screen only.
+   Edit here, then run tools/apply-page-theme.mjs. */
+@media screen{
+  :root:root:root{
+    --bg:#1b1030; --paper:#2a1850; --ink:#f6efff; --muted:#c3b2e6; --line:#4a3478;
+    --accent:#ffd23f; --accent-ink:#1b1030; --chip:#160d2b;
+    --ok:#5df2a4; --bad:#ff5d73; --warn:#ffb347; --okbg:#0f2219; --badbg:#2a0f18;
+    color-scheme:dark;
+  }
+  body{background-color:var(--bg);background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+  .mapcol{background:transparent}
+
+  /* header */
+  header.top{border-bottom:4px solid #000;box-shadow:0 3px 0 #8a6fd0}
+  h1{font-family:'Press Start 2P','Courier New',monospace;font-weight:400;font-size:clamp(14px,2vw,20px);line-height:1.5;
+    color:#ffd23f;text-shadow:3px 3px 0 #000;letter-spacing:0}
+  h1 span{color:#5df2a4}
+  .eyebrow{color:#5df2a4}
+
+  /* tabs and segmented toggles: menu buttons */
+  .tabs{background:#160d2b;border:3px solid #000;border-radius:6px}
+  .tabs button{border-radius:4px}
+  .tabs button[aria-selected="true"]{background:#ffd23f;color:#1b1030;box-shadow:inset 0 -3px 0 #c99a00}
+  .tabs button[aria-selected="true"]::before{content:'\25B6  ';font-size:.75em}
+  .seg{border:3px solid #000;border-radius:4px;background:#3a2463}
+  .seg button+button{border-left:2px solid #000}
+  .seg button[aria-pressed="true"]{background:#5df2a4;color:#1b1030}
+  #layers label{background:#3a2463;border:2px solid #000}
+
+  /* windows */
+  .panel,.card{background:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);border:4px solid #000;border-radius:6px;
+    box-shadow:inset 0 0 0 3px #8a6fd0,5px 5px 0 #000}
+  .mapframe{border:4px solid #000;box-shadow:5px 5px 0 #000}
+  .model,.cmp div,.drawbox,textarea{background:#160d2b;border:3px solid #000}
+
+  /* buttons */
+  .btn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94;font-weight:700}
+  .btn:hover{box-shadow:inset 0 0 0 2px #ffd23f}
+  .btn.primary{background:#ffd23f;color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+  .btn.ghost{background:transparent}
+  .btn:active,.opt:active{transform:translate(1px,1px)}
+  .opt{background:#160d2b;border:3px solid #000;border-radius:4px}
+  .opt:hover{border-color:#ffd23f}
+  .opt.right{border-color:var(--ok)} .opt.wrong{border-color:var(--bad)}
+  .mapchip{border:2px solid #000;background:#3a2463;color:var(--ink)}
+  .meter{background:#160d2b;border:2px solid #000}
+}
+</style>
+<!--pagetheme:end-->
+
 <div class="wrap">
 <header class="top">
  <div class="brand"><p class="eyebrow">Science 1206 · Weather Dynamics</p><h1>Canada Weather <span>Map Lab</span></h1></div>

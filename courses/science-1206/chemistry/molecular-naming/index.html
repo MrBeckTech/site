@@ -210,7 +210,72 @@ table.t th{font-size:.82rem;color:var(--muted)}
   .sheet{border:0;padding:0;max-width:none}
 }
 @media (prefers-reduced-motion:no-preference){ .pop{animation:pop .25s ease-out} @keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}} }
-</style></head><body><!--worldmap:start--><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap"><div style="max-width:1120px;margin:0 auto;padding:10px 12px 0;align-self:stretch;box-sizing:border-box"><a href="https://mrbecktech.github.io/site/" style="display:inline-block;font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1;color:#ffd23f;background:#3a2463;text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94">&#9664; WORLD MAP</a></div><!--worldmap:end-->
+</style>
+<!--pagetheme:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme for the chemistry interactives (Atoms/Ions/Bonds, Ionic Compounds, Molecular Naming).
+   Those pages are built on CSS variables with a full dark palette, so this pins the variables to the Twilight
+   colours (whatever the device's dark-mode setting) and turns panels, buttons and tabs into Twilight windows.
+   Screen only: the printable worksheets keep their own print styles. Edit here, then run tools/apply-page-theme.mjs.
+   Science colour-coding (metal = orange, non-metal = blue, covalent = teal, noble = grey) is kept on purpose. */
+@media screen{
+  :root:root:root{
+    --bg:#1b1030; --surface:#2a1850; --surface-2:#160d2b; --ink:#f6efff; --muted:#c3b2e6; --line:#4a3478; --ring:#8a6fd0;
+    --metal:#E8743B; --metal-ink:#F4A177; --metal-tint:#3a2216;
+    --non:#2F7FC1; --non-ink:#86BDEB; --non-tint:#152b42;
+    --cov:#2A9D8F; --cov-ink:#6FD0C2; --cov-tint:#12302c;
+    --a:#2A9D8F; --a-ink:#6FD0C2; --a-tint:#12302c;
+    --b:#7B5EA7; --b-ink:#C3AEE8; --b-tint:#2a2240;
+    --pre:#C99A12; --pre-ink:#F0D488; --pre-tint:#3a300e;
+    --noble:#7A869A; --noble-ink:#B4BECD; --noble-tint:#222b38;
+    --nucleus:#3a1630; --nucleus-stroke:#ff5d73; --nucleus-text:#ffffff;
+    --good:#5df2a4; --good-bg:#0f2219; --bad:#ff5d73; --bad-bg:#2a0f18; --note-bg:#2a2210; --note:#ffd23f;
+    --focus:#5df2a4;
+    --font-display:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+    color-scheme:dark;
+  }
+  body{background-color:var(--bg);background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+  body::before{background:#2a1850}
+
+  /* header bar */
+  .top{background:linear-gradient(180deg,#3b2468,#2a1850);border-bottom:4px solid #000;box-shadow:inset 0 -3px 0 #8a6fd0}
+  h1{font-family:'Press Start 2P','Courier New',monospace;font-weight:400;font-size:clamp(12px,1.4vw,15px);line-height:1.6;
+    color:#ffd23f;text-shadow:3px 3px 0 #000}
+  h2,h3,h4{font-weight:700}
+
+  /* tabs: menu items, gold cursor on the current one */
+  .tab{border-radius:4px;font-weight:700}
+  .tab:hover{background:#3a2463;color:var(--ink)}
+  .tab[aria-current=page]{background:#ffd23f;color:#1b1030;border:3px solid #000;box-shadow:inset 0 -3px 0 #c99a00}
+  .tab[aria-current=page]::before{content:'\25B6  ';font-size:.75em}
+
+  /* windows */
+  .panel,.card,.mod,.modal{background:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);border:4px solid #000;
+    border-radius:6px;box-shadow:inset 0 0 0 3px #8a6fd0,5px 5px 0 #000}
+  .card:hover,.mod:hover{box-shadow:inset 0 0 0 3px #ffd23f,5px 5px 0 #000}
+
+  /* buttons: chunky menu buttons. Coloured element buttons (.metal/.non/.cov) keep their science colours. */
+  .btn,.chip{border:3px solid #000;border-radius:4px;font-weight:700}
+  .btn:not(.metal):not(.non):not(.cov):not(.primary):not([aria-pressed=true]),
+  .chip:not([aria-pressed=true]){background:#3a2463;color:var(--ink);box-shadow:inset 0 0 0 2px #5b3f94}
+  .btn:not(.metal):not(.non):not(.cov):not(.primary):not([aria-pressed=true]):hover,
+  .chip:not([aria-pressed=true]):hover{box-shadow:inset 0 0 0 2px #ffd23f}
+  .btn.primary{background:#ffd23f;color:#1b1030;box-shadow:inset 0 -3px 0 #c99a00}
+  .btn[aria-pressed=true],.chip[aria-pressed=true]{background:#5df2a4;color:#1b1030;box-shadow:inset 0 -3px 0 #2fae6f}
+  .btn:active,.chip:active{transform:translate(1px,1px)}
+
+  .card .num{background:#ffd23f;color:#1b1030;border:2px solid #000}
+  .steps span.on{background:#5df2a4;color:#1b1030}
+
+  /* feedback and notes: dialogue boxes */
+  .fb,.note-box,details.why{border:3px solid #000;box-shadow:3px 3px 0 #000}
+  input[type=text],input[type=number],input:not([type]),select,.ans input{background:#160d2b;color:var(--ink);border:3px solid #000}
+}
+</style>
+<!--pagetheme:end-->
+</head><body><!--worldmap:start--><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap"><div style="max-width:1120px;margin:0 auto;padding:10px 12px 0;align-self:stretch;box-sizing:border-box"><a href="https://mrbecktech.github.io/site/" style="display:inline-block;font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1;color:#ffd23f;background:#3a2463;text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94">&#9664; WORLD MAP</a></div><!--worldmap:end-->
 <header class="top">
   <div class="top-row">
     <button type="button" class="brand" data-act="go" data-v="home" aria-label="Naming Molecular Compounds: home">
