@@ -170,7 +170,21 @@ table.t th{background:#000;color:var(--sky);font-family:var(--pix);font-size:9px
 @media (max-width:620px){.endteam img{width:40px}.endteam div{font-size:14px}.cert .snap{margin-top:8px}}
 .snap{font-family:var(--pix);font-size:11px;line-height:1.7;color:#241500;background:var(--gold);border:4px solid #000;padding:10px;margin-top:12px}
 
+/* duel */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.duo .field{margin:0 0 8px}
+.dgrid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+.dc{background:var(--panel2);border:3px solid #000;padding:4px;cursor:pointer}
+.dc.on{box-shadow:inset 0 0 0 3px var(--gold);background:#4a2f7d}
+.dc img{width:100%;max-width:48px;margin:0 auto}
+.dcn{font-family:var(--pix);font-size:9px;color:var(--gold);margin-top:8px;line-height:1.6}
+.arena .box.turn{box-shadow:inset 0 0 0 3px var(--gold),0 0 0 4px var(--gold)}
+.dturn{font-family:var(--pix);font-size:12px;color:var(--gold);margin:0 0 10px;line-height:1.6}
+.dturn.steal{color:var(--coral)}
+.cert .logo{overflow-wrap:anywhere}
+
 @media (max-width:620px){
+  .duo{grid-template-columns:1fr}
   .rpt .big3,.cert .big3{grid-template-columns:repeat(4,1fr);gap:4px}.rpt .big3 div,.cert .big3 div{padding:4px;font-size:15px}.rpt .big3 .v,.cert .big3 .v{font-size:11px}
   .rpt table.t,.cert table.t{font-size:18px}.rpt p{font-size:19px}
   body{font-size:20px}
@@ -640,14 +654,14 @@ const NOTES=[
 /* ============ sound ============ */
 let AC=null;
 const LOCK=location.hash==='#qa'?1:4;
-function tone(f,d,type,t0,vol){if(S&&S.mute)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+(t0||0),o=AC.createOscillator(),g=AC.createGain();o.type=type||'square';o.frequency.value=f;g.gain.setValueAtTime(vol||.045,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
+function tone(f,d,type,t0,vol){if((S&&S.mute)||(D&&D.mute))return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+(t0||0),o=AC.createOscillator(),g=AC.createGain();o.type=type||'square';o.frequency.value=f;g.gain.setValueAtTime(vol||.045,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
 const sfx={good(){[523,659,784].forEach((f,i)=>tone(f,.12,'square',i*.08))},bad(){tone(196,.2,'sawtooth');tone(147,.3,'sawtooth',.12)},
  hit(){tone(110,.1,'square');tone(70,.12,'square',.05)},lvl(){[523,659,784,1047].forEach((f,i)=>tone(f,.1,'triangle',i*.07))},
  win(){[392,523,659,784,659,784,1047].forEach((f,i)=>tone(f,.14,'square',i*.11))},blip(){tone(880,.05,'square')}};
 
 /* ============ state ============ */
 const KEY='elementQuest_v2';
-let S=null,B=null;
+let S=null,B=null,D=null;
 const maxHP=m=>28+6*m.lvl;
 function newState(name,starter){return {name,team:[{id:starter,lvl:1,xp:0,hp:34}],party:[0],act:0,prog:0,hints:2,score:0,correct:0,total:0,streak:0,best:0,ko:0,
   stats:[0,1,2,3].map(()=>({c:0,t:0})),seen:[],used:[],t0:Date.now(),mute:false,done:false,pts:0,hu:0,fin:0}}
@@ -675,8 +689,10 @@ function title(){
     <div class="starters">${['natrix','oxyfin','carbro'].map(id=>`<button class="starter${id===pick?' on':''}" data-st="${id}">${img(id,'',true)}<div><div class="nm">${CR[id].name} (${CR[id].sym})</div>${CR[id].d}</div></button>`).join('')}</div>
     <div class="err" id="err"></div>
     <div class="row" style="justify-content:center"><button class="btn" id="go">Start new game</button></div>
+    <p style="text-align:center;margin:18px 0 0;border-top:4px dashed var(--rim);padding-top:14px">Two players sharing a Chromebook, or two teams at the board?<br><button class="btn alt" id="duel" style="margin-top:8px">⚔ 2-player duel</button></p>
     <p style="text-align:center;margin:14px 0 0"><button class="btn ghost" id="tchk" style="font-size:9px">Teacher: verify a result</button></p>
    </div></div>`);
+  $('#duel').onclick=()=>duelSetup();
   app.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{pick=b.dataset.st;app.querySelectorAll('[data-st]').forEach(x=>x.classList.toggle('on',x===b));sfx.blip()});
   $('#go').onclick=()=>{const n=$('#nm').value.trim();if(!n){$('#err').textContent='Type your name first — it goes on your score screen.';$('#nm').focus();return}
     S=newState(n,pick);save();intro()};
@@ -723,7 +739,7 @@ function map(){
   const cur=app.querySelector('.node.cur');if(cur){cur.onclick=()=>{const z=NODES[S.prog].z;if(z<4&&!S.seen.includes(z)){S.seen.push(z);save();notes(z,()=>battle(S.prog),true)}else battle(S.prog)};cur.focus()}
 }
 function notes(z,after,first){
-  z=Math.min(z,3);const maxz=Math.min(3,NODES[Math.min(S.prog,NODES.length-1)].z);
+  z=Math.min(z,3);const maxz=S?Math.min(3,NODES[Math.min(S.prog,NODES.length-1)].z):3;
   const draw=zz=>`<div class="tabs">${[0,1,2,3].filter(i=>i<=maxz).map(i=>`<button class="btn ${i===zz?'':'ghost'}" data-tab="${i}">${ZONES[i].name}</button>`).join('')}</div>${first?`<p class="muted">Read these before your first battle here. You can reopen them any time with 📖 Notes.</p>`:''}${NOTES[zz]}<div class="row" style="margin-top:14px"><button class="btn" data-close>${after?'Start battle':'Close notes'}</button></div>`;
   const m=modal(draw(z),after);
   const wire=()=>m.v.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{m.v.querySelector('.modal').innerHTML=draw(+b.dataset.tab);wire();m.v.querySelectorAll('[data-close]').forEach(c=>c.onclick=m.close)});wire();
@@ -789,10 +805,10 @@ function answer(k){
   const right=q.options[q.ans];
   $('#fb').innerHTML=`<div class="fb"><div class="head ${ok?'ok':'no'}">${ok?'✓ Correct!':'✗ Not quite. The answer is: '+right}</div>${extra?`<p style="margin:4px 0">${extra}</p>`:''}<div class="why">${q.why}</div><button class="btn" id="go">${B.hp<=0?'Finish the battle':'Next question'}</button></div>`;
   $('#go').onclick=cont;
-  const gb=$('#go'),label=gb.textContent;
-  if(!ok){let t=LOCK;gb.disabled=true;gb.textContent=`Read the explanation… ${t}`;const iv=setInterval(()=>{t--;if(!document.body.contains(gb)){clearInterval(iv);return}if(t<=0){clearInterval(iv);gb.disabled=false;gb.textContent=label;gb.focus({preventScroll:true})}else gb.textContent=`Read the explanation… ${t}`},LOCK>1?1000:150)}
+  if(!ok)readLock($('#go'));
   setTimeout(()=>{const g=$('#go');if(g){if(!g.disabled)g.focus({preventScroll:true});g.scrollIntoView({block:'nearest',behavior:'smooth'})}},50);updHUD();
 }
+function readLock(gb){const label=gb.textContent;let t=LOCK;gb.disabled=true;gb.textContent=`Read the explanation… ${t}`;const iv=setInterval(()=>{t--;if(!document.body.contains(gb)){clearInterval(iv);return}if(t<=0){clearInterval(iv);gb.disabled=false;gb.textContent=label;gb.focus({preventScroll:true})}else gb.textContent=`Read the explanation… ${t}`},LOCK>1?1000:150)}
 function cont(){
   if(B.over)return;const g=$('#go');if(g)g.disabled=true;
   if(B.hp<=0){B.over=true;return victory()}
@@ -867,14 +883,136 @@ function endGame(){
     m.v.querySelector('#yes').onclick=()=>{m.close();clearSave();S=null;title()}};
 }
 
+/* ============ duel: 2 players, one screen, no grade ============ */
+// Turns alternate. Right answer: your creature attacks. Wrong: the other player may steal the same question.
+// The duel ends only at the end of a round, so both players always get the same number of turns.
+const DPICK=Object.keys(CR).filter(id=>id!=='prof');
+const DLEN=[['Quick',40],['Standard',60],['Long',100]];
+const DMG=10,CRIT=15,STEAL=5;
+function duelSetup(cfg){
+  S=null;B=null;D=null;
+  cfg=cfg||{p:[{name:'',id:'natrix'},{name:'',id:'oxyfin'}],topics:[0,1,2,3],len:1};
+  const pick=k=>`<div><div class="field"><label for="dn${k}">Player ${k+1} (or team) name</label><input id="dn${k}" maxlength="20" autocomplete="off" placeholder="Player ${k+1}" value="${esc(cfg.p[k].name)}"></div>
+   <div class="dgrid">${DPICK.map(id=>`<button class="dc${id===cfg.p[k].id?' on':''}" data-dc="${k}" data-id="${id}" aria-pressed="${id===cfg.p[k].id}" aria-label="${CR[id].name} for player ${k+1}" title="${CR[id].name} (${CR[id].sym})">${img(id,'',k===0)}</button>`).join('')}</div>
+   <div class="dcn" id="dcn${k}">${CR[cfg.p[k].id].name} (${CR[cfg.p[k].id].sym})</div></div>`;
+  view(`<div class="title"><div class="logo" style="font-size:clamp(22px,5vw,38px)">DUEL MODE</div>
+   <p class="tag">Two players (or two teams) take turns. A right answer makes your creature attack.<br>Miss, and your opponent can <b>steal</b> the question for a smaller hit.</p></div>
+   <div class="box"><div class="duo">${pick(0)}${pick(1)}</div>
+   <h3>Topics</h3><div class="row">${TOPICS.map((t,i)=>`<button class="btn${cfg.topics.includes(i)?'':' ghost'}" data-tp="${i}" aria-pressed="${cfg.topics.includes(i)}" style="font-size:9px">${t}</button>`).join('')}</div>
+   <h3>Length</h3><div class="row">${DLEN.map(([n,hp],i)=>`<button class="btn${i===cfg.len?'':' ghost'}" data-len="${i}" aria-pressed="${i===cfg.len}" style="font-size:9px">${n} (${hp} HP)</button>`).join('')}</div>
+   <p class="muted" style="margin:12px 0 4px">Right answer: ${DMG} damage (${CRIT} after 3 in a row). Steal: ${STEAL} damage. Nothing here is graded or saved.</p>
+   <div class="err" id="err"></div>
+   <div class="row" style="justify-content:center"><button class="btn ghost" id="dback">◀ Back</button><button class="btn" id="go">⚔ Start duel</button></div></div>`);
+  app.querySelectorAll('[data-dc]').forEach(b=>b.onclick=()=>{const k=+b.dataset.dc;cfg.p[k].id=b.dataset.id;sfx.blip();
+    app.querySelectorAll(`[data-dc="${k}"]`).forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)});$('#dcn'+k).textContent=`${CR[b.dataset.id].name} (${CR[b.dataset.id].sym})`});
+  app.querySelectorAll('[data-tp]').forEach(b=>b.onclick=()=>{const i=+b.dataset.tp,T=cfg.topics;T.includes(i)?T.splice(T.indexOf(i),1):T.push(i);
+    b.classList.toggle('ghost',!T.includes(i));b.setAttribute('aria-pressed',T.includes(i));sfx.blip()});
+  app.querySelectorAll('[data-len]').forEach(b=>b.onclick=()=>{cfg.len=+b.dataset.len;app.querySelectorAll('[data-len]').forEach(x=>{x.classList.toggle('ghost',x!==b);x.setAttribute('aria-pressed',x===b)});sfx.blip()});
+  $('#dback').onclick=title;
+  $('#go').onclick=()=>{if(!cfg.topics.length){$('#err').textContent='Pick at least one topic.';return}
+    [0,1].forEach(k=>cfg.p[k].name=$('#dn'+k).value.trim());cfg.topics.sort();duelStart(cfg)};
+}
+function duelStart(cfg){
+  const hp=DLEN[cfg.len][1],first=Math.random()<.5?0:1;
+  D={cfg,first,turn:first,round:1,phase:'',q:null,used:[],mute:D?D.mute:false,
+    pool:[...new Set(cfg.topics.flatMap(z=>POOLS[z].flat()))],
+    p:cfg.p.map((x,k)=>({name:x.name||`Player ${k+1}`,id:x.id,hp,max:hp,c:0,t:0,sw:0,st:0,streak:0,best:0}))};
+  duelArena();say(`${esc(D.p[first].name)} goes first (picked at random). ${duelPrompt()}`);
+}
+function duelArena(){
+  const cfg=D.cfg,Z=ZONES[cfg.topics.length===1?cfg.topics[0]:4],P=D.p;
+  const hud=k=>`<div class="${k?'ehud':'phud'} box" id="dh${k}"><div class="hn"><span>${esc(P[k].name)}</span><span class="sym" id="dv${k}"></span></div><div class="hp" id="dhp${k}"><i></i></div><div class="muted" style="font-size:18px;margin-top:2px">${CR[P[k].id].name}</div></div>`;
+  view(`<div class="hud"><div class="stat">⚔ DUEL · Round <span id="drd">1</span></div><div class="row"><button class="btn ghost" id="dquit">Quit</button><button class="btn ghost" id="mute" aria-label="Toggle sound">${D.mute?'🔇':'🔊'}</button></div></div>
+   <div class="arena" style="background:${Z.bg}"><div class="ground" style="background-color:${Z.gr}"></div>
+   ${hud(1)}${img(P[1].id,'espr',false)}${img(P[0].id,'pspr',true)}${hud(0)}</div>
+   <div class="box msg" id="msg" aria-live="polite"></div>
+   <div class="box qbox" id="qb"></div>
+   <div class="tools"><button class="btn ghost" id="bnotes">📖 Notes</button><span class="muted">Keys 1–4 answer for whoever's turn it is.</span></div>`);
+  $('#mute').onclick=()=>{D.mute=!D.mute;$('#mute').textContent=D.mute?'🔇':'🔊'};
+  $('#bnotes').onclick=()=>notes(cfg.topics[0]);
+  $('#dquit').onclick=()=>{const m=modal(`<h2>Quit the duel?</h2><p>This duel isn't saved.</p><div class="row"><button class="btn" id="yes">Yes, quit</button><button class="btn ghost" data-close>Keep playing</button></div>`);
+    m.v.querySelector('#yes').onclick=()=>{m.close();D=null;title()}};
+  dNext();
+}
+function suddenDeath(){
+  D.p.forEach(p=>p.hp=1);D.turn=D.first;D.round++;duelArena();
+  say(`⚡ SUDDEN DEATH! Both creatures are back with 1 HP. Any hit knocks out, and both players still get one turn per round. ${duelPrompt()}`);
+}
+function duelPrompt(){return `<b>${esc(D.p[D.turn].name)}</b>, answer to make ${CR[D.p[D.turn].id].name} attack!`}
+function dUpd(){
+  const who=D.phase==='steal'?1-D.turn:D.turn;
+  D.p.forEach((p,k)=>{setBar($('#dhp'+k),p.hp,p.max);$('#dv'+k).textContent=`${p.hp}/${p.max}`;$('#dh'+k).classList.toggle('turn',D.phase!=='done'&&k===who)});
+  $('#drd').textContent=D.round;
+}
+function dPick(){
+  let q,g;for(let k=0;k<25;k++){g=R(D.pool);q=g();if(!D.used.includes(q.key))break}
+  D.used.push(q.key);if(D.used.length>300)D.used=D.used.slice(-200);q.topic=TOPIC.get(g);return q;
+}
+function dNext(){
+  D.q=dPick();D.phase='ask';const q=D.q;
+  $('#qb').innerHTML=`<div class="dturn" id="dturn">▶ ${esc(D.p[D.turn].name)}: your turn</div><p class="prompt">${q.prompt}</p>${q.visual?`<div class="visual">${q.visual}</div>`:''}<div class="opts${/<svg/.test(q.options[0])?' pics':''}">${q.options.map((o,i)=>`<button class="opt" data-o="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join('')}</div><div id="fb"></div>`;
+  app.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>dAnswer(+b.dataset.o));
+  dUpd();
+}
+function dHit(k,d,crit){
+  const t=D.p[1-k];t.hp=Math.max(0,t.hp-d);
+  anim(k?'.espr':'.pspr',k?'lunge-l':'lunge-r');setTimeout(()=>{anim(k?'.pspr':'.espr','hurt');floatDmg(k?'p':'e',d,crit);sfx.hit();dUpd()},300);
+}
+function dAnswer(k){
+  if(D.phase!=='ask'&&D.phase!=='steal')return;
+  const q=D.q,ok=k===q.ans,b=app.querySelector(`[data-o="${k}"]`);
+  if(D.phase==='ask'){const a=D.p[D.turn],o=D.p[1-D.turn];a.t++;
+    if(ok){a.c++;a.streak++;a.best=Math.max(a.best,a.streak);const crit=a.streak>=3,d=crit?CRIT:DMG;sfx.good();dHit(D.turn,d,crit);
+      say(crit?`🔥 ${a.streak} in a row! ${CR[a.id].name} lands a critical hit for ${d}!`:`${CR[a.id].name} attacks for ${d} damage!`);return dReveal(true)}
+    a.streak=0;sfx.bad();b.classList.add('wrong');b.disabled=true;
+    if(q.options.length<3){say(`✗ Not quite, ${esc(a.name)}.`);return dReveal(false)}
+    D.phase='steal';const t=$('#dturn');t.textContent=`▶ ${o.name}: STEAL!`;t.classList.add('steal');
+    say(`✗ Not quite! <b>${esc(o.name)}</b>, steal it: pick the right answer for a ${STEAL}-damage hit.`);dUpd();return}
+  const s=D.p[1-D.turn];s.st++;
+  if(ok){s.sw++;sfx.good();dHit(1-D.turn,STEAL,false);say(`${esc(s.name)} steals it! ${CR[s.id].name} hits for ${STEAL}.`);return dReveal(false,true)}
+  else{sfx.bad();say('No steal: neither player got that one.')}
+  dReveal(false);
+}
+function dReveal(firstOk,stole){
+  D.phase='done';const q=D.q,last=D.turn!==D.first,over=last&&D.p.some(p=>p.hp<=0),nx=D.p[1-D.turn];
+  app.querySelectorAll('[data-o]').forEach(b=>{b.disabled=true;if(+b.dataset.o===q.ans)b.classList.add('right')});
+  $('#fb').innerHTML=`<div class="fb"><div class="head ${firstOk||stole?'ok':'no'}">${firstOk?'✓ Correct!':(stole?'✓ Stolen! The answer is: ':'✗ The answer is: ')+q.options[q.ans]}</div><div class="why">${q.why}</div><button class="btn" id="go">${over?'See who won':`Next turn: ${esc(nx.name)}`}</button></div>`;
+  $('#go').onclick=dCont;
+  if(!firstOk)readLock($('#go'));
+  setTimeout(()=>{const g=$('#go');if(g){if(!g.disabled)g.focus({preventScroll:true});g.scrollIntoView({block:'nearest',behavior:'smooth'})}},50);dUpd();
+}
+function dCont(){
+  if(D.phase!=='done')return;const g=$('#go');if(g)g.disabled=true;
+  if(D.turn!==D.first&&D.p.some(p=>p.hp<=0))return dEnd();
+  D.turn=1-D.turn;if(D.turn===D.first)D.round++;
+  dNext();const a=D.p[D.turn],o=D.p[1-D.turn],lastT=D.turn!==D.first;
+  say(lastT&&a.hp<=0&&o.hp>0?`${CR[a.id].name} is down, but rounds are fair: <b>${esc(a.name)}</b> gets one last turn. Knock out ${CR[o.id].name} to force a draw!`
+    :lastT&&o.hp<=0&&a.hp>0?`${CR[o.id].name} is down! Last turn of the round: <b>${esc(a.name)}</b>, answer right to win. Miss, and ${esc(o.name)} can steal back to try for a draw.`
+    :duelPrompt());
+}
+function dEnd(){
+  D.phase='over';const P=D.p,w=P[0].hp<=0&&P[1].hp<=0?-1:P[0].hp<=0?1:0;
+  sfx.win();if(w>=0)anim(w?'.pspr':'.espr','faint');else{anim('.pspr','faint');anim('.espr','faint')}
+  const row=(l,f)=>`<tr><td>${l}</td>${P.map(p=>`<td>${f(p)}</td>`).join('')}</tr>`;
+  setTimeout(()=>{view(`<div class="box cert">
+   <div class="logo" style="font-size:clamp(20px,5vw,34px);margin:6px 0">${w<0?'IT’S A DRAW!':esc(P[w].name)+' WINS!'}</div>
+   <p class="muted" style="margin:0">${w<0?'Both creatures went down in the same round.':`${CR[P[w].id].name} is still standing after ${D.round} round${D.round>1?'s':''}.`}</p>
+   <div class="endteam">${P.map((p,k)=>`<div>${img(p.id,'',k===0)}${esc(p.name)}<br>${CR[p.id].name}</div>`).join('')}</div>
+   <table class="t"><tr><th></th>${P.map(p=>`<th>${esc(p.name)}</th>`).join('')}</tr>
+   ${row('Own questions right',p=>`${p.c}/${p.t}`)}${row('Steals',p=>`${p.sw}/${p.st}`)}${row('Best streak',p=>p.best)}${row('HP left',p=>`${p.hp}/${p.max}`)}</table>
+   <div class="row" style="justify-content:center;margin-top:14px">${w<0?'<button class="btn" id="dsd">⚡ Sudden death</button>':''}<button class="btn${w<0?' alt':''}" id="go">⚔ Rematch</button><button class="btn alt" id="dset">Change players</button><button class="btn ghost" id="dt">Title screen</button></div></div>`);
+   if(w<0)$('#dsd').onclick=suddenDeath;
+   $('#go').onclick=()=>duelStart(D.cfg);$('#dset').onclick=()=>duelSetup(D.cfg);$('#dt').onclick=()=>{D=null;title()};app.querySelector('.cert .btn').focus()},700);
+}
+
 /* ============ keyboard ============ */
 document.addEventListener('keydown',e=>{
   if(e.target.tagName==='INPUT'){if(e.key==='Enter'){const g=$('#go');g&&g.click()}return}
   if(document.querySelector('.veil'))return;
-  if(B&&!B.answered&&/^[1-4]$/.test(e.key)){const b=app.querySelector(`[data-o="${+e.key-1}"]`);if(b&&!b.disabled){e.preventDefault();b.click()}}
+  if(((B&&!B.answered)||(D&&(D.phase==='ask'||D.phase==='steal')))&&/^[1-4]$/.test(e.key)){const b=app.querySelector(`[data-o="${+e.key-1}"]`);if(b&&!b.disabled){e.preventDefault();b.click()}}
 });
 
-if(location.hash==='#qa')window.__EQ={get S(){return S},get B(){return B},ALLG,POOLS,checkCode,gradeOf};
+if(location.hash==='#qa')window.__EQ={get S(){return S},get B(){return B},get D(){return D},ALLG,POOLS,checkCode,gradeOf};
 const sv=load();if(sv&&sv.done){S=sv;endGame()}else title();
 })();
 </script>
