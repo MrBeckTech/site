@@ -1,0 +1,1250 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conservation of Mass Bench | Science 1206</title>
+<meta name="tw-titlecard" content="CHEMISTRY · PART 2|MASS|IS CONSERVED.">
+<meta name="tw-canvas" content="off">
+<style>:root{
+  --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --warm:#ff9a4d;
+  --radius:6px; --focus:#5df2a4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif}
+.app{max-width:1180px;margin:0 auto;padding:8px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 8px}
+.hd h1{margin:0}
+.lead{flex-basis:100%;margin:2px 0 0;font-size:.95rem}
+.card{padding:12px 14px;margin:0 0 10px}
+.wtitle{font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1.6;color:var(--sky);margin:0 0 6px;font-weight:400}
+.wtitle.mint{color:var(--mint)}
+[hidden]{display:none!important}
+sub,sup{font-size:.62em;line-height:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* plain words */
+.plain p{margin:4px 0;max-width:76ch}
+.plain summary{cursor:pointer;list-style:none;font-family:'Press Start 2P','Courier New',monospace;font-size:10px;color:var(--sky);padding:2px 0}
+.plain summary::-webkit-details-marker{display:none}
+.plain summary::before{content:'▶ '}
+.plain[open] summary::before{content:'▼ '}
+.plain .go{margin-top:8px}
+
+/* buttons */
+.btn,.tab,.segbtn{appearance:none;font:inherit;font-weight:700;padding:7px 12px;min-height:38px;cursor:pointer}
+.btn:disabled,.segbtn:disabled{opacity:.45;cursor:not-allowed}
+.btn.small{padding:4px 9px;min-height:32px;font-size:.9rem}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.segbtn{flex:1 1 auto;text-align:left;font-size:.93rem;padding:6px 10px}
+.segbtn small{display:block;font-weight:400;font-size:.82rem;opacity:.9}
+
+/* tap-to-define words */
+.term{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:help;
+  text-decoration:underline dotted var(--sky);text-underline-offset:3px;text-decoration-thickness:2px}
+#tip{position:absolute;z-index:50;max-width:300px;background:var(--panel);color:var(--ink);border:3px solid #000;
+  border-left:6px solid var(--sky);border-radius:4px;padding:7px 10px;font-size:.92rem;box-shadow:4px 4px 0 #000}
+
+/* bench */
+.bench{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:10px;align-items:start}
+@media(max-width:1000px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{position:relative;background:var(--panel);border:3px solid #000;border-radius:4px}
+.stage canvas{display:block;width:100%;height:auto}
+.readout{position:absolute;left:14.4%;top:81.9%;width:18.6%;height:8.3%;display:flex;align-items:center;justify-content:flex-end;padding-right:.6%;
+  font:400 clamp(16px,2.3vw,27px)/1 'VT323','Courier New',monospace;color:var(--mint);pointer-events:none}
+.atoms{font-size:.9rem;color:var(--ink2);margin:6px 2px 0;min-height:2.6em}
+.atoms b{color:var(--ink)}
+.stepk{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--mint);margin:8px 0 4px;display:block}
+.stepk:first-child{margin-top:0}
+.eqline{font-size:1.05rem;margin:6px 0 2px}
+.say{background:var(--panel);border:3px solid #000;border-left:6px solid var(--sky);border-radius:4px;padding:8px 11px;margin:8px 0;font-size:.96rem}
+.say p{margin:3px 0}
+.say.good{border-left-color:var(--mint);background:#0f2219}
+.say.bad{border-left-color:var(--coral);background:#2a0f18}
+.say.warm{border-left-color:var(--warm);background:#24130f}
+.say.hint{border-left-color:var(--gold)}
+.say .tag{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;display:block;margin-bottom:3px;color:var(--gold)}
+.say.good .tag{color:var(--mint)} .say.bad .tag{color:var(--coral)} .say.warm .tag{color:var(--warm)}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:6px 0}
+.nums div{background:#0e0820;border:2px solid #3a2463;border-radius:3px;padding:3px 6px;font-size:.78rem;color:var(--ink2)}
+.nums b{display:block;font:400 22px/1 'VT323','Courier New',monospace;color:var(--gold)}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+details.note{font-size:.88rem;color:var(--ink2);margin-top:4px}
+details.note summary{cursor:pointer;color:var(--sky)}
+
+.log{width:100%;border-collapse:collapse;background:var(--panel);border:3px solid #000;font-size:.92rem}
+.log th{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;font-weight:400;color:var(--ink2);text-align:left;padding:7px 8px;border-bottom:2px solid #3a2463}
+.log td{padding:5px 8px;border-bottom:1px solid #2a1850}
+.log td.v{font:400 22px/1 'VT323','Courier New',monospace;color:var(--ink)}
+.log td.empty{color:#6c5a92}
+
+/* missing mass */
+.prob{background:var(--panel);border:3px solid #000;border-radius:4px;padding:12px 14px;margin:6px 0 8px}
+.prob .tag{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--gold);display:block;margin-bottom:6px}
+.prob p{margin:4px 0;font-size:1.02rem;max-width:80ch}
+.row{display:flex;align-items:flex-start;justify-content:center;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
+.row .col{display:flex;flex-direction:column;align-items:center;min-width:90px}
+.row .f{font-size:26px;font-weight:700;white-space:nowrap}
+.row .m{font:400 26px/1.1 'VT323','Courier New',monospace;color:var(--mint);margin-top:4px;white-space:nowrap}
+.row .m.q{color:#1b1030;background:var(--gold);border:2px solid #000;border-radius:3px;padding:0 8px}
+.row .op{font-size:24px;color:var(--ink2);padding-top:2px}
+.row .op.arrow{color:var(--gold)}
+.ans{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.ans label{font-weight:700}
+.ans input{width:170px;height:40px;font:400 26px/1 'VT323','Courier New',monospace;color:var(--gold);background:#0e0820;border:2px solid var(--rim);border-radius:3px;padding:0 8px}
+.work{background:#0e0820;border:2px solid #3a2463;border-radius:3px;padding:8px 12px;margin:6px 0;font-size:1rem}
+.work div{margin:3px 0}
+.work .bar{margin-top:8px;background:var(--gold);color:#1b1030;font-weight:700;padding:4px 10px;border:2px solid #000;border-radius:3px;display:inline-block}
+.howto{margin:0;padding-left:1.2rem;font-size:.95rem}
+.howto li{margin:2px 0}
+.score{font:400 24px/1 'VT323','Courier New',monospace;color:var(--gold)}
+
+/* learn */
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px;margin-top:10px}
+.learn .card{margin:0}
+.learn p{margin:4px 0}
+.learn details{background:var(--panel);border:3px solid #000;border-radius:4px;margin:6px 0;padding:6px 10px}
+.learn summary{cursor:pointer;font-weight:700}
+.foot{margin:12px 4px 0;font-size:.82rem}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<div id="app" class="app">
+  <header class="hd">
+    <h1>Conservation of Mass Bench</h1>
+    <span class="pill">SCIENCE 1206 · UNIT 2</span>
+    <p class="lead">Weigh a reaction before and after. Find out when the scale changes, and why.</p>
+  </header>
+
+  <details class="card plain" id="plain" open>
+    <summary>IN PLAIN WORDS</summary>
+    <p><b>Mass</b> means how much stuff something has. We measure it in grams (g).</p>
+    <p>In a reaction, atoms are taken apart and put back together in new ways, like LEGO bricks. You can't lose LEGO bricks, and no new ones appear.</p>
+    <p>So the mass at the end is the same as the mass at the start. This is the <b>law of conservation of mass</b>.</p>
+    <div class="say hint"><span class="tag">BUT MY SCALE CHANGED!</span>
+      <p>If the scale says it got lighter, some bricks (a gas) floated away. If it got heavier, some bricks (a gas from the air) joined in. The mass didn't vanish or appear. It just moved on or off the scale.</p></div>
+    <button class="btn primary go" id="goBtn" type="button">Start ▶</button>
+  </details>
+
+  <div id="lab" hidden>
+    <div class="tabs" role="tablist" aria-label="Activity">
+      <button class="tab" role="tab" data-tab="bench" type="button">Bench</button>
+      <button class="tab" role="tab" data-tab="missing" type="button">Missing Mass</button>
+    </div>
+
+    <section class="card" id="benchTab" aria-label="Virtual lab bench">
+      <div class="bench">
+        <div>
+          <div class="stage">
+            <canvas id="cv" width="720" height="360" role="img" aria-label="Lab bench and particle view"></canvas>
+            <div class="readout" id="readout" aria-hidden="true">0.00 g</div>
+          </div>
+          <p class="atoms" id="atoms" aria-live="polite"></p>
+        </div>
+        <div id="ctl"></div>
+      </div>
+    </section>
+
+    <section class="card" id="logTab" aria-label="Your results">
+      <h2 class="wtitle mint">YOUR RESULTS</h2>
+      <table class="log" id="log"></table>
+      <div id="bigIdea"></div>
+    </section>
+
+    <section class="card" id="missingTab" hidden aria-label="Missing mass practice">
+      <div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between">
+        <h2 class="wtitle mint" style="margin:0">MISSING MASS</h2>
+        <span>Correct so far: <span class="score" id="pScore">0</span></span>
+      </div>
+      <div class="say"><span class="tag">HOW TO DO IT</span>
+        <ol class="howto">
+          <li>Find the side where you know every mass. Add those masses up.</li>
+          <li>Mass is conserved, so the other side has the same total.</li>
+          <li>Subtract the masses you know. What is left is the missing mass.</li>
+        </ol></div>
+      <div id="prob"></div>
+    </section>
+  </div>
+
+  <div class="learn">
+    <section class="card">
+      <h2 class="wtitle">THE LAW</h2>
+      <p><b>Law of conservation of mass:</b> in a chemical reaction, the total mass of the reactants (what you start with) equals the total mass of the products (what you make).</p>
+      <p>Atoms are not made or destroyed. They are only rearranged. Same atoms, same mass.</p>
+      <p>If a scale shows a change, a gas got in or out. Use a sealed (closed) container and the mass stays the same.</p>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">BIG QUESTIONS</h2>
+      <details><summary>A nail rusts. Why does it get heavier?</summary>
+        <p>Rust forms when iron joins with oxygen from the air (and some water). The rust holds the iron <i>and</i> the oxygen, so the nail weighs more. The extra mass is the oxygen that joined in.</p></details>
+      <details><summary>Wood burns. Why is the ash so much lighter?</summary>
+        <p>Most of the atoms in wood leave as gases: carbon dioxide and water vapour. Only the ash stays behind. If you could catch every gas (and count the oxygen the fire used), the total mass would be the same as before.</p></details>
+      <details><summary>Steel wool burns. Why does it get heavier?</summary>
+        <p>It is the same idea as rusting, just much faster. Oxygen from the air joins the iron, so the solid left behind is heavier.</p></details>
+    </section>
+  </div>
+  <p class="foot">Science 1206 · Unit 2 Chemical Reactions · NL Science 10, Section 3.3. Masses come from real atomic masses. Your progress is saved on this device only.</p>
+</div>
+<div id="tip" role="tooltip" hidden></div>
+
+<script id="chem-core">
+/* Chemistry core: pure functions, no DOM. tools/test-chem.mjs runs this block in Node to check every bank. */
+const CHEM = (() => {
+  const STATE = /\((?:s|l|g|aq)\)/g;
+  function tokens(f) {
+    const s = String(f).replace(STATE, '').replace(/\^.*$/, '').trim();
+    let i = 0;
+    const num = () => { let d = ''; while (i < s.length && /\d/.test(s[i])) d += s[i++]; return d ? +d : 1; };
+    function group(close) {
+      const out = [];
+      while (i < s.length) {
+        const ch = s[i];
+        if (ch === '(' || ch === '[') {
+          const want = ch === '(' ? ')' : ']'; i++;
+          const start = i, kids = group(want);
+          if (s[i] !== want) throw new Error('Unclosed bracket in ' + f);
+          const text = s.slice(start, i); i++;
+          out.push({ kids, text, n: num() });
+        } else if (ch === ')' || ch === ']') {
+          if (ch !== close) throw new Error('Unexpected ' + ch + ' in ' + f);
+          return out;
+        } else if (/[A-Z]/.test(ch)) {
+          let el = ch; i++;
+          while (i < s.length && /[a-z]/.test(s[i])) el += s[i++];
+          out.push({ el, n: num() });
+        } else throw new Error('Cannot read "' + ch + '" in ' + f);
+      }
+      if (close) throw new Error('Unclosed bracket in ' + f);
+      return out;
+    }
+    const t = group(null);
+    if (!t.length) throw new Error('Empty formula');
+    return t;
+  }
+  function addAtoms(toks, mult, out) {
+    for (const t of toks) {
+      if (t.el) out[t.el] = (out[t.el] || 0) + t.n * mult;
+      else addAtoms(t.kids, t.n * mult, out);
+    }
+    return out;
+  }
+  const atoms = f => addAtoms(tokens(f), 1, {});
+  // Standard atomic masses (g/mol)
+  const AM = { H: 1.008, C: 12.011, N: 14.007, O: 15.999, Na: 22.990, Mg: 24.305, Al: 26.982, S: 32.06, Cl: 35.45,
+    K: 39.098, Ca: 40.078, Fe: 55.845, Cu: 63.546, Zn: 65.38, Ag: 107.868 };
+  function molarMass(f) {
+    const a = atoms(f);
+    return Object.keys(a).reduce((m, el) => { if (!(el in AM)) throw new Error('No atomic mass for ' + el); return m + AM[el] * a[el]; }, 0);
+  }
+  const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; };
+  const lcm = (a, b) => a / gcd(a, b) * b;
+  // Lowest whole-number coefficients, found from the atom counts (not from any answer key)
+  function solve(left, right) {
+    const fs = [...left, ...right], cnt = fs.map(atoms);
+    const els = [...new Set(cnt.flatMap(Object.keys))];
+    const n = fs.length;
+    const M = els.map(e => cnt.map((c, j) => [(c[e] || 0) * (j < left.length ? 1 : -1), 1]));
+    const norm = ([p, q]) => { if (q < 0) { p = -p; q = -q; } const g = gcd(p, q) || 1; return [p / g, q / g]; };
+    const sub = (a, b) => norm([a[0] * b[1] - b[0] * a[1], a[1] * b[1]]);
+    const mul = (a, b) => norm([a[0] * b[0], a[1] * b[1]]);
+    const div = (a, b) => norm([a[0] * b[1], a[1] * b[0]]);
+    const pivots = []; let row = 0;
+    for (let col = 0; col < n && row < M.length; col++) {
+      const p = M.findIndex((r, i) => i >= row && r[col][0] !== 0);
+      if (p < 0) continue;
+      [M[row], M[p]] = [M[p], M[row]];
+      const pv = M[row][col];
+      M[row] = M[row].map(x => div(x, pv));
+      M.forEach((r, i) => { if (i !== row && r[col][0] !== 0) { const f = r[col]; M[i] = r.map((x, j) => sub(x, mul(f, M[row][j]))); } });
+      pivots.push(col); row++;
+    }
+    const free = [...Array(n).keys()].filter(c => !pivots.includes(c));
+    if (free.length !== 1) return null;
+    const v = new Array(n).fill(null); v[free[0]] = [1, 1];
+    pivots.forEach((col, i) => { v[col] = norm([-M[i][free[0]][0], M[i][free[0]][1]]); });
+    const L = v.reduce((a, x) => lcm(a, x[1]), 1);
+    let ints = v.map(([p, q]) => p * (L / q));
+    if (ints.every(x => x < 0)) ints = ints.map(x => -x);
+    if (ints.some(x => x <= 0)) return null;
+    const g = ints.reduce((a, x) => gcd(a, x), 0);
+    return ints.map(x => x / g);
+  }
+  function check(left, right, c) {
+    const cnt = [...left, ...right].map(atoms), L = {}, R = {};
+    cnt.forEach((m, i) => Object.keys(m).forEach(k => { const s = i < left.length ? L : R; s[k] = (s[k] || 0) + m[k] * c[i]; }));
+    const keys = [...new Set([...Object.keys(L), ...Object.keys(R)])];
+    const balanced = keys.every(k => L[k] === R[k]);
+    const g = c.reduce((a, x) => gcd(a, x), 0);
+    return { balanced, g, correct: balanced && g === 1 };
+  }
+  // Mass in grams, rounded to 2 decimals, kept as whole hundredths so sums never pick up float error
+  const cg = g => Math.round(g * 100);
+  const fmt = h => (h < 0 ? '−' : '') + (Math.abs(h) / 100).toFixed(2);
+  return { tokens, atoms, molarMass, AM, solve, check, gcd, cg, fmt };
+})();
+if (typeof module !== 'undefined') module.exports = CHEM;
+</script>
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+/* chem(): the one formatter for every formula on this page.
+   "2H2O" -> coefficient 2, H<sub>2</sub>O. Charges "Ag^+" / "SO4^2-" -> superscript. "->" -> →. */
+function chem(s) {
+  return String(s).split(/\s*(\+|->|→)\s*/).map(part => {
+    if (part === '+') return ' + ';
+    if (part === '->' || part === '→') return ' → ';
+    const m = part.match(/^(\d+)\s*(?=[A-Z(\[])/);
+    let out = '', i = 0;
+    if (m) { out += m[1]; i = m[0].length; }
+    while (i < part.length) {
+      const ch = part[i], prev = part[i - 1] || '';
+      const st = part.slice(i).match(/^\((?:s|l|g|aq)\)/);
+      if (st) { out += `<span class="st">${st[0]}</span>`; i += st[0].length; continue; }
+      if (/\d/.test(ch) && /[A-Za-z)\]]/.test(prev)) {
+        let d = ''; while (i < part.length && /\d/.test(part[i])) d += part[i++];
+        out += `<sub>${d}</sub>`; continue;
+      }
+      if (ch === '^') {
+        let q = ''; i++; while (i < part.length && /[\d+\-]/.test(part[i])) q += part[i++];
+        out += `<sup>${q.replace('-', '−')}</sup>`; continue;
+      }
+      out += esc(ch); i++;
+    }
+    return out;
+  }).join('');
+}
+// The same formatting on the canvas: subscripts drawn smaller and lower
+function chemCanvas(ctx, s, x, y, size, align) {
+  const parts = [];
+  String(s).replace(/(\^[\d+\-]+)|([A-Za-z)\]])(\d+)|([^]+?)/g, (all, chg, a, d, other) => {
+    if (chg) parts.push([chg.slice(1).replace('-', '−'), 'sup']);
+    else if (a) { parts.push([a, 'n']); parts.push([d, 'sub']); }
+    else parts.push([other, 'n']);
+    return '';
+  });
+  const fontFor = k => `${k === 'n' ? 700 : 700} ${k === 'n' ? size : Math.round(size * 0.68)}px 'Atkinson Hyperlegible',system-ui,sans-serif`;
+  let w = 0;
+  parts.forEach(([t, k]) => { ctx.font = fontFor(k); w += ctx.measureText(t).width; });
+  let cx = align === 'center' ? x - w / 2 : align === 'right' ? x - w : x;
+  ctx.textAlign = 'left';
+  parts.forEach(([t, k]) => {
+    ctx.font = fontFor(k);
+    ctx.fillText(t, cx, y + (k === 'sub' ? size * 0.28 : k === 'sup' ? -size * 0.38 : 0));
+    cx += ctx.measureText(t).width;
+  });
+}
+
+/* Element colours: shared by every chemistry page (see docs/STYLE-GUIDE). [name, fill, letter colour] */
+const EL = {
+  H: ['hydrogen', '#f4f1ff', '#1b1030'], O: ['oxygen', '#e8414b', '#fff'], C: ['carbon', '#2b2b33', '#fff'],
+  N: ['nitrogen', '#3b6cf0', '#fff'], Cl: ['chlorine', '#19b3a3', '#08201d'], Na: ['sodium', '#ff8c1a', '#1b1030'],
+  K: ['potassium', '#b388ff', '#1b1030'], Mg: ['magnesium', '#9be564', '#1b1030'], Ca: ['calcium', '#d8c39a', '#1b1030'],
+  Al: ['aluminum', '#aeb9c6', '#1b1030'], Fe: ['iron', '#9a4f26', '#fff'], Cu: ['copper', '#e0956a', '#1b1030'],
+  S: ['sulfur', '#ffe04a', '#1b1030'], P: ['phosphorus', '#ff77c8', '#1b1030'], Br: ['bromine', '#a3342b', '#fff'],
+  I: ['iodine', '#7a3fb8', '#fff'], Pb: ['lead', '#6b7686', '#fff'], Hg: ['mercury', '#cfd6de', '#1b1030'],
+  Cr: ['chromium', '#6fae8d', '#1b1030'], Zn: ['zinc', '#8ea3bf', '#1b1030'], F: ['fluorine', '#c6f56b', '#1b1030'],
+  Ag: ['silver', '#e6e6e6', '#1b1030'], Li: ['lithium', '#d77cff', '#1b1030']
+};
+
+/* Reactions. The bracketed coefficients are for reference only: the page computes them itself. */
+const BENCH = [
+  ['NaHCO3 + CH3COOH -> NaCH3COO + H2O + CO2', [1, 1, 1, 1, 1]],
+  ['Fe + O2 -> Fe2O3', [4, 3, 2]],
+  ['AgNO3 + NaCl -> AgCl + NaNO3', [1, 1, 1, 1]]
+];
+const PRACTICE = [
+  ['H2 + O2 -> H2O', [2, 1, 2]],
+  ['Mg + O2 -> MgO', [2, 1, 2]],
+  ['Cu + O2 -> CuO', [2, 1, 2]],
+  ['Na + Cl2 -> NaCl', [2, 1, 2]],
+  ['N2 + H2 -> NH3', [1, 3, 2]],
+  ['Fe + O2 -> Fe2O3', [4, 3, 2]],
+  ['CH4 + O2 -> CO2 + H2O', [1, 2, 1, 2]],
+  ['C3H8 + O2 -> CO2 + H2O', [1, 5, 3, 4]],
+  ['CaCO3 -> CaO + CO2', [1, 1, 1]],
+  ['H2O2 -> H2O + O2', [2, 2, 1]],
+  ['KClO3 -> KCl + O2', [2, 2, 3]],
+  ['Zn + HCl -> ZnCl2 + H2', [1, 2, 1, 1]],
+  ['AgNO3 + NaCl -> AgCl + NaNO3', [1, 1, 1, 1]],
+  ['NaOH + HCl -> NaCl + H2O', [1, 1, 1, 1]]
+];
+const parseEq = s => { const [l, r] = s.split('->').map(x => x.split('+').map(y => y.trim())); return { l, r, c: CHEM.solve(l, r) }; };
+const { cg, fmt } = CHEM;
+const MM = f => CHEM.molarMass(f);
+
+/* Progress: this device only */
+const KEY = 'mass-balance:v1';
+let store = { seen: false, runs: {}, correct: 0 };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) store = Object.assign(store, s); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+
+/* tap-to-define words */
+const DEF = {
+  mass: 'How much stuff something has. Measured in grams (g).',
+  conserved: 'Kept the same. Nothing is lost and nothing is added.',
+  gas: 'A substance spread out like air. Gases can float away, so you can\'t see them leave.',
+  precipitate: 'A solid that forms when two liquids are mixed. It makes the liquid cloudy.',
+  sealed: 'Closed, so nothing can get in or out. Scientists call this a closed system.',
+  open: 'Open to the air, so gases can get in or out. Scientists call this an open system.',
+  reactants: 'What you start with. They are on the left of the arrow.',
+  products: 'What you make. They are on the right of the arrow.'
+};
+const T = (word, key) => `<button type="button" class="term" data-def="${key}">${word}</button>`;
+const tip = $('#tip');
+let tipFor = null;
+function showTip(el) {
+  tipFor = el; tip.innerHTML = chem(DEF[el.dataset.def]); tip.hidden = false;
+  const r = el.getBoundingClientRect();
+  tip.style.left = Math.max(8, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - 316)) + 'px';
+  tip.style.top = (window.scrollY + r.bottom + 6) + 'px';
+}
+const hideTip = () => { tip.hidden = true; tipFor = null; };
+document.addEventListener('click', e => {
+  const t = e.target.closest('.term[data-def]');
+  if (t) { tipFor === t ? hideTip() : showTip(t); } else if (!e.target.closest('#tip')) hideTip();
+});
+document.addEventListener('focusin', e => { const t = e.target.closest('.term[data-def]'); if (t) showTip(t); });
+document.addEventListener('focusout', e => { if (e.target.closest('.term[data-def]')) hideTip(); });
+document.addEventListener('mouseover', e => { const t = e.target.closest('.term[data-def]'); if (t && tipFor !== t) showTip(t); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
+
+/* ================= BENCH ================= */
+/* Each run's masses are computed from real molar masses.
+   Baking soda: 4.20 g NaHCO3 (0.0500 mol) with excess vinegar (100.00 g, 5% acetic acid = 0.0833 mol) gives 0.0500 mol CO2.
+   Rusting: 2.79 g steel wool (iron). Open: all of it rusts with oxygen from the room.
+            Sealed 1.00 L flask: only the oxygen inside (1.00 L of air at 20 °C holds 0.00871 mol O2) can react.
+   Silver nitrate: 0.0100 mol AgNO3 and 0.0100 mol NaCl make 0.0100 mol AgCl. No gas. */
+const RX = {
+  bs: { name: 'Baking soda + vinegar', eq: 'NaHCO3 + CH3COOH -> NaCH3COO + H2O + CO2', short: 'Fizzes. Makes a gas.' },
+  fe: { name: 'Iron rusting (steel wool)', eq: '4Fe + 3O2 -> 2Fe2O3', short: 'Damp steel wool, sped up.' },
+  ag: { name: 'Silver nitrate + salt water', eq: 'AgNO3 + NaCl -> AgCl + NaNO3', short: 'Makes a white solid.' }
+};
+const VESSEL = { beaker: 95.36, flask: 128.47, balloon: 2.85, boat: 1.12, tube: 12.40, smallTube: 6.20 };
+const AIR_L = 1.00, MOLAR_VOL = 24.06, O2_FRAC = 0.2095;     // 1.00 L of air at 20 °C and 1 atm
+const AIR_G = AIR_L / MOLAR_VOL * 28.96;                       // about 1.20 g of air sealed in the flask
+function runData(rx, cont) {
+  const sealed = cont === 'flask';
+  const base = sealed ? VESSEL.flask + VESSEL.balloon : VESSEL.beaker;
+  let parts = [], before, after, gas = 0, note = '';
+  if (rx === 'bs') {
+    const nB = cg(4.20) / 100 / MM('NaHCO3');                   // 0.0500 mol
+    const co2 = cg(nB * MM('CO2'));
+    parts = [['container', base], ['vinegar', 100.00], ['baking soda', 4.20]].concat(sealed ? [] : [['weigh boat', VESSEL.boat]]);
+    before = parts.reduce((s, p) => s + cg(p[1]), 0);
+    gas = sealed ? 0 : -co2; after = before + gas;
+    return { before, after, gas, co2, sealed, parts };
+  }
+  if (rx === 'fe') {
+    const nFe = cg(2.79) / 100 / MM('Fe');
+    parts = [['container', base], ['steel wool', 2.79]].concat(sealed ? [['air inside the flask', AIR_G]] : []);
+    before = parts.reduce((s, p) => s + cg(p[1]), 0);
+    if (sealed) {
+      const nO2 = AIR_L / MOLAR_VOL * O2_FRAC;
+      const feUsed = Math.min(nFe, nO2 * 4 / 3);
+      return { before, after: before, gas: 0, sealed, parts, o2: cg(nO2 * MM('O2')), feUsed: cg(feUsed * MM('Fe')),
+        oxide: cg(feUsed / 2 * MM('Fe2O3')) };
+    }
+    const o2 = cg(nFe * 3 / 4 * MM('O2'));
+    return { before, after: before + o2, gas: o2, sealed, parts, o2, oxide: cg(nFe / 2 * MM('Fe2O3')) };
+  }
+  const n = 0.0100;
+  parts = [['container', base], ['silver nitrate solution', 50.00], ['salt water', 25.00], ['test tube', sealed ? VESSEL.smallTube : VESSEL.tube]];
+  before = parts.reduce((s, p) => s + cg(p[1]), 0);
+  return { before, after: before, gas: 0, sealed, parts, agcl: cg(n * MM('AgCl')) };
+}
+
+/* Particle view: a few drawn molecules stand for a huge number of real ones.
+   Same atoms before and after; the only question is whether they stay on the scale. */
+const PV = { x: 368, y: 96, w: 334, h: 236 };           // the box = what is on the scale
+const ROOM = { x: 372, y: 32, w: 326, h: 50 };          // air in the room (open containers only)
+const BALLOON = { cx: 535, cy: 62 };
+const LIQ_TOP = PV.y + 82;
+const R = 8;
+const rnd = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+function shape(f) {
+  const list = [];
+  CHEM.tokens(f).forEach(function walk(t, _, __, mult = 1) {
+    if (t.el) for (let k = 0; k < t.n * mult; k++) list.push(t.el);
+    else t.kids.forEach(kid => walk(kid, 0, 0, mult * t.n));
+  });
+  const n = list.length, d = R * 1.75;
+  const cols = n <= 3 ? n : Math.ceil(Math.sqrt(n)), rows = Math.ceil(n / cols);
+  return list.map((el, j) => {
+    const r = Math.floor(j / cols), inRow = Math.min(cols, n - r * cols);
+    return { el, dx: ((j % cols) - (inRow - 1) / 2) * d, dy: (r - (rows - 1) / 2) * d };
+  });
+}
+const charge = f => (String(f).match(/\^([\d+\-]+)/) || [])[1] || '';
+function place(region, taken) {
+  const box = {
+    liq: [PV.x + 24, LIQ_TOP + 22, PV.w - 48, PV.y + PV.h - LIQ_TOP - 40],
+    air: [PV.x + 24, PV.y + 16, PV.w - 48, LIQ_TOP - PV.y - 30],
+    solid: [PV.x + 30, PV.y + PV.h - 46, PV.w - 60, 26],
+    room: [ROOM.x + 20, ROOM.y + 12, ROOM.w - 40, ROOM.h - 22],
+    bottom: [PV.x + 30, PV.y + PV.h - 24, PV.w - 60, 6],
+    balloon: [BALLOON.cx - 34, BALLOON.cy - 22, 68, 40]
+  }[region];
+  let best = null, bestD = -1;
+  for (let k = 0; k < 40; k++) {
+    const p = { x: box[0] + rnd() * box[2], y: box[1] + rnd() * box[3] };
+    const dmin = taken.reduce((m, q) => Math.min(m, Math.hypot(p.x - q.x, p.y - q.y)), 1e9);
+    if (dmin > bestD) { bestD = dmin; best = p; }
+    if (dmin > 46) break;
+  }
+  taken.push(best);
+  return best;
+}
+const onScaleRegion = r => r !== 'room';
+/* Scenario: before molecules [formula, count, region], after molecules [formula, count, final region],
+   and where incoming gas waits before it reacts. */
+function scenario(rx, sealed) {
+  if (rx === 'bs') return {
+    before: [['NaHCO3', 3, 'liq'], ['CH3COOH', 3, 'liq']],
+    after: [['NaCH3COO', 3, 'liq'], ['H2O', 3, 'liq'], ['CO2', 3, sealed ? 'balloon' : 'room']] };
+  if (rx === 'fe') return sealed
+    ? { before: [['Fe', 8, 'solid'], ['O2', 3, 'air']], after: [['Fe2O3', 2, 'solid'], ['Fe', 4, 'solid']] }
+    : { before: [['Fe', 4, 'solid'], ['O2', 3, 'room']], after: [['Fe2O3', 2, 'solid']] };
+  return {
+    before: [['Ag^+', 2, 'liq'], ['NO3^-', 2, 'liq'], ['Na^+', 2, 'liq'], ['Cl^-', 2, 'liq']],
+    after: [['AgCl', 2, 'bottom'], ['Na^+', 2, 'liq'], ['NO3^-', 2, 'liq']] };
+}
+function buildPV(rx, sealed) {
+  const sc = scenario(rx, sealed), taken = [];
+  const mk = ([f, n, region]) => Array.from({ length: n }, () => ({ f, region, atoms: shape(f), ch: charge(f), ph: rnd() * 6.28 }));
+  const B = sc.before.flatMap(mk), A = sc.after.flatMap(mk);
+  B.forEach(m => { m.p = place(m.region, taken); m.pA = m.p; });
+  // incoming gas (open rusting) first drifts down to the iron
+  const fe = B.filter(m => m.f === 'Fe');
+  B.filter(m => m.region === 'room' || (m.region === 'air' && rx === 'fe')).forEach((m, i) => {
+    const t = fe[i % fe.length].p; m.pA = { x: t.x + (i % 2 ? 16 : -16), y: t.y - 20 };
+  });
+  // unchanged molecules (spectator ions, leftover iron) keep their identity
+  const freeB = B.slice();
+  A.forEach(a => {
+    let same = -1; freeB.forEach((b, k) => { if (b.f === a.f) same = k; });
+    if (same >= 0 && (a.f.includes('^') || (rx === 'fe' && a.f === 'Fe'))) {
+      const b = freeB.splice(same, 1)[0]; a.same = b; a.pB = b.pA; a.atomsFrom = a.atoms.map((at, j) => ({ m: b, j }));
+    }
+  });
+  // every other product atom comes from the nearest unused reactant atom of the same element
+  const pool = freeB.flatMap(m => m.atoms.map((at, j) => ({ m, j, el: at.el, used: false })));
+  const posOf = (m, j) => ({ x: m.pA.x + m.atoms[j].dx, y: m.pA.y + m.atoms[j].dy });
+  const groups = A.filter(a => !a.same);
+  // seed each product at a reactant molecule so products form where the reactants were
+  groups.forEach((a, i) => {
+    const anchor = freeB[i % freeB.length];
+    a.atomsFrom = a.atoms.map(at => {
+      let best = null, bd = 1e9;
+      pool.forEach(c => { if (!c.used && c.el === at.el) { const p = posOf(c.m, c.j); const d = Math.hypot(p.x - anchor.pA.x, p.y - anchor.pA.y); if (d < bd) { bd = d; best = c; } } });
+      if (!best) throw new Error('Particle view does not balance for ' + a.f);
+      best.used = true; return { m: best.m, j: best.j };
+    });
+    const ps = a.atomsFrom.map(s => posOf(s.m, s.j));
+    a.pB = { x: ps.reduce((s, p) => s + p.x, 0) / ps.length, y: ps.reduce((s, p) => s + p.y, 0) / ps.length };
+  });
+  if (pool.some(c => !c.used)) throw new Error('Particle view has leftover atoms');
+  A.forEach(a => { a.pC = a.same || a.region === 'liq' || a.region === 'solid' ? a.pB : place(a.region, []); });
+  return { B, A, sealed, rx };
+}
+const atomCount = mols => mols.reduce((s, m) => s + m.atoms.length, 0);
+
+/* ---- drawing ---- */
+const cv = $('#cv'), ctx = cv.getContext('2d');
+const DPR = Math.min(2, window.devicePixelRatio || 1);
+cv.width = 720 * DPR; cv.height = 360 * DPR; ctx.scale(DPR, DPR);
+const COL = { panel: '#160d2b', ink: '#f6efff', ink2: '#c3b2e6', rim: '#8a6fd0', gold: '#ffd23f', mint: '#5df2a4', coral: '#ff5d73', sky: '#6ad3ff' };
+const ease = t => t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t);
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => ease((t - a) / (b - a));
+
+const B = { rx: null, cont: null, pred: null, t: 0, running: false, done: false, pv: null, data: null, start: 0, bubbles: [], wool: [] };
+const DUR = 4600;
+function timeline(t) {   // 0..1 overall -> phases
+  const inc = B.rx === 'fe' && !B.data.sealed;
+  return { a: seg(t, 0, inc ? 0.3 : 0.05), b: seg(t, inc ? 0.25 : 0.08, inc ? 0.6 : 0.45), c: seg(t, inc ? 0.6 : 0.45, 0.95) };
+}
+// how far the scale reading has moved (0..1)
+const massProgress = ph => B.rx === 'fe' ? ph.b : ph.c;
+
+function drawScene(now) {
+  ctx.clearRect(0, 0, 720, 360);
+  ctx.fillStyle = COL.panel; ctx.fillRect(0, 0, 720, 360);
+  // bench
+  ctx.fillStyle = '#2a1d45'; ctx.fillRect(0, 334, 344, 26);
+  ctx.fillStyle = '#3a2463'; ctx.fillRect(0, 332, 344, 3);
+  // balance
+  ctx.fillStyle = '#2f3440'; roundRect(22, 286, 296, 46, 7); ctx.fill();
+  ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = '#b8c0cc'; ctx.fillRect(48, 274, 244, 9);
+  ctx.fillStyle = '#7d8696'; ctx.fillRect(160, 283, 20, 4);
+  ctx.fillStyle = '#0b1a12'; roundRect(104, 295, 134, 30, 3); ctx.fill();
+  ctx.strokeStyle = '#4d5566'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = COL.ink2; ctx.font = "700 9px 'Atkinson Hyperlegible',sans-serif"; ctx.textAlign = 'left';
+  ctx.fillText('DIGITAL BALANCE', 248, 314);
+  if (!B.rx || !B.cont) {
+    ctx.fillStyle = COL.ink2; ctx.font = "15px 'Atkinson Hyperlegible',sans-serif"; ctx.textAlign = 'center';
+    ctx.fillText('Pick a reaction and a container →', 172, 200);
+    drawPVFrame(false);
+    ctx.fillStyle = COL.ink2; ctx.fillText('The particle view shows up here.', PV.x + PV.w / 2, PV.y + PV.h / 2);
+    return;
+  }
+  const ph = B.done ? { a: 1, b: 1, c: 1 } : B.running ? timeline(B.t) : { a: 0, b: 0, c: 0 };
+  drawVessel(ph, now);
+  drawPV(ph, now);
+}
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+function flaskPath() {
+  ctx.beginPath(); ctx.moveTo(152, 132); ctx.lineTo(152, 176); ctx.lineTo(104, 272); ctx.lineTo(236, 272);
+  ctx.lineTo(188, 176); ctx.lineTo(188, 132);
+}
+function drawVessel(ph, now) {
+  const sealed = B.cont === 'flask', rx = B.rx;
+  const glass = 'rgba(190,215,255,.75)';
+  // liquid colour (real look: vinegar and the salt solutions are clear; silver chloride is a white solid)
+  const liquid = rx === 'bs' ? 'rgba(235,228,190,.30)' : 'rgba(200,220,255,.22)';
+  let level = rx === 'fe' ? 0 : rx === 'bs' ? 72 : 52 + 26 * ph.b;   // liquid height in px
+  const cloud = rx === 'ag' ? ph.b : 0;
+  const clip = () => { if (sealed) { flaskPath(); ctx.closePath(); } else { ctx.beginPath(); ctx.rect(110, 150, 110, 122); } };
+  // liquid
+  if (level) {
+    ctx.save(); clip(); ctx.clip();
+    ctx.fillStyle = liquid; ctx.fillRect(100, 272 - level, 140, level);
+    if (cloud) { ctx.fillStyle = `rgba(245,245,250,${0.55 * cloud * (1 - 0.5 * ph.c)})`; ctx.fillRect(100, 272 - level, 140, level); }
+    if (rx === 'ag' && ph.c) { ctx.fillStyle = `rgba(250,250,252,${0.9 * ph.c})`; ctx.fillRect(100, 266, 140, 6); }
+    // bubbles (baking soda)
+    if (rx === 'bs' && B.running) {
+      const fizz = Math.sin(Math.PI * Math.min(1, B.t / 0.85));
+      if (B.bubbles.length < 40 && Math.random() < fizz * 0.9) B.bubbles.push({ x: 120 + Math.random() * 100, y: 268, r: 1.5 + Math.random() * 2.5 });
+      ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.lineWidth = 1;
+      B.bubbles.forEach(b => { b.y -= 1.6 + b.r * 0.4; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, 6.29); ctx.stroke(); });
+      B.bubbles = B.bubbles.filter(b => b.y > 272 - level);
+      if (fizz > 0.2) { ctx.fillStyle = `rgba(255,255,255,${0.35 * fizz})`; ctx.fillRect(100, 272 - level - 6, 140, 8); }
+    }
+    ctx.restore();
+  }
+  // steel wool
+  if (rx === 'fe') {
+    if (!B.wool.length) for (let k = 0; k < 26; k++) B.wool.push([132 + Math.random() * 66, 236 + Math.random() * 30, 6 + Math.random() * 12, Math.random() * 6.28]);
+    const rust = sealed ? 0.35 * ph.b : ph.b;   // sealed: only part of it rusts
+    const c0 = [140, 143, 153], c1 = [139, 58, 26];
+    ctx.lineWidth = 1.3;
+    B.wool.forEach(([x, y, r, a], k) => {
+      const t = sealed ? (k % 3 === 0 ? ph.b : 0) : rust;
+      ctx.strokeStyle = `rgb(${c0.map((v, i) => Math.round(lerp(v, c1[i], t))).join(',')})`;
+      ctx.beginPath(); ctx.ellipse(x, y, r, r * 0.45, a, 0, 6.29); ctx.stroke();
+    });
+  }
+  // glass
+  ctx.strokeStyle = glass; ctx.lineWidth = 3;
+  if (sealed) { flaskPath(); ctx.stroke(); ctx.fillStyle = 'rgba(190,215,255,.06)'; flaskPath(); ctx.closePath(); ctx.fill(); }
+  else {
+    ctx.beginPath(); ctx.moveTo(106, 148); ctx.lineTo(110, 152); ctx.lineTo(110, 272); ctx.lineTo(220, 272); ctx.lineTo(220, 152); ctx.lineTo(224, 148); ctx.stroke();
+    ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(190,215,255,.4)';
+    for (let y = 182; y < 270; y += 22) { ctx.beginPath(); ctx.moveTo(110, y); ctx.lineTo(124, y); ctx.stroke(); }
+  }
+  // extras on the pan
+  if (rx === 'bs' && !sealed) {
+    ctx.fillStyle = '#d9d2bf'; ctx.beginPath(); ctx.moveTo(236, 273); ctx.lineTo(284, 273); ctx.lineTo(278, 264); ctx.lineTo(242, 264); ctx.fill();
+    if (ph.a < 1) { ctx.fillStyle = `rgba(255,255,255,${1 - ph.a})`; ctx.beginPath(); ctx.ellipse(260, 263, 14, 5, 0, 3.14, 6.29); ctx.fill(); }
+    label('baking soda', 260, 256, 10);
+  }
+  if (rx === 'ag') {
+    const pour = ph.a < 1 && B.running ? 0 : ph.b;
+    const tx = sealed ? 196 : 252, ty = sealed ? 214 : 214, tilt = sealed ? 0.35 : 0;
+    ctx.save(); ctx.translate(tx, ty); ctx.rotate(tilt);
+    ctx.fillStyle = 'rgba(200,220,255,.30)'; ctx.fillRect(-7, 58 - 40 * (1 - pour), 14, 40 * (1 - pour));
+    ctx.strokeStyle = glass; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(-8, 0); ctx.lineTo(-8, 54); ctx.arc(0, 54, 8, 3.14, 0, true); ctx.lineTo(8, 0); ctx.stroke();
+    ctx.restore();
+    if (!sealed) label('salt water', 252, 206, 10);
+  }
+  // balloon
+  if (sealed) {
+    let b = 0;
+    if (rx === 'bs') b = 0.08 + 0.92 * ph.c;
+    if (rx === 'fe') b = -0.4 * ph.b;
+    const rxx = 15 + Math.max(0, b) * 32, ryy = 19 + Math.max(0, b) * 40;
+    const cy = 132 - ryy + 6 + (b < 0 ? -b * 26 : 0);
+    ctx.fillStyle = '#d9465d'; ctx.strokeStyle = '#000'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.ellipse(170, cy, rxx * (1 + Math.min(0, b) * 0.4), ryy * (1 + Math.min(0, b) * 0.8), 0, 0, 6.29); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.beginPath(); ctx.ellipse(170 - rxx * 0.35, cy - ryy * 0.35, rxx * 0.18, ryy * 0.22, -0.5, 0, 6.29); ctx.fill();
+    ctx.fillStyle = '#b13348'; ctx.fillRect(149, 128, 42, 8);
+    if (rx === 'bs' && ph.a < 1) { ctx.fillStyle = `rgba(255,255,255,${0.9 * (1 - ph.a)})`; ctx.beginPath(); ctx.ellipse(170, cy + 6, 9, 5, 0, 0, 6.29); ctx.fill(); }
+    if (rx === 'bs') label(ph.c > 0.5 ? 'CO2 trapped in the balloon' : 'baking soda in the balloon', 266, 70, 11);
+    if (rx === 'fe' && ph.b > 0.5) label('balloon pulled in: O2 used up', 262, 96, 11);
+  }
+  // gas leaving / joining (open)
+  if (!sealed && B.running) {
+    if (rx === 'bs' && ph.c > 0 && ph.c < 1) {
+      ctx.fillStyle = 'rgba(200,210,230,.5)';
+      for (let k = 0; k < 14; k++) { const s = (k / 14 + ph.c) % 1; ctx.beginPath(); ctx.arc(130 + (k * 37) % 80 + s * 30, 150 - s * 120, 2.4, 0, 6.29); ctx.fill(); }
+    }
+    if (rx === 'fe' && ph.a > 0 && ph.b < 1) {
+      ctx.fillStyle = 'rgba(232,65,75,.55)';
+      for (let k = 0; k < 12; k++) { const s = (k / 12 + B.t * 3) % 1; ctx.beginPath(); ctx.arc(140 + (k * 29) % 60, 30 + s * 200, 2.2, 0, 6.29); ctx.fill(); }
+    }
+  }
+  if (!sealed && rx === 'bs' && ph.c > 0.3) label('CO2 gas escapes into the room', 172, 40, 11);
+  if (!sealed && rx === 'fe' && ph.a > 0.1) label('O2 from the room joins the iron', 172, 40, 11);
+  if (rx === 'fe' && B.running) label('time-lapse: really takes days', 172, 58, 10, COL.ink2);
+  if (rx === 'ag' && ph.b > 0.4) label('white solid forms (precipitate)', 172, 128, 11);
+  label(sealed ? 'sealed flask + balloon' : 'open beaker', 172, 352, 10, COL.ink2);
+}
+function label(t, x, y, size, col) { ctx.fillStyle = col || COL.ink; chemCanvas(ctx, t, x, y, size, 'center'); }
+
+function drawPVFrame(sealed, balloonFull) {
+  ctx.fillStyle = '#0e0820'; ctx.fillRect(PV.x, PV.y, PV.w, PV.h);
+  ctx.strokeStyle = COL.rim; ctx.lineWidth = 3;
+  if (sealed) { ctx.strokeRect(PV.x, PV.y, PV.w, PV.h); }
+  else { ctx.beginPath(); ctx.moveTo(PV.x, PV.y); ctx.lineTo(PV.x, PV.y + PV.h); ctx.lineTo(PV.x + PV.w, PV.y + PV.h); ctx.lineTo(PV.x + PV.w, PV.y); ctx.stroke(); }
+  ctx.fillStyle = COL.mint; ctx.font = "8px 'Press Start 2P',monospace"; ctx.textAlign = 'left';
+  ctx.fillText('PARTICLE VIEW', PV.x, 16);
+  ctx.fillStyle = COL.ink2; ctx.font = "11px 'Atkinson Hyperlegible',sans-serif";
+  ctx.fillText('Inside the box = on the scale', PV.x + 128, 16);
+  if (sealed && balloonFull != null) {
+    ctx.strokeStyle = '#d9465d'; ctx.lineWidth = 2;
+    const r = 18 + 26 * balloonFull;
+    ctx.beginPath(); ctx.arc(BALLOON.cx, PV.y - 2 - r * 0.6, r, 0.2, Math.PI - 0.2, true); ctx.stroke();
+    ctx.fillStyle = COL.ink2; ctx.fillText('balloon', BALLOON.cx + r + 4, PV.y - 8);
+  }
+  if (!sealed) { ctx.fillStyle = COL.ink2; ctx.fillText('room air (off the scale)', ROOM.x + ROOM.w - 128, ROOM.y + 2); }
+}
+function drawAtom(x, y, el, alpha) {
+  const c = EL[el] || ['', '#888', '#fff'];
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = c[1]; ctx.beginPath(); ctx.arc(x, y, R, 0, 6.29); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 1; ctx.stroke();
+  ctx.fillStyle = c[2]; ctx.font = `700 ${el.length > 1 ? 7.5 : 9.5}px 'Atkinson Hyperlegible',sans-serif`; ctx.textAlign = 'center';
+  ctx.fillText(el, x, y + 3);
+  ctx.globalAlpha = 1;
+}
+function drawPV(ph, now) {
+  const pv = B.pv, sealed = pv.sealed;
+  drawPVFrame(sealed, pv.rx === 'bs' ? ph.c : pv.rx === 'fe' ? -0.3 * ph.b : 0);
+  if (pv.rx !== 'fe') { ctx.fillStyle = 'rgba(106,211,255,.08)'; ctx.fillRect(PV.x + 2, LIQ_TOP, PV.w - 4, PV.y + PV.h - LIQ_TOP - 2);
+    ctx.fillStyle = COL.ink2; ctx.font = "11px 'Atkinson Hyperlegible',sans-serif"; ctx.textAlign = 'left'; ctx.fillText('water (not drawn)', PV.x + 8, LIQ_TOP + 13); }
+  const bob = (m, amp) => ({ x: Math.sin(now / 700 + m.ph) * amp, y: Math.cos(now / 900 + m.ph * 1.3) * amp });
+  const amp = m => m.region === 'room' || m.region === 'air' || m.region === 'balloon' ? 2.5 : m.region === 'solid' || m.region === 'bottom' ? 0.4 : 1.4;
+  const molPosB = m => { const p = { x: lerp(m.p.x, m.pA.x, ph.a), y: lerp(m.p.y, m.pA.y, ph.a) }, o = bob(m, amp(m) * (1 - ph.b)); return { x: p.x + o.x, y: p.y + o.y }; };
+  const molPosA = m => { const p = { x: lerp(m.pB.x, m.pC.x, ph.c), y: lerp(m.pB.y, m.pC.y, ph.c) }, o = bob(m, amp(m) * ph.c); return { x: p.x + o.x, y: p.y + o.y }; };
+  if (ph.b <= 0) {
+    pv.B.forEach(m => { const p = molPosB(m); m.atoms.forEach(a => drawAtom(p.x + a.dx, p.y + a.dy, a.el, 1)); chargeMark(m, p); });
+  } else {
+    pv.A.forEach(m => {
+      const pa = molPosA(m);
+      m.atoms.forEach((a, j) => {
+        const src = m.atomsFrom[j], pb = molPosB(src.m), from = src.m.atoms[src.j];
+        drawAtom(lerp(pb.x + from.dx, pa.x + a.dx, ph.b), lerp(pb.y + from.dy, pa.y + a.dy, ph.b), a.el, 1);
+      });
+      if (ph.b > 0.9) chargeMark(m, pa);
+    });
+  }
+}
+function chargeMark(m, p) {
+  if (!m.ch) return;
+  const top = Math.min(...m.atoms.map(a => a.dy)) - R, right = Math.max(...m.atoms.map(a => a.dx)) + R;
+  ctx.fillStyle = COL.gold; ctx.font = "700 11px 'Atkinson Hyperlegible',sans-serif"; ctx.textAlign = 'left';
+  ctx.fillText(m.ch.replace('-', '−'), p.x + right, p.y + top + 4);
+}
+
+/* animation loop: only runs while something moves, and pauses when the tab is hidden */
+let raf = 0;
+function frame(now) {
+  raf = 0;
+  if (B.running) {
+    B.t = Math.min(1, (now - B.start) / DUR);
+    const ph = timeline(B.t), k = massProgress(ph);
+    showMass(Math.round(lerp(B.data.before, B.data.after, k)));
+    if (B.t >= 1) { B.running = false; B.done = true; finishRun(); }
+  }
+  drawScene(now);
+  // smooth while reacting; a gentle 25 fps jiggle while idle; nothing at all when hidden or on the other tab
+  if (document.hidden || !B.rx || !B.cont || $('#benchTab').hidden) return;
+  if (B.running) raf = requestAnimationFrame(frame);
+  else idle = setTimeout(() => { idle = 0; raf = requestAnimationFrame(frame); }, 40);
+}
+let idle = 0;
+const kick = () => { if (idle) { clearTimeout(idle); idle = 0; } if (!raf && !document.hidden) raf = requestAnimationFrame(frame); };
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { if (raf) cancelAnimationFrame(raf); raf = 0; if (idle) clearTimeout(idle); idle = 0; if (B.running) B.pausedAt = performance.now(); }
+  else { if (B.running && B.pausedAt) B.start += performance.now() - B.pausedAt; B.pausedAt = 0; kick(); }
+});
+function showMass(h) { $('#readout').textContent = fmt(h) + ' g'; }
+
+/* ---- bench controls (one step at a time) ---- */
+const PRED = { up: 'Go up ▲', down: 'Go down ▼', same: 'Stay the same =' };
+function setupRun() {
+  B.t = 0; B.running = false; B.done = false; B.bubbles = []; B.wool = [];
+  if (B.rx && B.cont) {
+    B.data = runData(B.rx, B.cont);
+    B.pv = buildPV(B.rx, B.cont === 'flask');
+    showMass(B.data.before);
+  } else { B.data = null; B.pv = null; $('#readout').textContent = '0.00 g'; }
+  renderCtl(); renderAtoms(); kick(); drawScene(performance.now());
+}
+function renderCtl() {
+  const c = $('#ctl');
+  let h = B.done ? `<span class="stepk">YOUR RUN</span><p style="margin:2px 0">${RX[B.rx].name} · ${B.cont === 'flask' ? 'sealed flask + balloon' : 'open beaker'}</p>
+    <p class="eqline" style="margin-top:0">${chem(RX[B.rx].eq)}</p>` + resultHTML() : '';
+  if (!B.done) h += `<span class="stepk">STEP 1 · PICK A REACTION</span><div class="seg" role="group" aria-label="Reaction">${Object.entries(RX).map(([k, r]) =>
+    `<button class="segbtn" type="button" data-rx="${k}" aria-pressed="${B.rx === k}">${r.name}<small>${r.short}</small></button>`).join('')}</div>`;
+  if (B.rx && !B.done) {
+    h += `<p class="eqline">${chem(RX[B.rx].eq)}</p>`;
+    h += `<span class="stepk">STEP 2 · PICK A CONTAINER</span><div class="seg" role="group" aria-label="Container">
+      <button class="segbtn" type="button" data-cont="beaker" aria-pressed="${B.cont === 'beaker'}">Open beaker<small>Gases can get in or out.</small></button>
+      <button class="segbtn" type="button" data-cont="flask" aria-pressed="${B.cont === 'flask'}">Sealed flask + balloon<small>Nothing gets in or out.</small></button></div>`;
+  }
+  if (B.rx && B.cont && !B.done) {
+    h += `<span class="stepk">STEP 3 · PREDICT</span><p style="margin:2px 0 4px">When it reacts, the scale will…</p>
+      <div class="seg" role="group" aria-label="Prediction">${Object.entries(PRED).map(([k, t]) =>
+      `<button class="segbtn" type="button" data-pred="${k}" aria-pressed="${B.pred === k}" ${B.running || B.done ? 'disabled' : ''}>${t}</button>`).join('')}</div>`;
+  }
+  if (B.rx && B.cont && B.pred && !B.done) {
+    h += `<span class="stepk">STEP 4 · REACT</span><div class="acts"><button class="btn primary" type="button" id="react" ${B.running ? 'disabled' : ''}>${B.running ? 'Reacting…' : 'React ▶'}</button></div>`;
+  }
+  c.innerHTML = h;
+  c.querySelectorAll('[data-rx]').forEach(b => b.addEventListener('click', () => { if (B.running) return; B.rx = b.dataset.rx; B.pred = null; setupRun(); focusSel('[data-rx="' + B.rx + '"]'); }));
+  c.querySelectorAll('[data-cont]').forEach(b => b.addEventListener('click', () => { if (B.running) return; B.cont = b.dataset.cont; B.pred = null; setupRun(); focusSel('[data-cont="' + B.cont + '"]'); }));
+  c.querySelectorAll('[data-pred]').forEach(b => b.addEventListener('click', () => { B.pred = b.dataset.pred; renderCtl(); focusSel('#react'); }));
+  const r = c.querySelector('#react');
+  if (r) r.addEventListener('click', () => { B.running = true; B.start = performance.now(); B.pausedAt = 0; renderCtl(); kick(); });
+  const again = c.querySelector('#again'); if (again) again.addEventListener('click', () => { B.pred = null; setupRun(); focusSel('[data-pred]'); });
+  const other = c.querySelector('#other'); if (other) other.addEventListener('click', () => { B.cont = B.cont === 'flask' ? 'beaker' : 'flask'; B.pred = null; setupRun(); focusSel('[data-pred]'); });
+}
+const focusSel = s => { const e = $('#ctl').querySelector(s); if (e) e.focus({ preventScroll: true }); };
+const actual = d => d.after > d.before ? 'up' : d.after < d.before ? 'down' : 'same';
+function resultHTML() {
+  const d = B.data, a = actual(d), diff = d.after - d.before, ok = B.pred === a;
+  const moved = a === 'up' ? `went <b>up by ${fmt(diff)} g</b>` : a === 'down' ? `went <b>down by ${fmt(-diff)} g</b>` : `<b>stayed the same</b>`;
+  let why = '', note = '';
+  if (B.rx === 'bs' && !d.sealed) why = `<p>The reaction made carbon dioxide ${T('gas', 'gas')} (${chem('CO2')}). It bubbled out of the open beaker into the room.</p><p>The mass didn't disappear. ${fmt(d.co2)} g of ${chem('CO2')} just left the scale.</p>`;
+  if (B.rx === 'bs' && d.sealed) { why = `<p>The ${chem('CO2')} gas was trapped in the balloon, so it stayed on the scale. Same atoms, same mass.</p>`;
+    note = `<details class="note"><summary>Real-lab note</summary>A real scale may read a little less here. The big balloon pushes air aside, and the air pushes up on it a bit (like a boat floating). The mass inside has not changed.</details>`; }
+  if (B.rx === 'bs' && !d.sealed) note = `<details class="note"><summary>Real-lab note</summary>Some ${chem('CO2')} stays dissolved in the liquid for a while, so a real scale may drop a little less at first.</details>`;
+  if (B.rx === 'fe' && !d.sealed) why = `<p>Oxygen gas (${chem('O2')}) from the room joined the iron to make iron oxide (rust). The extra ${fmt(d.o2)} g is that oxygen. It was in the air, off the scale. Now it is stuck to the iron, on the scale.</p>`;
+  if (B.rx === 'fe' && d.sealed) why = `<p>The iron could only use the oxygen already inside the flask, and that air was already on the scale. Nothing got in or out.</p>
+    <p>The balloon got pulled in, because some gas (the ${chem('O2')}) was used up. Only about ${fmt(d.feUsed)} g of the iron rusted, because the flask ran out of oxygen.</p>`;
+  if (B.rx === 'ag') why = `<p>A white solid formed: silver chloride (${chem('AgCl')}), a ${T('precipitate', 'precipitate')}. But no gas was made, so nothing got in or out.</p><p>That is why the ${d.sealed ? 'sealed flask' : 'open beaker'} gives the same answer as the ${d.sealed ? 'open beaker' : 'sealed flask'}.</p>`;
+  return `<div class="say ${ok ? 'good' : 'warm'}"><span class="tag">${ok ? 'YOUR PREDICTION WAS RIGHT ✓' : 'NOT WHAT YOU PREDICTED'}</span>
+      <p>You said: ${PRED[B.pred]}. The scale ${moved}.</p></div>
+    <div class="nums"><div>Before<b>${fmt(d.before)} g</b></div><div>After<b>${fmt(d.after)} g</b></div><div>Change<b>${diff > 0 ? '+' : ''}${fmt(diff)} g</b></div></div>
+    <div class="say"><span class="tag">WHY?</span>${why}<p><b>Mass is always ${T('conserved', 'conserved')}.</b> If the scale changes, a gas got in or out.</p>${note}</div>
+    <div class="acts"><button class="btn primary" type="button" id="other">Try the ${B.cont === 'flask' ? 'open beaker' : 'sealed flask'} ▶</button>
+      <button class="btn small" type="button" id="again">Change the setup</button></div>`;
+}
+function renderAtoms() {
+  const el = $('#atoms');
+  if (!B.pv) { el.innerHTML = 'Each drawn molecule in the particle view stands for a huge number of real ones.'; return; }
+  const on = mols => mols.filter(m => onScaleRegion(m.region)).reduce((s, m) => s + m.atoms.length, 0);
+  const pv = B.pv, all0 = atomCount(pv.B), all1 = atomCount(pv.A);
+  const b0 = on(pv.B), b1 = on(pv.A);
+  let extra = '';
+  if (B.done) {
+    if (b1 < b0) extra = ` ${b0 - b1} atoms (the ${chem('CO2')}) floated off into the room.`;
+    else if (b1 > b0) extra = ` ${b1 - b0} atoms (the ${chem('O2')}) came in from the room.`;
+    else extra = ' Nothing got in or out.';
+  }
+  el.innerHTML = `Atoms in the picture: <b>${all0}</b> before${B.done ? ` → <b>${all1}</b> after (the same atoms, just rearranged)` : ''}.
+    On the scale: <b>${b0}</b>${B.done ? ` → <b>${b1}</b>.${extra}` : '.'}`;
+}
+function finishRun() {
+  const d = B.data;
+  store.runs[B.rx + ':' + B.cont] = d.after - d.before; save();
+  renderCtl(); renderAtoms(); renderLog();
+  focusSel('#other');
+}
+function renderLog() {
+  const cell = (rx, c) => { const v = store.runs[rx + ':' + c];
+    return v == null ? `<td class="empty">not tried yet</td>` : `<td class="v">${v > 0 ? '+' : ''}${fmt(v)} g <small style="font-family:'Atkinson Hyperlegible',sans-serif;font-size:.8rem;color:#c3b2e6">${v > 0 ? 'went up' : v < 0 ? 'went down' : 'no change'}</small></td>`; };
+  $('#log').innerHTML = `<thead><tr><th scope="col">REACTION</th><th scope="col">OPEN BEAKER</th><th scope="col">SEALED FLASK</th></tr></thead><tbody>${
+    Object.entries(RX).map(([k, r]) => `<tr><td>${r.name}</td>${cell(k, 'beaker')}${cell(k, 'flask')}</tr>`).join('')}</tbody>`;
+  const n = Object.keys(store.runs).length;
+  $('#bigIdea').innerHTML = n >= 6
+    ? `<div class="say good"><span class="tag">WHAT DID YOU NOTICE?</span><p>In the sealed flask, the mass <b>never</b> changed. In the open beaker, it changed only when a gas got in or out. Mass is always conserved.</p></div>`
+    : `<p style="color:#c3b2e6;font-size:.9rem;margin:6px 2px 0">Try all 6 boxes. Then look for the pattern.</p>`;
+}
+
+/* ================= MISSING MASS ================= */
+const NAMES = { H2: 'hydrogen', O2: 'oxygen', H2O: 'water', Mg: 'magnesium', MgO: 'magnesium oxide', Cu: 'copper', CuO: 'copper(II) oxide',
+  Na: 'sodium', Cl2: 'chlorine', NaCl: 'sodium chloride', N2: 'nitrogen', NH3: 'ammonia', Fe: 'iron', Fe2O3: 'iron(III) oxide',
+  CH4: 'methane', CO2: 'carbon dioxide', C3H8: 'propane', CaCO3: 'calcium carbonate', CaO: 'calcium oxide', H2O2: 'hydrogen peroxide',
+  KClO3: 'potassium chlorate', KCl: 'potassium chloride', Zn: 'zinc', HCl: 'hydrochloric acid', ZnCl2: 'zinc chloride',
+  AgNO3: 'silver nitrate', AgCl: 'silver chloride', NaNO3: 'sodium nitrate', NaOH: 'sodium hydroxide' };
+const EQS = PRACTICE.map(([s]) => parseEq(s));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const randN = (lo, hi) => lo + Math.random() * (hi - lo);
+// masses of every substance for n "batches" of the equation, in hundredths of a gram
+const massesFor = (eq, n) => [...eq.l, ...eq.r].map((f, i) => cg(eq.c[i] * n * MM(f)));
+const term = (eq, i) => { const f = [...eq.l, ...eq.r][i]; return (eq.c[i] > 1 ? eq.c[i] : '') + f; };
+const sumH = a => a.reduce((s, x) => s + x, 0);
+const eqStr = eq => [...eq.l, ...eq.r].map((_, i) => term(eq, i)).slice(0, eq.l.length).join(' + ') + ' -> ' +
+  [...eq.l, ...eq.r].map((_, i) => term(eq, i)).slice(eq.l.length).join(' + ');
+const gList = hs => hs.map(h => fmt(h) + ' g').join(' + ');
+
+const P = { cur: null, tries: 0, shown: 0, done: false };
+function makeProblem() {
+  const kind = pick(['reactant', 'product', 'two', 'escaped', 'joined']);
+  if (kind === 'reactant' || kind === 'product' || kind === 'two') {
+    const pool = EQS.filter(e => kind === 'reactant' ? e.l.length >= 2 : kind === 'product' ? e.r.length === 1 : e.r.length === 2);
+    const eq = pick(pool), n = randN(0.08, 0.6);
+    let m = massesFor(eq, n);
+    const nL = eq.l.length, all = m.length;
+    const miss = kind === 'reactant' ? Math.floor(Math.random() * nL) : nL + Math.floor(Math.random() * (all - nL));
+    // keep the shown numbers conserved to the hundredth: the full side's total sets the answer
+    const fullLeft = miss >= nL;
+    const full = fullLeft ? m.slice(0, nL) : m.slice(nL), part = fullLeft ? m.slice(nL) : m.slice(0, nL);
+    const known = part.filter((_, i) => (fullLeft ? nL + i : i) !== miss);
+    const ans = sumH(full) - sumH(known);
+    m[miss] = ans;
+    const f = [...eq.l, ...eq.r][miss];
+    const sideFull = fullLeft ? 'reactants' : 'products', sideOther = fullLeft ? 'products' : 'reactants';
+    const work = [
+      full.length > 1 ? `Add up the ${sideFull} (you know all of them): ${gList(full)} = <b>${fmt(sumH(full))} g</b>`
+        : `There is only one ${sideFull.slice(0, -1)}, so the ${sideFull} total <b>${fmt(sumH(full))} g</b>.`,
+      `Mass is conserved, so the ${sideOther} also add up to ${fmt(sumH(full))} g.`,
+      known.length ? `${chem(f)} = ${fmt(sumH(full))} g − ${gList(known).replace(/ \+ /g, ' − ')} = <b>${fmt(ans)} g</b>` : `There is only one ${sideOther.slice(0, -1)}, so ${chem(f)} = <b>${fmt(ans)} g</b>`
+    ];
+    const tag = kind === 'reactant' ? 'MISSING REACTANT' : kind === 'product' ? 'MISSING PRODUCT' : 'TWO PRODUCTS';
+    return { kind, tag, eq, m, miss, ans, f, work, fullLeft,
+      first: full.length > 1 ? `Start with the ${sideFull}. You know every mass there. Add them up.`
+        : `Start with the ${sideFull.slice(0, -1)}. You know its mass, so that is the total for the ${sideFull}.` };
+  }
+  return kind === 'escaped' ? escaped() : joined();
+}
+function escaped() {
+  const t = pick(['caco3', 'zn', 'bs', 'h2o2']);
+  if (t === 'caco3') {
+    const eq = parseEq('CaCO3 -> CaO + CO2'), n = randN(0.04, 0.25), [m0, m1] = massesFor(eq, n), ans = m0 - m1;
+    return { kind: 'escaped', tag: 'A GAS ESCAPED', eq, ans, f: 'CO2',
+      text: `<p>You heat ${fmt(m0)} g of calcium carbonate (${chem('CaCO3')}) in an open dish. It breaks down into solid calcium oxide (${chem('CaO')}) and carbon dioxide gas (${chem('CO2')}).</p><p>When it cools, ${fmt(m1)} g of solid ${chem('CaO')} is left. What mass of ${chem('CO2')} escaped into the air?</p>`,
+      first: `The ${chem('CaCO3')} turned into ${chem('CaO')} and ${chem('CO2')}. So ${chem('CaCO3')} = ${chem('CaO')} + ${chem('CO2')}.`,
+      work: [`${chem('CaCO3 -> CaO + CO2')}, so ${fmt(m0)} g = ${fmt(m1)} g + ${chem('CO2')}`,
+        `${chem('CO2')} = ${fmt(m0)} g − ${fmt(m1)} g = <b>${fmt(ans)} g</b>`, `The ${chem('CO2')} is a gas, so it left the dish.`] };
+  }
+  const beaker = cg(randN(85, 115));
+  if (t === 'zn') {
+    const eq = parseEq('Zn + HCl -> ZnCl2 + H2'), n = randN(0.08, 0.3), m = massesFor(eq, n), acid = cg(randN(40, 70));
+    const zinc = m[0], before = beaker + acid + zinc, ans = m[3], after = before - ans;
+    return { kind: 'escaped', tag: 'A GAS ESCAPED', eq, ans, f: 'H2',
+      text: `<p>A beaker of hydrochloric acid and a piece of zinc sit on a balance. Together they read ${fmt(before)} g.</p><p>You drop the zinc in. It fizzes as hydrogen gas (${chem('H2')}) forms in the open beaker: ${chem(eqStr(eq))}.</p><p>When the fizzing stops, the balance reads ${fmt(after)} g. What mass of hydrogen escaped?</p>`,
+      first: 'Compare the balance before and after. The difference is the gas that left.',
+      work: [`Before: ${fmt(before)} g. After: ${fmt(after)} g.`, `The scale lost ${fmt(before)} g − ${fmt(after)} g = <b>${fmt(ans)} g</b>`,
+        `Mass is conserved, so that mass is the ${chem('H2')} gas that floated out of the open beaker.`] };
+  }
+  if (t === 'bs') {
+    const eq = parseEq('NaHCO3 + CH3COOH -> NaCH3COO + H2O + CO2'), n = randN(0.02, 0.1), m = massesFor(eq, n), vin = cg(randN(80, 150));
+    const before = beaker + vin + m[0], ans = m[4], after = before - ans;
+    return { kind: 'escaped', tag: 'A GAS ESCAPED', eq, ans, f: 'CO2',
+      text: `<p>An open beaker of vinegar plus ${fmt(m[0])} g of baking soda reads ${fmt(before)} g on a balance.</p><p>You mix them. It fizzes as carbon dioxide gas (${chem('CO2')}) forms. Afterwards the balance reads ${fmt(after)} g. What mass of ${chem('CO2')} escaped?</p>`,
+      first: 'Compare the balance before and after. The difference is the gas that left.',
+      work: [`Before: ${fmt(before)} g. After: ${fmt(after)} g.`, `The scale lost ${fmt(before)} g − ${fmt(after)} g = <b>${fmt(ans)} g</b>`,
+        `Mass is conserved, so that mass is the ${chem('CO2')} gas that escaped into the room.`] };
+  }
+  const eq = parseEq('H2O2 -> H2O + O2'), n = randN(0.03, 0.15), m = massesFor(eq, n), water = cg(randN(40, 90));
+  const before = beaker + water + m[0], ans = m[2], after = before - ans;
+  return { kind: 'escaped', tag: 'A GAS ESCAPED', eq, ans, f: 'O2',
+    text: `<p>An open beaker of hydrogen peroxide solution reads ${fmt(before)} g. A little yeast is added. It breaks the hydrogen peroxide down: ${chem(eqStr(eq))}. Bubbles of oxygen gas form.</p><p>When the bubbling stops, it reads ${fmt(after)} g. What mass of oxygen escaped?</p>`,
+    first: 'Compare the balance before and after. The difference is the gas that left.',
+    work: [`Before: ${fmt(before)} g. After: ${fmt(after)} g.`, `The scale lost ${fmt(before)} g − ${fmt(after)} g = <b>${fmt(ans)} g</b>`,
+      `Mass is conserved, so that mass is the ${chem('O2')} gas that bubbled out.`] };
+}
+function joined() {
+  const t = pick([['Mg + O2 -> MgO', 'magnesium ribbon', 'burns with a bright white flame', 'white ash (magnesium oxide, MgO)'],
+    ['Cu + O2 -> CuO', 'copper powder', 'is heated in an open dish', 'black copper(II) oxide (CuO)'],
+    ['Fe + O2 -> Fe2O3', 'steel wool (iron)', 'is left damp for a week', 'rust (iron(III) oxide, Fe2O3)']]);
+  const eq = parseEq(t[0]), n = randN(0.05, 0.3), m = massesFor(eq, n);
+  const metal = m[0], oxide = m[2], ans = oxide - metal, prod = eq.r[0];
+  return { kind: 'joined', tag: 'A GAS JOINED IN', eq, ans, f: 'O2',
+    text: `<p>${fmt(metal)} g of ${t[1]} ${t[2]}. It joins with oxygen from the air: ${chem(eqStr(eq))}.</p><p>Afterwards there is ${fmt(oxide)} g of ${t[3].replace(/(MgO|CuO|Fe2O3)/, x => chem(x))}. What mass of oxygen joined in?</p>`,
+    first: `The solid got heavier. The extra mass is the oxygen that joined it.`,
+    work: [`metal + ${chem('O2')} = ${chem(prod)}, so ${fmt(metal)} g + ${chem('O2')} = ${fmt(oxide)} g`,
+      `${chem('O2')} = ${fmt(oxide)} g − ${fmt(metal)} g = <b>${fmt(ans)} g</b>`, `The oxygen was in the air, so it wasn't counted at the start.`] };
+}
+function renderProblem() {
+  const p = P.cur, box = $('#prob');
+  let h = `<div class="prob"><span class="tag">${p.tag}</span>`;
+  if (p.m) {
+    const fs = [...p.eq.l, ...p.eq.r], nL = p.eq.l.length;
+    h += `<p>${chem(p.f)} is missing. Find its mass.</p><div class="row" role="group" aria-label="Equation with masses">${fs.map((f, i) =>
+      (i ? `<span class="op ${i === nL ? 'arrow' : ''}">${i === nL ? '→' : '+'}</span>` : '') +
+      `<div class="col"><span class="f">${chem(term(p.eq, i))}</span><span class="m ${i === p.miss ? 'q' : ''}">${i === p.miss ? '? g' : fmt(p.m[i]) + ' g'}</span></div>`).join('')}</div>`;
+  } else h += p.text;
+  h += `</div>
+    <div class="ans"><label for="pAns">Mass of ${chem(p.f)}:</label><input id="pAns" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 12.50 g" ${P.done ? 'disabled' : ''}>
+      <button class="btn primary" type="button" id="pCheck" ${P.done ? 'disabled' : ''}>Check ✓</button>
+      <button class="btn" type="button" id="pHow" ${P.shown >= p.work.length ? 'disabled' : ''}>${P.shown ? 'Next line' : 'Show me how'}</button>
+      <button class="btn small" type="button" id="pNew">${P.done ? 'Next problem ▶' : 'New problem'}</button></div>
+    <div id="pFb" aria-live="polite">${P.fb || ''}</div>`;
+  if (P.shown) h += `<div class="work">${p.work.slice(0, P.shown).map(w => `<div>${w}</div>`).join('')}${P.shown >= p.work.length ? `<div class="bar">Answer: ${fmt(p.ans)} g of ${chem(p.f)}</div>` : ''}</div>`;
+  box.innerHTML = h;
+  const inp = $('#pAns');
+  if (P.keep != null) { inp.value = P.keep; }
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); checkAnswer(); } });
+  $('#pCheck').addEventListener('click', checkAnswer);
+  $('#pHow').addEventListener('click', () => { P.keep = inp.value; P.shown = Math.min(p.work.length, P.shown + 1); renderProblem(); $('#pHow').disabled ? $('#pAns').focus() : $('#pHow').focus(); });
+  $('#pNew').addEventListener('click', () => { newProblem(); $('#pAns').focus(); });
+  $('#pScore').textContent = store.correct;
+}
+function newProblem() { P.cur = makeProblem(); P.tries = 0; P.shown = 0; P.done = false; P.fb = ''; P.keep = null; renderProblem(); }
+function checkAnswer() {
+  const p = P.cur, raw = $('#pAns').value.trim();
+  P.keep = raw;
+  const m = raw.replace(',', '.').match(/^([+\-−]?\d*\.?\d+)\s*([a-zA-Z]*)\.?$/);
+  const say = (cls, tag, body) => `<div class="say ${cls}"><span class="tag">${tag}</span>${body}</div>`;
+  if (!raw) { P.fb = say('hint', 'TYPE AN ANSWER', `<p>Type a number and its unit, like <b>12.50 g</b>.</p>`); return renderProblem(); }
+  if (!m) { P.fb = say('hint', 'CHECK HOW YOU WROTE IT', `<p>Write a number and then the unit, like <b>12.50 g</b>.</p>`); return renderProblem(); }
+  const val = Math.round(parseFloat(m[1].replace('−', '-')) * 100), unit = m[2].toLowerCase();
+  const right = Math.abs(val - p.ans) <= 1;
+  if (right && !unit) { P.fb = say('hint', 'RIGHT NUMBER! ADD THE UNIT', `<p>${fmt(p.ans)} is right. Now add the unit: <b>g</b> (grams). A number without its unit isn't a full answer.</p>`); return renderProblem(); }
+  if (unit && !['g', 'gram', 'grams'].includes(unit)) { P.fb = say('hint', 'USE GRAMS', `<p>These masses are in grams. Write your answer with <b>g</b>, like 12.50 g.</p>`); return renderProblem(); }
+  P.tries++;
+  if (right) {
+    P.done = true; P.shown = p.work.length; store.correct++; save();
+    P.fb = say('good', 'CORRECT ✓', `<p>${fmt(p.ans)} g of ${chem(p.f)}. Here is the work, the way the answer key shows it.</p>`);
+  } else if (P.tries === 1) {
+    P.fb = say('bad', 'NOT YET', `<p>${p.first}</p><p>Mass is conserved: the total before equals the total after. Try again.</p>`);
+  } else {
+    P.shown = p.work.length;
+    P.fb = say('bad', 'NOT YET', `<p>Here is the work, one step per line. Follow it, then type the answer.</p>`);
+  }
+  renderProblem();
+  if (P.done) $('#pNew').focus(); else $('#pAns').focus();
+}
+
+/* ================= tabs + start ================= */
+function setTab(t) {
+  document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === t)));
+  $('#benchTab').hidden = t !== 'bench'; $('#logTab').hidden = t !== 'bench'; $('#missingTab').hidden = t !== 'missing';
+  if (t === 'missing' && !P.cur) newProblem();
+  if (t === 'bench') kick();
+}
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+function startLab() { $('#lab').hidden = false; $('#plain').open = false; store.seen = true; save(); kick(); }
+$('#goBtn').addEventListener('click', () => { startLab(); const b = document.querySelector('[data-rx]'); if (b) b.focus(); });
+if (store.seen) startLab();
+setTab('bench');
+setupRun();
+renderLog();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => drawScene(performance.now()));
+})();
+</script>
+</body></html>

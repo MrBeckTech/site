@@ -180,6 +180,7 @@ a{color:var(--tw-sky)}
       Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
       Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
       content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
    2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
    NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
 (function(){
@@ -232,7 +233,7 @@ a{color:var(--tw-sky)}
     }
     cache.set(key,out); return out;
   }
-  const C2=window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
   if(C2){
     const ORIG='__twFill', STACK='__twStack';
     const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
