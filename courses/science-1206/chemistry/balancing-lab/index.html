@@ -428,15 +428,16 @@ a{color:var(--tw-sky)}
     </section>
     <section class="card">
       <h2 class="wtitle">THE ODD–EVEN TRICK</h2>
-      <p>O<sub>2</sub> always brings oxygen in pairs (2, 4, 6 …). If the other side needs an odd number of O, no whole number in front of O<sub>2</sub> works.</p>
-      <p>Fix: double every coefficient. Now the O is even, and you can finish.</p>
+      <p>O<sub>2</sub> always brings oxygen in pairs: 2, 4, 6 … always an even number. So if the other side has an <b>odd</b> number of O, no number in front of O<sub>2</sub> can match it.</p>
+      <p>Fix: double every coefficient. The odd side becomes even. Then fix O again.</p>
       <div class="ex">
-        <p><b>Example:</b> iron rusting, <span class="exq">Fe + O<sub>2</sub> → Fe<sub>2</sub>O<sub>3</sub></span></p>
+        <p><b>Example:</b> burning acetylene (welding torch fuel), <span class="exq">C<sub>2</sub>H<sub>2</sub> + O<sub>2</sub> → CO<sub>2</sub> + H<sub>2</sub>O</span></p>
         <ol>
-          <li>Fe: 2 on the right, so <span class="exq">2Fe + O<sub>2</sub> → Fe<sub>2</sub>O<sub>3</sub></span></li>
-          <li>O: 3 on the right (odd). O<sub>2</sub> gives 2 or 4, never 3. It would take 1½ O<sub>2</sub>, and coefficients must be whole numbers.</li>
-          <li>Double every coefficient (2, 1½, 1 become 4, 3, 2): <span class="exq">4Fe + 3O<sub>2</sub> → 2Fe<sub>2</sub>O<sub>3</sub></span></li>
-          <li>Check: Fe 4 = 4. O 6 = 6. Balanced.</li>
+          <li>C, then H: <span class="exq">C<sub>2</sub>H<sub>2</sub> + O<sub>2</sub> → 2CO<sub>2</sub> + H<sub>2</sub>O</span></li>
+          <li>O: the right has 4 + 1 = 5 O. That's odd, and O<sub>2</sub> only makes even numbers, so we're stuck.</li>
+          <li>Double every coefficient: <span class="exq">2C<sub>2</sub>H<sub>2</sub> + 2O<sub>2</sub> → 4CO<sub>2</sub> + 2H<sub>2</sub>O</span>. Now the right has 8 + 2 = 10 O.</li>
+          <li>Fix O again: 10 O needs 5 O<sub>2</sub>. <span class="exq">2C<sub>2</sub>H<sub>2</sub> + 5O<sub>2</sub> → 4CO<sub>2</sub> + 2H<sub>2</sub>O</span></li>
+          <li>Check: C 4 = 4. H 4 = 4. O 10 = 10. Balanced.</li>
         </ol>
       </div>
       <p>Elements that come in pairs when they are alone: <b>HONClBrIF</b> = H<sub>2</sub>, O<sub>2</sub>, N<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub>, F<sub>2</sub>.</p>
@@ -1011,9 +1012,9 @@ function level1(m) {
 function level2(m) {
   if (m.type === 'lcm') return `<p>Change two coefficients: ${fF(m.F)} and ${fF(m.H)}.</p>`;
   if (m.type === 'mult') {
-    const [num, den] = m.need, x = num / den;
-    return `<p>You would need ${Number.isInteger(x * 2) ? (x % 1 ? Math.floor(x) + '½' : x) : num + '/' + den} ${fF(m.F)}. You can't have part of a molecule.</p>
-      <p>So ${m.q === 2 ? 'double every coefficient' : 'multiply every coefficient by ' + m.q} first.</p>`;
+    const [num, den] = m.need, k = unitWord(m.E);
+    return `<p>${fF(m.F)} brings ${k} in groups of ${den}${den === 2 ? ' (always an even number)' : ''}. It would have to bring <b>${num}</b>, and no whole number of groups of ${den} makes ${num}.</p>
+      <p>So ${m.q === 2 ? 'double every coefficient' : 'multiply every coefficient by ' + m.q} first. Then fix ${k} again.</p>`;
   }
   return `<p>Change the ${T('coefficient', 'coefficient')} (the big number in front) of ${fF(m.F)}.</p>`;
 }
