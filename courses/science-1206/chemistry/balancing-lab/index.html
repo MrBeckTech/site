@@ -103,6 +103,10 @@ sup{font-size:.62em;line-height:0}
 .ionrow input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--gold);flex:none}
 .ionrow.off{color:var(--ink2)}
 .ionrow small{display:block;color:var(--ink2);font-size:.82rem}
+.ionnote{margin:7px 0 0;color:var(--ink2);font-size:.82rem}
+.ionnote:empty{display:none}
+.learn .wide{grid-column:1/-1}
+.learn .exs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}
 
 .coach{margin-top:8px}
 .say{background:var(--panel);border:3px solid #000;border-left:6px solid var(--sky);border-radius:4px;padding:8px 11px;margin:0 0 8px;font-size:.98rem}
@@ -403,6 +407,7 @@ a{color:var(--tw-sky)}
             <div class="wtitle mint">ATOM COUNT</div>
             <div id="tally"></div>
             <label class="ionrow" id="ionRow"><input type="checkbox" id="ion"><span id="ionTxt"></span></label>
+            <div class="ionnote" id="ionNote"></div>
           </div>
         </div>
       </div>
@@ -422,7 +427,7 @@ a{color:var(--tw-sky)}
         <li>Change coefficients, never subscripts.</li>
         <li>Start with the biggest formula. Leave lone elements (like Fe or O<sub>2</sub>) for last.</li>
         <li>Burning a fuel (combustion)? Go C, then H, then O.</li>
-        <li>A polyatomic ion (like NO<sub>3</sub>) that is the same on both sides? Count the polyatomic ion as one unit.</li>
+        <li>A polyatomic ion (like NO<sub>3</sub>) that is the same on both sides? Count it as one unit. If it is only on one side, count its atoms one by one. (See <b>Whole or split?</b> below.)</li>
         <li>Check every element. Use the smallest whole numbers. A coefficient of 1 is not written.</li>
       </ol>
     </section>
@@ -441,6 +446,63 @@ a{color:var(--tw-sky)}
         </ol>
       </div>
       <p>Elements that come in pairs when they are alone: <b>HONClBrIF</b> = H<sub>2</sub>, O<sub>2</sub>, N<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub>, F<sub>2</sub>.</p>
+    </section>
+    <section class="card wide">
+      <h2 class="wtitle">POLYATOMIC IONS: WHOLE OR SPLIT?</h2>
+      <p>A polyatomic ion is a group of atoms joined together, like SO<sub>4</sub> (sulfate) or OH (hydroxide). In some reactions it goes through in one piece. In others it breaks apart. Look at <b>both sides</b> to tell which.</p>
+      <ul>
+        <li><b>The same ion is on both sides</b> → it stayed in one piece. You can count it as <b>one unit</b>.</li>
+        <li><b>It is only on one side</b> → it broke apart. Count its atoms <b>one by one</b>.</li>
+      </ul>
+      <p>Brackets count too: Ca(NO<sub>3</sub>)<sub>2</sub> has 2 NO<sub>3</sub> units, because the 2 outside the brackets multiplies everything inside.</p>
+      <p>Counting every atom one by one always works. Counting a unit is just a shortcut, and it only works when the ion is whole on both sides.</p>
+      <div class="exs">
+        <div class="ex">
+          <p><b>Whole:</b> <span class="exq">BaCl<sub>2</sub> + Na<sub>2</sub>SO<sub>4</sub> → BaSO<sub>4</sub> + NaCl</span></p>
+          <p>SO<sub>4</sub> is on both sides, so count it as one unit. Count Ba, Cl, Na and SO<sub>4</sub>.</p>
+          <p>Cl: 2 on the left, so 2NaCl. <span class="exq">BaCl<sub>2</sub> + Na<sub>2</sub>SO<sub>4</sub> → BaSO<sub>4</sub> + 2NaCl</span></p>
+          <p>Check: Ba 1 = 1. SO<sub>4</sub> 1 = 1. Na 2 = 2. Cl 2 = 2.</p>
+        </div>
+        <div class="ex">
+          <p><b>Split:</b> heating limestone, <span class="exq">CaCO<sub>3</sub> → CaO + CO<sub>2</sub></span></p>
+          <p>CO<sub>3</sub> is only on the left. On the right, its atoms are shared between CaO and CO<sub>2</sub>. There is no CO<sub>3</sub> to match, so count Ca, C and O one by one.</p>
+          <p>Check: Ca 1 = 1. C 1 = 1. O 3 = 1 + 2. Already balanced.</p>
+        </div>
+        <div class="ex">
+          <p><b>Both in one:</b> <span class="exq">KOH + H<sub>3</sub>PO<sub>4</sub> → K<sub>3</sub>PO<sub>4</sub> + H<sub>2</sub>O</span></p>
+          <p>PO<sub>4</sub> is on both sides: one unit. OH is only on the left (H<sub>2</sub>O is not OH), so split it into O and H. Count K, PO<sub>4</sub>, O and H.</p>
+          <ol>
+            <li>K: 3 on the right, so 3KOH.</li>
+            <li>H: the left has 3 + 3 = 6, so 3H<sub>2</sub>O.</li>
+            <li>O: 3 on the left (in 3KOH), 3 on the right (in 3H<sub>2</sub>O). The O inside PO<sub>4</sub> is already part of the unit, so don't count it again.</li>
+          </ol>
+          <p><span class="exq">3KOH + H<sub>3</sub>PO<sub>4</sub> → K<sub>3</sub>PO<sub>4</sub> + 3H<sub>2</sub>O</span></p>
+        </div>
+      </div>
+    </section>
+    <section class="card wide">
+      <h2 class="wtitle">COMBUSTION: HOW TO SPOT IT</h2>
+      <div class="exs">
+        <div>
+          <p><b>Combustion</b> means burning a fuel in oxygen. You can tell from the formulas:</p>
+          <ul>
+            <li>Left: a fuel made of C and H (a <b>hydrocarbon</b>, like CH<sub>4</sub> or C<sub>3</sub>H<sub>8</sub>) + O<sub>2</sub>. Some fuels also contain O, like ethanol, C<sub>2</sub>H<sub>5</sub>OH. They burn the same way.</li>
+            <li>Right: CO<sub>2</sub> + H<sub>2</sub>O. With enough oxygen, it always makes these two.</li>
+          </ul>
+          <p><b>What's different:</b> O is in <b>both</b> products, so you can't fix O until CO<sub>2</sub> and H<sub>2</sub>O are set. Go <b>C, then H, then O</b>. O<sub>2</sub> is a lone element, so changing it last fixes O without breaking C or H.</p>
+          <p>If O comes out odd, use the odd–even trick.</p>
+        </div>
+        <div class="ex">
+          <p><b>Example:</b> burning natural gas, <span class="exq">CH<sub>4</sub> + O<sub>2</sub> → CO<sub>2</sub> + H<sub>2</sub>O</span></p>
+          <ol>
+            <li>C: 1 on the left, 1 in CO<sub>2</sub>. Already matches.</li>
+            <li>H: 4 on the left. Each H<sub>2</sub>O has 2 H, so 2H<sub>2</sub>O.</li>
+            <li>O: the right has 2 (in CO<sub>2</sub>) + 2 (in 2H<sub>2</sub>O) = 4. Each O<sub>2</sub> has 2, so 2O<sub>2</sub>.</li>
+          </ol>
+          <p><span class="exq">CH<sub>4</sub> + 2O<sub>2</sub> → CO<sub>2</sub> + 2H<sub>2</sub>O</span></p>
+          <p>Check: C 1 = 1. H 4 = 4. O 4 = 4. Balanced.</p>
+        </div>
+      </div>
     </section>
   </div>
   <p class="foot">Science 1206 · Unit 2 Chemical Reactions · NL Science 10, Section 3.3. Your progress is saved on this device only.</p>
@@ -797,7 +859,7 @@ const DEF = {
   products: 'What you make. They are on the right of the arrow.',
   atom: 'The smallest piece of an element. The LEGO brick.',
   molecule: 'A group of atoms joined together, like one sandwich.',
-  polyatomic: 'A group of atoms that stays together and has a charge, like NO3 (nitrate) or SO4 (sulfate).',
+  polyatomic: 'A group of atoms joined together that has a charge, like NO3 (nitrate) or SO4 (sulfate). In many reactions it moves as one piece. In some, it breaks apart.',
   lone: 'An element all by itself, not joined to a different element. Examples: Fe, Cu, O2, Cl2.',
   combustion: 'Burning a fuel made of C and H (a hydrocarbon) in oxygen. It makes CO2 and H2O.',
   lowest: 'The smallest whole numbers that still balance. If you can divide every coefficient by the same number, you should.'
@@ -929,6 +991,10 @@ function drawTally(e) {
   const row = $('#ionRow'), box = $('#ion');
   box.checked = useIons(); box.disabled = !ionOK || (S.mode === 'challenge' && !S.ch.showTally);
   row.hidden = !ionOK;
+  // Ions on one side only: they break apart, so their atoms are counted one by one
+  const has = (fs, ion) => fs.some(f => CHEM.units(f, [ion])[ion]);
+  const split = CHEM.IONS.filter(ion => !e.ions.includes(ion) && (has(e.left, ion) || has(e.right, ion)));
+  $('#ionNote').innerHTML = split.map(ion => `${chem(ion)} (${CHEM.ION_NAME[ion]}) is only on the ${has(e.left, ion) ? 'left' : 'right'}. It breaks apart in this reaction, so count its ${Object.keys(CHEM.atoms(ion)).join(' and ')} atoms one by one.`).join('<br>');
   $('#ionTxt').innerHTML = `Count ${T('polyatomic ions', 'polyatomic')} as one unit` + (ionOK
     ? `<small>${e.ions.map(chem).join(' and ')} ${e.ions.length > 1 ? 'are' : 'is'} the same on both sides, so you can count ${e.ions.length > 1 ? 'each one' : 'it'} as one unit.</small>`
     : '');
@@ -1002,7 +1068,7 @@ function level1(m) {
   const head = `<p>Fix <b>${k}</b> next. Left has <b>${m.L}</b>, right has <b>${m.R}</b>.</p>`;
   const why = {
     combustion: `<p>This is ${T('combustion', 'combustion')} (burning a fuel). Go C, then H, then O.</p>`,
-    ion: `<p>${k} is a ${T('polyatomic ion', 'polyatomic')} that is the same on both sides. Count the polyatomic ion as one unit.</p>`,
+    ion: `<p>${k} is a ${T('polyatomic ion', 'polyatomic')} that is the same on both sides, so it goes through the reaction in one piece. Count it as one unit.</p>`,
     lone: `<p>${k} is a ${T('lone element', 'lone')} here, so we left it for last. Changing a lone element doesn't mess up anything else.</p>`,
     multi: `<p>${k} shows up in more than one formula on a side, so we left it until the others matched.</p>`,
     biggest: `<p>Start with the biggest formula. Leave lone elements (like Fe or ${chem('O2')}) for last.</p>`
