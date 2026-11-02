@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reaction Types | Science 1206</title>
+<meta name="tw-titlecard" content="CHEMISTRY · PART 2|REACTION|TYPES.">
+<meta name="tw-canvas" content="off">
+<style>:root{
+  --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --warm:#ff9a4d;
+  --radius:6px; --focus:#5df2a4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif}
+.app{max-width:1180px;margin:0 auto;padding:8px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 8px}
+.hd h1{margin:0}
+.lead{flex-basis:100%;margin:2px 0 0;font-size:.95rem}
+.card{padding:12px 14px;margin:0 0 10px}
+.wtitle{font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1.6;color:var(--sky);margin:0 0 6px;font-weight:400}
+.wtitle.mint{color:var(--mint)}
+[hidden]{display:none!important}
+sub,sup{font-size:.62em;line-height:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+.plain p{margin:4px 0;max-width:76ch}
+.plain summary{cursor:pointer;list-style:none;font-family:'Press Start 2P','Courier New',monospace;font-size:10px;color:var(--sky);padding:2px 0}
+.plain summary::-webkit-details-marker{display:none}
+.plain summary::before{content:'▶ '}
+.plain[open] summary::before{content:'▼ '}
+.plain .go{margin-top:8px}
+
+.btn,.tab,.segbtn{appearance:none;font:inherit;font-weight:700;padding:7px 12px;min-height:38px;cursor:pointer}
+.btn:disabled,.segbtn:disabled{opacity:.45;cursor:not-allowed}
+.btn.small{padding:4px 9px;min-height:32px;font-size:.9rem}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.segbtn{text-align:left;font-size:.92rem;padding:6px 10px}
+.segbtn small{display:block;font-weight:400;font-size:.8rem}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+
+.term{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:help;
+  text-decoration:underline dotted var(--sky);text-underline-offset:3px;text-decoration-thickness:2px}
+#tip{position:absolute;z-index:50;max-width:300px;background:var(--panel);color:var(--ink);border:3px solid #000;
+  border-left:6px solid var(--sky);border-radius:4px;padding:7px 10px;font-size:.92rem;box-shadow:4px 4px 0 #000}
+
+.say{background:var(--panel);border:3px solid #000;border-left:6px solid var(--sky);border-radius:4px;padding:8px 11px;margin:8px 0;font-size:.97rem}
+.say p{margin:3px 0}
+.say.good{border-left-color:var(--mint);background:#0f2219}
+.say.bad{border-left-color:var(--coral);background:#2a0f18}
+.say.warm{border-left-color:var(--warm);background:#24130f}
+.say.hint{border-left-color:var(--gold)}
+.say .tag{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;display:block;margin-bottom:3px;color:var(--gold)}
+.say.good .tag{color:var(--mint)} .say.bad .tag{color:var(--coral)} .say.warm .tag{color:var(--warm)}
+
+.stage{background:var(--panel);border:3px solid #000;border-radius:4px;position:relative}
+.stage canvas{display:block;width:100%;height:auto}
+
+/* dance floor */
+.dance{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:10px;align-items:start}
+@media(max-width:1000px){.dance{grid-template-columns:1fr}}
+.pattern{font-size:1.7rem;font-weight:700;text-align:center;margin:6px 0 0}
+.pattern .lbl{display:block;font-size:.8rem;font-weight:400;color:var(--ink2)}
+.caption{min-height:2.8em;color:var(--ink);font-size:1rem;margin:4px 2px 0}
+.ex{font-size:1.25rem;font-weight:700;margin:4px 0}
+
+/* sort it */
+.sortq{background:var(--panel);border:3px solid #000;border-radius:4px;padding:14px;text-align:center;font-size:2rem;font-weight:700;margin:0 0 8px}
+.types{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+@media(max-width:900px){.types{grid-template-columns:repeat(2,1fr)}}
+.types .segbtn{min-height:56px}
+.flow{list-style:none;margin:6px 0 0;padding:0}
+.flow li{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:5px 0;border-bottom:1px solid #2a1850}
+.flow li .q{flex:1 1 300px}
+.flow li.yes .q{color:var(--mint);font-weight:700}
+.flow li.no .q{color:var(--ink2)}
+.score{font:400 24px/1 'VT323','Courier New',monospace;color:var(--gold)}
+
+/* burner */
+.burn{display:grid;grid-template-columns:360px minmax(0,1fr);gap:12px;align-items:start}
+@media(max-width:900px){.burn{grid-template-columns:1fr}}
+.slider label{font-weight:700;display:flex;justify-content:space-between;gap:8px}
+.slider output{font:400 22px/1 'VT323','Courier New',monospace;color:var(--gold)}
+.slider input{width:100%;height:30px;accent-color:var(--gold)}
+.slider .ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--ink2)}
+.prods{width:100%;border-collapse:collapse;background:var(--panel);border:3px solid #000;margin-top:6px}
+.prods td{padding:4px 8px;border-bottom:1px solid #2a1850;font-size:.95rem}
+.prods td.f{font-weight:700;width:90px;font-size:1.1rem}
+.prods .barw{width:45%}
+.prods .bar{height:14px;background:var(--sky);border:2px solid #000;border-radius:2px;transition:width .2s}
+.prods .bar.warnc{background:var(--warm)} .prods .bar.soot{background:#5b5560}
+.prods td.amt{white-space:nowrap;color:var(--ink2);width:80px}
+.co{display:flex;gap:10px;align-items:center;background:#0e0820;border:3px solid #000;border-radius:4px;padding:6px 10px;margin-top:8px}
+.co .ppm{font:400 34px/1 'VT323','Courier New',monospace;color:var(--mint);min-width:110px}
+.co.warn .ppm{color:var(--warm)} .co.alarm .ppm{color:var(--coral)}
+.co .stt{font-weight:700}
+.flame-lbl{font-weight:700;margin:6px 0 0}
+.helper{margin-top:10px}
+.hrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0}
+.hrow input{width:80px;height:38px;font:400 26px/1 'VT323','Courier New',monospace;color:var(--gold);background:#0e0820;border:2px solid var(--rim);border-radius:3px;padding:0 8px;text-align:center}
+.hrow input:disabled{border-color:var(--mint);color:var(--mint)}
+.heq{font-size:1.5rem;font-weight:700;text-align:center;background:#0e0820;border:2px solid #3a2463;border-radius:3px;padding:6px;margin:6px 0}
+
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px;margin-top:10px}
+.learn .card{margin:0}
+.learn p{margin:4px 0}
+.learn ol{margin:4px 0 0;padding-left:1.2rem}
+.foot{margin:12px 4px 0;font-size:.82rem}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<div id="app" class="app">
+  <header class="hd">
+    <h1>Reaction Types</h1>
+    <span class="pill">SCIENCE 1206 · UNIT 2</span>
+    <p class="lead">Five kinds of reactions, five dances. Watch them, sort them, and light a burner.</p>
+  </header>
+
+  <details class="card plain" id="plain" open>
+    <summary>IN PLAIN WORDS</summary>
+    <p>A reaction is like a dance floor. The dancers (atoms, or groups of atoms) change partners.</p>
+    <p>There are five dances: <b>pair up</b> (formation), <b>split up</b> (decomposition), <b>cut in</b> (single replacement), and <b>swap partners</b> (double replacement). The fifth is <b>combustion</b>: burning a fuel in oxygen.</p>
+    <p>You can tell which dance it is just by looking at the equation. The equation always shows what is made.</p>
+    <button class="btn primary go" id="goBtn" type="button">Start ▶</button>
+  </details>
+
+  <div id="lab" hidden>
+    <div class="tabs" role="tablist" aria-label="Activity">
+      <button class="tab" role="tab" data-tab="dance" type="button">Dance Floor</button>
+      <button class="tab" role="tab" data-tab="sort" type="button">Sort It</button>
+      <button class="tab" role="tab" data-tab="burn" type="button">Burner</button>
+    </div>
+
+    <section class="card" id="danceTab" aria-label="Dance floor">
+      <div class="dance">
+        <div>
+          <div class="stage"><canvas id="dcv" width="720" height="270" role="img" aria-label="Dance floor animation"></canvas></div>
+          <p class="caption" id="dcap" aria-live="polite"></p>
+        </div>
+        <div>
+          <span class="wtitle mint">PICK A DANCE</span>
+          <div class="seg" role="group" aria-label="Reaction type" id="dpick"></div>
+          <div id="dinfo"></div>
+          <div class="acts"><button class="btn" type="button" id="dplay">Pause ❚❚</button><button class="btn small" type="button" id="dagain">Start again</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="sortTab" hidden aria-label="Sort the reactions">
+      <div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between">
+        <h2 class="wtitle mint" style="margin:0">SORT IT</h2>
+        <span>Right on the first try: <span class="score" id="sScore">0</span> of <span class="score" id="sTotal">0</span></span>
+      </div>
+      <p style="margin:4px 0 8px">What type of reaction is this? The equations are already balanced.</p>
+      <div class="sortq" id="sEq"></div>
+      <div class="types" role="group" aria-label="Reaction type" id="sPick"></div>
+      <div id="sFb" aria-live="polite"></div>
+      <div class="acts"><button class="btn" type="button" id="sFlow">Use the flowchart</button><button class="btn small" type="button" id="sNext">Skip ▶</button></div>
+      <div id="sFlowBox"></div>
+    </section>
+
+    <section class="card" id="burnTab" hidden aria-label="Bunsen burner">
+      <div class="burn">
+        <div>
+          <div class="stage"><canvas id="bcv" width="360" height="330" role="img" aria-label="Bunsen burner flame"></canvas></div>
+          <p class="flame-lbl" id="flameLbl" aria-live="polite"></p>
+        </div>
+        <div>
+          <span class="wtitle mint">PICK A FUEL</span>
+          <div class="seg" role="group" aria-label="Fuel" id="fuelPick"></div>
+          <div class="slider" style="margin-top:10px">
+            <label for="air"><span>Air hole (how much oxygen gets in)</span><output id="airOut"></output></label>
+            <input type="range" id="air" min="0" max="100" value="100">
+            <div class="ends"><span>closed: not enough O<sub>2</sub></span><span>open: plenty of O<sub>2</sub></span></div>
+          </div>
+          <table class="prods" id="prods" aria-label="What the flame makes"></table>
+          <div class="co" id="co" aria-live="polite"><span class="ppm" id="ppm">0 ppm</span><div><span class="stt" id="coStt"></span><br><small style="color:#c3b2e6">CO detector (simulated reading)</small></div></div>
+          <div class="say warm"><span class="tag">CARBON MONOXIDE (CO)</span><p>CO is colourless, it has no smell, and it is poisonous. You can't see it or smell it, so homes have CO detectors near furnaces and fireplaces.</p></div>
+        </div>
+      </div>
+      <div class="helper" id="helper"></div>
+    </section>
+  </div>
+
+  <div class="learn">
+    <section class="card">
+      <h2 class="wtitle">THE FIVE TYPES</h2>
+      <p><b>Formation</b> (or synthesis): A + B → AB. Two things join into one.</p>
+      <p><b>Decomposition</b>: AB → A + B. One thing breaks apart.</p>
+      <p><b>Single replacement</b>: A + BC → AC + B. A lone element takes another one's place.</p>
+      <p><b>Double replacement</b>: AB + CD → AD + CB. Two compounds swap partners. An acid + a base (neutralization) is one of these.</p>
+      <p><b>Combustion</b>: a hydrocarbon (made of only C and H) + O<sub>2</sub> → CO<sub>2</sub> + H<sub>2</sub>O.</p>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">THE FLOWCHART</h2>
+      <p>Ask these in order. Stop at the first "yes".</p>
+      <ol>
+        <li>Hydrocarbon + O<sub>2</sub> → CO<sub>2</sub> + H<sub>2</sub>O? Combustion.</li>
+        <li>Only one reactant? Decomposition.</li>
+        <li>Only one product? Formation.</li>
+        <li>A lone element on each side? Single replacement.</li>
+        <li>Two compounds → two compounds? Double replacement.</li>
+      </ol>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">WATCH OUT</h2>
+      <p>Not everything that burns is combustion here. S<sub>8</sub> + 8O<sub>2</sub> → 8SO<sub>2</sub> makes one product, so it is <b>formation</b>. Sulfur isn't a hydrocarbon.</p>
+      <p>HCl + KOH → KCl + H<sub>2</sub>O is <b>double replacement</b>. H and K swap partners. (It is also called neutralization.)</p>
+    </section>
+  </div>
+  <p class="foot">Science 1206 · Unit 2 Chemical Reactions · NL Science 10, Section 4.1. Your progress is saved on this device only.</p>
+</div>
+<div id="tip" role="tooltip" hidden></div>
+
+<script id="chem-core">
+/* Chemistry core: pure functions, no DOM. tools/test-chem.mjs runs this block in Node to check every bank. */
+const CHEM = (() => {
+  const STATE = /\((?:s|l|g|aq)\)/g;
+  // Top-level groups of a formula: {el,n} for an element, {kids,text,n} for a bracketed group.
+  function tokens(f) {
+    const s = String(f).replace(STATE, '').replace(/\^.*$/, '').trim();
+    let i = 0;
+    const num = () => { let d = ''; while (i < s.length && /\d/.test(s[i])) d += s[i++]; return d ? +d : 1; };
+    function group(close) {
+      const out = [];
+      while (i < s.length) {
+        const ch = s[i];
+        if (ch === '(' || ch === '[') {
+          const want = ch === '(' ? ')' : ']'; i++;
+          const start = i, kids = group(want);
+          if (s[i] !== want) throw new Error('Unclosed bracket in ' + f);
+          const text = s.slice(start, i); i++;
+          out.push({ kids, text, n: num() });
+        } else if (ch === ')' || ch === ']') {
+          if (ch !== close) throw new Error('Unexpected ' + ch + ' in ' + f);
+          return out;
+        } else if (/[A-Z]/.test(ch)) {
+          let el = ch; i++;
+          while (i < s.length && /[a-z]/.test(s[i])) el += s[i++];
+          out.push({ el, n: num() });
+        } else throw new Error('Cannot read "' + ch + '" in ' + f);
+      }
+      if (close) throw new Error('Unclosed bracket in ' + f);
+      return out;
+    }
+    const t = group(null);
+    if (!t.length) throw new Error('Empty formula');
+    return t;
+  }
+  function addAtoms(toks, mult, out) {
+    for (const t of toks) {
+      if (t.el) out[t.el] = (out[t.el] || 0) + t.n * mult;
+      else addAtoms(t.kids, t.n * mult, out);
+    }
+    return out;
+  }
+  // Atom counts, e.g. Ca3(PO4)2 -> {Ca:3, P:2, O:8}
+  const atoms = f => addAtoms(tokens(f), 1, {});
+
+  const IONS = ['HCO3', 'NH4', 'NO3', 'SO4', 'PO4', 'CO3', 'OH'];
+  const ION_NAME = { HCO3: 'hydrogen carbonate', NH4: 'ammonium', NO3: 'nitrate', SO4: 'sulfate', PO4: 'phosphate', CO3: 'carbonate', OH: 'hydroxide' };
+  const METALS = new Set('Li Na K Rb Cs Be Mg Ca Sr Ba Al Ga Sn Pb Zn Fe Cu Ag Au Hg Ni Co Cr Mn Ti'.split(' '));
+  const tokText = t => t.el + (t.n > 1 ? t.n : '');
+  // Counts with the allowed polyatomic ions as single units, e.g. KNO3 with [NO3] -> {K:1, NO3:1}
+  function units(f, allowed) {
+    const toks = tokens(f), out = {};
+    let used = new Array(toks.length).fill(false);
+    toks.forEach((t, i) => {
+      if (t.kids && allowed.includes(t.text)) { out[t.text] = (out[t.text] || 0) + t.n; used[i] = true; }
+    });
+    // A bare ion at the end (KNO3, H2SO4) or NH4 at the start (NH4Cl)
+    const plain = toks.map(t => t.el ? tokText(t) : null);
+    for (const ion of IONS.filter(x => allowed.includes(x))) {
+      let hit = false;
+      for (let k = 1; k < toks.length && !hit; k++) {
+        const tail = toks.length - k;
+        const seg = plain.slice(tail);
+        const metalOH = tail === 1 && toks[0].el && METALS.has(toks[0].el);
+        if (ion !== 'NH4' && !seg.includes(null) && seg.join('') === ion && !used.slice(tail).some(Boolean) && (ion !== 'OH' || metalOH)) {
+          out[ion] = (out[ion] || 0) + 1; for (let j = tail; j < toks.length; j++) used[j] = true; hit = true;
+        }
+        const head = plain.slice(0, k);
+        if (!hit && ion === 'NH4' && !head.includes(null) && head.join('') === 'NH4' && !used.slice(0, k).some(Boolean)) {
+          out.NH4 = (out.NH4 || 0) + 1; for (let j = 0; j < k; j++) used[j] = true; hit = true;
+        }
+      }
+      if (hit) break;
+    }
+    toks.forEach((t, i) => { if (!used[i]) addAtoms([t], 1, out); });
+    return out;
+  }
+  // Polyatomic ions that appear unchanged on both sides (so they may be counted as one unit)
+  function commonIons(left, right) {
+    return IONS.filter(ion => left.some(f => units(f, [ion])[ion]) && right.some(f => units(f, [ion])[ion]));
+  }
+
+  const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a; };
+  const gcdAll = arr => arr.reduce((g, x) => gcd(g, x), 0);
+  const lcm = (a, b) => a / gcd(a, b) * b;
+
+  // Lowest whole-number coefficients, found from the atom counts (not from any answer key)
+  function solve(left, right) {
+    const fs = [...left, ...right], cnt = fs.map(atoms);
+    const els = [...new Set(cnt.flatMap(Object.keys))];
+    const n = fs.length;
+    // rows of fractions [num, den]
+    const M = els.map(e => cnt.map((c, j) => [(c[e] || 0) * (j < left.length ? 1 : -1), 1]));
+    const norm = ([p, q]) => { if (q < 0) { p = -p; q = -q; } const g = gcd(p, q) || 1; return [p / g, q / g]; };
+    const sub = (a, b) => norm([a[0] * b[1] - b[0] * a[1], a[1] * b[1]]);
+    const mul = (a, b) => norm([a[0] * b[0], a[1] * b[1]]);
+    const div = (a, b) => norm([a[0] * b[1], a[1] * b[0]]);
+    const pivots = []; let row = 0;
+    for (let col = 0; col < n && row < M.length; col++) {
+      const p = M.findIndex((r, i) => i >= row && r[col][0] !== 0);
+      if (p < 0) continue;
+      [M[row], M[p]] = [M[p], M[row]];
+      const pv = M[row][col];
+      M[row] = M[row].map(x => div(x, pv));
+      M.forEach((r, i) => { if (i !== row && r[col][0] !== 0) { const f = r[col]; M[i] = r.map((x, j) => sub(x, mul(f, M[row][j]))); } });
+      pivots.push(col); row++;
+    }
+    const free = [...Array(n).keys()].filter(c => !pivots.includes(c));
+    if (free.length !== 1) return null;
+    const v = new Array(n).fill(null); v[free[0]] = [1, 1];
+    pivots.forEach((col, i) => { v[col] = norm([-M[i][free[0]][0], M[i][free[0]][1]]); });
+    const L = v.reduce((a, x) => lcm(a, x[1]), 1);
+    let ints = v.map(([p, q]) => p * (L / q));
+    if (ints.every(x => x < 0)) ints = ints.map(x => -x);
+    if (ints.some(x => x <= 0)) return null;
+    const g = gcdAll(ints);
+    return ints.map(x => x / g);
+  }
+
+  // Totals per element (or per unit) on each side for given coefficients
+  function tally(counts, nL, c) {
+    const keys = [], L = {}, R = {};
+    counts.forEach((m, i) => Object.keys(m).forEach(k => {
+      if (!keys.includes(k)) keys.push(k);
+      const side = i < nL ? L : R; side[k] = (side[k] || 0) + m[k] * c[i];
+    }));
+    return keys.map(k => ({ k, L: L[k] || 0, R: R[k] || 0 }));
+  }
+  // Atoms all match + lowest whole-number ratio?
+  function check(left, right, c) {
+    const rows = tally([...left, ...right].map(atoms), left.length, c);
+    const balanced = rows.every(r => r.L === r.R);
+    const g = gcdAll(c);
+    return { rows, balanced, g, lowest: g === 1, correct: balanced && g === 1 && c.every(x => x >= 1 && Number.isInteger(x)) };
+  }
+
+  const isHydrocarbon = f => { const a = atoms(f); return Object.keys(a).sort().join() === 'C,H'; };
+  const isCombustion = (left, right) => left.length === 2 && left.includes('O2') && left.some(isHydrocarbon) &&
+    right.length === 2 && right.includes('CO2') && right.includes('H2O');
+
+  /* Hint engine. It works the way students are taught (biggest formula first, lone elements last,
+     C -> H -> O for combustion, double everything when O comes out odd). Before giving a move it plays
+     the method forward; if the method would not reach the lowest-ratio answer from here, it falls back
+     to steering one formula straight to the computed answer. */
+  function prepare(left, right) {
+    const f = [...left, ...right], nL = left.length;
+    const atomC = f.map(atoms), ions = commonIons(left, right);
+    const target = solve(left, right);
+    return { left, right, f, nL, atomC, ions, target, combustion: isCombustion(left, right),
+      size: atomC.map(m => Object.values(m).reduce((a, b) => a + b, 0)),
+      unitC: f.map(x => units(x, ions)) };
+  }
+  function order(eq, counts) {
+    if (eq.combustion) return ['C', 'H', 'O'];
+    const keys = [];
+    counts.forEach(m => Object.keys(m).forEach(k => { if (!keys.includes(k)) keys.push(k); }));
+    const info = k => {
+      const has = counts.map((m, i) => m[k] ? i : -1).filter(i => i >= 0);
+      const lone = has.some(i => { const ks = Object.keys(eq.atomC[i]); return ks.length === 1 && ks[0] === k; }) ? 1 : 0;
+      const multi = (has.filter(i => i < eq.nL).length > 1 || has.filter(i => i >= eq.nL).length > 1) ? 1 : 0;
+      const big = Math.max(...has.map(i => eq.size[i]));
+      return [lone, multi, -big, keys.indexOf(k)];
+    };
+    const cmp = (a, b) => { const x = info(a), y = info(b); for (let i = 0; i < 4; i++) if (x[i] !== y[i]) return x[i] - y[i]; return 0; };
+    return keys.slice().sort(cmp);
+  }
+  function why(eq, counts, k) {
+    if (eq.combustion) return 'combustion';
+    if (IONS.includes(k)) return 'ion';
+    const has = counts.map((m, i) => m[k] ? i : -1).filter(i => i >= 0);
+    if (has.some(i => { const ks = Object.keys(eq.atomC[i]); return ks.length === 1 && ks[0] === k; })) return 'lone';
+    if (has.filter(i => i < eq.nL).length > 1 || has.filter(i => i >= eq.nL).length > 1) return 'multi';
+    return 'biggest';
+  }
+  function methodMove(eq, counts, c) {
+    const rows = tally(counts, eq.nL, c), by = Object.fromEntries(rows.map(r => [r.k, r]));
+    const E = order(eq, counts).find(k => by[k] && by[k].L !== by[k].R);
+    if (!E) return null;
+    const { L, R } = by[E], lowLeft = L < R;
+    const onSide = left => counts.map((m, i) => m[E] && (i < eq.nL) === left ? i : -1).filter(i => i >= 0);
+    const lowF = onSide(lowLeft), highF = onSide(!lowLeft);
+    const low = Math.min(L, R), high = Math.max(L, R), diff = high - low;
+    const base = { E, L, R, why: why(eq, counts, E) };
+    const loneOf = i => { const ks = Object.keys(eq.atomC[i]); return ks.length === 1 && ks[0] === E; };
+    let F = lowF.find(loneOf);
+    if (F == null) F = lowF.find(i => diff % counts[i][E] === 0);
+    if (F == null) F = lowF.slice().sort((a, b) => eq.size[b] - eq.size[a])[0];
+    const nF = counts[F][E];
+    if (diff % nF === 0) return { ...base, type: 'set', F, changes: [[F, c[F] + diff / nF]] };
+    if (lowF.length === 1 && highF.length === 1) {
+      const a = nF, H = highF[0], b = counts[H][E];
+      for (let T = high + 1; T <= 600; T++) if (T % a === 0 && T % b === 0)
+        return { ...base, type: 'lcm', F, H, a, b, T, changes: [[F, T / a], [H, T / b]] };
+      return null;
+    }
+    const q = nF / gcd(diff, nF);
+    return { ...base, type: 'mult', F, q, need: [c[F] * nF + diff, nF], changes: c.map((x, i) => [i, x * q]) };
+  }
+  const apply = (c, m) => { const d = c.slice(); m.changes.forEach(([i, v]) => { d[i] = v; }); return d; };
+  function reaches(eq, counts, c) {
+    let s = c.slice();
+    for (let step = 0; step < 40; step++) {
+      if (tally(counts, eq.nL, s).every(r => r.L === r.R)) return s.every((x, i) => x === eq.target[i]);
+      const m = methodMove(eq, counts, s);
+      if (!m) return false;
+      s = apply(s, m);
+      if (s.some(x => x > 200)) return false;
+    }
+    return false;
+  }
+  function nextMove(eq, useIons, c) {
+    const counts = useIons ? eq.unitC : eq.atomC;
+    if (!eq.target) return null;
+    if (tally(counts, eq.nL, c).every(r => r.L === r.R)) return null;
+    const m = methodMove(eq, counts, c);
+    if (m && reaches(eq, counts, apply(c, m))) return m;
+    // Fallback: steer one formula to the computed answer
+    const rows = tally(counts, eq.nL, c), by = Object.fromEntries(rows.map(r => [r.k, r]));
+    const E = order(eq, counts).find(k => by[k] && by[k].L !== by[k].R);
+    const { L, R } = by[E];
+    const off = counts.map((m2, i) => m2[E] && c[i] !== eq.target[i] ? i : -1).filter(i => i >= 0);
+    const lowSide = off.filter(i => (i < eq.nL) === (L < R));
+    const F = (lowSide.length ? lowSide : off).length ? (lowSide.length ? lowSide : off)[0]
+      : c.findIndex((x, i) => x !== eq.target[i]);
+    return { E, L, R, why: why(eq, counts, E), type: 'target', F, changes: [[F, eq.target[F]]] };
+  }
+
+
+  // Reaction type, using the decision flowchart in order (combustion = hydrocarbon + O2 -> CO2 + H2O only)
+  const isElement = f => Object.keys(atoms(f)).length === 1;
+  function classifySteps(left, right) {
+    const qs = [
+      ['Is it a hydrocarbon + O2 -> CO2 + H2O (combustion)?', isCombustion(left, right), 'combustion'],
+      ['Only one reactant (decomposition)?', left.length === 1, 'decomposition'],
+      ['Only one product (formation)?', right.length === 1, 'formation'],
+      ['A lone element on each side (single replacement)?', left.length === 2 && right.length === 2 &&
+        left.filter(isElement).length === 1 && right.filter(isElement).length === 1, 'single'],
+      ['Two compounds -> two compounds (double replacement)?', left.length === 2 && right.length === 2 &&
+        !left.some(isElement) && !right.some(isElement), 'double']
+    ];
+    const k = qs.findIndex(q => q[1]);
+    return qs.slice(0, k < 0 ? qs.length : k + 1);
+  }
+  function classify(left, right) { const s = classifySteps(left, right), last = s[s.length - 1]; return last[1] ? last[2] : null; }
+  // Ionic formula from two ions, e.g. ['Pb',2] + ['NO3',-1] -> Pb(NO3)2
+  const POLY = ['NH4', 'OH', 'NO3', 'SO4', 'PO4', 'CO3', 'HCO3'];
+  function ionicFormula(cat, an) {
+    const c = cat[1], a = -an[1], g = gcd(c, a), nc = a / g, na = c / g;
+    const part = (sym, n) => n === 1 ? sym : POLY.includes(sym) ? `(${sym})${n}` : sym + n;
+    return part(cat[0], nc) + part(an[0], na);
+  }
+  // Molecular names: "nitrogen dioxide" -> [[1,'nitrogen','N'],[2,'oxygen','O']]
+  const PREFIX = [['mono', 1], ['di', 2], ['tri', 3], ['tetra', 4], ['penta', 5], ['hexa', 6]];
+  const ROOT = { oxide: ['oxygen', 'O'], chloride: ['chlorine', 'Cl'], sulfide: ['sulfur', 'S'], nitride: ['nitrogen', 'N'],
+    fluoride: ['fluorine', 'F'], bromide: ['bromine', 'Br'], iodide: ['iodine', 'I'], phosphide: ['phosphorus', 'P'] };
+  const FIRST = { carbon: 'C', nitrogen: 'N', sulfur: 'S', phosphorus: 'P', hydrogen: 'H', silicon: 'Si', oxygen: 'O' };
+  function molecularParts(name) {
+    return name.toLowerCase().split(/\s+/).map((w, i) => {
+      let n = 1, rest = w;
+      for (const [p, v] of PREFIX) if (w.startsWith(p) && w.length > p.length + 3) { n = v; rest = w.slice(p.length); break; }
+      if (i === 0) return [n, rest, FIRST[rest]];
+      const key = Object.keys(ROOT).find(k => rest === k || 'o' + rest === k);
+      return [n, ROOT[key][0], ROOT[key][1]];
+    });
+  }
+  return { classify, classifySteps, ionicFormula, molecularParts, tokens, atoms, units, commonIons, IONS, ION_NAME, solve, tally, check, gcd, gcdAll, prepare, order, nextMove, isCombustion };
+})();
+if (typeof module !== 'undefined') module.exports = CHEM;
+</script>
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* chem(): the one formatter for every formula on this page.
+   "2H2O" -> coefficient 2, H<sub>2</sub>O. "->" -> →. Only " + " with spaces is a plus sign, so charges like K^+ survive. */
+function chem(s) {
+  return String(s).split(/(\s+\+\s+|\s*->\s*|\s*→\s*)/).map(part => {
+    const op = part.trim();
+    if (op === '+' && part !== '+') return ' + ';
+    if (op === '->' || op === '→') return ' → ';
+    const m = part.match(/^(\d+)\s*(?=[A-Z(\[])/);
+    let out = '', i = 0;
+    if (m) { out += m[1]; i = m[0].length; }
+    while (i < part.length) {
+      const ch = part[i], prev = part[i - 1] || '';
+      const st = part.slice(i).match(/^\((?:s|l|g|aq)\)/);
+      if (st) { out += `<span class="st">${st[0]}</span>`; i += st[0].length; continue; }
+      if (/\d/.test(ch) && /[A-Za-z)\]]/.test(prev)) {
+        let d = ''; while (i < part.length && /\d/.test(part[i])) d += part[i++];
+        out += `<sub>${d}</sub>`; continue;
+      }
+      if (ch === '^') {
+        let q = ''; i++; while (i < part.length && /[\d+\-]/.test(part[i])) q += part[i++];
+        out += `<sup>${q.replace('-', '−')}</sup>`; continue;
+      }
+      out += esc(ch); i++;
+    }
+    return out;
+  }).join('');
+}
+// balanced equation text from formulas + coefficients (1 is not written)
+const eqText = (l, r, c) => l.map((f, i) => (c[i] > 1 ? c[i] : '') + f).join(' + ') + ' -> ' + r.map((f, i) => (c[l.length + i] > 1 ? c[l.length + i] : '') + f).join(' + ');
+
+/* Element colours: shared by every chemistry page (see docs/STYLE-GUIDE). [fill, letter colour] */
+const EL = { H: ['#f4f1ff', '#1b1030'], O: ['#e8414b', '#fff'], C: ['#2b2b33', '#fff'] };
+
+/* Progress: this device only */
+const KEY = 'reaction-types:v1';
+let store = { seen: false, right: 0, total: 0 };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) store = Object.assign(store, s); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+
+/* tap-to-define words */
+const DEF = {
+  hydrocarbon: 'A compound made of only carbon (C) and hydrogen (H), like CH4 or C3H8. Most fuels are hydrocarbons.',
+  element: 'A substance with only one kind of atom, like Fe, Cu or O2.',
+  compound: 'A substance with two or more kinds of atoms joined, like H2O or NaCl.',
+  neutralization: 'An acid + a base makes a salt + water. It is a double replacement.',
+  soot: 'Tiny bits of solid carbon (C). Soot makes a flame glow yellow and leaves black marks.',
+  incomplete: 'Burning without enough oxygen. Some carbon ends up as carbon monoxide (CO) or soot (C) instead of CO2.'
+};
+const T = (word, key) => `<button type="button" class="term" data-def="${key}">${word}</button>`;
+const tip = $('#tip');
+let tipFor = null;
+function showTip(el) {
+  tipFor = el; tip.innerHTML = chem(DEF[el.dataset.def]); tip.hidden = false;
+  const r = el.getBoundingClientRect();
+  tip.style.left = Math.max(8, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - 316)) + 'px';
+  tip.style.top = (window.scrollY + r.bottom + 6) + 'px';
+}
+const hideTip = () => { tip.hidden = true; tipFor = null; };
+document.addEventListener('click', e => {
+  const t = e.target.closest('.term[data-def]');
+  if (t) { tipFor === t ? hideTip() : showTip(t); } else if (!e.target.closest('#tip')) hideTip();
+});
+document.addEventListener('focusin', e => { const t = e.target.closest('.term[data-def]'); if (t) showTip(t); });
+document.addEventListener('focusout', e => { if (e.target.closest('.term[data-def]')) hideTip(); });
+document.addEventListener('mouseover', e => { const t = e.target.closest('.term[data-def]'); if (t && tipFor !== t) showTip(t); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
+
+/* ================= DANCE FLOOR ================= */
+/* Generic dancers A-D for the four partner dances (letters as well as colours), real atoms for combustion. */
+const DC = { A: ['#ffd23f', '#1b1030'], B: ['#6ad3ff', '#1b1030'], C: ['#5df2a4', '#1b1030'], D: ['#ff5d73', '#1b1030'] };
+const Y = 140;
+const DANCES = {
+  formation: { name: 'Formation', alt: 'also called synthesis', move: 'Pair up', pattern: 'A + B -> AB',
+    ex: ['Mg + O2 -> MgO', [2, 1, 2]], said: 'Two things join to make one new thing.',
+    d: [['A', 220, Y, 335, Y], ['B', 500, Y, 385, Y]], before: [], after: [['A', 'B']],
+    cap: ['A and B dance on their own.', 'They move together…', 'They pair up! Now there is one new thing: AB.'] },
+  decomposition: { name: 'Decomposition', move: 'Split up', pattern: 'AB -> A + B',
+    ex: ['N2H4 -> N2 + H2', [1, 1, 2]], said: 'One thing breaks apart into simpler things.',
+    d: [['A', 335, Y, 220, Y], ['B', 385, Y, 500, Y]], before: [['A', 'B']], after: [],
+    cap: ['A and B are a pair: AB.', 'They let go…', 'They split up! Now A and B dance alone.'] },
+  single: { name: 'Single replacement', move: 'Cut in', pattern: 'A + BC -> AC + B',
+    ex: ['Fe + CuSO4 -> Cu + Fe2(SO4)3', [2, 3, 3, 1]], said: 'A lone element takes the place of another element in a compound.',
+    d: [['A', 140, Y, 430, Y], ['B', 430, Y, 610, Y], ['C', 480, Y, 480, Y]], before: [['B', 'C']], after: [['A', 'C']],
+    cap: ['A is on its own. B and C are a pair.', 'A cuts in…', 'A takes B\'s place! Now A is with C, and B is on its own.'] },
+  double: { name: 'Double replacement', move: 'Swap partners', pattern: 'AB + CD -> AD + CB',
+    ex: ['BaCl2 + Na2SO4 -> BaSO4 + NaCl', [1, 1, 1, 2]], said: 'Two compounds swap partners.',
+    d: [['A', 170, Y, 170, Y], ['B', 220, Y, 550, Y], ['C', 500, Y, 500, Y], ['D', 550, Y, 220, Y]], before: [['A', 'B'], ['C', 'D']], after: [['A', 'D'], ['C', 'B']],
+    cap: ['Two pairs: A with B, and C with D.', 'They swap partners…', 'Now A is with D, and C is with B.'] },
+  combustion: { name: 'Combustion', move: 'Burn in oxygen', pattern: 'hydrocarbon + O2 -> CO2 + H2O',
+    ex: ['CH4 + O2 -> CO2 + H2O', [1, 2, 1, 2]], said: 'A fuel made of C and H burns in oxygen. It always makes CO2 and H2O (and gives off heat and light).',
+    d: [['C', 190, Y, 330, Y], ['H', 190, Y - 34, 474, 82], ['H', 224, Y, 526, 82], ['H', 190, Y + 34, 474, 202], ['H', 156, Y, 526, 202],
+        ['O', 420, 80, 290, Y], ['O', 454, 80, 500, 64], ['O', 420, 200, 370, Y], ['O', 454, 200, 500, 184]],
+    before: [[0, 1], [0, 2], [0, 3], [0, 4], [5, 6], [7, 8]], after: [[0, 5], [0, 7], [6, 1], [6, 2], [8, 3], [8, 4]], real: true, dbl: [[0, 5], [0, 7]],
+    cap: ['A methane molecule (CH4) and two oxygen molecules (O2).', 'The fuel burns. The atoms rearrange…', 'They make carbon dioxide (CO2) and water (H2O), plus heat and light.'] }
+};
+const DORDER = ['formation', 'decomposition', 'single', 'double', 'combustion'];
+const D = { type: 'formation', t0: 0, playing: !reduced, pausedT: 0 };
+const dcv = $('#dcv'), dctx = dcv.getContext('2d');
+const DPR = Math.min(2, window.devicePixelRatio || 1);
+dcv.width = 720 * DPR; dcv.height = 270 * DPR; dctx.scale(DPR, DPR);
+const ease = t => t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t);
+const CYCLE = 6500;
+function dancePhase(t) {   // t 0..1 through one loop
+  return { move: reduced ? (t > 0.5 ? 1 : 0) : ease((t - 0.25) / 0.45), cap: t < 0.25 ? 0 : t < 0.7 ? 1 : 2 };
+}
+function drawDance(now) {
+  const g = dctx, dn = DANCES[D.type];
+  const t = D.playing ? ((now - D.t0) % CYCLE) / CYCLE : D.pausedT;
+  const ph = dancePhase(t);
+  g.clearRect(0, 0, 720, 270);
+  // floor tiles
+  for (let x = 0; x < 720; x += 40) for (let y = 0; y < 270; y += 40) { g.fillStyle = ((x + y) / 40) % 2 ? '#1c1236' : '#221642'; g.fillRect(x, y, 40, 40); }
+  if (dn.real) {   // combustion: a glow while it burns
+    const k = Math.sin(Math.PI * Math.min(1, Math.max(0, (t - 0.25) / 0.5)));
+    if (k > 0) { const gr = g.createRadialGradient(340, Y, 10, 340, Y, 220); gr.addColorStop(0, `rgba(255,154,77,${0.45 * k})`); gr.addColorStop(1, 'rgba(255,154,77,0)'); g.fillStyle = gr; g.fillRect(0, 0, 720, 270); }
+    if (ph.cap === 2) { g.fillStyle = '#ffd23f'; g.font = "700 14px 'Atkinson Hyperlegible',sans-serif"; g.textAlign = 'center'; g.fillText('+ energy (heat and light)', 360, 258); }
+  }
+  const r = dn.real ? 15 : 22;
+  const pos = dn.d.map(([id, x0, y0, x1, y1], k) => {
+    let x = x0 + (x1 - x0) * ph.move, y = y0 + (y1 - y0) * ph.move;
+    if (D.type === 'double' && (id === 'B' || id === 'D')) y += (id === 'B' ? -1 : 1) * 70 * Math.sin(Math.PI * ph.move);   // they pass each other
+    if (D.type === 'single' && id === 'B') y -= 40 * Math.sin(Math.PI * ph.move);
+    const bounce = reduced ? 0 : Math.abs(Math.sin(now / 260 + k)) * 5;
+    return { id, x, y: y - bounce };
+  });
+  const find = a => typeof a === 'number' ? pos[a] : pos.find(p => p.id === a);
+  const bond = (a, b, alpha, dbl) => {
+    const p = find(a), q = find(b); if (!p || !q || alpha <= 0) return;
+    g.strokeStyle = `rgba(246,239,255,${alpha})`; g.lineWidth = dn.real ? 4 : 7; g.lineCap = 'round';
+    if (dbl) { const dx = q.x - p.x, dy = q.y - p.y, L = Math.hypot(dx, dy) || 1, nx = -dy / L * 4, ny = dx / L * 4;
+      g.lineWidth = 3; [[nx, ny], [-nx, -ny]].forEach(([ox, oy]) => { g.beginPath(); g.moveTo(p.x + ox, p.y + oy); g.lineTo(q.x + ox, q.y + oy); g.stroke(); }); }
+    else { g.beginPath(); g.moveTo(p.x, p.y); g.lineTo(q.x, q.y); g.stroke(); }
+  };
+  const bOut = 1 - ease((t - 0.27) / 0.12), bIn = ease((t - 0.62) / 0.1);
+  dn.before.forEach(([a, b]) => bond(a, b, reduced ? (ph.move ? 0 : 1) : bOut));
+  dn.after.forEach(([a, b]) => bond(a, b, reduced ? ph.move : bIn, dn.dbl && dn.dbl.some(([x, y]) => x === a && y === b)));
+  pos.forEach(p => {
+    const c = dn.real ? EL[p.id] : DC[p.id];
+    g.fillStyle = c[0]; g.beginPath(); g.arc(p.x, p.y, r, 0, 6.29); g.fill();
+    g.strokeStyle = dn.real ? 'rgba(255,255,255,.6)' : '#000'; g.lineWidth = dn.real ? 1.5 : 3; g.stroke();
+    g.fillStyle = c[1]; g.font = `700 ${dn.real ? 14 : 20}px 'Atkinson Hyperlegible',sans-serif`; g.textAlign = 'center'; g.fillText(p.id, p.x, p.y + (dn.real ? 5 : 7));
+  });
+  const cap = dn.cap[ph.cap];
+  if ($('#dcap').dataset.c !== cap) { $('#dcap').dataset.c = cap; $('#dcap').innerHTML = `<b>${['Before', 'During', 'After'][ph.cap]}:</b> ${chem(cap)}`; }
+}
+function renderDanceInfo() {
+  $('#dpick').innerHTML = DORDER.map(k => `<button class="segbtn" type="button" data-dance="${k}" aria-pressed="${D.type === k}">${DANCES[k].name}<small>${DANCES[k].move}</small></button>`).join('');
+  $('#dpick').querySelectorAll('[data-dance]').forEach(b => b.addEventListener('click', () => { D.type = b.dataset.dance; D.t0 = performance.now(); D.pausedT = 0; renderDanceInfo(); kick(); $(`[data-dance="${D.type}"]`).focus(); }));
+  const dn = DANCES[D.type], [eq, c] = dn.ex, [l, r] = eq.split('->').map(x => x.split('+').map(y => y.trim()));
+  const ok = CHEM.check(l, r, c).correct;    // the example is checked, not trusted
+  $('#dinfo').innerHTML = `<div class="pattern"><span class="lbl">PATTERN</span>${chem(dn.pattern)}</div>
+    <div class="say"><span class="tag">${dn.name.toUpperCase()}${dn.alt ? ' (' + dn.alt.toUpperCase() + ')' : ''}</span><p>${chem(dn.said).replace('C and H', T('C and H', 'hydrocarbon'))}</p>
+      <p>Real example:</p><p class="ex">${ok ? chem(eqText(l, r, c)) : ''}</p></div>`;
+}
+$('#dplay').addEventListener('click', () => {
+  const now = performance.now();
+  if (D.playing) { D.pausedT = ((now - D.t0) % CYCLE) / CYCLE; D.playing = false; }
+  else { D.t0 = now - D.pausedT * CYCLE; D.playing = true; }
+  $('#dplay').textContent = D.playing ? 'Pause ❚❚' : 'Play ▶'; kick();
+});
+$('#dagain').addEventListener('click', () => { D.t0 = performance.now(); D.pausedT = 0; kick(); });
+
+/* ================= SORT IT ================= */
+/* [skeleton, coefficients, type]. Types are computed by the flowchart (CHEM.classify); the third entry is only checked by the test. */
+const SORT_BANK = [
+  ['Mg + O2 -> MgO', [2, 1, 2], 'formation'],
+  ['S8 + O2 -> SO2', [1, 8, 8], 'formation'],
+  ['Na + Cl2 -> NaCl', [2, 1, 2], 'formation'],
+  ['N2 + H2 -> NH3', [1, 3, 2], 'formation'],
+  ['Al + O2 -> Al2O3', [4, 3, 2], 'formation'],
+  ['H2 + O2 -> H2O', [2, 1, 2], 'formation'],
+  ['CaO + H2O -> Ca(OH)2', [1, 1, 1], 'formation'],
+  ['N2H4 -> N2 + H2', [1, 1, 2], 'decomposition'],
+  ['H2O -> H2 + O2', [2, 2, 1], 'decomposition'],
+  ['CaCO3 -> CaO + CO2', [1, 1, 1], 'decomposition'],
+  ['KClO3 -> KCl + O2', [2, 2, 3], 'decomposition'],
+  ['HgO -> Hg + O2', [2, 2, 1], 'decomposition'],
+  ['Fe + CuSO4 -> Cu + Fe2(SO4)3', [2, 3, 3, 1], 'single'],
+  ['Zn + HCl -> ZnCl2 + H2', [1, 2, 1, 1], 'single'],
+  ['Cl2 + KBr -> KCl + Br2', [1, 2, 2, 1], 'single'],
+  ['Al + CuCl2 -> AlCl3 + Cu', [2, 3, 2, 3], 'single'],
+  ['Mg + AgNO3 -> Mg(NO3)2 + Ag', [1, 2, 1, 2], 'single'],
+  ['BaCl2 + Na2SO4 -> BaSO4 + NaCl', [1, 1, 1, 2], 'double'],
+  ['HCl + KOH -> KCl + H2O', [1, 1, 1, 1], 'double'],
+  ['AgNO3 + NaCl -> AgCl + NaNO3', [1, 1, 1, 1], 'double'],
+  ['Pb(NO3)2 + KI -> PbI2 + KNO3', [1, 2, 1, 2], 'double'],
+  ['H2SO4 + NaOH -> Na2SO4 + H2O', [1, 2, 1, 2], 'double'],
+  ['CH4 + O2 -> CO2 + H2O', [1, 2, 1, 2], 'combustion'],
+  ['C3H8 + O2 -> CO2 + H2O', [1, 5, 3, 4], 'combustion'],
+  ['C4H10 + O2 -> CO2 + H2O', [2, 13, 8, 10], 'combustion'],
+  ['C8H18 + O2 -> CO2 + H2O', [2, 25, 16, 18], 'combustion'],
+  ['C2H4 + O2 -> CO2 + H2O', [1, 3, 2, 2], 'combustion']
+];
+const SORT = SORT_BANK.map(([s]) => { const [l, r] = s.split('->').map(x => x.split('+').map(y => y.trim())); const c = CHEM.solve(l, r); return { l, r, c, text: eqText(l, r, c), type: CHEM.classify(l, r) }; });
+const TYPES = [['formation', 'Formation', 'pair up'], ['decomposition', 'Decomposition', 'split up'], ['single', 'Single replacement', 'cut in'],
+  ['double', 'Double replacement', 'swap partners'], ['combustion', 'Combustion', 'burn a fuel in O2']];
+const TN = Object.fromEntries(TYPES.map(t => [t[0], t[1]]));
+const SS = { order: [], i: 0, tries: 0, done: false, fb: '', flow: null };
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function nextSort() {
+  if (!SS.order.length || SS.i >= SS.order.length - 1) { SS.order = shuffle(SORT.map((_, i) => i)); SS.i = 0; } else SS.i++;
+  Object.assign(SS, { tries: 0, done: false, fb: '', flow: null });
+  renderSort();
+}
+const curSort = () => SORT[SS.order[SS.i]];
+// why each flowchart question is yes or no, for this equation
+function reasons(q) {
+  const isEl = f => Object.keys(CHEM.atoms(f)).length === 1, isHC = f => Object.keys(CHEM.atoms(f)).sort().join() === 'C,H';
+  const list = fs => fs.map(chem).join(', ');
+  const hasO2 = q.l.includes('O2');
+  return [
+    q.type === 'combustion' ? `Yes: ${chem(q.l.find(isHC))} is a ${T('hydrocarbon', 'hydrocarbon')} (only C and H), it burns in ${chem('O2')}, and it makes only ${chem('CO2')} and ${chem('H2O')}.`
+      : hasO2 && !q.l.some(isHC) ? `No. There is ${chem('O2')}, and it may burn, but there is no ${T('hydrocarbon', 'hydrocarbon')} (a compound of only C and H).`
+      : `No. There is no hydrocarbon burning in ${chem('O2')}.`,
+    q.l.length === 1 ? `Yes: there is only one reactant, ${chem(q.l[0])}.` : `No. There are ${q.l.length} reactants: ${list(q.l)}.`,
+    q.r.length === 1 ? `Yes: there is only one product, ${chem(q.r[0])}.` : `No. There are ${q.r.length} products: ${list(q.r)}.`,
+    (q.l.filter(isEl).length === 1 && q.r.filter(isEl).length === 1) ? `Yes: ${chem(q.l.find(isEl))} is a lone ${T('element', 'element')} on the left, and ${chem(q.r.find(isEl))} is a lone element on the right.`
+      : `No. Lone elements on the left: ${q.l.filter(isEl).map(chem).join(', ') || 'none'}. On the right: ${q.r.filter(isEl).map(chem).join(', ') || 'none'}.`,
+    `Yes: two ${T('compounds', 'compound')} on the left (${list(q.l)}) and two on the right (${list(q.r)}). They swap partners.`
+  ];
+}
+function renderSort() {
+  const q = curSort();
+  $('#sEq').innerHTML = chem(q.text);
+  $('#sPick').innerHTML = TYPES.map(([v, n, d]) => `<button class="segbtn" type="button" data-sort="${v}" ${SS.done ? 'disabled' : ''}>${n}<small>${chem(d)}</small></button>`).join('');
+  $('#sPick').querySelectorAll('[data-sort]').forEach(b => b.addEventListener('click', () => pickSort(b.dataset.sort)));
+  $('#sFb').innerHTML = SS.fb;
+  $('#sNext').textContent = SS.done ? 'Next equation ▶' : 'Skip ▶';
+  $('#sNext').classList.toggle('primary', SS.done);
+  $('#sScore').textContent = store.right; $('#sTotal').textContent = store.total;
+  renderFlow();
+}
+function pickSort(v) {
+  const q = curSort();
+  SS.tries++;
+  const steps = CHEM.classifySteps(q.l, q.r), why = reasons(q), k = steps.length - 1;
+  if (v === q.type) {
+    if (SS.tries === 1) store.right++;
+    store.total++; save();
+    SS.done = true;
+    SS.fb = `<div class="say good"><span class="tag">RIGHT! ${TN[v].toUpperCase()} ✓</span><p>${why[k]}</p>${trapNote(q, v, true)}</div>`;
+    renderSort(); $('#sNext').focus(); return;
+  }
+  // explain using the first flowchart question this choice gets wrong
+  SS.fb = `<div class="say bad"><span class="tag">NOT ${TN[v].toUpperCase()}</span>${trapNote(q, v, false)}<p>Try the flowchart: ask the questions in order and stop at the first "yes".</p></div>`;
+  renderSort();
+  const b = $(`[data-sort="${v}"]`); if (b) b.focus();
+}
+function trapNote(q, v, right) {
+  const s = q.l.join('+');
+  if (!right && v === 'combustion' && q.l.includes('O2')) return `<p>It burns in oxygen, but combustion here means a ${T('hydrocarbon', 'hydrocarbon')} + ${chem('O2')} → ${chem('CO2')} + ${chem('H2O')}. ${q.l.find(f => f !== 'O2') ? chem(q.l.find(f => f !== 'O2')) + ' is not a hydrocarbon.' : ''}</p>`;
+  if (s === 'HCl+KOH') return `<p>${right ? 'Good: ' : ''}an acid (HCl) + a base (KOH) is called ${T('neutralization', 'neutralization')}. It is a double replacement: H and K swap partners. It makes a salt (KCl) and water.</p>`;
+  if (s === 'CaO+H2O') return `<p>${right ? 'Good: two' : 'Two'} compounds can still join into one product. One product means formation.</p>`;
+  if (!right && v === 'single' && q.type === 'double') return `<p>Single replacement needs a lone element on each side. Here every substance is a compound.</p>`;
+  if (!right && v === 'double' && q.type === 'single') return `<p>Look for a lone element: ${chem(q.l.find(f => Object.keys(CHEM.atoms(f)).length === 1))} is on its own. That makes it a single replacement, not a swap of two compounds.</p>`;
+  if (!right && v === 'formation' && q.r.length > 1) return `<p>Formation makes only one product. This makes ${q.r.length}.</p>`;
+  if (!right && v === 'decomposition' && q.l.length > 1) return `<p>Decomposition starts with only one reactant. This starts with ${q.l.length}.</p>`;
+  return '';
+}
+function renderFlow() {
+  const box = $('#sFlowBox'), q = curSort();
+  if (SS.flow == null) { box.innerHTML = ''; return; }
+  const steps = CHEM.classifySteps(q.l, q.r), why = reasons(q);
+  const QS = ['Is it a hydrocarbon + O2 -> CO2 + H2O?', 'Only one reactant?', 'Only one product?', 'A lone element on each side?', 'Two compounds -> two compounds?'];
+  let h = '<div class="say hint"><span class="tag">THE FLOWCHART</span><ol class="flow">';
+  for (let k = 0; k <= SS.flow.at && k < QS.length; k++) {
+    const truth = steps[k] ? steps[k][1] : false, answered = k < SS.flow.at || SS.flow.solved;
+    h += `<li class="${answered ? (truth ? 'yes' : 'no') : ''}"><span class="q">${k + 1}. ${chem(QS[k])}${answered ? ` <span style="display:block;font-weight:400">${why[k]}</span>` : ''}</span>
+      ${answered ? '' : `<button class="btn small" type="button" data-yn="1">Yes</button><button class="btn small" type="button" data-yn="0">No</button>`}</li>`;
+  }
+  h += '</ol>';
+  if (SS.flow.msg) h += `<p>${SS.flow.msg}</p>`;
+  if (SS.flow.solved) h += `<p><b>So it is ${TN[q.type].toLowerCase()}.</b> Now pick it above.</p>`;
+  box.innerHTML = h + '</div>';
+  box.querySelectorAll('[data-yn]').forEach(b => b.addEventListener('click', () => {
+    const k = SS.flow.at, truth = steps[k] ? steps[k][1] : false, said = b.dataset.yn === '1';
+    if (said !== truth) { SS.flow.msg = `Look again: ${why[k].replace(/^(Yes: |No\. )/, '')}`; renderFlow(); box.querySelector('[data-yn]').focus(); return; }
+    SS.flow.msg = '';
+    if (truth) SS.flow.solved = true; else SS.flow.at++;
+    renderFlow();
+    const nb = box.querySelector('[data-yn]'); if (nb) nb.focus(); else { const pb = $(`[data-sort="${q.type}"]`); if (pb && !SS.done) pb.focus(); }
+  }));
+}
+$('#sFlow').addEventListener('click', () => { SS.flow = { at: 0, solved: false, msg: '' }; renderFlow(); const b = $('#sFlowBox [data-yn]'); if (b) b.focus(); });
+$('#sNext').addEventListener('click', () => { nextSort(); const b = $('[data-sort]'); if (b) b.focus(); });
+
+/* ================= BURNER ================= */
+/* A simple model of a Bunsen flame. The slider sets how much of the oxygen the fuel needs gets in.
+   Enough oxygen: complete combustion, only CO2 + H2O (a blue flame).
+   Not enough: some carbon leaves as CO or soot (C) instead (a yellow, sooty flame). */
+const FUELS = [['CH4', 'methane', 'natural gas'], ['C3H8', 'propane', 'BBQ tanks'], ['C4H10', 'butane', 'lighters'], ['C8H18', 'octane', 'in gasoline']];
+const B = { fuel: 0, air: 100, soot: [] };
+const airFrac = v => 0.55 + v / 100 * 0.6;           // 0.55 to 1.15 of the oxygen needed
+const complete = v => Math.max(0, Math.min(1, (airFrac(v) - 0.55) / 0.45));
+function model() {
+  const f = FUELS[B.fuel][0], a = CHEM.atoms(f), x = a.C, y = a.H, k = complete(B.air);
+  return { f, x, y, k, co2: x * k, h2o: y / 2, co: x * (1 - k) * 0.65, c: x * (1 - k) * 0.35 };
+}
+const amountWord = (v, max) => v <= 0.001 ? 'none' : v / max < 0.2 ? 'a little' : v / max < 0.6 ? 'some' : 'lots';
+function renderBurner() {
+  $('#fuelPick').innerHTML = FUELS.map(([f, n, use], i) => `<button class="segbtn" type="button" data-fuel="${i}" aria-pressed="${B.fuel === i}">${chem(f)} ${n}<small>${use}</small></button>`).join('');
+  $('#fuelPick').querySelectorAll('[data-fuel]').forEach(b => b.addEventListener('click', () => { B.fuel = +b.dataset.fuel; renderBurner(); renderHelper(true); $(`[data-fuel="${B.fuel}"]`).focus(); }));
+  const m = model();
+  $('#airOut').textContent = B.air < 34 ? 'mostly closed' : B.air < 75 ? 'half open' : 'open';
+  const rows = [['CO2', m.co2, m.x, '', 'carbon dioxide'], ['H2O', m.h2o, m.y / 2, '', 'water'], ['CO', m.co, m.x * 0.65, 'warnc', 'carbon monoxide'], ['C', m.c, m.x * 0.35, 'soot', 'soot (carbon)']];
+  $('#prods').innerHTML = `<caption class="sr">What the flame makes</caption>` + rows.map(([f, v, max, cls, n]) =>
+    `<tr><td class="f">${chem(f)}</td><td>${n}</td><td class="barw"><div class="bar ${cls}" style="width:${Math.round(100 * v / max)}%"></div></td><td class="amt">${amountWord(v, max)}</td></tr>`).join('');
+  const ppm = Math.round((1 - m.k) * 400), co = $('#co');
+  $('#ppm').textContent = ppm + ' ppm';
+  co.classList.toggle('warn', ppm > 0 && ppm < 150); co.classList.toggle('alarm', ppm >= 150);
+  $('#coStt').textContent = ppm === 0 ? 'OK: no CO' : ppm < 150 ? 'WARNING: CO detected' : 'ALARM: lots of CO';
+  const l = [m.f, 'O2'], r = ['CO2', 'H2O'], c = CHEM.solve(l, r);
+  $('#flameLbl').innerHTML = m.k >= 0.999
+    ? `Blue flame: <b>complete combustion</b>. ${chem(eqText(l, r, c))}`
+    : `Yellow, sooty flame: <b>${T('incomplete combustion', 'incomplete')}</b>. Not enough ${chem('O2')}, so it also makes CO and ${T('soot', 'soot')}. (You only need to recognise this one. You don't need to balance it.)`;
+}
+$('#air').addEventListener('input', e => { B.air = +e.target.value; renderBurner(); kick(); });
+
+const bcv = $('#bcv'), bctx = bcv.getContext('2d');
+bcv.width = 360 * DPR; bcv.height = 330 * DPR; bctx.scale(DPR, DPR);
+function drawBurner(now) {
+  const g = bctx, m = model(), u = 1 - m.k;   // u: 0 blue ... 1 yellow and sooty
+  g.clearRect(0, 0, 360, 330);
+  g.fillStyle = '#160d2b'; g.fillRect(0, 0, 360, 330);
+  g.fillStyle = '#2a1d45'; g.fillRect(0, 306, 360, 24);
+  // burner: base, barrel, air-hole collar
+  g.fillStyle = '#6b7686'; g.fillRect(140, 292, 80, 14);
+  g.fillStyle = '#8e99a8'; g.fillRect(166, 196, 28, 98);
+  g.fillStyle = '#5b6573'; g.fillRect(162, 262, 36, 18);
+  const hole = 4 + 12 * (B.air / 100);
+  g.fillStyle = '#0b0614'; g.fillRect(180 - hole / 2, 266, hole, 10);
+  g.fillStyle = COLINK; g.font = "11px 'Atkinson Hyperlegible',sans-serif"; g.textAlign = 'left'; g.fillText('air hole', 206, 276);
+  g.strokeStyle = '#3d3a4a'; g.lineWidth = 6; g.beginPath(); g.moveTo(140, 300); g.quadraticCurveTo(60, 300, 20, 320); g.stroke();
+  g.fillStyle = COLINK; g.fillText('gas: ' + FUELS[B.fuel][1], 18, 296);
+  // flame (real colours: blue when complete, yellow-orange when sooty)
+  const flick = reduced ? 0 : Math.sin(now / 90) * 3 + Math.sin(now / 37) * 2;
+  const H = 70 + u * 100 + flick * (0.3 + u), W = 15 + u * 13;
+  const tipX = 180 + (reduced ? 0 : Math.sin(now / 160) * 4 * u);
+  const blob = (h, w, col) => { g.fillStyle = col; g.beginPath(); g.moveTo(180 - w, 196); g.quadraticCurveTo(180 - w * 1.1, 196 - h * 0.55, tipX, 196 - h); g.quadraticCurveTo(180 + w * 1.1, 196 - h * 0.55, 180 + w, 196); g.closePath(); g.fill(); };
+  const outer = `rgba(${Math.round(90 + 165 * u)},${Math.round(110 + 80 * u)},${Math.round(255 - 215 * u)},${0.55 + 0.35 * u})`;
+  blob(H, W, outer);
+  if (u > 0.05) blob(H * 0.75, W * 0.7, `rgba(255,${Math.round(200 + 30 * (1 - u))},80,${0.6 * u})`);
+  blob(28 + 12 * (1 - u), 8, `rgba(150,200,255,${0.9 - 0.7 * u})`);   // inner cone
+  // soot rising from a sooty flame
+  if (!reduced && u > 0.15 && B.soot.length < 40 && Math.random() < u) B.soot.push({ x: tipX + (Math.random() - 0.5) * 10, y: 196 - H, r: 1.5 + Math.random() * 2.5 });
+  g.fillStyle = 'rgba(40,36,44,.85)';
+  B.soot.forEach(p => { p.y -= 1.2; p.x += Math.sin(p.y / 12) * 0.5; g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.29); g.fill(); });
+  B.soot = B.soot.filter(p => p.y > -6);
+  g.fillStyle = COLINK; g.textAlign = 'center'; g.font = "700 13px 'Atkinson Hyperlegible',sans-serif";
+  g.fillText(m.k >= 0.999 ? 'blue flame' : u > 0.15 ? 'yellow, sooty flame' : 'mostly blue flame', 180, 18);
+}
+const COLINK = '#c3b2e6';
+
+/* C -> H -> O helper for the chosen fuel (complete combustion) */
+const HP = { step: 0, fb: '', vals: {}, doubled: false };
+function renderHelper(reset) {
+  if (reset) Object.assign(HP, { step: 0, fb: '', vals: {}, doubled: false });
+  const m = model(), x = m.x, y = m.y, nO = 2 * x + y / 2, f = m.f;
+  const c = CHEM.solve([f, 'O2'], ['CO2', 'H2O']);
+  const odd = nO % 2 === 1;
+  const v = HP.vals, k = HP.doubled ? 2 : 1;
+  const cur = [k, HP.step >= 3 ? (HP.doubled ? nO : nO / 2) : '?', HP.step >= 1 ? k * x : '?', HP.step >= 2 ? k * y / 2 : '?'];
+  const show = (n, s) => `${n === '?' ? '<span style="color:#c3b2e6">?</span>' : n > 1 ? n : ''}${chem(s)}`;
+  let h = `<span class="wtitle mint">BALANCE THE COMPLETE COMBUSTION: C, THEN H, THEN O</span>
+    <div class="heq">${show(cur[0], f)} + ${show(cur[1], 'O2')} → ${show(cur[2], 'CO2')} + ${show(cur[3], 'H2O')}</div>`;
+  const row = (id, q, done) => `<div class="hrow"><label for="${id}">${q}</label><input id="${id}" inputmode="numeric" autocomplete="off" value="${esc(v[id] || '')}" ${done ? 'disabled' : ''}>${done ? '<span style="color:#5df2a4">✓</span>' : `<button class="btn primary small" type="button" data-hc="${id}">Check</button>`}</div>`;
+  h += row('hC', `<b>C first.</b> ${chem(f)} has ${x} C. Each ${chem('CO2')} has 1 C. How many ${chem('CO2')}?`, HP.step >= 1);
+  if (HP.step >= 1) h += row('hH', `<b>H next.</b> ${chem(f)} has ${y} H. Each ${chem('H2O')} has 2 H. How many ${chem('H2O')}?`, HP.step >= 2);
+  if (HP.step >= 2 && !HP.doubled) h += row('hO', `<b>O last.</b> On the right: ${x} × 2 + ${y / 2} × 1 = <b>${nO}</b> O. Each ${chem('O2')} has 2 O. How many ${chem('O2')}?`, HP.step >= 3);
+  if (HP.doubled) h += `<div class="say warm"><span class="tag">DOUBLE EVERYTHING</span><p>${nO} is odd, and ${chem('O2')} only brings O in pairs (an even number), so no number in front of ${chem('O2')} gives ${nO}. Double every coefficient: now there are ${2 * nO} O on the right, which is ${nO} ${chem('O2')}.</p></div>`;
+  if (HP.step >= 3) h += `<div class="say good"><span class="tag">BALANCED ✓</span><p>${chem(eqText([f, 'O2'], ['CO2', 'H2O'], c))}</p></div>`;
+  h += HP.fb;
+  $('#helper').innerHTML = h;
+  $('#helper').querySelectorAll('[data-hc]').forEach(b => b.addEventListener('click', () => helperCheck(b.dataset.hc)));
+  $('#helper').querySelectorAll('input').forEach(inp => inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); helperCheck(inp.id); } }));
+  const dbl = $('#helper').querySelector('#hDouble'); if (dbl) dbl.addEventListener('click', () => { HP.doubled = true; HP.step = 3; HP.fb = ''; renderHelper(); });
+}
+function helperCheck(id) {
+  const m = model(), x = m.x, y = m.y, nO = 2 * x + y / 2;
+  const raw = ($('#' + id).value || '').trim().replace(',', '.'); HP.vals[id] = raw;
+  const n = parseFloat(raw);
+  const bad = t => { HP.fb = `<div class="say bad"><span class="tag">NOT YET</span><p>${t}</p></div>`; renderHelper(); const i = $('#' + id); if (i) i.focus(); };
+  if (id === 'hC') { if (n === x) { HP.step = 1; HP.fb = ''; renderHelper(); $('#hH').focus(); } else bad(`Count the C in ${chem(m.f)}: the small number after C is ${x}. One ${chem('CO2')} holds one C, so you need ${x === 1 ? 'just one' : 'one for each C'}.`); }
+  if (id === 'hH') { if (n === y / 2) { HP.step = 2; HP.fb = ''; renderHelper(); const o = $('#hO'); if (o) o.focus(); } else bad(`There are ${y} H to share out, and each ${chem('H2O')} takes 2. So divide: ${y} ÷ 2.`); }
+  if (id === 'hO') {
+    if (nO % 2 === 0 && n === nO / 2) { HP.step = 3; HP.fb = ''; renderHelper(); }
+    else if (nO % 2 === 1 && (n === nO / 2 || Math.abs(n - nO / 2) < 0.01)) {
+      HP.fb = `<div class="say warm"><span class="tag">RIGHT MATH, BUT…</span><p>${nO} ÷ 2 = ${nO / 2}. Coefficients must be whole numbers. You can't have half a molecule of ${chem('O2')}.</p>
+        <div class="acts"><button class="btn primary" type="button" id="hDouble">Double everything ▶</button></div></div>`; renderHelper(); $('#hDouble').focus();
+    } else bad(`There are ${nO} O on the right. Each ${chem('O2')} brings 2 O. How many 2s make ${nO}? (${nO} ÷ 2)`);
+  }
+}
+
+/* ================= tabs, loop, start ================= */
+let tab = 'dance', raf = 0;
+function frame(now) {
+  raf = 0;
+  if (document.hidden) return;
+  if (tab === 'dance') drawDance(now);
+  if (tab === 'burn') drawBurner(now);
+  const moving = !reduced && ((tab === 'dance' && D.playing) || tab === 'burn');
+  if (moving) raf = requestAnimationFrame(frame);
+}
+const kick = () => { if (!raf && !document.hidden) raf = requestAnimationFrame(frame); };
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { if (raf) cancelAnimationFrame(raf); raf = 0; if (D.playing) { D.hiddenAt = performance.now(); } }
+  else { if (D.hiddenAt) { D.t0 += performance.now() - D.hiddenAt; D.hiddenAt = 0; } kick(); }
+});
+function setTab(t) {
+  tab = t;
+  document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === t)));
+  $('#danceTab').hidden = t !== 'dance'; $('#sortTab').hidden = t !== 'sort'; $('#burnTab').hidden = t !== 'burn';
+  if (t === 'sort' && !SS.order.length) nextSort();
+  kick();
+}
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+function startLab() { $('#lab').hidden = false; $('#plain').open = false; store.seen = true; save(); kick(); }
+$('#goBtn').addEventListener('click', () => { startLab(); const b = $('[data-dance]'); if (b) b.focus(); });
+if (reduced) { $('#dplay').textContent = 'Play ▶'; D.playing = false; D.pausedT = 0.9; }
+renderDanceInfo(); renderBurner(); renderHelper(true);
+if (store.seen) startLab();
+setTab('dance');
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => kick());
+})();
+</script>
+</body></html>

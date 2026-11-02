@@ -116,9 +116,6 @@ sub,sup{font-size:.62em;line-height:0}
 .tally td.s{font-weight:700;white-space:nowrap}
 
 /* step 5 */
-.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:6px}
-.types .segbtn{text-align:left;min-height:54px}
-.types small{display:block;font-weight:400;font-size:.82rem}
 .flow{margin:4px 0 0;padding-left:1.2rem}
 .flow li{margin:2px 0}
 .flow li.yes{color:var(--mint);font-weight:700}
@@ -363,8 +360,8 @@ a{color:var(--tw-sky)}
     <p>A <b>word equation</b> tells you about a reaction in a sentence. A <b>chemical equation</b> says the same thing in chemistry shorthand.</p>
     <p>It is a recipe: <b>what you start with → what you make</b>. The sentence always tells you what is made. You never have to guess.</p>
     <p>Clue words do the work. "Reacts with" or "and" means <b>+</b>. "Produces", "yields" or "forms" means <b>→</b>.</p>
-    <div class="say hint"><span class="tag">FIVE SMALL STEPS</span>
-      <p>1 Find the substances. 2 Write each formula. 3 Build the equation. 4 Balance it. 5 Name the reaction type.</p></div>
+    <div class="say hint"><span class="tag">FOUR SMALL STEPS</span>
+      <p>1 Find the substances. 2 Write each formula. 3 Build the equation. 4 Balance it.</p></div>
     <button class="btn primary go" id="goBtn" type="button">Start ▶</button>
   </details>
 
@@ -394,19 +391,8 @@ a{color:var(--tw-sky)}
       <p><b>Roman numerals give the metal's charge.</b> Iron(III) means Fe<sup>3+</sup>. Copper(I) sulfate is Cu<sub>2</sub>SO<sub>4</sub>, because two Cu<sup>+</sup> balance one SO<sub>4</sub><sup>2−</sup>.</p>
       <p>Need a refresher? <a href="https://mrbecktech.github.io/site/courses/science-1206/chemistry/ionic-compounds/" target="_blank" rel="noopener">Ionic Compounds</a> · <a href="https://mrbecktech.github.io/site/courses/science-1206/chemistry/molecular-naming/" target="_blank" rel="noopener">Naming Molecular Compounds</a></p>
     </section>
-    <section class="card">
-      <h2 class="wtitle">REACTION TYPES</h2>
-      <p>Check them in this order:</p>
-      <ol class="flow">
-        <li>A hydrocarbon + O<sub>2</sub> → CO<sub>2</sub> + H<sub>2</sub>O? <b>Combustion</b>.</li>
-        <li>Only one reactant? <b>Decomposition</b>.</li>
-        <li>Only one product? <b>Formation</b> (also called synthesis).</li>
-        <li>A lone element on each side? <b>Single replacement</b>.</li>
-        <li>Two compounds → two compounds? <b>Double replacement</b>.</li>
-      </ol>
-    </section>
   </div>
-  <p class="foot">Science 1206 · Unit 2 Chemical Reactions · NL Science 10, Sections 3.3 and 4.1. Your progress is saved on this device only.</p>
+  <p class="foot">Science 1206 · Unit 2 Chemical Reactions · NL Science 10, Section 3.3. Your progress is saved on this device only.</p>
 </div>
 
 <dialog id="lockDlg" aria-labelledby="lockH">
@@ -645,22 +631,6 @@ const CHEM = (() => {
   }
 
 
-  // Reaction type, using the decision flowchart in order (combustion = hydrocarbon + O2 -> CO2 + H2O only)
-  const isElement = f => Object.keys(atoms(f)).length === 1;
-  function classifySteps(left, right) {
-    const qs = [
-      ['Is it a hydrocarbon + O2 -> CO2 + H2O (combustion)?', isCombustion(left, right), 'combustion'],
-      ['Only one reactant (decomposition)?', left.length === 1, 'decomposition'],
-      ['Only one product (formation)?', right.length === 1, 'formation'],
-      ['A lone element on each side (single replacement)?', left.length === 2 && right.length === 2 &&
-        left.filter(isElement).length === 1 && right.filter(isElement).length === 1, 'single'],
-      ['Two compounds -> two compounds (double replacement)?', left.length === 2 && right.length === 2 &&
-        !left.some(isElement) && !right.some(isElement), 'double']
-    ];
-    const k = qs.findIndex(q => q[1]);
-    return qs.slice(0, k < 0 ? qs.length : k + 1);
-  }
-  function classify(left, right) { const s = classifySteps(left, right), last = s[s.length - 1]; return last[1] ? last[2] : null; }
   // Ionic formula from two ions, e.g. ['Pb',2] + ['NO3',-1] -> Pb(NO3)2
   const POLY = ['NH4', 'OH', 'NO3', 'SO4', 'PO4', 'CO3', 'HCO3'];
   function ionicFormula(cat, an) {
@@ -682,7 +652,7 @@ const CHEM = (() => {
       return [n, ROOT[key][0], ROOT[key][1]];
     });
   }
-  return { classify, classifySteps, ionicFormula, molecularParts, tokens, atoms, units, commonIons, IONS, ION_NAME, solve, tally, check, gcd, gcdAll, prepare, order, nextMove, isCombustion };
+  return { ionicFormula, molecularParts, tokens, atoms, units, commonIons, IONS, ION_NAME, solve, tally, check, gcd, gcdAll, prepare, order, nextMove, isCombustion };
 })();
 if (typeof module !== 'undefined') module.exports = CHEM;
 </script>
@@ -692,61 +662,61 @@ if (typeof module !== 'undefined') module.exports = CHEM;
  {"id":"al","text":"Solid [aluminum] reacts with [oxygen] gas to form solid [aluminum oxide].",
   "subs":[{"n":"aluminum","f":"Al","k":"metal","st":["s"],"sw":"solid"},{"n":"oxygen","f":"O2","k":"diatomic","st":["g"],"sw":"gas"},
           {"n":"aluminum oxide","f":"Al2O3","k":"ionic","ions":[["Al",3],["O",-2]],"st":["s"],"sw":"solid"}],
-  "left":[0,1],"right":[2],"key":[4,3,2],"type":"formation","clues":[["reacts with","+"],["to form","→"]]},
+  "left":[0,1],"right":[2],"key":[4,3,2],"clues":[["reacts with","+"],["to form","→"]]},
  {"id":"k","text":"Solid [potassium] reacts with aqueous [magnesium chloride] to produce solid [magnesium] and aqueous [potassium chloride].",
   "subs":[{"n":"potassium","f":"K","k":"metal","st":["s"],"sw":"solid"},{"n":"magnesium chloride","f":"MgCl2","k":"ionic","ions":[["Mg",2],["Cl",-1]],"st":["aq"],"sw":"aqueous"},
           {"n":"magnesium","f":"Mg","k":"metal","st":["s"],"sw":"solid"},{"n":"potassium chloride","f":"KCl","k":"ionic","ions":[["K",1],["Cl",-1]],"st":["aq"],"sw":"aqueous"}],
-  "left":[0,1],"right":[2,3],"key":[2,1,1,2],"type":"single","clues":[["reacts with","+"],["to produce","→"],["and","+"]]},
+  "left":[0,1],"right":[2,3],"key":[2,1,1,2],"clues":[["reacts with","+"],["to produce","→"],["and","+"]]},
  {"id":"h2o","text":"Liquid [water] decomposes into [hydrogen] gas and [oxygen] gas.",
   "subs":[{"n":"water","f":"H2O","k":"common","st":["l"],"sw":"liquid"},{"n":"hydrogen","f":"H2","k":"diatomic","st":["g"],"sw":"gas"},
           {"n":"oxygen","f":"O2","k":"diatomic","st":["g"],"sw":"gas"}],
-  "left":[0],"right":[1,2],"key":[2,2,1],"type":"decomposition","clues":[["decomposes into","→"],["and","+"]]},
+  "left":[0],"right":[1,2],"key":[2,2,1],"clues":[["decomposes into","→"],["and","+"]]},
  {"id":"zn","text":"[Zinc] metal reacts with [hydrochloric acid] to produce [zinc chloride] solution and [hydrogen] gas.",
   "subs":[{"n":"zinc","f":"Zn","k":"metal","st":["s"],"sw":"metal"},{"n":"hydrochloric acid","f":"HCl","k":"acid","st":[null,"aq"],
            "h":"Hydrochloric acid is hydrogen chloride dissolved in water. Its formula is HCl."},
           {"n":"zinc chloride","f":"ZnCl2","k":"ionic","ions":[["Zn",2],["Cl",-1]],"st":["aq"],"sw":"solution"},{"n":"hydrogen","f":"H2","k":"diatomic","st":["g"],"sw":"gas"}],
-  "left":[0,1],"right":[2,3],"key":[1,2,1,1],"type":"single","clues":[["reacts with","+"],["to produce","→"],["and","+"]]},
+  "left":[0,1],"right":[2,3],"key":[1,2,1,1],"clues":[["reacts with","+"],["to produce","→"],["and","+"]]},
  {"id":"c3h8","text":"[Propane (C3H8)] burns in [oxygen] gas to give [carbon dioxide] gas and [water] vapour.",
   "subs":[{"n":"propane","f":"C3H8","k":"given","st":[null,"g"]},{"n":"oxygen","f":"O2","k":"diatomic","st":["g"],"sw":"gas"},
           {"n":"carbon dioxide","f":"CO2","k":"molecular","st":["g"],"sw":"gas"},{"n":"water","f":"H2O","k":"common","st":["g"],"sw":"vapour"}],
-  "left":[0,1],"right":[2,3],"key":[1,5,3,4],"type":"combustion","clues":[["burns in","+"],["to give","→"],["and","+"]]},
+  "left":[0,1],"right":[2,3],"key":[1,5,3,4],"clues":[["burns in","+"],["to give","→"],["and","+"]]},
  {"id":"fe","text":"Solid [iron] reacts with [chlorine] gas to form solid [iron(III) chloride].",
   "subs":[{"n":"iron","f":"Fe","k":"metal","st":["s"],"sw":"solid"},{"n":"chlorine","f":"Cl2","k":"diatomic","st":["g"],"sw":"gas"},
           {"n":"iron(III) chloride","f":"FeCl3","k":"ionic","ions":[["Fe",3,"III"],["Cl",-1]],"st":["s"],"sw":"solid"}],
-  "left":[0,1],"right":[2],"key":[2,3,2],"type":"formation","clues":[["reacts with","+"],["to form","→"]]},
+  "left":[0,1],"right":[2],"key":[2,3,2],"clues":[["reacts with","+"],["to form","→"]]},
  {"id":"cu","text":"Aqueous [copper(II) chloride] reacts with solid [aluminum] to produce solid [copper] and aqueous [aluminum chloride].",
   "subs":[{"n":"copper(II) chloride","f":"CuCl2","k":"ionic","ions":[["Cu",2,"II"],["Cl",-1]],"st":["aq"],"sw":"aqueous"},{"n":"aluminum","f":"Al","k":"metal","st":["s"],"sw":"solid"},
           {"n":"copper","f":"Cu","k":"metal","st":["s"],"sw":"solid"},{"n":"aluminum chloride","f":"AlCl3","k":"ionic","ions":[["Al",3],["Cl",-1]],"st":["aq"],"sw":"aqueous"}],
-  "left":[0,1],"right":[2,3],"key":[3,2,3,2],"type":"single","clues":[["reacts with","+"],["to produce","→"],["and","+"]]},
+  "left":[0,1],"right":[2,3],"key":[3,2,3,2],"clues":[["reacts with","+"],["to produce","→"],["and","+"]]},
  {"id":"pb","text":"Aqueous [lead(II) nitrate] reacts with aqueous [potassium iodide] to form solid [lead(II) iodide] and aqueous [potassium nitrate].",
   "subs":[{"n":"lead(II) nitrate","f":"Pb(NO3)2","k":"ionic","ions":[["Pb",2,"II"],["NO3",-1]],"st":["aq"],"sw":"aqueous"},{"n":"potassium iodide","f":"KI","k":"ionic","ions":[["K",1],["I",-1]],"st":["aq"],"sw":"aqueous"},
           {"n":"lead(II) iodide","f":"PbI2","k":"ionic","ions":[["Pb",2,"II"],["I",-1]],"st":["s"],"sw":"solid"},{"n":"potassium nitrate","f":"KNO3","k":"ionic","ions":[["K",1],["NO3",-1]],"st":["aq"],"sw":"aqueous"}],
-  "left":[0,1],"right":[2,3],"key":[1,2,1,2],"type":"double","clues":[["reacts with","+"],["to form","→"],["and","+"]]},
+  "left":[0,1],"right":[2,3],"key":[1,2,1,2],"clues":[["reacts with","+"],["to form","→"],["and","+"]]},
  {"id":"hg","text":"When heated, solid [mercury(II) oxide] breaks down into liquid [mercury] and [oxygen] gas.",
   "subs":[{"n":"mercury(II) oxide","f":"HgO","k":"ionic","ions":[["Hg",2,"II"],["O",-2]],"st":["s"],"sw":"solid"},{"n":"mercury","f":"Hg","k":"metal","st":["l"],"sw":"liquid"},
           {"n":"oxygen","f":"O2","k":"diatomic","st":["g"],"sw":"gas"}],
-  "left":[0],"right":[1,2],"key":[2,2,1],"type":"decomposition","clues":[["When heated","one reactant"],["breaks down into","→"],["and","+"]]},
+  "left":[0],"right":[1,2],"key":[2,2,1],"clues":[["When heated","one reactant"],["breaks down into","→"],["and","+"]]},
  {"id":"naoh","text":"Aqueous [sodium hydroxide] reacts with aqueous [sulfuric acid] to produce aqueous [sodium sulfate] and liquid [water].",
   "subs":[{"n":"sodium hydroxide","f":"NaOH","k":"ionic","ions":[["Na",1],["OH",-1]],"st":["aq"],"sw":"aqueous"},
           {"n":"sulfuric acid","f":"H2SO4","k":"acid","st":["aq"],"sw":"aqueous","h":"Sulfuric acid is hydrogen ions (H^+) with the sulfate ion (SO4^2-). Two H^+ balance one SO4^2-, so it is H2SO4."},
           {"n":"sodium sulfate","f":"Na2SO4","k":"ionic","ions":[["Na",1],["SO4",-2]],"st":["aq"],"sw":"aqueous"},{"n":"water","f":"H2O","k":"common","st":["l"],"sw":"liquid"}],
-  "left":[0,1],"right":[2,3],"key":[2,1,1,2],"type":"double","clues":[["reacts with","+"],["to produce","→"],["and","+"]]},
+  "left":[0,1],"right":[2,3],"key":[2,1,1,2],"clues":[["reacts with","+"],["to produce","→"],["and","+"]]},
  {"id":"ch4","text":"[Methane (CH4)] gas burns in [oxygen] gas to produce [carbon dioxide] gas and [water] vapour.",
   "subs":[{"n":"methane","f":"CH4","k":"given","st":["g"],"sw":"gas"},{"n":"oxygen","f":"O2","k":"diatomic","st":["g"],"sw":"gas"},
           {"n":"carbon dioxide","f":"CO2","k":"molecular","st":["g"],"sw":"gas"},{"n":"water","f":"H2O","k":"common","st":["g"],"sw":"vapour"}],
-  "left":[0,1],"right":[2,3],"key":[1,2,1,2],"type":"combustion","clues":[["burns in","+"],["to produce","→"],["and","+"]]},
+  "left":[0,1],"right":[2,3],"key":[1,2,1,2],"clues":[["burns in","+"],["to produce","→"],["and","+"]]},
  {"id":"br","text":"Liquid [bromine] reacts with aqueous [potassium iodide] to form aqueous [potassium bromide] and solid [iodine].",
   "subs":[{"n":"bromine","f":"Br2","k":"diatomic","st":["l"],"sw":"liquid"},{"n":"potassium iodide","f":"KI","k":"ionic","ions":[["K",1],["I",-1]],"st":["aq"],"sw":"aqueous"},
           {"n":"potassium bromide","f":"KBr","k":"ionic","ions":[["K",1],["Br",-1]],"st":["aq"],"sw":"aqueous"},{"n":"iodine","f":"I2","k":"diatomic","st":["s"],"sw":"solid"}],
-  "left":[0,1],"right":[2,3],"key":[1,2,2,1],"type":"single","clues":[["reacts with","+"],["to form","→"],["and","+"]]},
+  "left":[0,1],"right":[2,3],"key":[1,2,2,1],"clues":[["reacts with","+"],["to form","→"],["and","+"]]},
  {"id":"no2","text":"[Nitrogen] gas reacts with [oxygen] gas to form [nitrogen dioxide] gas.",
   "subs":[{"n":"nitrogen","f":"N2","k":"diatomic","st":["g"],"sw":"gas"},{"n":"oxygen","f":"O2","k":"diatomic","st":["g"],"sw":"gas"},
           {"n":"nitrogen dioxide","f":"NO2","k":"molecular","st":["g"],"sw":"gas"}],
-  "left":[0,1],"right":[2],"key":[1,2,2],"type":"formation","clues":[["reacts with","+"],["to form","→"]]},
+  "left":[0,1],"right":[2],"key":[1,2,2],"clues":[["reacts with","+"],["to form","→"]]},
  {"id":"s8","text":"Solid [sulfur] burns in [oxygen] gas to form [sulfur dioxide] gas.",
   "subs":[{"n":"sulfur","f":"S8","k":"poly","st":["s"],"sw":"solid"},{"n":"oxygen","f":"O2","k":"diatomic","st":["g"],"sw":"gas"},
           {"n":"sulfur dioxide","f":"SO2","k":"molecular","st":["g"],"sw":"gas"}],
-  "left":[0,1],"right":[2],"key":[1,8,8],"type":"formation","clues":[["burns in","+"],["to form","→"]]}
+  "left":[0,1],"right":[2],"key":[1,8,8],"clues":[["burns in","+"],["to form","→"]]}
 ]
 </script>
 
@@ -794,11 +764,6 @@ const ELN = { H: 'hydrogen', O: 'oxygen', C: 'carbon', N: 'nitrogen', Cl: 'chlor
   Hg: 'mercury', Zn: 'zinc', F: 'fluorine' };
 const DIATOMIC = ['H', 'O', 'N', 'Cl', 'Br', 'I', 'F'];
 const STATES = [['s', 'solid'], ['l', 'liquid'], ['g', 'gas'], ['aq', 'aqueous']];
-const TYPES = [['formation', 'Formation', 'also called synthesis: A + B → AB'], ['decomposition', 'Decomposition', 'AB → A + B'],
-  ['single', 'Single replacement', 'A + BC → AC + B'], ['double', 'Double replacement', 'AB + CD → AD + CB'],
-  ['combustion', 'Combustion', 'hydrocarbon + O2 → CO2 + H2O']];
-const TYPE_NAME = Object.fromEntries(TYPES.map(t => [t[0], t[1]]));
-
 const BANK = JSON.parse($('#bank').textContent).map(q => {
   const l = q.left.map(i => q.subs[i].f), r = q.right.map(i => q.subs[i].f);
   return Object.assign(q, { eq: CHEM.prepare(l, r), order: [...q.left, ...q.right] });
@@ -841,12 +806,12 @@ document.addEventListener('mouseover', e => { const t = e.target.closest('.term[
 document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
 
 /* State */
-const S = { i: 0, step: 1, sel: new Set(), wrongs: new Set(), tries: 0, fb: '', f: [], fmsg: [], help: [], side: [], st: [], c: [], hint: 0, move: null, type: null, done: false };
+const S = { i: 0, step: 1, sel: new Set(), wrongs: new Set(), tries: 0, fb: '', f: [], fmsg: [], help: [], side: [], st: [], c: [], hint: 0, move: null };
 const Q = () => BANK[S.i];
 function loadQ() {
   const q = Q();
   Object.assign(S, { done4: false, step: 1, sel: new Set(), wrongs: new Set(), tries: 0, fb: '', f: q.subs.map(() => ''), fmsg: q.subs.map(() => null),
-    help: q.subs.map(() => 0), side: q.subs.map(() => null), st: q.subs.map(() => undefined), c: q.order.map(() => 1), hint: 0, move: null, type: null, done: false });
+    help: q.subs.map(() => 0), side: q.subs.map(() => null), st: q.subs.map(() => undefined), c: q.order.map(() => 1), hint: 0, move: null });
   render();
 }
 
@@ -984,12 +949,12 @@ function render() {
   $('#bar').innerHTML = `<span class="lbl">SENTENCE</span><div class="pick" role="group" aria-label="Choose a sentence">${BANK.map((b, i) =>
     `<button type="button" data-i="${i}" class="${i === S.i ? 'on' : ''} ${store.solved[b.id] ? 'done' : ''}" aria-pressed="${i === S.i}"
       aria-label="Sentence ${i + 1}${store.solved[b.id] ? ', done' : ''}">${i + 1}</button>`).join('')}</div>
-    <div class="steps" aria-label="Steps">${['1 FIND', '2 FORMULAS', '3 BUILD', '4 BALANCE', '5 TYPE'].map((s, i) =>
+    <div class="steps" aria-label="Steps">${['1 FIND', '2 FORMULAS', '3 BUILD', '4 BALANCE'].map((s, i) =>
       `<span class="${S.step === i + 1 ? 'on' : S.step > i + 1 ? 'past' : ''}">${s}</span>`).join('')}</div>`;
   $('#bar').querySelectorAll('.pick button').forEach(b => b.addEventListener('click', () => { S.i = +b.dataset.i; loadQ(); }));
   renderSentence();
   const P = $('#panel');
-  const steps = [null, step1, step2, step3, step4, step5];
+  const steps = [null, step1, step2, step3, step4, done];
   P.innerHTML = steps[Math.min(S.step, 5)](q);
   wire(q);
 }
@@ -1043,29 +1008,19 @@ function step4(q) {
       <p>Change the ${T('coefficients', 'coefficient')} (the big numbers in front) until every row says ✓. Change coefficients, never subscripts.</p></div>
     <div class="eq" id="eq">${eqh}</div>
     <div class="bal"><div>${hint}${S.fb}
-      <div class="acts">${S.done4 ? `<button class="btn primary" type="button" id="to5">Next: name the type ▶</button>`
+      <div class="acts">${S.done4 ? ''
         : `<button class="btn" type="button" id="hint">${S.hint >= 3 ? 'No more hints' : S.hint ? 'More hint (' + (S.hint + 1) + '/3)' : 'Hint'}</button>
            <button class="btn primary" type="button" id="check4">Check ✓</button>`}</div></div>
       <table class="tally"><thead><tr><th scope="col">ELEMENT</th><th scope="col">LEFT</th><th scope="col">RIGHT</th><th scope="col"><span class="sr">MATCH?</span></th></tr></thead><tbody>${
         rows.map(r => `<tr class="${r.L === r.R ? 'ok' : 'no'}"><td>${r.k} (${ELN[r.k] || r.k})</td><td class="n">${r.L}</td><td class="n">${r.R}</td><td class="s">${r.L === r.R ? '✓ match' : '✗ not yet'}</td></tr>`).join('')}</tbody></table></div>`;
 }
-function step5(q) {
+function done(q) {
   const e = q.eq;
   const full = e.f.map((_, j) => (S.c[j] > 1 ? S.c[j] : '') + formulaWithState(q, j));
   const eqText = full.slice(0, e.nL).join(' + ') + ' -> ' + full.slice(e.nL).join(' + ');
-  if (S.done) return `<div class="final">${chem(eqText)}</div>
-    <div class="say good"><span class="tag">ALL FIVE STEPS DONE ✓</span><p>This is a <b>${TYPE_NAME[CHEM.classify(q.eq.left, q.eq.right)].toLowerCase()}</b> reaction.</p>${flowHTML(q, true)}</div>
-    <div class="acts">${S.i < BANK.length - 1 ? '<button class="btn primary" type="button" id="nextQ">Next sentence ▶</button>' : '<p>That was the last sentence. Well done!</p>'}</div>`;
   return `<div class="final">${chem(eqText)}</div>
-    <div class="say"><span class="tag">STEP 5 · WHAT TYPE OF REACTION?</span><p>Pick the type. Check in this order: combustion, then one reactant, then one product, then a lone element on each side, then two compounds → two compounds.</p></div>
-    <div class="types" role="group" aria-label="Reaction type">${TYPES.map(([v, n, pat]) =>
-      `<button class="segbtn" type="button" data-type="${v}" aria-pressed="${S.type === v}">${n}<small>${chem(pat)}</small></button>`).join('')}</div>
-    ${S.fb}`;
-}
-// the decision flowchart for this equation, with the step that decides it marked
-function flowHTML(q, mark) {
-  const steps = CHEM.classifySteps(q.eq.left, q.eq.right);
-  return `<ol class="flow">${steps.map(([txt, yes]) => `<li class="${mark && yes ? 'yes' : ''}">${chem(txt)} ${yes ? '<b>Yes.</b>' : 'No.'}</li>`).join('')}</ol>`;
+    <div class="say good"><span class="tag">ALL FOUR STEPS DONE ✓</span><p>Every element matches, and these are the smallest whole numbers.</p></div>
+    <div class="acts">${S.i < BANK.length - 1 ? '<button class="btn primary" type="button" id="nextQ">Next sentence ▶</button>' : '<p>That was the last sentence. Well done!</p>'}</div>`;
 }
 function hintText(m, level) {
   const e = Q().eq, fF = i => chem(e.f[i]);
@@ -1116,9 +1071,6 @@ function wire(q) {
     S.hint++; S.fb = ''; render(); focusFirst('#hint');
   });
   on('check4', checkStep4);
-  on('to5', () => { S.step = 5; S.fb = ''; render(); focusFirst('[data-type]'); });
-  // step 5
-  P.querySelectorAll('[data-type]').forEach(b => b.addEventListener('click', () => checkStep5(b.dataset.type)));
   on('nextQ', () => { S.i++; loadQ(); window.scrollTo({ top: $('#lab').offsetTop - 8 }); focusFirst('#check1'); });
 }
 const focusSel = s => { const e = $('#panel').querySelector(s); if (e) e.focus({ preventScroll: true }); };
@@ -1173,9 +1125,8 @@ function setC(j, v, typing) {
 function checkStep4() {
   const q = Q(), e = q.eq, r = CHEM.check(e.left, e.right, S.c);
   if (r.correct) {
-    S.done4 = true;
-    S.fb = `<div class="say good"><span class="tag">BALANCED! ✓</span><p>Every element matches, and these are the smallest whole numbers.</p></div>`;
-    render(); focusFirst('#to5'); return;
+    S.done4 = true; S.step = 5; S.fb = ''; store.solved[q.id] = true; save();
+    render(); focusFirst('#nextQ'); return;
   }
   if (r.balanced) {
     S.fb = `<div class="say warm"><span class="tag">BALANCED, BUT REDUCE IT</span><p>All the atoms match. But every coefficient can be divided by ${r.g}. Use the smallest whole numbers: divide each one by ${r.g}.</p></div>`;
@@ -1189,19 +1140,6 @@ function checkStep4() {
   }
   render(); focusFirst('#check4');
 }
-function checkStep5(v) {
-  const q = Q(), right = CHEM.classify(q.eq.left, q.eq.right);
-  S.type = v;
-  if (v === right) {
-    S.done = true; store.solved[q.id] = true; save();
-    S.fb = ''; render(); focusFirst('#nextQ'); return;
-  }
-  const traps = [];
-  if (v === 'combustion' && !right.startsWith('comb')) traps.push(`It burns, but combustion here means a hydrocarbon (a fuel made of only C and H) + ${chem('O2')} → ${chem('CO2')} + ${chem('H2O')}. ${q.eq.left.some(f => /^[CH0-9]+$/.test(f) && f.includes('C')) ? '' : 'There is no hydrocarbon in this one.'}`);
-  S.fb = `<div class="say bad"><span class="tag">NOT ${TYPE_NAME[v].toUpperCase()}</span>${traps.map(t => `<p>${t}</p>`).join('')}<p>Go through the questions in order. Stop at the first "yes":</p>${flowHTML(q, false)}</div>`;
-  render(); focusSel(`[data-type="${v}"]`);
-}
-
 /* ---- start ---- */
 function startLab() { $('#lab').hidden = false; $('#plain').open = false; store.seen = true; save(); }
 $('#goBtn').addEventListener('click', () => { startLab(); const b = $('#sentence .w'); if (b) b.focus(); });
