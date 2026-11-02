@@ -1,480 +1,826 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>90s Retro Science Review Guide</title>
-<style>
-  /* 90s Retro Aesthetic Base */
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unit 1 Review, Part 1 | Science 1206</title>
+<meta name="tw-titlecard" content="WEATHER · TEST #1|REVIEW|GET READY.">
+<style>:root{
+  --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --warm:#ff9a4d;
+  --radius:6px; --focus:#5df2a4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif}
+.app{max-width:1060px;margin:0 auto;padding:8px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 8px}
+.hd h1{margin:0}
+.lead{flex-basis:100%;margin:2px 0 0;font-size:.95rem}
+.card{padding:12px 16px;margin:0 0 12px}
+.part{font-family:'Press Start 2P','Courier New',monospace;font-size:11px;line-height:1.6;color:#1b1030;background:var(--gold);display:inline-block;padding:6px 10px;border:3px solid #000;box-shadow:4px 4px 0 #000;margin:4px 0 10px;font-weight:400}
+.wtitle{font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1.6;color:var(--sky);margin:0 0 6px;font-weight:400}
+[hidden]{display:none!important}
+sub,sup{font-size:.62em;line-height:0}
+a{color:var(--sky)}
+.plain p{margin:4px 0;max-width:80ch}
+.btn,.segbtn{appearance:none;font:inherit;font-weight:700;padding:7px 12px;min-height:38px;cursor:pointer}
+.btn.small{padding:4px 9px;min-height:32px;font-size:.9rem}
+.segbtn{text-align:left;font-size:.95rem;padding:6px 10px;min-height:36px}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
 
-  :root {
-    --bg-color: #008080; /* Classic Teal */
-    --hot-pink: #ff007f;
-    --neon-yellow: #ffff00;
-    --electric-blue: #00dfff;
-    --purple: #8b008b;
-    --card-bg: #c0c0c0; /* Windows 95 Grey */
-  }
+/* progress bar */
+.prog{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0;margin:0 0 6px}
+.prog .bar{height:16px;border:3px solid #000;border-radius:4px;background:var(--panel);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--mint);width:0;transition:width .3s}
+.prog .txt{font-size:.85rem;color:var(--ink2);margin-top:2px}
 
-  body {
-    background-color: var(--bg-color);
-    background-image: radial-gradient(var(--purple) 15%, transparent 16%), radial-gradient(var(--electric-blue) 15%, transparent 16%);
-    background-size: 30px 30px;
-    background-position: 0 0, 15px 15px;
-    font-family: 'VT323', monospace;
-    color: #000;
-    margin: 0;
-    padding: 20px;
-  }
+/* part 1: key words */
+.vocab{width:100%;border-collapse:collapse;background:var(--panel);border:3px solid #000;margin:0 0 10px}
+.vocab th{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;font-weight:400;color:var(--ink2);text-align:left;padding:7px 8px;border-bottom:2px solid #3a2463}
+.vocab td{padding:6px 8px;border-bottom:1px solid #2a1850;vertical-align:top}
+.vocab td.c{font:400 22px/1 'VT323','Courier New',monospace;color:var(--gold);width:44px}
+.vocab td.t{width:250px}
+.vocab .term{font-weight:700;color:var(--mint)}
+.vocab .tn{font:400 20px/1 'VT323','Courier New',monospace;color:var(--gold);margin-right:6px}
+.sub-h{font-weight:700;color:var(--sky);margin:12px 0 4px}
 
-  /* Main Container Box */
-  .retro-container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: #ffffff;
-    border: 5px solid #000;
-    box-shadow: 10px 10px 0px #000;
-    padding: 20px;
-  }
+/* part 2: concepts */
+.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px}
+.cc{background:var(--panel);border:3px solid #000;border-left:6px solid #3a2463;border-radius:4px;padding:9px 12px;scroll-margin-top:60px}
+.cc.all{border-left-color:var(--mint)}
+.cc.wide{grid-column:1 / -1}
+.cc h3{margin:0 0 4px;font-size:1.02rem;color:var(--sky);display:flex;gap:8px;align-items:baseline}
+.cc h3 .cn{font:400 24px/1 'VT323','Courier New',monospace;color:var(--gold);min-width:22px}
+.cc .ask{margin:0 0 6px;font-size:.88rem;color:var(--ink2);font-style:italic}
+.cc ul{margin:0;padding-left:1.1rem}
+.cc li{margin:3px 0;font-size:.94rem}
+.cc b{color:#fff}
+.cfoot{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:8px;padding-top:6px;border-top:1px solid #2a1850;font-size:.85rem}
+.cfoot .cst{color:var(--ink2)} .cc.all .cfoot .cst{color:var(--mint)}
+.mini{width:100%;border-collapse:collapse;margin:6px 0;font-size:.88rem}
+.mini th{text-align:left;color:var(--ink2);font-weight:700;border-bottom:2px solid #3a2463;padding:3px 6px}
+.mini td{border-bottom:1px solid #2a1850;padding:3px 6px;vertical-align:top}
+.abs{color:var(--warm);font-weight:700} .rel{color:var(--sky);font-weight:700}
+.fig{margin:8px 0 2px}
+.fig svg{display:block;width:100%;height:auto;max-width:560px;border:3px solid #000;border-radius:4px}
+.fig .cap{font-size:.8rem;color:var(--ink2);margin-top:3px}
+/* energy budget bar */
+.ebar{display:flex;height:34px;border:3px solid #000;border-radius:4px;overflow:hidden;margin:8px 0 4px;font:400 20px/28px 'VT323','Courier New',monospace;color:#1b1030;text-align:center}
+.ebar span{display:block;border-right:2px solid #000}
+.ebar span:last-child{border-right:0}
+.ekey{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px 10px;font-size:.84rem;margin:0 0 4px}
+.ekey i{display:inline-block;width:12px;height:12px;border:2px solid #000;margin-right:5px;vertical-align:-1px}
 
-  /* Header Section */
-  header {
-    background: linear-gradient(90deg, var(--hot-pink), var(--purple));
-    border: 4px solid #000;
-    padding: 15px;
-    text-align: center;
-    color: #fff;
-    text-shadow: 3px 3px 0px #000;
-    margin-bottom: 20px;
-  }
+/* part 3: practice */
+.q{background:var(--panel);border:3px solid #000;border-left:6px solid #3a2463;border-radius:4px;padding:9px 12px;margin:0 0 10px;scroll-margin-top:60px}
+.q.done{border-left-color:var(--mint)}
+.q .num{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--gold);display:block;margin-bottom:3px}
+.q .num .sec{color:var(--ink2)}
+.q .stem{font-weight:700;margin:0 0 6px}
+.q .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:5px}
+.q .fb{margin-top:6px;font-size:.95rem}
+.q .fb.good{color:var(--mint)} .q .fb.bad{color:#ffb3bd}
+.q .fb .why{color:var(--ink)}
+.q .fig svg{max-width:340px}
 
-  h1 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 1.5rem;
-    margin: 0 0 10px 0;
-    color: var(--neon-yellow);
-    text-shadow: 3px 3px 0px #000;
-  }
-
-  h2 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 1.1rem;
-    background: var(--neon-yellow);
-    color: #000;
-    padding: 8px;
-    border: 3px solid #000;
-    box-shadow: 4px 4px 0px #000;
-    margin-top: 30px;
-    text-transform: uppercase;
-  }
-
-  /* Retro Marquee Styling */
-  .marquee-box {
-    background: #000;
-    color: var(--electric-blue);
-    font-family: 'VT323', monospace;
-    font-size: 1.4rem;
-    padding: 5px;
-    border: 2px solid #fff;
-    margin-bottom: 20px;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  /* Retro Table Styling */
-  .retro-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1.2rem;
-  }
-
-  .retro-table th {
-    background: var(--electric-blue);
-    color: #000;
-    border: 3px solid #000;
-    padding: 10px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.8rem;
-  }
-
-  .retro-table td {
-    border: 2px solid #000;
-    padding: 8px 12px;
-    background: #fff;
-  }
-
-  .retro-table tr:nth-child(even) td {
-    background: #f0f0f0;
-  }
-
-  .code-badge {
-    background: var(--hot-pink);
-    color: #fff;
-    font-weight: bold;
-    padding: 2px 8px;
-    border: 2px solid #000;
-    display: inline-block;
-  }
-
-  .term-badge {
-    background: var(--neon-yellow);
-    font-weight: bold;
-    padding: 2px 6px;
-    border: 2px solid #000;
-    display: inline-block;
-  }
-
-  /* Card Grid for Concepts */
-  .concept-card {
-    background: #fff;
-    border: 3px solid #000;
-    box-shadow: 6px 6px 0px #000;
-    margin-bottom: 20px;
-    padding: 15px;
-  }
-
-  .concept-card h3 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.9rem;
-    color: var(--hot-pink);
-    margin-top: 0;
-    border-bottom: 2px dashed #000;
-    padding-bottom: 8px;
-  }
-
-  .concept-card ul {
-    margin: 0;
-    padding-left: 20px;
-    font-size: 1.25rem;
-    line-height: 1.4;
-  }
-
-  .concept-card li {
-    margin-bottom: 8px;
-  }
-
-  /* Decorative Badges */
-  .badge-90s {
-    display: inline-block;
-    background: var(--hot-pink);
-    color: #fff;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.6rem;
-    padding: 4px 8px;
-    border: 2px solid #000;
-    transform: rotate(-2deg);
-    margin-bottom: 10px;
-  }
-
-  /* Button/Footer Styling */
-  .footer-retro {
-    text-align: center;
-    margin-top: 30px;
-    padding: 10px;
-    background: var(--neon-yellow);
-    border: 3px solid #000;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.7rem;
-  }
+/* end card: '90s anime episode ending */
+.endcard{position:fixed;inset:0;z-index:9998;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;cursor:pointer;overflow:hidden}
+.endcard .stripes{position:absolute;inset:-20% -10%;background:repeating-linear-gradient(-28deg,transparent 0 46px,rgba(255,210,63,.9) 46px 58px,transparent 58px 120px,rgba(255,93,115,.85) 120px 128px,transparent 128px 190px,rgba(106,211,255,.8) 190px 196px);
+  opacity:.22;animation:slide 6s linear infinite}
+@keyframes slide{to{transform:translateX(190px)}}
+.endcard .k{font:400 clamp(10px,1.4vw,14px)/1.6 'Press Start 2P','Courier New',monospace;color:var(--gold);position:relative;letter-spacing:.06em}
+.endcard .big{font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.92;position:relative;transform-origin:left;transform:scaleX(.72);white-space:nowrap}
+.endcard .l1{font-size:clamp(40px,8vw,96px)}
+.endcard .l2{font-size:clamp(52px,11vw,132px);color:var(--gold)}
+.endcard .sub{position:relative;font:italic 700 clamp(14px,2vw,22px)/1.3 'Atkinson Hyperlegible',sans-serif;color:var(--sky);margin-top:14px}
+.endcard .close{position:absolute;right:18px;bottom:14px;font-size:13px;color:#888}
+.endcard .in{animation:pop .6s cubic-bezier(.2,1.4,.4,1) both}
+.endcard .in.d2{animation-delay:.25s} .endcard .in.d3{animation-delay:.5s} .endcard .in.d4{animation-delay:.8s}
+@keyframes pop{from{opacity:0;transform:translateX(-40px) scaleX(.72)}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.endcard .stripes,.endcard .in{animation:none}}
+.foot{margin:12px 4px 0;font-size:.82rem}
+@media print{.prog,.acts,.endcard,.cfoot .btn{display:none!important}}
 </style>
-</head>
-<body><!--worldmap:start--><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap"><div style="max-width:1120px;margin:0 auto;padding:10px 12px 0;align-self:stretch;box-sizing:border-box"><a href="https://mrbecktech.github.io/site/" style="display:inline-block;font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1;color:#ffd23f;background:#3a2463;text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94">&#9664; WORLD MAP</a></div><!--worldmap:end-->
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
 
-<div class="retro-container">
-  
-  <header>
-    <div class="badge-90s">★ EXTREME STUDY GUIDE ★</div>
-    <h1>CHAPTER 1 SCIENCE REVIEW</h1>
-    <p style="font-size: 1.4rem; margin: 0;">Meteorology, Energy Transfer, Weather Systems & Ocean Circulation</p>
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<div id="app" class="app">
+  <header class="hd">
+    <h1>Unit 1 Review, Part 1</h1>
+    <span class="pill">SCIENCE 1206 · UNIT 1</span>
+    <p class="lead">Weather dynamics: energy, the water cycle, air masses, pressure, winds, fronts and ocean currents. Get ready for Test #1.</p>
   </header>
 
-  <div class="marquee-box">
-    <marquee behavior="scroll" direction="left" scrollamount="6">
-      *** COOL DOWN WITH WEATHER SYSTEMS! *** DONT FORGET YOUR ALBEDO VALUES! *** RADICAL SCIENCE STUDY SHEET ***
-    </marquee>
+  <div class="card plain">
+    <h2 class="wtitle">IN PLAIN WORDS</h2>
+    <p>This page follows the <b>Test #1 Review</b> in your booklet. <b>Part 1</b> is the key words, with the matching review (a) to (r). <b>Part 2</b> answers each of the 20 concepts on the review sheet. <b>Part 3</b> is practice questions that check your answers.</p>
+    <p>Answer every question in Part 3 correctly to finish. Wrong answers are fine: each one points you to the concept to reread, so try again. The Unit Test review is <a href="https://mrbecktech.github.io/site/courses/science-1206/weather/u1-review-pt2/" target="_blank" rel="noopener">Part 2 ↗</a>.</p>
   </div>
 
-  <h2>PART 1: KEY VOCABULARY & MATCHING</h2>
-  
-  <table class="retro-table">
-    <thead>
-      <tr>
-        <th style="width: 10%;">Code</th>
-        <th>Definition / Concept</th>
-        <th style="width: 35%;">Matching Term & Number</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="code-badge">(a)</span></td>
-        <td>A vertical transfer of energy involving particle flow; warm/energetic particles become less dense and rise, cold particles become denser and sink.</td>
-        <td><span class="term-badge">8. Convection</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(b)</span></td>
-        <td>The degree to which a substance reflects radiation/energy; derived from the Latin word for 'whiteness'.</td>
-        <td><span class="term-badge">11. Albedo</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(c)</span></td>
-        <td>The set of atmospheric and environmental conditions observed from day to day.</td>
-        <td><span class="term-badge">1. Weather</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(d)</span></td>
-        <td>A transfer of energy that does not require particles, utilizing electromagnetic waves.</td>
-        <td><span class="term-badge">10. Radiation</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(e)</span></td>
-        <td>A horizontal transfer of energy, occurring alongside convection to form complete convection currents.</td>
-        <td><span class="term-badge">9. Advection</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(f)</span></td>
-        <td>Energy transfer involving energetic particles colliding with adjacent particles, passing along kinetic thermal energy.</td>
-        <td><span class="term-badge">7. Conduction</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(g)</span></td>
-        <td>The horizontal movement of air flowing from a high pressure system toward a low pressure system.</td>
-        <td><span class="term-badge">25. Wind</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(h)</span></td>
-        <td>The quantity of heat energy required to raise the temperature of 1 gram of a substance by 1°C.</td>
-        <td><span class="term-badge">12. Specific Heat Capacity</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(i)</span></td>
-        <td>The apparent deflection of an object moving straight across a rotating surface (twisting right in the Northern Hemisphere).</td>
-        <td><span class="term-badge">26. Coriolis Effect</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(j)</span></td>
-        <td>The capacity of a substance to absorb, store, and retain heat (e.g., water, due to high specific heat capacity).</td>
-        <td><span class="term-badge">13. Heat Sink</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(k)</span></td>
-        <td>A cool, dry air mass that originates over land in the far northern continental region.</td>
-        <td><span class="term-badge">22. Continental Polar Air Mass</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(l)</span></td>
-        <td>A warm, moist air mass originating over warm oceanic waters in the Caribbean region.</td>
-        <td><span class="term-badge">23. Maritime Tropical Air Mass</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(m)</span></td>
-        <td>A major planetary wind belt operating between 30° and 60° latitude in both hemispheres.</td>
-        <td><span class="term-badge">27. Prevailing Westerlies</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(n)</span></td>
-        <td>High-altitude, high-speed westerly winds (~7,000 m) near 30° and 60° latitude that steer surface weather.</td>
-        <td><span class="term-badge">30. Jet Stream</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(o)</span></td>
-        <td>A continuous global cycle that transfers both water and massive quantities of thermal energy.</td>
-        <td><span class="term-badge">33. Water Cycle</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(p)</span></td>
-        <td>The phase change from gas to liquid, releasing latent heat as clouds and precipitation form.</td>
-        <td><span class="term-badge">35. Condensation</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(q)</span></td>
-        <td>Warm ocean current originating in the Caribbean, flowing along eastern North America toward Newfoundland.</td>
-        <td><span class="term-badge">38. Gulf Stream</span></td>
-      </tr>
-      <tr>
-        <td><span class="code-badge">(r)</span></td>
-        <td>Phase change directly from solid to gas (vapor) as snow/ice absorbs energy from the environment.</td>
-        <td><span class="term-badge">36. Sublimation (Heat Absorbing)</span></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="prog" aria-live="polite"><div class="bar"><i id="progBar"></i></div><div class="txt" id="progTxt"></div></div>
 
-  <h2>PART 2: CONCEPTS & REVIEW QUESTIONS</h2>
+  <section class="card" aria-labelledby="p1">
+    <h2 class="part" id="p1">PART 1: KEY WORDS</h2>
+    <p style="margin:0 0 8px">Match each statement to a term from the list in your booklet. Say the term (and its number) to yourself, then tap to check.</p>
+    <p class="sub-h">Matching review (a) to (r)</p>
+    <table class="vocab" id="match"></table>
+    <p class="sub-h">The rest of the terms on your list</p>
+    <table class="vocab" id="vocab"></table>
+    <div class="acts"><button class="btn small" type="button" id="vAll">Show all terms</button><button class="btn small" type="button" id="vHide">Hide all terms</button></div>
+  </section>
 
-  <div class="concept-card">
-    <h3>1. Earth's Energy Budget & Global Thermal Balance</h3>
-    <ul>
-      <li><b>Incoming Solar Radiation:</b> ~50% passes through the atmosphere and is absorbed by land/ocean. The remaining 50% is absorbed by atmospheric gases/particles (20%), reflected by clouds/dust (25%), or reflected by Earth's surfaces (5%).</li>
-      <li><b>Outward Radiation Balance:</b> To maintain stable global temperatures, Earth radiates an equivalent amount of thermal energy back into space as long-wavelength infrared radiation.</li>
-    </ul>
-  </div>
+  <section class="card" aria-labelledby="p2">
+    <h2 class="part" id="p2">PART 2: CONCEPTS</h2>
+    <p style="margin:0 0 8px">The grey line in each box is the concept from your review sheet. Below it is what you need to know. <b>Practise ▶</b> jumps to that concept’s questions.</p>
+    <div class="concepts" id="concepts"></div>
+  </section>
 
-  <div class="concept-card">
-    <h3>2. Albedo & The Hydrosphere as a Heat Sink</h3>
-    <ul>
-      <li><b>Albedo Dynamics:</b> Light surfaces (snow/ice) have high albedo (reflect 70–80%). Dark surfaces (soil/ocean) have low albedo, absorbing most solar energy.</li>
-      <li><b>Hydrosphere Heat Sink:</b> Water's high specific heat capacity allows it to absorb vast thermal energy without drastic temperature shifts, buffering global climate.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>3. Impact of Specific Heat Capacity on Air Temp</h3>
-    <ul>
-      <li><b>Terrestrial Heating:</b> Land heats up and cools down rapidly due to low specific heat capacity, leading to extreme daily and seasonal fluctuations.</li>
-      <li><b>Aquatic Moderation:</b> Water warms and cools gradually, creating milder winters and cooler summers in coastal regions.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>4. Thermal Energy Transfer Mechanisms</h3>
-    <ul>
-      <li><b>Radiation:</b> Solar shortwave radiation warms the surface, which re-emits longwave thermal infrared radiation.</li>
-      <li><b>Conduction:</b> Heat transfers through particle-to-particle collisions when air contacts warm ground or water.</li>
-      <li><b>Convection:</b> Warm air expands, rises, and is replaced by cooler, denser air, forming vertical atmospheric circulation cells.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>5. Greenhouse Effect as an Atmospheric Heat Sink</h3>
-    <ul>
-      <li><b>Mechanisms:</b> Greenhouse gases (H₂O vapor, CO₂, CH₄) absorb emitted longwave IR radiation and re-radiate thermal energy in all directions.</li>
-      <li><b>Climate Role:</b> Traps energy in the troposphere to maintain average global temperatures suitable for life.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>6. Phase Changes: Endothermic vs. Exothermic</h3>
-    <ul>
-      <li><b>Heat Absorbed (Endothermic):</b> Melting, Evaporation, and Sublimation require water molecules to absorb energy from their surroundings.</li>
-      <li><b>Heat Released (Exothermic):</b> Freezing, Condensation, and Deposition release stored latent thermal energy into ambient air/water.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>7. Latent Heat of Fusion & Vaporization</h3>
-    <ul>
-      <li><b>Latent Heat of Fusion:</b> Energy absorbed or released during transitions between solid and liquid states at constant temperature.</li>
-      <li><b>Latent Heat of Vaporization:</b> Energy absorbed or released during transitions between liquid and gas states at constant temperature.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>8. Heat Transfer in the Global Water Cycle</h3>
-    <ul>
-      <li><b>Evaporative Storage:</b> Solar energy converts sensible heat into latent heat stored within water vapor.</li>
-      <li><b>Atmospheric Release:</b> Condensation releases latent heat high in the troposphere as clouds form, fueling storms.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>9. Convection vs. Advection</h3>
-    <ul>
-      <li><b>Convection:</b> Vertical transfer of energy driven by buoyancy and thermal density differences.</li>
-      <li><b>Advection:</b> Horizontal transfer of energy or mass by moving fluids (e.g., winds or surface currents).</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>10. Solar Insolation & Spherical Geometry</h3>
-    <ul>
-      <li><b>Equatorial Direct Rays:</b> Rays strike directly at 90°, concentrating energy over a minimal surface area.</li>
-      <li><b>Polar Slanted Rays:</b> Solar energy strikes at oblique angles, spreading energy over a larger surface area with lower absorption.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>11. Pressure, Air Density, & Wind Generation</h3>
-    <ul>
-      <li><b>Low Pressure:</b> Heated air expands, becomes less dense, and ascends.</li>
-      <li><b>High Pressure:</b> Cooling air contracts, becomes denser, and sinks.</li>
-      <li><b>Wind Generation:</b> Pressure gradients force air to move horizontally from high pressure to low pressure.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>12. Air Masses: Classification & Formation</h3>
-    <ul>
-      <li><b>Arctic (A):</b> Bitterly cold and dry.</li>
-      <li><b>Continental Polar (cP):</b> Cold and dry.</li>
-      <li><b>Maritime Polar (mP):</b> Cool and humid.</li>
-      <li><b>Continental Tropical (cT):</b> Hot and dry.</li>
-      <li><b>Maritime Tropical (mT):</b> Warm and humid.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>13. High vs. Low Pressure Systems</h3>
-    <ul>
-      <li><b>High Pressure (Anticyclone):</b> Sinking, dense, dry air flowing outward. Clockwise rotation in NH; produces clear, fair weather.</li>
-      <li><b>Low Pressure (Cyclone):</b> Rising warm air drawing air inward. Counterclockwise rotation in NH; generates clouds and precipitation.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>14. Global Circulation & Coriolis Effect</h3>
-    <ul>
-      <li><b>Global Convection:</b> Equatorial heating and polar cooling drive massive atmospheric circulation cells.</li>
-      <li><b>Coriolis Deflection:</b> Earth's rotation deflects air right in the NH and left in the SH, creating 3 distinct circulation belts per hemisphere.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>15. Major Planetary Wind Systems</h3>
-    <ul>
-      <li><b>Trade Winds:</b> 0°–30° latitude; blow persistently from east to west toward the equator.</li>
-      <li><b>Prevailing Westerlies:</b> 30°–60° latitude; blow from west to east, steering North American weather.</li>
-      <li><b>Polar Easterlies:</b> 60° to poles; transport cold arctic air from east to west.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>16. Dynamics of the Polar Jet Stream</h3>
-    <ul>
-      <li><b>Characteristics:</b> High-speed westerly winds (~7,000–12,000 m altitude) near 40°–60°N latitude.</li>
-      <li><b>Weather Impact:</b> Thermal boundary separating polar and tropical air; jet stream undulations steer surface storm systems.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>17. Atmospheric Fronts</h3>
-    <ul>
-      <li><b>Cold Front:</b> Cold air wedges under warm air, creating intense, short duration precipitation/thunderstorms.</li>
-      <li><b>Warm Front:</b> Warm air gently climbs over cold air, creating overcast stratus clouds and prolonged rain.</li>
-      <li><b>Stationary Front:</b> Two non-advancing air masses meet, creating extended periods of rain and clouds.</li>
-      <li><b>Occluded Front:</b> Fast cold front overtakes warm front, lifting warm air off the surface; brings complex clouds and heavy rain.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>18. Surface Ocean Currents</h3>
-    <ul>
-      <li><b>Mechanism:</b> Driven by prevailing surface winds and deflected by landmasses and Coriolis effect into giant ocean gyres.</li>
-      <li><b>Heat Transport:</b> Warm currents move tropical energy poleward (west boundaries); cold currents move polar water toward equator (east boundaries).</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>19. Local Impacts: Gulf Stream & Labrador Current</h3>
-    <ul>
-      <li><b>Gulf Stream:</b> Carries warm tropical waters northward along eastern North America, moderating Atlantic Canada's winter temps.</li>
-      <li><b>Labrador Current:</b> Transports cold Arctic water south, chilling summer coastal temps and creating heavy sea fog when meeting warm air.</li>
-    </ul>
-  </div>
-
-  <div class="concept-card">
-    <h3>20. Thermohaline Circulation</h3>
-    <ul>
-      <li><b>Drivers:</b> Driven by water density differences from temperature ('thermo') and salinity ('haline').</li>
-      <li><b>Global Conveyor Belt:</b> Cold, dense, saline polar water sinks and flows globally before upwelling, circulating thermal energy and nutrients planet-wide.</li>
-    </ul>
-  </div>
-
-  <div class="footer-retro">
-    ▲ BEST VIEWED IN NETSCAPE NAVIGATOR 4.0 OR INTERNET EXPLORER ★ END OF REVIEW GUIDE ▲
-  </div>
-
+  <section class="card" aria-labelledby="p3">
+    <h2 class="part" id="p3">PART 3: PRACTICE QUESTIONS</h2>
+    <div id="questions"></div>
+    <div class="acts"><button class="btn small" type="button" id="resetAll">Clear my answers</button></div>
+  </section>
+  <p class="foot">Science 1206 · Unit 1 Weather Dynamics · Test #1 review · Science 1206 textbook, Chapter 1, pp. 10–33. Numbers marked “about” are rounded. Your answers are saved on this device only.</p>
+</div>
+<div id="endcard" class="endcard" role="dialog" aria-modal="true" aria-label="Review complete" hidden tabindex="-1">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="k in">UNIT 1 · PART 1 · REVIEW COMPLETE</div>
+  <div class="big l1 in d2">SEE YOU</div>
+  <div class="big l2 in d3">NEXT CLASS...</div>
+  <div class="sub in d4">You answered every question. Good luck on Test #1!</div>
+  <div class="close">click or press Esc to close</div>
 </div>
 
-</body>
-</html>
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const SIMS = 'https://mrbecktech.github.io/site/courses/science-1206/weather/sims/';
+const SIM_NAME = { 'energy-budget': '01 Energy Budget', 'heat-transfer': '02 Heat Transfer', 'heat-sinks': '03 Heat Sinks', 'atmosphere-pressure': '04 Atmosphere',
+  'water-cycle': '06 Water Cycle', 'air-masses': '07 Air Masses', 'pressure-systems': '08 Pressure Systems', 'coriolis-effect': '09 Coriolis Effect',
+  'global-winds': '10 Global Winds', 'jet-streams': '11 Jet Streams', 'weather-fronts': '12 Fronts', 'surface-currents': '13 Surface Currents', 'deep-currents': '14 Deep Currents' };
+
+/* Progress: this device only */
+const KEY = 'wx-review-1:v1';
+let store = { done: {}, shown: false, seen: {} };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) store = Object.assign(store, s); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+
+/* ================= figures ================= */
+/* Front symbols. Colours stay the real weather-map colours (blue cold, red warm, purple occluded) on a light map background.
+   pts: the front line; side +1 puts the symbols on the left of the line's direction (up, for a line drawn left to right). */
+const FC = { cold: '#1d5fd1', warm: '#d7263d', occ: '#8e44ad' };
+function frontSVG(type, pts, side = 1, gap = 26) {
+  const segs = []; let L = 0;
+  for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], l = Math.hypot(x1 - x0, y1 - y0); segs.push({ x0, y0, dx: (x1 - x0) / l, dy: (y1 - y0) / l, a: L, l }); L += l; }
+  const at = d => { const s = segs.find(g => d <= g.a + g.l) || segs[segs.length - 1], u = d - s.a; return { x: s.x0 + s.dx * u, y: s.y0 + s.dy * u, tx: s.dx, ty: s.dy }; };
+  const f = n => n.toFixed(1);
+  const tri = (p, sd, c) => { const nx = p.ty * sd, ny = -p.tx * sd;
+    return `<polygon fill="${c}" points="${f(p.x - p.tx * 7)},${f(p.y - p.ty * 7)} ${f(p.x + p.tx * 7)},${f(p.y + p.ty * 7)} ${f(p.x + nx * 10)},${f(p.y + ny * 10)}"/>`; };
+  const semi = (p, sd, c) => { const nx = p.ty * sd, ny = -p.tx * sd, q = [];
+    for (let k = 0; k <= 10; k++) { const th = Math.PI * k / 10; q.push(f(p.x + p.tx * 7 * Math.cos(th) + nx * 7 * Math.sin(th)) + ',' + f(p.y + p.ty * 7 * Math.cos(th) + ny * 7 * Math.sin(th))); }
+    return `<polygon fill="${c}" points="${q.join(' ')}"/>`; };
+  const line = (d0, d1, c) => { const q = []; for (let d = d0; d < d1; d += 3) { const p = at(d); q.push(f(p.x) + ',' + f(p.y)); } const p = at(d1); q.push(f(p.x) + ',' + f(p.y));
+    return `<polyline fill="none" stroke="${c}" stroke-width="3.5" stroke-linejoin="round" points="${q.join(' ')}"/>`; };
+  let out = '';
+  const n = Math.max(1, Math.floor(L / gap));
+  for (let i = 0; i < n; i++) {
+    const d0 = i * gap, d1 = i === n - 1 ? L : (i + 1) * gap, p = at((d0 + Math.min(d1, d0 + gap)) / 2);
+    if (type === 'cold') out += line(d0, d1, FC.cold) + tri(p, side, FC.cold);
+    if (type === 'warm') out += line(d0, d1, FC.warm) + semi(p, side, FC.warm);
+    if (type === 'occ') out += line(d0, d1, FC.occ) + (i % 2 ? semi(p, side, FC.occ) : tri(p, side, FC.occ));
+    if (type === 'stat') out += i % 2 ? line(d0, d1, FC.warm) + semi(p, -side, FC.warm) : line(d0, d1, FC.cold) + tri(p, side, FC.cold);
+  }
+  return out;
+}
+const PAPER = '#f7f3e8', MAPINK = '#2b2633';
+function figFronts() {
+  const rows = [['cold', 'Cold front'], ['warm', 'Warm front'], ['stat', 'Stationary front'], ['occ', 'Occluded front']];
+  return `<div class="fig"><svg viewBox="0 0 520 214" role="img" aria-label="Weather map symbols: cold front, blue line with blue triangles. Warm front, red line with red semicircles. Stationary front, alternating blue triangles and red semicircles on opposite sides. Occluded front, purple line with triangles and semicircles on the same side.">
+    <rect width="520" height="214" fill="${PAPER}"/>
+    ${rows.map(([t, name], i) => { const y = 40 + i * 50; return `<text x="14" y="${y + 5}" font-size="16" font-weight="700" fill="${MAPINK}" font-family="Atkinson Hyperlegible,sans-serif">${name}</text>${frontSVG(t, [[170, y], [500, y]])}`; }).join('')}
+  </svg><div class="cap">The symbols sit on the side the front is moving toward (here, up the page). A stationary front isn’t moving, so its symbols point both ways.</div></div>`;
+}
+function figFrontOnly(type) {
+  return `<div class="fig"><svg viewBox="0 0 320 64" role="img" aria-label="A weather map front symbol"><rect width="320" height="64" fill="${PAPER}"/>${frontSVG(type, [[20, 40], [300, 40]])}</svg></div>`;
+}
+function figSun() {
+  return `<div class="fig"><svg viewBox="0 0 380 200" role="img" aria-label="Two equal beams of sunlight reach Earth. Near the equator the beam strikes almost straight on and covers a small area. Near the pole the same beam strikes at a low angle and is spread over a much larger area.">
+    <rect width="380" height="200" fill="#120a24"/>
+    <circle cx="260" cy="100" r="90" fill="#2b5d9c" stroke="#000" stroke-width="2"/>
+    <line x1="166" y1="100" x2="354" y2="100" stroke="#c3b2e6" stroke-dasharray="5 4"/>
+    <text x="300" y="95" font-size="11" fill="#f6efff" font-family="Atkinson Hyperlegible,sans-serif">equator</text>
+    <polygon points="0,86 171.1,86 171.1,114 0,114" fill="rgba(255,210,63,.55)"/>
+    <polygon points="0,14 233.5,14 191.2,42 0,42" fill="rgba(255,210,63,.55)"/>
+    <path d="M171.1 86 A90 90 0 0 0 171.1 114" fill="none" stroke="#ffd23f" stroke-width="6"/>
+    <path d="M233.5 14 A90 90 0 0 0 191.2 42" fill="none" stroke="#ffd23f" stroke-width="6"/>
+    <text x="8" y="32" font-size="12" font-weight="700" fill="#1b1030" font-family="Atkinson Hyperlegible,sans-serif">beam near the pole</text>
+    <text x="8" y="104" font-size="12" font-weight="700" fill="#1b1030" font-family="Atkinson Hyperlegible,sans-serif">same beam, near the equator</text>
+    <text x="8" y="150" font-size="12" fill="#f6efff" font-family="Atkinson Hyperlegible,sans-serif">Gold edge = the area each beam heats.</text>
+    <text x="8" y="168" font-size="12" fill="#f6efff" font-family="Atkinson Hyperlegible,sans-serif">Near the pole it is spread out, so</text>
+    <text x="8" y="184" font-size="12" fill="#f6efff" font-family="Atkinson Hyperlegible,sans-serif">each square metre gets less energy.</text>
+  </svg></div>`;
+}
+function figWinds() {
+  const cx = 190, cy = 150, r = 130, Y = lat => cy - r * Math.sin(lat * Math.PI / 180), HW = lat => r * Math.cos(lat * Math.PI / 180);
+  const T = (x, y, s, o = '') => `<text x="${x}" y="${y}" font-family="Atkinson Hyperlegible,sans-serif" ${o}>${s}</text>`;
+  const lats = [60, 30, 0, -30, -60];
+  const arrows = [[200, 23, 180, 35], [172, 68, 208, 54], [208, 108, 172, 128], [208, 192, 172, 172], [172, 232, 208, 246], [200, 277, 180, 265]];
+  const names = [[30, 'Polar easterlies'], [61, 'Prevailing westerlies'], [118, 'Trade winds'], [182, 'Trade winds'], [239, 'Prevailing westerlies'], [271, 'Polar easterlies']];
+  const pr = [[0, 'L'], [30, 'H'], [60, 'L'], [-30, 'H'], [-60, 'L']];
+  return `<div class="fig"><svg viewBox="0 0 480 300" role="img" aria-label="Global wind belts. Between the equator and 30 degrees the trade winds blow toward the equator from the east. Between 30 and 60 degrees the prevailing westerlies blow from the west. Beyond 60 degrees the polar easterlies blow from the east. Low pressure at the equator and 60 degrees, high pressure at 30 degrees and the poles.">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ffd23f"/></marker></defs>
+    <rect width="480" height="300" fill="#120a24"/>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="#22305e" stroke="#000" stroke-width="2"/>
+    ${lats.map(l => `<line x1="${(cx - HW(l)).toFixed(1)}" y1="${Y(l).toFixed(1)}" x2="${(cx + HW(l)).toFixed(1)}" y2="${Y(l).toFixed(1)}" stroke="#c3b2e6" stroke-width="${l ? 1 : 2}" ${l ? 'stroke-dasharray="4 3"' : ''}/>` +
+      T((cx - HW(l) - 6).toFixed(1), (Y(l) + 4).toFixed(1), l ? Math.abs(l) + '°' + (l > 0 ? 'N' : 'S') : '0°', 'font-size="12" fill="#c3b2e6" text-anchor="end"')).join('')}
+    ${pr.map(([l, s]) => T((cx - HW(l) + 16).toFixed(1), (Y(l) + 5).toFixed(1), s, `font-size="14" font-weight="700" fill="${s === 'H' ? '#6ad3ff' : '#ff5d73'}"`)).join('')}
+    ${T(cx, 13, 'H', 'font-size="14" font-weight="700" fill="#6ad3ff" text-anchor="middle"')}${T(cx, 297, 'H', 'font-size="14" font-weight="700" fill="#6ad3ff" text-anchor="middle"')}
+    ${arrows.map(([x1, y1, x2, y2]) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ffd23f" stroke-width="3" marker-end="url(#ah)"/>`).join('')}
+    ${names.map(([y, s]) => T(332, y + 4, s, 'font-size="13" fill="#f6efff"')).join('')}
+    ${T(332, 150, 'equator', 'font-size="12" fill="#c3b2e6"')}
+  </svg><div class="cap">Gold arrows: the way the surface wind blows. <span style="color:#6ad3ff">H</span> = high pressure (air sinks), <span style="color:#ff5d73">L</span> = low pressure (air rises). The curve comes from the Coriolis effect: right in the north, left in the south.</div></div>`;
+}
+const EBAR = `<div class="ebar" role="img" aria-label="Of 100 units of sunlight: 25 reflected by clouds and particles, 20 absorbed by the atmosphere, 5 reflected by land and sea, 50 absorbed by the surface.">
+  <span style="width:25%;background:#6ad3ff">25</span><span style="width:20%;background:#ff9a4d">20</span><span style="width:5%;background:#c9f0ff"></span><span style="width:50%;background:#5df2a4">50</span></div>
+  <div class="ekey"><span><i style="background:#6ad3ff"></i>25 reflected by clouds and particles</span><span><i style="background:#ff9a4d"></i>20 absorbed by the atmosphere</span>
+  <span><i style="background:#c9f0ff"></i>5 reflected by land and sea</span><span><i style="background:#5df2a4"></i>50 absorbed by land and water</span></div>`;
+
+/* ================= PART 1: key words ================= */
+// The booklet's matching review: [letter statement, term number, term]
+const MATCH = [
+  ['A vertical transfer of energy which involves the flow of particles: energetic particles become less dense and rise, while less energetic particles become more dense and sink.', 8, 'convection'],
+  ['The degree to which a substance reflects energy; from the Latin for “whiteness”.', 11, 'albedo'],
+  ['The set of environmental conditions observed from day to day.', 1, 'weather'],
+  ['A transfer of energy that does not require particles, because the energy travels as waves (electromagnetic waves).', 10, 'radiation'],
+  ['A horizontal transfer of energy, which commonly occurs along with convection to create a convection current.', 9, 'advection'],
+  ['A transfer of energy in which energetic particles collide with neighbouring particles and pass energy along to them.', 7, 'conduction'],
+  ['A movement of air from a high pressure system to a low pressure system.', 25, 'wind'],
+  ['The amount of heat a substance can absorb, per gram of substance, before its temperature increases by 1 °C.', 12, 'specific heat capacity'],
+  ['The idea that an object moving straight across a rotating surface will have its path curve to the right or left.', 26, 'Coriolis effect'],
+  ['A substance that can absorb and store heat. Water is an excellent example, because of its high specific heat capacity.', 13, 'heat sink'],
+  ['A cold, dry air mass which forms over the land in the far north.', 22, 'continental polar air mass'],
+  ['A warm, moist air mass which forms over the Caribbean (and the Gulf of Mexico).', 23, 'maritime tropical air mass'],
+  ['A large wind pattern in both the northern and southern hemispheres, between the latitudes of 30° and 60°.', 27, 'prevailing westerlies'],
+  ['High-speed winds high in the troposphere (about 10–12 km up), near the latitudes 30° and 60°; they steer weather systems.', 30, 'jet stream'],
+  ['A cycle which not only transfers water, but is also important in transferring energy.', 33, 'water cycle'],
+  ['The change of state from gas to liquid, which happens as clouds and precipitation form.', 35, 'condensation'],
+  ['The ocean current which forms near the Caribbean and follows the east coast of North America up to Newfoundland.', 38, 'Gulf Stream'],
+  ['The change of state from solid to gas (vapour), which happens when ice and snow absorb heat and the water enters the atmosphere without melting first.', 36, 'sublimation']
+];
+// The other terms on the Test #1 list: [number, term, meaning]
+const VOCAB = [
+  [2, 'climate', 'The pattern of weather conditions in a region over a long period of time: years, decades or longer.'],
+  [3, 'biosphere', 'All the areas on and under the land, in the water and in the air that are home to and support life.'],
+  [4, 'lithosphere', 'The land: continental crust above sea level and oceanic crust at the bottom of the ocean.'],
+  [5, 'hydrosphere', 'Water on or near Earth’s surface: oceans, rivers, ponds, ice, and water vapour in the air.'],
+  [6, 'atmosphere', 'The mixture of nitrogen, oxygen and other gases around Earth, more than 700 km thick. All weather happens in the lowest 12 km, the troposphere.'],
+  [14, 'latitude', 'How far north or south of the equator a place is, in degrees: 0° at the equator, 90° at each pole.'],
+  [15, 'longitude', 'How far east or west of the prime meridian a place is, in degrees: 0° to 180°.'],
+  [16, 'atmospheric pressure', 'The push of the air on a surface, caused by the weight of the air above it. About 101.3 kPa at sea level.'],
+  [17, 'high pressure system', 'An area where cool, dense air sinks and spreads out. Winds blow outward and clockwise (northern hemisphere). Usually clear, dry weather.'],
+  [18, 'low pressure system', 'An area where warm air rises. Winds blow inward and counterclockwise (northern hemisphere). Usually clouds and precipitation.'],
+  [19, 'air mass', 'A very large body of air with nearly the same temperature and humidity throughout, taken from the surface it formed over.'],
+  [20, 'prevailing wind', 'The usual direction from which the wind blows in a region.'],
+  [21, 'maritime polar air mass', 'Forms over cold northern oceans: cold and humid in winter, cool and humid in summer.'],
+  [24, 'continental tropical air mass', 'Forms over hot, dry land (the southwestern U.S. and Mexico): warm and dry in winter, hot and dry in summer.'],
+  [28, 'polar easterlies', 'Cold winds between 60° and the poles that blow from the east.'],
+  [29, 'trade winds', 'Winds between the equator and 30° that blow toward the equator from the east (from the north-east in the northern hemisphere).'],
+  [31, 'latent heat of fusion', 'The energy a solid absorbs as it melts (and gives off as it freezes) without its temperature changing.'],
+  [32, 'latent heat of vapourization', 'The energy a liquid absorbs as it evaporates (and gives off as it condenses) without its temperature changing.'],
+  [34, 'evaporation', 'Liquid to gas. Absorbs thermal energy.'],
+  [37, 'solidification (freezing)', 'Liquid to solid. Releases thermal energy.'],
+  [39, 'Labrador Current', 'A cold ocean current flowing south from the Arctic past Labrador and Newfoundland. It brings icebergs and cools the coast.'],
+  [40, 'front', 'The boundary between two air masses with different temperatures and humidity.'],
+  [41, 'cold front', 'Cold air pushes under warm air and lifts it steeply. Map symbol: blue triangles.'],
+  [42, 'warm front', 'Warm air slides up and over cold air. Map symbol: red semicircles.'],
+  [43, 'occluded front', 'Forms when a cold front catches up to a warm front and lifts the warm air off the ground. Map symbol: purple triangles and semicircles on the same side.'],
+  [44, 'stationary front', 'A boundary between two air masses that is not moving. Map symbol: blue triangles and red semicircles on opposite sides.'],
+  [45, 'melting', 'Solid to liquid. Absorbs thermal energy.']
+];
+function renderVocab() {
+  const seen = store.seen;
+  const cell = (k, n, w) => seen[k] ? `<span class="tn">${n}</span><span class="term">${esc(w)}</span>` : `<button class="btn small" type="button" data-v="${k}">Tap to check</button>`;
+  $('#match').innerHTML = `<thead><tr><th scope="col">#</th><th scope="col">STATEMENT</th><th scope="col">TERM</th></tr></thead><tbody>${MATCH.map(([d, n, w], i) =>
+    `<tr><td class="c">(${String.fromCharCode(97 + i)})</td><td>${esc(d)}</td><td class="t">${cell('m' + i, n, w)}</td></tr>`).join('')}</tbody>`;
+  $('#vocab').innerHTML = `<thead><tr><th scope="col">#</th><th scope="col">MEANING</th><th scope="col">TERM</th></tr></thead><tbody>${VOCAB.map(([n, w, d], i) =>
+    `<tr><td class="c">${n}</td><td>${esc(d)}</td><td class="t">${cell('v' + i, n, w)}</td></tr>`).join('')}</tbody>`;
+  document.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', () => { store.seen[b.dataset.v] = true; save(); renderVocab(); }));
+}
+$('#vAll').addEventListener('click', () => { MATCH.forEach((_, i) => { store.seen['m' + i] = true; }); VOCAB.forEach((_, i) => { store.seen['v' + i] = true; }); save(); renderVocab(); });
+$('#vHide').addEventListener('click', () => { store.seen = {}; save(); renderVocab(); });
+
+/* ================= PART 2: concepts (the booklet's Test #1 review, items 1-20) ================= */
+// [id, title, review-sheet wording, points (HTML allowed), extra HTML, sims, wide]
+const CARDS = [
+  ['B', 'Weather basics', 'From the booklet notes: weather, its six components, weather lore and Earth’s spheres.', [
+    '<b>Weather</b> is the physical conditions of the atmosphere at a specific time and place. It changes from day to day, often hour to hour. <b>Climate</b> is the pattern of weather in a region over a long time.',
+    'Six components of weather (Table 1.1): <b>temperature</b> (how warm or cold; the average kinetic energy of the particles), <b>precipitation</b> (any liquid or solid water that falls: rain, snow, hail), <b>atmospheric pressure</b> (the force of the atmosphere on the surface below it), <b>humidity</b> (the amount of water vapour in the air), <b>wind speed and direction</b> (how fast the air moves and the direction it comes from) and <b>sky cover</b> (how much of the sky is covered by cloud).',
+    '<b>Weather lore</b>: sayings, often rhyming, used to make informal predictions about the weather. Ex: “Mare’s tails and mackerel scales make tall ships carry short sails.” Those thin, wispy, high ice-crystal clouds often arrive ahead of a storm, so sailors lowered their sails for the wind to come.',
+    'Earth’s four spheres (Figure 1.2): <b>atmosphere</b> (the air: nitrogen, oxygen and other gases, more than 700 km thick; all weather happens in the lowest 12 km, the troposphere), <b>lithosphere</b> (the land: continental crust above sea level and oceanic crust on the ocean bottom), <b>hydrosphere</b> (water on or near the surface: oceans, rivers, ponds, ice, and water vapour in the air) and <b>biosphere</b> (all the places on land, in water and in the air that hold and support life).',
+    'Seven causes of weather: Earth’s shape and sunlight, air masses, pressure systems, the Coriolis effect, global winds, fronts and ocean currents.'], '', [], true],
+  ['1', 'Earth’s energy budget', 'Describe Earth’s energy budget (the flow of energy from the Sun to Earth, and the outward flow of energy from Earth).', [
+    'Out of every 100 units of sunlight reaching Earth: <b>25</b> are reflected by clouds and particles, <b>20</b> are absorbed by the atmosphere, <b>5</b> are reflected by land and sea, and <b>50</b> are absorbed by land and water (Figure 1.4).',
+    'The warmed surface gives off energy as <b>infrared radiation</b>. Greenhouse gases absorb some of it and send it back out in all directions, some back down to the surface.',
+    'The energy budget is the balance between energy in and energy out. Earth sends as much energy back to space as it absorbs, so its average temperature stays steady. If more came in than went out, Earth would warm.'], EBAR, ['energy-budget'], true],
+  ['2', 'Albedo and the hydrosphere as a heat sink', 'Describe the effect of albedo on absorption of radiant energy. Relate the high specific heat capacity of water, relative to land, to how the hydrosphere acts as a heat sink.', [
+    '<b>Albedo</b> is the reflectivity of a surface: how much of the energy hitting it is reflected. Light surfaces reflect, dark surfaces absorb. A snow-covered field reflects about 70–80% (high albedo), so less energy is absorbed and it stays cooler.',
+    'The same field growing crops in summer reflects only about 20% or less (lower albedo), so it absorbs more and warms more. Oceans and ponds have a low albedo: they absorb about 95% of the sunlight reaching them.',
+    '<b>Specific heat capacity</b> is how much (and how quickly) a substance absorbs and releases energy: the energy needed to raise 1 g of it by 1 °C. Water’s is much higher than land’s or air’s.',
+    'A <b>heat sink</b> is any substance that can absorb and hold a “pool” of energy without changing state. Water heats up and cools off slowly, so it can absorb a huge amount of energy with only a small rise in temperature and give it back slowly. Because there is so much of it, the hydrosphere is Earth’s great heat sink and has a big influence on weather.'], '', ['energy-budget', 'heat-sinks']],
+  ['3', 'Specific heat capacity and air temperature', 'How the specific heat capacity of different surfaces (land and water) affects the temperature of the air above it.', [
+    'Air takes on the temperature of the surface below it.',
+    'Land has a <b>low</b> specific heat capacity: it heats up quickly in the day and summer and cools quickly at night and in winter. Air over land has big temperature swings.',
+    'Water has a <b>high</b> specific heat capacity: it warms and cools slowly, so the air over it stays more even.',
+    'Coastal places are <b>cooler in summer</b> and <b>milder in winter</b> than inland places (Figure 1.5: coastal Springdale against inland Badger). On a summer day the land warms faster, warm air rises over it, and cooler sea air flows in: a <b>sea breeze</b>. At night it reverses: a <b>land breeze</b>.'], '', ['heat-sinks']],
+  ['4', 'From the surface to the atmosphere', 'Describe how energy absorbed by Earth’s surface is transferred to the atmosphere by conduction, convection and radiation.', [
+    '<b>Radiation</b>: the warm surface gives off infrared radiation. Greenhouse gases in the air absorb it. This is the biggest source of heat for the air near the ground. (Radiation needs no particles.)',
+    '<b>Conduction</b>: air particles touching the warm ground collide with it and gain energy. Only the thin layer of air in contact is heated this way.',
+    '<b>Convection</b>: the heated air expands, becomes less dense and rises, carrying energy upward. Cooler, denser air sinks to take its place, forming a loop (a convection current).'], '', ['heat-transfer']],
+  ['5', 'The greenhouse effect', 'Describe the greenhouse effect and relate it to how the atmosphere acts as a heat sink.', [
+    'Sunlight (mostly visible light) passes through the atmosphere and warms the surface. The surface gives off <b>infrared</b> radiation.',
+    '<b>Greenhouse gases</b> (water vapour, carbon dioxide and methane) absorb that infrared and give it off again in all directions, including back toward the ground.',
+    'This way the atmosphere absorbs and holds thermal energy: it acts as a <b>heat sink</b>.',
+    'Without this natural greenhouse effect, Earth’s average temperature would be about −18 °C instead of about 14 °C, too cold for life as we know it.'], '', ['energy-budget']],
+  ['6', 'Changes of state and heat', 'Relate changes of state (condensation, evaporation, melting, solidification, sublimation) to the absorption or release of heat.', [
+    'Changing state takes energy in or gives it out, even though the temperature doesn’t change while it happens.'],
+    `<table class="mini"><thead><tr><th>Absorbs heat (from the surroundings)</th><th>Releases heat (to the surroundings)</th></tr></thead><tbody>
+      <tr><td><span class="abs">Melting</span>: solid → liquid</td><td><span class="rel">Solidification (freezing)</span>: liquid → solid</td></tr>
+      <tr><td><span class="abs">Evaporation</span>: liquid → gas</td><td><span class="rel">Condensation</span>: gas → liquid</td></tr>
+      <tr><td><span class="abs">Sublimation</span>: solid → gas</td><td><span class="rel">Deposition</span>: gas → solid (frost)</td></tr></tbody></table>
+      <ul><li>Each pair is opposite: the energy absorbed one way is released the other way. Transpiration (water evaporating from plant leaves) also absorbs energy.</li></ul>`, ['water-cycle']],
+  ['7', 'Latent heat', 'Define the latent heat of fusion and vapourization.', [
+    '<b>Latent heat of fusion</b>: the energy a substance absorbs to melt (solid → liquid) without changing temperature. The same amount is released when it freezes. Water: 334 J/g.',
+    '<b>Latent heat of vapourization</b>: the energy a substance absorbs to evaporate (liquid → gas) without changing temperature. The same amount is released when it condenses. Water: 2260 J/g, almost 7 times more.',
+    '“Latent” means hidden: the energy goes into changing state, not into raising the temperature, so a thermometer doesn’t show it. Ice water stays at 0 °C until all the ice has melted.'], '', ['water-cycle']],
+  ['8', 'Heat transfer in the water cycle', 'Describe and explain heat transfer in the water cycle.', [
+    'The <b>water cycle</b> moves water between the oceans, the air and the land by evaporation, condensation and precipitation. It moves energy too.',
+    'Water <b>evaporates</b> (mostly from warm tropical oceans) and absorbs energy. That cools the ocean and stores the energy in the water vapour.',
+    'Winds carry the vapour up and away, sometimes thousands of kilometres. When it <b>condenses</b> into clouds, it releases that energy and warms the air there. This energy powers storms.',
+    'So the water cycle moves heat from the surface up into the atmosphere, and from the tropics toward the poles.'], '', ['water-cycle']],
+  ['9', 'Convection and advection', 'Describe and explain convection and advection and their relation to air and water currents.', [
+    '<b>Convection</b> is a <b>vertical</b> transfer of energy: warm, less dense fluid rises and cool, denser fluid sinks.',
+    '<b>Advection</b> is a <b>horizontal</b> transfer of energy: the large-scale sideways movement of air (or water) carrying energy with it. Wind is advection in the air; ocean currents are advection in the water.',
+    '<b>Advection fog</b> forms when warm, moist air moves over a cooler surface (cold ocean water or cold land). The air cools and its water vapour condenses.',
+    'Together they make a <b>convection current</b>: rise, move sideways, sink, move back. A sea breeze is one: air rises over warm land, sinks over the cool sea, and blows back onto land along the surface.',
+    'The same loops drive global winds and deep ocean currents.'], '', ['heat-transfer', 'heat-sinks']],
+  ['10', 'Earth’s shape and unequal heating', 'Relate Earth’s shape and the angle of incoming solar energy to the unequal heating of Earth’s surface.', [
+    'Earth is a sphere, so sunlight hits different places at different angles.',
+    'Near the <b>equator</b> the Sun is nearly overhead. Its rays strike almost straight on, so the energy is concentrated on a small area: more energy per square metre, so it is warmer.',
+    'Near the <b>poles</b> the rays strike at a low angle. The same energy is spread over a much larger area, and it passes through more atmosphere first (more is reflected and absorbed on the way). Less energy per square metre, so it is colder.',
+    'Snow and ice near the poles also have a high albedo, so they reflect even more.'], figSun(), [], true],
+  ['11', 'Heating, density and pressure', 'Describe and explain how heat transfer from Earth’s surfaces to the air directly above affects air density, movement and pressure in the atmosphere.', [
+    'Air over a <b>warm</b> surface is heated. Its particles move faster and spread out, so the air becomes <b>less dense</b> and <b>rises</b>. Less air presses down, so the surface pressure is <b>low</b>.',
+    'Air over a <b>cold</b> surface cools. Its particles slow down and pack closer, so the air becomes <b>denser</b> and <b>sinks</b>. More air presses down, so the surface pressure is <b>high</b>.',
+    'Air then moves from high pressure to low pressure: that is <b>wind</b>. The bigger the pressure difference, the stronger the wind.',
+    '<b>Humidity</b> changes pressure too. Water vapour is lighter than the nitrogen and oxygen it replaces, so humid air is less dense and exerts less pressure. A falling barometer suggests warm, humid air is coming; a rising one suggests cool, dry weather.',
+    'Pressure also drops with height: about 101.3 kPa at sea level, and only about 10% of that at the top of the troposphere.'], '', ['atmosphere-pressure', 'pressure-systems']],
+  ['12', 'Air masses', 'Describe the formation and characteristics of air masses (arctic, continental polar, continental tropical, maritime polar, maritime tropical).', [
+    'An <b>air mass</b> is a very large mass of air with nearly the same temperature, humidity and pressure throughout. It forms when air sits over one area (thousands of square kilometres) for days or weeks and takes on the properties of that surface. Most form over tropical or polar regions.',
+    '<b>Continental</b> = formed over land, so dry. <b>Maritime</b> = formed over the ocean, so humid. <b>Arctic</b> = bitterly cold, <b>polar</b> = cold, <b>tropical</b> = warm.'],
+    `<table class="mini"><thead><tr><th>Air mass (Table 1.2)</th><th>Forms over</th><th>Winter</th><th>Summer</th></tr></thead><tbody>
+      <tr><td>Arctic</td><td>the Arctic</td><td>bitter cold, dry</td><td>cold, dry</td></tr>
+      <tr><td>Continental polar</td><td>northern Canada</td><td>very cold, dry</td><td>cool, dry</td></tr>
+      <tr><td>Continental tropical</td><td>southwestern U.S. and Mexico</td><td>warm, dry</td><td>hot, dry</td></tr>
+      <tr><td>Maritime polar</td><td>North Pacific and North Atlantic</td><td>cold, humid</td><td>cool, humid</td></tr>
+      <tr><td>Maritime tropical</td><td>the Pacific, the Gulf of Mexico and the Atlantic</td><td>warm, humid</td><td>hot, humid</td></tr></tbody></table>
+      <ul><li>Figure 1.11 splits the ocean ones by where they form: maritime polar (Pacific) and (Atlantic); maritime tropical (Pacific), (Gulf) and (Atlantic).</li>
+      <li>Newfoundland is mostly affected by maritime polar (Atlantic), continental polar and maritime tropical (Atlantic) air, plus Arctic air in winter.</li></ul>`, ['air-masses']],
+  ['13', 'High and low pressure systems', 'Explain the formation of high and low pressure systems and describe their characteristic wind movements and associated weather.', [
+    '<b>High pressure</b> forms when an air mass cools over an ocean or a cold region on land. Its particles lose kinetic energy, so it becomes denser and contracts, drawing in more air from the upper troposphere. The added weight raises the surface pressure. The dense air sinks and flows <b>outward and clockwise</b> (northern hemisphere). Sinking air warms and dries, so highs often bring <b>clear skies</b>.',
+    '<b>Low pressure</b> forms when an air mass travels over warm land or ocean. It warms, expands and rises, pushing away air in the upper troposphere, so the pressure at the surface drops and air is drawn in. Winds flow <b>inward and counterclockwise</b> (northern hemisphere). Rising air cools and its water vapour condenses, so lows often bring <b>clouds and wet weather</b>.',
+    'In the southern hemisphere both directions are reversed (the Coriolis effect turns the other way).',
+    'On a map, <b>isobars</b> join places with the same pressure. The closer together they are, the stronger the wind.'], '', ['pressure-systems']],
+  ['14', 'Convection currents + the Coriolis effect', 'Describe how the combination of convection currents and the Coriolis effect create global wind patterns.', [
+    '<b>Convection</b>: the equator is heated most, so air rises there (low pressure), flows toward the poles high up, cools and sinks near 30° (high pressure), then flows back toward the equator along the surface. Similar loops form between 30° and 60° and between 60° and the poles: three loops in each hemisphere.',
+    'Without spin, surface winds would blow straight north or south. The <b>Coriolis effect</b> (Earth rotating underneath the moving air) turns moving air to the <b>right</b> in the northern hemisphere and to the <b>left</b> in the southern hemisphere.',
+    'So the winds end up blowing from the east or west, forming the global wind belts.'], '', ['coriolis-effect', 'global-winds']],
+  ['15', 'Global wind systems', 'Identify global wind systems and relate prevailing winds to the movement of weather systems.', [],
+    `<table class="mini"><thead><tr><th>Wind system</th><th>Location</th><th>Path</th></tr></thead><tbody>
+      <tr><td>Trade winds</td><td>equator to 30° N and S</td><td>toward the equator, from the north-east (N) or south-east (S)</td></tr>
+      <tr><td>Prevailing westerlies</td><td>30° to 60° N and S</td><td>toward the poles, from the west (south-west in the N, north-west in the S)</td></tr>
+      <tr><td>Polar easterlies</td><td>60° to the poles</td><td>away from the poles, from the east</td></tr></tbody></table>
+      ${figWinds()}
+      <ul><li>Weather systems are carried by the prevailing winds. Canada (and Newfoundland, at about 47° N) is in the <b>prevailing westerlies</b>, so our weather usually moves in from the <b>west</b>.</li>
+      <li>In the tropics the trade winds carry weather systems, such as young hurricanes, toward the <b>west</b>. When those storms drift north into the westerlies, they turn and head north-east, sometimes toward Newfoundland.</li></ul>`, ['global-winds'], true],
+  ['16', 'The polar jet stream', 'Describe the effects of the polar jet stream on the development, severity and movement of local weather systems.', [
+    'A <b>jet stream</b> is a narrow band of fast-moving wind, up to 300 km/h or more, at altitudes of 10 km to 12 km, blowing generally from west to east. It forms from a large temperature difference in the upper air combined with the Coriolis effect.',
+    'The <b>polar jet streams</b> (the major ones, about 40° to 60° N and S) separate the polar easterlies from the prevailing westerlies. The minor <b>subtropical jets</b> (about 20° to 30°) are where the trade winds meet the westerlies.',
+    '<b>Development</b>: storms form along jet streams and grow into large weather systems.',
+    '<b>Movement</b>: weather systems generally follow the path of the jet. Where it dips south, cold air moves toward the tropics; where it bulges north, warm air moves toward the poles.',
+    '<b>Severity</b>: the jet moves air of different temperatures from one region to another, which affects how intense the weather is. Its speed depends on the temperature difference between the air masses: a bigger difference makes a faster jet and stronger storms (so it is stronger in winter).',
+    'Newfoundland is close to the polar jet most of the year, which is why our weather changes so fast.'], '', ['jet-streams']],
+  ['17', 'Fronts', 'Describe the development of warm, cold, stationary and occluded fronts and their associated weather conditions.', [
+    'A <b>front</b> is the zone where two air masses with different characteristics meet. It can be hundreds of kilometres wide and thousands long. The warmer, less dense air is pushed upward; as it rises it cools, its water vapour condenses, and clouds and precipitation form. An approaching front means a change in the weather.',
+    '<b>Cold front</b>: cold air wedges under warm air and lifts it steeply. Tall cumulonimbus clouds, a short burst of heavy rain or thunderstorms, then clearing, colder air, rising pressure and a wind shift.',
+    '<b>Warm front</b>: warm air slides up gently over cold air. Cloud thickens slowly; long periods of steady rain or snow, then warmer, more humid air.',
+    '<b>Stationary front</b>: two air masses meet but neither advances, so the boundary stalls (often between air masses with small temperature and pressure differences). Cloudy, damp weather can last for days.',
+    '<b>Occluded front</b> (occluded means obstructed): a fast cold front overtakes a warm front and forces the warm air up off the ground. Clouds and precipitation, usually as the storm is weakening.'], figFronts(), ['weather-fronts'], true],
+  ['18', 'Surface currents move thermal energy', 'Describe how surface currents move thermal energy around Earth.', [
+    '<b>Surface currents</b> are created by the <b>wind</b>. There are five major sets, one in each main ocean basin. Because of the Coriolis effect they turn <b>clockwise</b> in the northern hemisphere and <b>counterclockwise</b> in the southern hemisphere.',
+    'Warm currents near the equator flow west. When they reach a continent they turn toward the poles, carrying warm tropical water to colder places (like the Gulf Stream). They give off heat to the air, warming the coasts they pass.',
+    'As that water cools it meets land again and flows back toward the equator as a <b>cold current</b> (like the Canary Current), cooling the coasts it passes.',
+    'Currents on the western side of an ocean basin are narrow and fast; those on the eastern side are wide and slow.',
+    'This is advection: the oceans carry energy from the equator toward the poles and help even out Earth’s temperatures.'], '', ['surface-currents']],
+  ['19', 'Gulf Stream and Labrador Current', 'Describe the effects of the Gulf Stream and Labrador Current on local weather.', [
+    '<b>Gulf Stream</b>: a fast, warm current from the Gulf of Mexico and Caribbean, north along the coast of North America to the Grand Banks, then across the Atlantic toward Europe. It brings warm, moist air to our coast, so winters here are milder than inland Canada (average January low: −8 °C in St. John’s, −14 °C in Ottawa), and it feeds energy to storms such as nor’easters.',
+    '<b>Labrador Current</b>: a cold current bringing Arctic water south along the coast of Labrador and Newfoundland. It cools the air (cool summers, a later spring), and carries sea ice and icebergs from the west coast of Greenland.',
+    '<b>Fog</b>: near the Grand Banks, warm, moist air from over the Gulf Stream moves over the cold Labrador Current water and cools until its water vapour condenses. This is advection fog, and it is why St. John’s is one of the foggiest places in the world.'], '', ['surface-currents']],
+  ['20', 'Deep ocean currents', 'Explain how differences in temperature and salt content form deep ocean currents that move thermal energy around Earth.', [
+    'Seawater gets <b>denser</b> when it is <b>colder</b> and when it is <b>saltier</b>. Dense water sinks below less dense water.',
+    'In the North Atlantic (near Greenland and the Labrador Sea) and around Antarctica, surface water is chilled by cold air. When sea ice forms it leaves its salt behind, so the water gets saltier too. This cold, salty water <b>sinks</b> and flows along the ocean floor.',
+    'It spreads through all the oceans, slowly rises again (upwelling) and returns as warm surface currents. This loop is called <b>thermohaline circulation</b> (thermo = heat, haline = salt), or the <b>ocean conveyor belt</b>. One trip takes about 1000 years.',
+    'It moves thermal energy: warm surface water flows toward the North Atlantic, gives up its heat to the air (warming the region), then sinks.'], '', ['deep-currents']]
+];
+const CARD_OF = {}; CARDS.forEach(c => { CARD_OF[c[0]] = c; });
+const cardLabel = id => id === 'B' ? 'Weather basics' : 'Concept ' + id;
+
+/* ================= PART 3: practice questions ================= */
+// [card id, question, [options], correct index, why it is right, figure (optional)]
+const MC = [
+  ['B', 'Which is the best definition of weather?', ['The average conditions of a region over 30 years', 'The condition of the atmosphere at a particular place and time', 'The amount of water vapour in the air', 'Air moving from high to low pressure'], 1,
+    'Weather is what the atmosphere is doing at one place and time. The long-term average is climate.'],
+  ['B', 'Which of Earth’s spheres includes the oceans, lakes, rivers, groundwater and ice?', ['atmosphere', 'lithosphere', 'hydrosphere', 'biosphere'], 2, 'The hydrosphere is all of Earth’s water, in every form.'],
+  ['B', '“Mare’s tails and mackerel scales make tall ships carry short sails.” This saying is an example of…', ['weather lore', 'a weather map', 'climate', 'the Coriolis effect'], 0,
+    'Weather lore is a saying, often rhyming, used to make informal predictions. These high, wispy clouds often come before a storm.'],
+  ['B', 'Which of these is one of the six components of weather in your textbook?', ['sky cover', 'latitude', 'albedo', 'the Coriolis effect'], 0,
+    'The six are temperature, precipitation, atmospheric pressure, humidity, wind speed and direction, and sky cover.'],
+  ['1', 'Out of every 100 units of sunlight reaching Earth, about how many are absorbed by land and water?', ['5', '20', '25', '50'], 3,
+    'About 50 are absorbed by the surface. 25 are reflected by clouds and particles, 20 are absorbed by the atmosphere and 5 are reflected by land and sea.'],
+  ['1', 'The Sun shines on Earth all the time. Why doesn’t Earth keep getting hotter?', ['The atmosphere blocks almost all sunlight', 'Earth gives off as much energy to space as it absorbs', 'The oceans store all the energy forever', 'Plants use up the Sun’s energy'], 1,
+    'That balance is the energy budget: energy in = energy out, so the average temperature stays steady.'],
+  ['2', 'Which surface has the highest albedo?', ['fresh snow', 'ocean water', 'asphalt', 'a dark forest'], 0, 'Fresh snow reflects most of the sunlight that hits it (about 70–80% or more). The others absorb most of it.'],
+  ['2', 'Arctic sea ice melts and leaves open ocean. What happens to the energy absorbed there?', ['Less is absorbed, because water reflects more than ice', 'More is absorbed, because water has a lower albedo than ice', 'Nothing changes', 'All of it is reflected'], 1,
+    'Dark water has a much lower albedo than white ice, so it absorbs more sunlight and warms more. That melts more ice.'],
+  ['2', 'Why is the hydrosphere such a good heat sink?', ['Water has a high albedo', 'Water has a high specific heat capacity, so it absorbs a lot of energy with only a small temperature change', 'Water heats up faster than land', 'Water is a good conductor of electricity'], 1,
+    'Water’s high specific heat capacity lets it store huge amounts of energy and release it slowly.'],
+  ['3', 'Which statement about land and water is correct?', ['Land heats up and cools down faster than water', 'Water heats up faster than land', 'They heat at the same rate', 'Land has a higher specific heat capacity than water'], 0,
+    'Land has a low specific heat capacity, so its temperature changes quickly. Water’s changes slowly.'],
+  ['3', 'Why is a coastal town usually cooler in summer and milder in winter than a town far inland?', ['The ocean warms and cools slowly, and the air over it follows the water’s temperature', 'There is less sunlight at the coast', 'Coastal air has more carbon dioxide', 'Inland towns are higher up'], 0,
+    'The ocean is a heat sink. In summer it is still cool, so sea air is cool. In winter it is still holding summer’s heat, so sea air is milder.'],
+  ['4', 'The ground warms the thin layer of air touching it. Which energy transfer is this?', ['conduction', 'convection', 'radiation', 'advection'], 0, 'Conduction needs contact: particles in the air collide with the warm ground and gain energy.'],
+  ['4', 'Which energy transfer can happen through empty space?', ['conduction', 'convection', 'radiation', 'advection'], 2, 'Radiation travels as electromagnetic waves, so it needs no particles. That is how sunlight reaches us.'],
+  ['4', 'Which transfer is the biggest source of heat for the air near Earth’s surface?', ['conduction from the ground', 'infrared radiation from the ground, absorbed by greenhouse gases', 'sunlight absorbed directly by the air', 'advection from the ocean'], 1,
+    'Sunlight mostly passes through the air and warms the ground. The ground gives off infrared, which greenhouse gases absorb.'],
+  ['5', 'Greenhouse gases warm the lower atmosphere because they…', ['reflect sunlight back to space', 'absorb infrared from the surface and give it off in all directions, including back down', 'block visible light from reaching the ground', 'make the ozone layer thicker'], 1,
+    'They absorb the infrared the warm surface gives off and re-emit it, so the atmosphere holds energy like a heat sink.'],
+  ['5', 'Without the natural greenhouse effect, Earth’s average temperature would be about…', ['14 °C', '−18 °C', '30 °C', '0 °C'], 1, 'About −18 °C instead of about 14 °C. The natural greenhouse effect keeps Earth warm enough for life.'],
+  ['6', 'Which change of state releases thermal energy to the surroundings?', ['melting', 'evaporation', 'sublimation', 'condensation'], 3,
+    'Condensation (gas to liquid) releases energy. Melting, evaporation and sublimation all absorb it.'],
+  ['6', 'You step out of a pool on a windy day and feel cold. Why?', ['Water on your skin evaporates, absorbing thermal energy from your skin', 'The water condenses and releases energy', 'Wind is always cold', 'The water freezes on your skin'], 0,
+    'Evaporation absorbs energy. The water takes that energy from your skin, so you cool down.'],
+  ['6', 'Frost forms on a car window overnight, straight from water vapour. What is this change, and what happens to energy?', ['sublimation, absorbs energy', 'deposition, releases energy', 'condensation, absorbs energy', 'melting, releases energy'], 1,
+    'Gas straight to solid is deposition, the opposite of sublimation. It releases energy.'],
+  ['7', 'What is the latent heat of vapourization?', ['The energy to raise 1 g of water by 1 °C', 'The energy absorbed when a liquid turns to gas (or released when the gas condenses), with no temperature change', 'The energy released when ice melts', 'The heat of the Sun’s rays'], 1,
+    'Latent heat goes into changing state, not changing temperature. Vapourization is liquid ↔ gas; fusion is solid ↔ liquid.'],
+  ['7', 'A glass of ice water is left on the counter. While the ice is melting, the temperature of the water…', ['rises steadily', 'stays at about 0 °C', 'drops below 0 °C', 'jumps to room temperature'], 1,
+    'The energy coming in is used as latent heat of fusion to melt the ice, so the temperature stays at 0 °C until the ice is gone.'],
+  ['8', 'How does the water cycle move thermal energy from the tropics to colder places?', ['Water evaporates in warm places (absorbing energy), is carried away, and condenses elsewhere (releasing it)', 'Rain carries cold from the poles to the tropics', 'Ice absorbs heat as it freezes', 'Clouds reflect all the heat back to the tropics'], 0,
+    'Evaporation stores energy in water vapour. Condensation releases it, often far from where the water started.'],
+  ['8', 'Where does a thunderstorm get much of its energy?', ['Energy released as water vapour condenses into cloud', 'Energy absorbed as rain evaporates', 'Lightning', 'Cold air sinking'], 0,
+    'Condensation releases the latent heat that was absorbed when the water evaporated. That warms the air and keeps it rising.'],
+  ['9', 'A cool breeze blows from the ocean onto land on a summer afternoon. This sideways movement of air and its energy is…', ['advection', 'convection', 'conduction', 'radiation'], 0,
+    'Horizontal movement is advection. The rising over the land is convection; together they make a convection current.'],
+  ['9', 'Which pair is correct?', ['Convection: horizontal. Advection: vertical.', 'Convection: vertical. Advection: horizontal.', 'Both are vertical.', 'Both need empty space.'], 1,
+    'Convection moves energy up and down (rising and sinking). Advection moves it sideways (wind and currents).'],
+  ['10', 'Why is it warmer near the equator than near the poles?', ['The equator is closer to the Sun', 'Sunlight strikes near the equator almost straight on, so its energy is concentrated on a smaller area', 'There is more air at the equator', 'The poles have more greenhouse gases'], 1,
+    'Same sunlight, smaller area: more energy per square metre. (Earth’s distance from the Sun is almost the same for both.)'],
+  ['10', 'Near the poles, sunlight arrives at a low angle. Why does that make it weaker?', ['It is spread over a larger area and passes through more atmosphere', 'It is a different colour', 'It travels faster', 'The Sun is smaller there'], 0,
+    'Low-angle rays cover more ground and travel a longer path through the air, so each square metre gets less energy.'],
+  ['11', 'Air over a sunny parking lot is heated. What happens to it?', ['It expands, becomes less dense and rises, lowering the surface pressure', 'It contracts, becomes denser and sinks', 'It stays still and gets heavier', 'It turns into a high pressure system'], 0,
+    'Warm air is less dense, so it rises. With less air pressing down, the surface pressure drops.'],
+  ['11', 'Wind blows…', ['from low pressure toward high pressure', 'from high pressure toward low pressure', 'only from west to east', 'only near the coast'], 1, 'Air always moves from high pressure toward low pressure. That movement is wind.'],
+  ['12', 'An air mass forms over the cold North Atlantic Ocean. What type is it?', ['continental polar: cold and dry', 'maritime polar: cold and humid', 'maritime tropical: warm and humid', 'continental tropical: hot and dry'], 1,
+    'Maritime = over the ocean, so humid. Polar = cold.'],
+  ['12', 'Which air mass is hot and dry?', ['maritime tropical', 'continental tropical', 'maritime polar', 'Arctic'], 1, 'Continental tropical air forms over the hot deserts of the southwestern U.S. and Mexico.'],
+  ['12', 'What gives an air mass its temperature and humidity?', ['The surface it forms over (its source region)', 'The jet stream', 'The time of day', 'Its speed'], 0,
+    'An air mass sits over one region for days or weeks and takes on that surface’s properties.'],
+  ['13', 'In the northern hemisphere, winds around a low pressure system blow…', ['outward and clockwise', 'inward and counterclockwise', 'outward and counterclockwise', 'inward and clockwise'], 1,
+    'Air flows in toward a low and the Coriolis effect turns it, giving a counterclockwise spin. Around a high it is outward and clockwise.'],
+  ['13', 'A high pressure system is moving over your town. What weather do you expect?', ['Clear, dry, settled weather', 'Heavy rain and thunderstorms', 'Thick cloud and drizzle for days', 'A blizzard'], 0,
+    'In a high, air sinks. Sinking air warms and dries, so clouds don’t form.'],
+  ['13', 'Why do low pressure systems bring clouds and precipitation?', ['Air sinks and warms', 'Air rises and cools, so its water vapour condenses', 'The pressure squeezes water out of the air', 'They are always over the ocean'], 1,
+    'Rising air cools. Once it cools to its dew point, water vapour condenses into cloud and then precipitation.'],
+  ['14', 'Global wind belts form because of…', ['convection currents from unequal heating, turned by the Coriolis effect', 'ocean currents pushing the air', 'mountains', 'the Moon’s gravity'], 0,
+    'Unequal heating sets up convection loops, and Earth’s rotation turns the moving air so it blows from the east or west.'],
+  ['14', 'In the northern hemisphere, the Coriolis effect turns moving air to the…', ['left', 'right', 'north only', 'it doesn’t turn'], 1, 'Right in the northern hemisphere, left in the southern hemisphere.'],
+  ['15', 'Newfoundland and Labrador lies in which wind belt?', ['trade winds', 'prevailing westerlies', 'polar easterlies', 'the doldrums'], 1,
+    'We are between 30° and 60° N, in the prevailing westerlies, so most of our weather arrives from the west.'],
+  ['15', 'In the northern hemisphere the trade winds blow from the…', ['north-east', 'south-west', 'north-west', 'south'], 0, 'They blow toward the equator and are turned to the right, so they come from the north-east.'],
+  ['15', 'A hurricane forms in the tropical Atlantic. Which winds first carry it toward the west?', ['prevailing westerlies', 'trade winds', 'polar easterlies', 'the jet stream'], 1,
+    'In the tropics the trade winds carry weather systems west. Later the storm can turn north-east in the westerlies.'],
+  ['16', 'The polar jet stream dips far south of Newfoundland. What is most likely?', ['Cold polar air moves in', 'A heat wave', 'The trade winds arrive', 'Nothing changes'], 0,
+    'North of the jet is cold polar air. When the jet dips south of us, that cold air comes down over us.'],
+  ['16', 'Why is the polar jet stream faster and stronger in winter?', ['There is a bigger temperature difference between the poles and the equator', 'There is more sunlight', 'The oceans are warmer', 'Earth spins faster in winter'], 0,
+    'A bigger temperature contrast makes a stronger jet, and stronger storms along it.'],
+  ['16', 'How does the polar jet stream affect storms?', ['Storms form along it, and weather systems generally follow its path from west to east', 'It stops all storms', 'It moves storms from east to west', 'It only affects the ocean'], 0,
+    'Storms form along jet streams, follow their path, and are made more intense by the air of different temperatures the jet brings.'],
+  ['16', 'About how high up are jet streams?', ['about 1 km', 'about 10 km to 12 km', 'about 100 km', 'at the ground'], 1,
+    'Jet streams blow at altitudes of about 10 km to 12 km, near the top of the troposphere.'],
+  ['17', 'What does this weather map symbol show?', ['warm front', 'cold front', 'stationary front', 'occluded front'], 1, 'Blue triangles on a blue line: a cold front.', 'cold'],
+  ['17', 'What does this weather map symbol show?', ['warm front', 'cold front', 'stationary front', 'occluded front'], 3, 'Purple, with triangles and semicircles on the same side: an occluded front.', 'occ'],
+  ['17', 'Which front usually brings long periods of steady rain or snow from layered clouds?', ['cold front', 'warm front', 'occluded front', 'no front'], 1,
+    'A warm front has a gentle slope, so warm air rises slowly over a wide area.'],
+  ['17', 'Right after a cold front passes, the temperature usually ___ and the air pressure ___.', ['rises; drops', 'drops; rises', 'rises; rises', 'stays the same; drops'], 1,
+    'Colder, denser air arrives behind the front, so the temperature falls and the pressure rises. The sky usually clears.'],
+  ['17', 'An occluded front forms when…', ['a cold front catches up to a warm front', 'two warm fronts meet', 'a front stops moving', 'a high meets a low'], 0, 'The fast cold front overtakes the warm front and lifts the warm air off the ground.'],
+  ['18', 'What mainly drives surface ocean currents?', ['the prevailing winds', 'the Moon', 'differences in salt only', 'earthquakes'], 0, 'Winds push the surface water. The Coriolis effect and the continents steer it into gyres.'],
+  ['18', 'How does a warm current like the Gulf Stream move thermal energy?', ['It carries warm tropical water toward the poles and gives off heat to the air there', 'It carries cold water to the tropics', 'It reflects sunlight', 'It sinks to the ocean floor'], 0,
+    'Warm currents carry energy poleward. Cold currents carry cold water toward the equator.'],
+  ['19', 'Why is St. John’s often foggy?', ['Warm, moist air from over the Gulf Stream moves over the cold Labrador Current and cools until its water vapour condenses', 'The Labrador Current is warm', 'The jet stream makes fog', 'Icebergs give off steam'], 0,
+    'Warm, moist air moving over a cold surface makes advection fog.'],
+  ['19', 'Which current brings icebergs to Newfoundland?', ['Gulf Stream', 'Labrador Current', 'North Atlantic Current', 'California Current'], 1, 'The cold Labrador Current flows south from the Arctic, carrying sea ice and icebergs from Greenland.'],
+  ['20', 'Which seawater is the densest, so most likely to sink?', ['warm and fresh', 'warm and salty', 'cold and fresh', 'cold and salty'], 3, 'Both cold and salt make water denser. Cold, salty water sinks.'],
+  ['20', 'Why does surface water sink near Greenland and the Labrador Sea?', ['It is cooled by cold air, and forming sea ice leaves salt behind, making it denser', 'It is warmed by the Sun', 'Rivers add fresh water to it', 'The wind pushes it down'], 0,
+    'Colder and saltier means denser. That dense water sinks and starts the deep ocean conveyor belt.']
+];
+// Shuffle the options (the same way on every visit) so the right answer isn't always in the same place.
+// Numbers, letters and ordered sets (stages, directions of spin) keep their natural order.
+const ORDERED = /^([d.−]+( °C| km)?|[A-E]|the same|cumulus|mature|dissipating|clockwise|counterclockwise|warmer than normal|colder than normal)$/;
+const QS = MC.map(([sec, q, opts, k, why, fig], i) => {
+  let ord = opts.map((_, j) => j);
+  if (!opts.every(o => ORDERED.test(o))) { let s = 97 + i * 7919; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647; rnd(); rnd(); rnd();
+    for (let j = ord.length - 1; j > 0; j--) { const r = Math.floor(rnd() * (j + 1)); [ord[j], ord[r]] = [ord[r], ord[j]]; } }
+  return { id: 'q' + i, sec, q, opts: ord.map(j => opts[j]), k: ord.indexOf(k), why, fig };
+});
+// mix the concepts so practice is mixed, but keep the same order on every visit
+const Q = (() => { const a = QS.slice(); let s = 1206; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; })();
+
+function renderCards() {
+  $('#concepts').innerHTML = CARDS.map(([id, t, ask, pts, extra, sims, wide]) => `<section class="cc${wide ? ' wide' : ''}" id="c-${id}"><h3><span class="cn">${id === 'B' ? '★' : id}</span>${esc(t)}</h3>
+    <p class="ask">${esc(ask)}</p>${pts.length ? `<ul>${pts.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}${extra}
+    <div class="cfoot" id="cf-${id}"></div></section>`).join('');
+}
+function renderFoots() {
+  CARDS.forEach(([id, , , , , sims]) => {
+    const ids = Q.filter(q => q.sec === id).map(q => q.id), d = ids.filter(x => store.done[x]).length, next = ids.find(x => !store.done[x]);
+    const box = $('#c-' + id); box.classList.toggle('all', d === ids.length);
+    $('#cf-' + id).innerHTML = `<span class="cst">${d === ids.length ? '✓ all ' + ids.length + ' questions done' : 'Practice: ' + d + ' of ' + ids.length + ' done'}</span>` +
+      (next ? `<button class="btn small" type="button" data-go="${next}">Practise ▶</button>` : '') +
+      sims.map(s => `<a href="${SIMS}${s}/" target="_blank" rel="noopener">Sim ${esc(SIM_NAME[s])} ↗</a>`).join(' ');
+  });
+  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => {
+    const el = $('#q-' + b.dataset.go); el.scrollIntoView({ block: 'center' }); const f = el.querySelector('button'); if (f) f.focus({ preventScroll: true });
+  }));
+}
+
+const state = {};   // per-question feedback this visit
+function qHTML(q, n) {
+  const done = store.done[q.id], fb = state[q.id] || (done ? { ok: true, txt: 'Done ✓' } : null);
+  return `<div class="q ${done ? 'done' : ''}" data-id="${q.id}" id="q-${q.id}"><span class="num">QUESTION ${n + 1} <span class="sec">· ${esc(cardLabel(q.sec).toUpperCase())}</span></span>
+    <p class="stem">${esc(q.q)}</p>${q.fig ? figFrontOnly(q.fig) : ''}
+    <div class="opts" role="group" aria-label="Answers">${q.opts.map((o, i) => `<button class="segbtn" type="button" data-q="${q.id}" data-v="${i}">${esc(o)}</button>`).join('')}</div>
+    <div class="fb ${fb ? (fb.ok ? 'good' : 'bad') : ''}" aria-live="polite">${fb ? fb.txt : ''}</div></div>`;
+}
+function wire(root) {
+  root.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => answer(b.dataset.q, +b.dataset.v)));
+  root.querySelectorAll('[data-back]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const c = $('#c-' + a.dataset.back); c.scrollIntoView({ block: 'start' }); }));
+}
+function renderQs() { $('#questions').innerHTML = Q.map((q, n) => qHTML(q, n)).join(''); wire($('#questions')); renderProgress(); }
+function answer(id, v) {
+  const q = Q.find(x => x.id === id), box = document.querySelector(`.q[data-id="${id}"]`), ok = v === q.k;
+  const txt = ok ? `<b>Right ✓</b> <span class="why">${esc(q.why)}</span>`
+    : `<b>Not quite.</b> <span class="why">Reread <a href="#c-${q.sec}" data-back="${q.sec}">${esc(cardLabel(q.sec))}: ${esc(CARD_OF[q.sec][1])}</a>, then try again.</span>`;
+  state[id] = { ok, txt };
+  if (ok && !store.done[id]) { store.done[id] = true; save(); }
+  box.outerHTML = qHTML(q, Q.indexOf(q));
+  const nb = document.querySelector(`.q[data-id="${id}"]`); wire(nb);
+  const f = nb.querySelector(`[data-v="${v}"]`); if (f) f.focus({ preventScroll: true });
+  renderProgress();
+}
+function renderProgress() {
+  renderFoots();
+  const n = Q.filter(q => store.done[q.id]).length;
+  $('#progBar').style.width = (100 * n / Q.length) + '%';
+  $('#progTxt').textContent = n === Q.length ? `All ${Q.length} questions done!` : `Part 3: ${n} of ${Q.length} questions done`;
+  if (n === Q.length && !store.shown) { store.shown = true; save(); showEnd(); }
+}
+
+/* ================= the end card ================= */
+let endFrom = null;
+function showEnd() {
+  const e = $('#endcard'); endFrom = document.activeElement; e.hidden = false;
+  e.querySelectorAll('.in').forEach(x => { x.style.animation = 'none'; void x.offsetWidth; x.style.animation = ''; });
+  e.focus();
+}
+function hideEnd() { $('#endcard').hidden = true; if (endFrom && endFrom.focus) endFrom.focus(); }
+$('#endcard').addEventListener('click', hideEnd);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#endcard').hidden) hideEnd(); });
+$('#resetAll').addEventListener('click', () => { store.done = {}; store.shown = false; save(); Object.keys(state).forEach(k => delete state[k]); renderQs(); });
+
+renderVocab(); renderCards(); renderQs();
+})();
+</script>
+</body></html>

@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unit 1 Review, Part 2 | Science 1206</title>
+<meta name="tw-titlecard" content="WEATHER · UNIT TEST|REVIEW|FINAL STRETCH.">
+<style>:root{
+  --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --warm:#ff9a4d;
+  --radius:6px; --focus:#5df2a4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif}
+.app{max-width:1060px;margin:0 auto;padding:8px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 8px}
+.hd h1{margin:0}
+.lead{flex-basis:100%;margin:2px 0 0;font-size:.95rem}
+.card{padding:12px 16px;margin:0 0 12px}
+.part{font-family:'Press Start 2P','Courier New',monospace;font-size:11px;line-height:1.6;color:#1b1030;background:var(--gold);display:inline-block;padding:6px 10px;border:3px solid #000;box-shadow:4px 4px 0 #000;margin:4px 0 10px;font-weight:400}
+.wtitle{font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1.6;color:var(--sky);margin:0 0 6px;font-weight:400}
+[hidden]{display:none!important}
+sub,sup{font-size:.62em;line-height:0}
+a{color:var(--sky)}
+.plain p{margin:4px 0;max-width:80ch}
+.btn,.segbtn{appearance:none;font:inherit;font-weight:700;padding:7px 12px;min-height:38px;cursor:pointer}
+.btn.small{padding:4px 9px;min-height:32px;font-size:.9rem}
+.segbtn{text-align:left;font-size:.95rem;padding:6px 10px;min-height:36px}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
+
+/* progress bar */
+.prog{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0;margin:0 0 6px}
+.prog .bar{height:16px;border:3px solid #000;border-radius:4px;background:var(--panel);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--mint);width:0;transition:width .3s}
+.prog .txt{font-size:.85rem;color:var(--ink2);margin-top:2px}
+
+/* part 1: key words */
+.vocab{width:100%;border-collapse:collapse;background:var(--panel);border:3px solid #000;margin:0 0 10px}
+.vocab th{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;font-weight:400;color:var(--ink2);text-align:left;padding:7px 8px;border-bottom:2px solid #3a2463}
+.vocab td{padding:6px 8px;border-bottom:1px solid #2a1850;vertical-align:top}
+.vocab td.c{font:400 22px/1 'VT323','Courier New',monospace;color:var(--gold);width:44px}
+.vocab td.t{width:250px}
+.vocab .term{font-weight:700;color:var(--mint)}
+.vocab tr.grp td{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--sky);padding-top:10px}
+
+/* part 2: concepts */
+.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px}
+.cc{background:var(--panel);border:3px solid #000;border-left:6px solid #3a2463;border-radius:4px;padding:9px 12px;scroll-margin-top:60px}
+.cc.all{border-left-color:var(--mint)}
+.cc.wide{grid-column:1 / -1}
+.cc h3{margin:0 0 4px;font-size:1.02rem;color:var(--sky);display:flex;gap:8px;align-items:baseline}
+.cc h3 .cn{font:400 24px/1 'VT323','Courier New',monospace;color:var(--gold);min-width:22px}
+.cc .ask{margin:0 0 6px;font-size:.88rem;color:var(--ink2);font-style:italic}
+.cc ul{margin:0;padding-left:1.1rem}
+.cc li{margin:3px 0;font-size:.94rem}
+.cc b{color:#fff}
+.cfoot{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:8px;padding-top:6px;border-top:1px solid #2a1850;font-size:.85rem}
+.cfoot .cst{color:var(--ink2)} .cc.all .cfoot .cst{color:var(--mint)}
+.mini{width:100%;border-collapse:collapse;margin:6px 0;font-size:.88rem}
+.mini th{text-align:left;color:var(--ink2);font-weight:700;border-bottom:2px solid #3a2463;padding:3px 6px}
+.mini td{border-bottom:1px solid #2a1850;padding:3px 6px;vertical-align:top}
+.mini td:first-child{font-weight:700;color:#fff;white-space:nowrap}
+@media(max-width:600px){.mini td:first-child{white-space:normal}.mini{font-size:.8rem}.mini td,.mini th{padding:3px 3px}}
+.figrow{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start}
+.figrow .fig{flex:1 1 300px}
+.fig{margin:8px 0 2px}
+.fig svg{display:block;width:100%;height:auto;max-width:520px;border:3px solid #000;border-radius:4px}
+.fig .cap{font-size:.8rem;color:var(--ink2);margin-top:3px}
+
+/* part 3: practice */
+.q{background:var(--panel);border:3px solid #000;border-left:6px solid #3a2463;border-radius:4px;padding:9px 12px;margin:0 0 10px;scroll-margin-top:60px}
+.q.done{border-left-color:var(--mint)}
+.q .num{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--gold);display:block;margin-bottom:3px}
+.q .num .sec{color:var(--ink2)}
+.q .stem{font-weight:700;margin:0 0 6px}
+.q .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:5px}
+.q .fb{margin-top:6px;font-size:.95rem}
+.q .fb.good{color:var(--mint)} .q .fb.bad{color:#ffb3bd}
+.q .fb .why{color:var(--ink)}
+.q .fig svg{max-width:420px}
+.q .fig.sym svg{max-width:340px}
+
+/* end card: '90s anime episode ending */
+.endcard{position:fixed;inset:0;z-index:9998;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;cursor:pointer;overflow:hidden}
+.endcard .stripes{position:absolute;inset:-20% -10%;background:repeating-linear-gradient(-28deg,transparent 0 46px,rgba(255,210,63,.9) 46px 58px,transparent 58px 120px,rgba(255,93,115,.85) 120px 128px,transparent 128px 190px,rgba(106,211,255,.8) 190px 196px);
+  opacity:.22;animation:slide 6s linear infinite}
+@keyframes slide{to{transform:translateX(190px)}}
+.endcard .k{font:400 clamp(10px,1.4vw,14px)/1.6 'Press Start 2P','Courier New',monospace;color:var(--gold);position:relative;letter-spacing:.06em}
+.endcard .big{font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.92;position:relative;transform-origin:left;transform:scaleX(.72);white-space:nowrap}
+.endcard .l1{font-size:clamp(40px,8vw,96px)}
+.endcard .l2{font-size:clamp(52px,11vw,132px);color:var(--gold)}
+.endcard .sub{position:relative;font:italic 700 clamp(14px,2vw,22px)/1.3 'Atkinson Hyperlegible',sans-serif;color:var(--sky);margin-top:14px}
+.endcard .close{position:absolute;right:18px;bottom:14px;font-size:13px;color:#888}
+.endcard .in{animation:pop .6s cubic-bezier(.2,1.4,.4,1) both}
+.endcard .in.d2{animation-delay:.25s} .endcard .in.d3{animation-delay:.5s} .endcard .in.d4{animation-delay:.8s}
+@keyframes pop{from{opacity:0;transform:translateX(-40px) scaleX(.72)}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.endcard .stripes,.endcard .in{animation:none}}
+.foot{margin:12px 4px 0;font-size:.82rem}
+@media print{.prog,.acts,.endcard,.cfoot .btn{display:none!important}}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<div id="app" class="app">
+  <header class="hd">
+    <h1>Unit 1 Review, Part 2</h1>
+    <span class="pill">SCIENCE 1206 · UNIT 1</span>
+    <p class="lead">Extreme weather, weather instruments, maps and forecasting, climate and climate change. Get ready for the Unit Test.</p>
+  </header>
+
+  <div class="card plain">
+    <h2 class="wtitle">IN PLAIN WORDS</h2>
+    <p>This page follows the <b>Unit 1 Review (Test 2)</b> in your booklet. The Unit Test covers the <b>whole unit</b>, so do the <a href="https://mrbecktech.github.io/site/courses/science-1206/weather/u1-review-pt1/" target="_blank" rel="noopener">Part 1 review ↗</a> too. This page adds the new material.</p>
+    <p><b>Part 1</b> is the new key words. <b>Part 2</b> answers the new concepts to know, plus extreme weather. <b>Part 3</b> is practice questions that check your answers, with a few Part 1 refreshers mixed in. Answer every question correctly to finish. A wrong answer points you to the concept to reread.</p>
+  </div>
+
+  <div class="prog" aria-live="polite"><div class="bar"><i id="progBar"></i></div><div class="txt" id="progTxt"></div></div>
+
+  <section class="card" aria-labelledby="p1">
+    <h2 class="part" id="p1">PART 1: KEY WORDS</h2>
+    <p style="margin:0 0 8px">These are the terms on your Unit Test list that were not on the Test #1 list. Read each meaning, say the term to yourself, then tap to check.</p>
+    <table class="vocab" id="vocab"></table>
+    <div class="acts"><button class="btn small" type="button" id="vAll">Show all terms</button><button class="btn small" type="button" id="vHide">Hide all terms</button></div>
+  </section>
+
+  <section class="card" aria-labelledby="p2">
+    <h2 class="part" id="p2">PART 2: CONCEPTS</h2>
+    <p style="margin:0 0 8px">The grey line in each box is the concept from your review sheet (numbered on from the 20 in Part 1). <b>Practise ▶</b> jumps to that concept’s questions.</p>
+    <div class="concepts" id="concepts"></div>
+  </section>
+
+  <section class="card" aria-labelledby="p3">
+    <h2 class="part" id="p3">PART 3: PRACTICE QUESTIONS</h2>
+    <div id="questions"></div>
+    <div class="acts"><button class="btn small" type="button" id="resetAll">Clear my answers</button></div>
+  </section>
+  <p class="foot">Science 1206 · Unit 1 Weather Dynamics · Unit Test review · Science 1206 textbook, Chapter 1, pp. 34–75. Numbers marked “about” are rounded. Your answers are saved on this device only.</p>
+</div>
+<div id="endcard" class="endcard" role="dialog" aria-modal="true" aria-label="Review complete" hidden tabindex="-1">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="k in">UNIT 1 · PART 2 · REVIEW COMPLETE</div>
+  <div class="big l1 in d2">SEE YOU</div>
+  <div class="big l2 in d3">NEXT CLASS...</div>
+  <div class="sub in d4">You answered every question. Good luck on the Unit Test!</div>
+  <div class="close">click or press Esc to close</div>
+</div>
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const SITE = 'https://mrbecktech.github.io/site/courses/science-1206/weather/';
+const LINKS = { 'thunderstorms-tornadoes': ['sims/thunderstorms-tornadoes/', 'Sim 16 Thunderstorms'], hurricanes: ['sims/hurricanes/', 'Sim 17 Hurricanes'],
+  'noreasters-blizzards': ['sims/noreasters-blizzards/', 'Sim 18 Nor’easters'], 'el-nino-la-nina': ['sims/el-nino-la-nina/', 'Sim 15 El Niño'],
+  'weather-fronts': ['sims/weather-fronts/', 'Sim 12 Fronts'], maplab: ['weather-map-lab/', 'Weather Map Lab'], 'energy-budget': ['sims/energy-budget/', 'Sim 01 Energy Budget'],
+  'deep-currents': ['sims/deep-currents/', 'Sim 14 Deep Currents'], pt1: ['u1-review-pt1/', 'Part 1 review'] };
+
+/* Progress: this device only */
+const KEY = 'wx-review-2:v1';
+let store = { done: {}, shown: false, seen: {} };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) store = Object.assign(store, s); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+
+/* ================= figures ================= */
+/* Front symbols. Colours stay the real weather-map colours (blue cold, red warm, purple occluded) on a light map background.
+   pts: the front line; side +1 puts the symbols on the left of the line's direction (up, for a line drawn left to right). */
+const FC = { cold: '#1d5fd1', warm: '#d7263d', occ: '#8e44ad' };
+function frontSVG(type, pts, side = 1, gap = 26) {
+  const segs = []; let L = 0;
+  for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], l = Math.hypot(x1 - x0, y1 - y0); segs.push({ x0, y0, dx: (x1 - x0) / l, dy: (y1 - y0) / l, a: L, l }); L += l; }
+  const at = d => { const s = segs.find(g => d <= g.a + g.l) || segs[segs.length - 1], u = d - s.a; return { x: s.x0 + s.dx * u, y: s.y0 + s.dy * u, tx: s.dx, ty: s.dy }; };
+  const f = n => n.toFixed(1);
+  const tri = (p, sd, c) => { const nx = p.ty * sd, ny = -p.tx * sd;
+    return `<polygon fill="${c}" points="${f(p.x - p.tx * 7)},${f(p.y - p.ty * 7)} ${f(p.x + p.tx * 7)},${f(p.y + p.ty * 7)} ${f(p.x + nx * 10)},${f(p.y + ny * 10)}"/>`; };
+  const semi = (p, sd, c) => { const nx = p.ty * sd, ny = -p.tx * sd, q = [];
+    for (let k = 0; k <= 10; k++) { const th = Math.PI * k / 10; q.push(f(p.x + p.tx * 7 * Math.cos(th) + nx * 7 * Math.sin(th)) + ',' + f(p.y + p.ty * 7 * Math.cos(th) + ny * 7 * Math.sin(th))); }
+    return `<polygon fill="${c}" points="${q.join(' ')}"/>`; };
+  const line = (d0, d1, c) => { const q = []; for (let d = d0; d < d1; d += 3) { const p = at(d); q.push(f(p.x) + ',' + f(p.y)); } const p = at(d1); q.push(f(p.x) + ',' + f(p.y));
+    return `<polyline fill="none" stroke="${c}" stroke-width="3.5" stroke-linejoin="round" points="${q.join(' ')}"/>`; };
+  let out = '';
+  const n = Math.max(1, Math.floor(L / gap));
+  for (let i = 0; i < n; i++) {
+    const d0 = i * gap, d1 = i === n - 1 ? L : (i + 1) * gap, p = at((d0 + Math.min(d1, d0 + gap)) / 2);
+    if (type === 'cold') out += line(d0, d1, FC.cold) + tri(p, side, FC.cold);
+    if (type === 'warm') out += line(d0, d1, FC.warm) + semi(p, side, FC.warm);
+    if (type === 'occ') out += line(d0, d1, FC.occ) + (i % 2 ? semi(p, side, FC.occ) : tri(p, side, FC.occ));
+    if (type === 'stat') out += i % 2 ? line(d0, d1, FC.warm) + semi(p, -side, FC.warm) : line(d0, d1, FC.cold) + tri(p, side, FC.cold);
+  }
+  return out;
+}
+const PAPER = '#f7f3e8', MAPINK = '#2b2633', FONT = 'font-family="Atkinson Hyperlegible,sans-serif"';
+function figFronts() {
+  const rows = [['cold', 'Cold front'], ['warm', 'Warm front'], ['stat', 'Stationary front'], ['occ', 'Occluded front']];
+  return `<div class="fig"><svg viewBox="0 0 520 214" role="img" aria-label="Weather map symbols: cold front, blue line with blue triangles. Warm front, red line with red semicircles. Stationary front, alternating blue triangles and red semicircles on opposite sides. Occluded front, purple line with triangles and semicircles on the same side.">
+    <rect width="520" height="214" fill="${PAPER}"/>
+    ${rows.map(([t, name], i) => { const y = 40 + i * 50; return `<text x="14" y="${y + 5}" font-size="16" font-weight="700" fill="${MAPINK}" ${FONT}>${name}</text>${frontSVG(t, [[170, y], [500, y]])}`; }).join('')}
+  </svg><div class="cap">The symbols sit on the side the front is moving toward (here, up the page).</div></div>`;
+}
+function figFrontOnly(type) {
+  return `<div class="fig sym"><svg viewBox="0 0 320 64" role="img" aria-label="A weather map front symbol"><rect width="320" height="64" fill="${PAPER}"/>${frontSVG(type, [[20, 40], [300, 40]])}</svg></div>`;
+}
+/* A schematic weather map: a low with its warm and cold fronts, a high to the west, and isobars that are crowded on the west side. */
+function figMap() {
+  const iso = [0, 1, 2, 3].map(k => ({ cx: 200 + 12 * k, rx: 30 + 28 * k, ry: 20 + 18 * k, p: (99.6 + 0.4 * k).toFixed(1) }));
+  const pt = (x, y, s) => `<circle cx="${x}" cy="${y}" r="10" fill="#fff" stroke="${MAPINK}" stroke-width="2"/><text x="${x}" y="${y + 5}" text-anchor="middle" font-size="14" font-weight="700" fill="${MAPINK}" ${FONT}>${s}</text>`;
+  return `<div class="fig"><svg viewBox="0 0 420 270" role="img" aria-label="Weather map. A low pressure centre has a warm front running east and a cold front running south-west. Point A is north of the warm front. Point B is south of the low, between the two fronts. Point C is west of the cold front. Isobars around the low are close together near point D on the west side and far apart near point E on the east side. A high is in the north-west corner.">
+    <rect width="420" height="270" fill="${PAPER}"/>
+    ${iso.map(e => `<ellipse cx="${e.cx}" cy="120" rx="${e.rx}" ry="${e.ry}" fill="none" stroke="#8b8794" stroke-width="1.5"/><text x="${(e.cx + e.rx * 0.5 + 2).toFixed(1)}" y="${(120 - e.ry * 0.866 - 2).toFixed(1)}" font-size="10" fill="#5d5868" ${FONT}>${e.p}</text>`).join('')}
+    <circle cx="52" cy="52" r="26" fill="none" stroke="#8b8794" stroke-width="1.5"/>
+    <text x="52" y="60" text-anchor="middle" font-size="24" font-weight="700" fill="#1d5fd1" ${FONT}>H</text>
+    ${frontSVG('warm', [[200, 120], [250, 134], [300, 150], [345, 172]])}
+    ${frontSVG('cold', [[200, 120], [180, 160], [155, 200], [128, 244]])}
+    <text x="200" y="128" text-anchor="middle" font-size="24" font-weight="700" fill="#d7263d" ${FONT}>L</text>
+    ${pt(285, 108, 'A')}${pt(222, 206, 'B')}${pt(112, 178, 'C')}${pt(150, 98, 'D')}${pt(326, 96, 'E')}
+    <text x="10" y="262" font-size="11" fill="#5d5868" ${FONT}>Isobars in kPa · weather systems here move from west to east →</text>
+  </svg></div>`;
+}
+
+/* ================= PART 1: key words ================= */
+// [group, term, meaning] - the Unit Test terms that were not on the Test #1 list
+const VOCAB = [
+  ['EXTREME WEATHER', 'extreme weather', 'Weather far more severe than usual, which can cause damage or put people in danger: hurricanes, nor’easters, thunderstorms, tornadoes and blizzards.'],
+  ['', 'hurricane', 'A massive spinning storm that forms over warm tropical ocean water around a low pressure centre, with sustained winds of more than 119 km/h.'],
+  ['', 'nor’easter', 'A powerful storm that forms when cold, dry Arctic air meets warm, humid air from over the Gulf of Mexico or the Gulf Stream. High winds, heavy precipitation, flooding and surging waves. Usually September to April.'],
+  ['', 'thunderstorm', 'A storm named for the lightning, thunder, strong winds and hail or rain it produces, from a tall cumulonimbus cloud (thunderhead).'],
+  ['', 'tornado', 'A violent, funnel-shaped column of rotating air that touches the ground.'],
+  ['', 'El Niño', 'Every few years the winds across the South Pacific reverse and flow east, and the surface water of the eastern Pacific near the equator warms. It changes weather around the world.'],
+  ['', 'La Niña', 'The opposite of El Niño: the winds flowing west across the South Pacific get stronger, and the surface water near the equator cools.'],
+  ['OCEAN CURRENTS', 'surface currents', 'Currents in the upper part of the ocean, driven mainly by the wind. They move thermal energy from the tropics toward the poles.'],
+  ['', 'deep ocean current', 'A slow current deep in the ocean, driven by differences in density (cold, salty water sinks). Part of the ocean conveyor belt.'],
+  ['INSTRUMENTS', 'barometer', 'Measures atmospheric pressure, in kilopascals (kPa).'],
+  ['', 'rain gauge', 'Measures rainfall, in millimetres (mm). A funnel catches the rain and the narrow tube is marked in mm.'],
+  ['', 'hygrometer', 'Measures relative humidity (%): the water vapour in the air compared with the most the air could hold at that temperature.'],
+  ['', 'thermometer', 'Measures air temperature, in degrees Celsius (°C).'],
+  ['', 'wind vane', 'Measures wind direction. Its arrow points in the direction the wind is coming from.'],
+  ['', 'anemometer', 'Measures wind speed, usually in km/h. The wind spins its open cups.'],
+  ['', 'weather balloon', 'Carries a radiosonde high into the atmosphere to measure temperature, pressure and humidity, and radios the data back. Tracking the balloon gives wind speed and direction.'],
+  ['', 'weather radar', 'Remote sensing that sends out radio waves and measures the waves reflected by rain, snow and hail. Its main job is to find precipitation: where it is and how heavy.'],
+  ['', 'weather satellite', 'Remote sensing technology in orbit around Earth. Its infrared (heat) and visible light sensors show clouds and weather systems as they form and move.'],
+  ['FORECASTING', 'weather map', 'A map that uses symbols to show the weather over a region: fronts, high and low pressure systems, isobars and isotherms.'],
+  ['', 'weather forecasting', 'Predicting future weather from ongoing observations of atmospheric conditions.'],
+  ['', 'short range forecast', 'A forecast of how the weather will change over the next 48 hours or less. Quite accurate.'],
+  ['', 'long range forecast', 'A forecast of how the weather will change over the next 3 to 7 days. Less accurate than a short range forecast.'],
+  ['CLIMATE', 'climate', 'The pattern of weather conditions in a region over a long period of time: years, decades or longer.'],
+  ['', 'energy budget', 'The balance between the energy Earth absorbs from the Sun and the energy it radiates back to space.'],
+  ['', 'greenhouse gases', 'Gases that absorb heat radiated from Earth’s surface and radiate it again: water vapour, carbon dioxide, methane, nitrous oxide and halocarbons.'],
+  ['', 'anthropogenic greenhouse effect', 'The greenhouse effect made stronger by human-produced greenhouse gases (anthropogenic means “human-caused”). Also called the enhanced greenhouse effect.'],
+  ['', 'global warming', 'The rise in Earth’s average surface temperature.'],
+  ['', 'climate change', 'A change in the weather conditions a region has over a long time: not only temperature, but precipitation, wind and storms too.']
+];
+function renderVocab() {
+  const seen = store.seen;
+  $('#vocab').innerHTML = `<thead><tr><th scope="col">#</th><th scope="col">MEANING</th><th scope="col">TERM</th></tr></thead><tbody>${VOCAB.map(([g, w, d], i) =>
+    (g ? `<tr class="grp"><td colspan="3">${g}</td></tr>` : '') +
+    `<tr><td class="c">${i + 1}</td><td>${esc(d)}</td><td class="t">${seen['v' + i] ? `<span class="term">${esc(w)}</span>` : `<button class="btn small" type="button" data-v="v${i}">Tap to check</button>`}</td></tr>`).join('')}</tbody>`;
+  document.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', () => { store.seen[b.dataset.v] = true; save(); renderVocab(); }));
+}
+$('#vAll').addEventListener('click', () => { VOCAB.forEach((_, i) => { store.seen['v' + i] = true; }); save(); renderVocab(); });
+$('#vHide').addEventListener('click', () => { store.seen = {}; save(); renderVocab(); });
+
+/* ================= PART 2: concepts (Unit Test review) ================= */
+// [id, badge, title, review-sheet wording, points (HTML allowed), extra HTML, links, wide]
+const CARDS = [
+  ['R', '↺', 'Part 1 refresher', 'Concepts 1 to 20 from the Test #1 review are on the Unit Test too.', [
+    'Energy budget, albedo, heat sinks, conduction, convection, radiation and advection, the greenhouse effect, changes of state and latent heat, the water cycle, unequal heating, air masses, pressure systems, the Coriolis effect, global winds, the jet stream, fronts, and surface and deep ocean currents.',
+    'They are all explained in the Part 1 review, with practice questions. A few refreshers are mixed into the questions on this page.'], '', ['pt1'], true],
+  ['E1', '⚡', 'Thunderstorms and tornadoes', 'Extreme weather (booklet pp. 34–45): thunderstorm and tornado.', [
+    'A <b>thunderstorm</b> is named for the lightning, thunder, strong winds and hail or rain it produces. Water vapour in rising warm air condenses and releases thermal energy, which heats the air so it keeps rising. This builds a cumulonimbus cloud (thunderhead) that can reach the top of the troposphere and spread into an “anvil” shape.',
+    'Thunderstorms need <b>unstable</b> air: moist air rising quickly up a mountain or within a cold air mass, sea breezes in the tropics, or an advancing cold front (less often a warm front).',
+    'Three stages: <b>cumulus</b> (updraft only), <b>mature</b> (updraft and downdraft: the worst rain, hail and lightning), <b>dissipating</b> (the downdraft cuts off the warm air).',
+    '<b>Lightning</b> is a giant electric spark. <b>Thunder</b> is the sound of air heated so quickly by lightning that it expands explosively. Count the seconds between the flash and the thunder and divide by 3 for the distance in kilometres.',
+    'A <b>tornado</b> is a violent, funnel-shaped column of rotating air that touches the ground. It can form when strong high-altitude horizontal winds hit the rapidly rising air in a large thunderstorm and make it rotate. This spinning vortex is a <b>funnel cloud</b>; when it touches the ground it becomes a tornado. Surface winds can reach 400 km/h. Tornadoes are rated EF0 to EF5 on the Enhanced Fujita scale, by the damage they do.',
+    'Tornadoes are rare in Newfoundland: the cold ocean keeps the air near the ground cool and stable.'], '', ['thunderstorms-tornadoes']],
+  ['E2', '⚡', 'Hurricanes', 'Extreme weather (booklet pp. 34–45): hurricane.', [
+    'A <b>hurricane</b> is a massive spinning storm that forms in the tropics. It becomes a hurricane when its sustained winds are <b>more than 119 km/h</b>. The textbook says winds may reach 240 km/h; the strongest storms go higher. The same storms are called cyclones near the Indian Ocean and typhoons in the western Pacific.',
+    'How one forms (Figure 1.22): warm air absorbs moisture from the warm ocean and rises. The water vapour condenses into clouds and rain, releasing thermal energy, which makes the air less dense so it rises faster. The rising air leaves low pressure at the surface, and air rushes in to replace it. The Coriolis effect makes that air spin: <b>counterclockwise</b> in the northern hemisphere. More condensation releases more energy, and the storm spins faster.',
+    'It needs warm ocean water (about 26.5 °C or warmer), and it has to form at least about 5° from the equator so the Coriolis effect can spin it. The calm <b>eye</b> is surrounded by the <b>eyewall</b> (the strongest winds) and spiral rainbands.',
+    'Hurricane season is late summer to early fall, when the oceans store the most thermal energy. Over land or cold water a hurricane loses its energy source and weakens.',
+    'Dangers: wind, flooding rain and <b>storm surge</b>. Hurricane Igor (2010) caused power loss, flooding and washed-out roads and bridges in the province; Hurricane Matthew (2016) also washed out roads.'], '', ['hurricanes']],
+  ['E3', '⚡', 'Nor’easters and blizzards', 'Extreme weather (booklet pp. 34–45): nor’easter.', [
+    'A <b>nor’easter</b> is a powerful storm on the east coast, named for its winds from the northeast. It brings high winds, heavy precipitation, flooding and surging waves.',
+    'It forms when two air masses meet: cold, dry Arctic air (carried by the jet stream) pushing down across eastern Canada and the northern U.S., and warm, humid air that picked up heat and moisture over the Gulf of Mexico or the Gulf Stream. The temperature difference fuels the storm. Warm air is pulled up the east side of the storm, creating an area of low pressure.',
+    'Nor’easters rotate counterclockwise, usually happen from September to April, and look like a huge comma from space.',
+    'They can bring hurricane-force winds, but they form differently: from two clashing air masses, not from warm tropical water.',
+    'A <b>blizzard</b> is a violent winter storm with freezing temperatures, strong winds and blowing snow. In a blizzard, winds are more than 56 km/h and visibility is less than 0.5 km for at least 3 hours. The snow doesn’t have to be falling: wind can blow snow that is already on the ground. Blizzards often form on the northwest side of a strong storm.'], '', ['noreasters-blizzards']],
+  ['E4', '⚡', 'El Niño and La Niña', 'Extreme weather (booklet pp. 34–45): El Niño and La Niña.', [
+    '<b>Normal</b>: the trade winds push warm surface water west across the Pacific, and cold, nutrient-rich water rises (upwelling) off South America.',
+    '<b>El Niño</b> (every few years): the winds across the South Pacific reverse and flow east, and the ocean surface near the equator in the eastern Pacific warms. Upwelling off Peru weakens, so fish catches drop.',
+    'About 25% of the world’s weather patterns are affected in an El Niño year. Coastal western North America gets unusually warm, wet winters, often with flooding; other places get drought. On the Atlantic coast there are fewer hurricanes and tornadoes, and they are less intense.',
+    '<b>La Niña</b> is the opposite: the winds flowing west across the South Pacific get stronger and the surface water near the equator cools. It magnifies the usual patterns: in eastern North America, winters are colder and snowier, and tornado and hurricane seasons can be longer and more powerful.',
+    'Scientists have not yet pinpointed exactly what causes El Niño and La Niña.'], '', ['el-nino-la-nina']],
+  ['21', '21', 'Weather instruments and technology', 'Know what each weather instrument and weather technology measures, units, etc.', [
+    '<b>Qualitative</b> observations use the senses (how the wind sounds, how foggy it looks). <b>Quantitative</b> observations are measurements made with instruments (Table 2.1).'],
+    `<table class="mini"><thead><tr><th>Instrument</th><th>Measures</th><th>Units</th><th>How it works</th></tr></thead><tbody>
+      <tr><td>Barometer</td><td>atmospheric pressure</td><td>kPa (home ones may use millibars or mmHg)</td><td>An aneroid barometer has a sealed, flexible cell of air. High pressure squeezes it more than low pressure; the change moves a needle. Falling pressure: a low is coming. Rising: fair weather.</td></tr>
+      <tr><td>Rain gauge</td><td>rainfall</td><td>mm</td><td>A funnel catches rain over a large area; the narrow body is marked in mm. A tipping-bucket gauge measures electronically. Snowfall is measured with a marked pole, in cm.</td></tr>
+      <tr><td>Hygrometer</td><td>relative humidity</td><td>%</td><td>Digital, or two thermometers (wet bulb and dry bulb). Evaporation cools the wet bulb; the bigger the difference, the drier the air. No difference = 100%.</td></tr>
+      <tr><td>Thermometer</td><td>air temperature</td><td>°C</td><td>Alcohol in a narrow tube expands and rises as it warms. Others use metals or electric current.</td></tr>
+      <tr><td>Wind vane</td><td>wind direction</td><td>compass points (16)</td><td>Shaped like an arrow with a big tail. The wind turns the tail so the arrow points to where the wind is coming from.</td></tr>
+      <tr><td>Anemometer</td><td>wind speed</td><td>km/h</td><td>The wind catches its open cups and spins them; the rotation gives the speed.</td></tr>
+      <tr><td>Weather balloon</td><td>temperature, pressure and humidity high up; wind speed and direction</td><td>°C, kPa, %, km/h</td><td>A hydrogen balloon carries a <b>radiosonde</b> (instruments + radio transmitter) that sends data back. Tracking the balloon gives the wind. It expands as it rises, bursts, and a parachute brings the radiosonde down.</td></tr>
+      <tr><td>Weather radar</td><td>location and intensity of precipitation</td><td>images</td><td>Remote sensing. Radio waves are reflected by rain, snow and hail; heavier precipitation reflects more. It can see through clouds, so its main job is detecting precipitation. <b>Doppler radar</b> also measures whether it is moving toward or away and how fast, giving a storm’s direction and speed: an early warning system.</td></tr>
+      <tr><td>Weather satellite</td><td>cloud cover; development and movement of weather systems</td><td>images</td><td>Remote sensing in orbit. Infrared (heat) sensors and visible light sensors. <b>GOES</b> (geostationary) satellites sit about 36 000 km above the equator and watch the same spot all the time. <b>POES</b> (polar orbiting) satellites circle over the poles about 14 times a day and scan the whole globe.</td></tr></tbody></table>
+      <ul><li><b>Remote sensing technology</b> collects weather data from a distance, without touching what it observes. Examples: weather radar and weather satellites.</li></ul>`, [], true],
+  ['22', '22', 'Reading a weather map', 'Interpret a weather map, weather map symbols and be able to describe weather conditions.', [
+    '<b>H</b> = high pressure: clear, dry weather; winds blow outward and clockwise. <b>L</b> = low pressure: clouds and precipitation; winds blow inward and counterclockwise.',
+    '<b>Isobars</b> join places with the same atmospheric pressure (in kPa). The closer together they are, the stronger the wind. <b>Isotherms</b> join places with the same temperature.',
+    'Fronts (Table 2.2): a <b>cold front</b> is the leading edge of an advancing cold air mass. A <b>warm front</b> is the retreating edge of a cold air mass as a warm air mass approaches. A <b>stationary front</b> is a boundary between two air masses that are not moving. An <b>occluded front</b> forms when a fast cold front overtakes a slow warm front.',
+    'A low usually has a warm front ahead of it and a cold front trailing behind. Ahead of the warm front: thickening cloud and long, steady precipitation. Between the fronts: warm and humid. Behind the cold front: colder, clearing, pressure rising.',
+    'To forecast from maps, look at: where the fronts are, and how fast and which way they are moving; where the pressure systems are (the weather is often unsettled where two pressure systems meet); and how close the isobars or isotherms are and how fast that is changing. Quickly changing temperature or pressure often means a front is coming.',
+    'Weather systems over Canada move from <b>west to east</b> with the prevailing westerlies, so look west to see what is coming.'],
+    `<div class="figrow">${figMap()}${figFronts()}</div>`, ['maplab', 'weather-fronts'], true],
+  ['23', '23', 'Forecasting: limits and improvements', 'Discuss limitations of weather forecasting and how forecasting has improved.', [
+    '<b>Short range forecast</b>: up to <b>48 hours</b>. Quite accurate, especially for when and where weather systems form and how they move, and for temperature and wind. Techniques: <b>persistence forecasting</b> (assume the current weather continues; good for only a few hours) and <b>nowcasting</b> (up to about 6 hours, using radar and satellites; good for tracking storms), plus analyzing weather maps.',
+    '<b>Long range forecast</b>: <b>3 to 7 days</b>. Made with computer statistical analysis of past weather data and computer models of the atmosphere (which also use sea surface temperatures, sea ice and snow cover). Several models are usually run and their results averaged.',
+    '<b>Limitations</b>: the main one is that the atmosphere is one of the most unpredictable systems on Earth, so the farther ahead a forecast goes, the less reliable it is. Computer models have to make assumptions about how the atmosphere will behave, and those are right in some situations and not others. Models are better at large-scale patterns than small ones: local terrain (like the cliffs at Cape St. Mary’s) and local winds change the weather in ways models can’t predict.',
+    '<b>Improvements</b>: better technology (satellites, radar, computers and models). Today’s 5-day forecasts are as accurate as 2-day forecasts were 20 years ago.',
+    '<b>Why it matters</b>: farmers plan planting, harvesting and frost protection; fishers and offshore workers need marine forecasts to stay safe; road crews, airlines and ferries plan around storms. The Meteorological Service of Canada (Environment Canada) makes forecasts and warnings, and runs the Canadian Hurricane Centre.'], '', []],
+  ['24', '24', 'Clues to past climates', 'Describe how ice cores, tree rings and fossils infer past conditions of Earth.', [
+    'Direct measurements of temperature, humidity and precipitation go back only about 200 years. For older climates, scientists use three main sources: trees, fossils and ice cores.'],
+    `<table class="mini"><thead><tr><th>Method</th><th>How it works</th><th>What it tells us</th></tr></thead><tbody>
+      <tr><td>Tree rings</td><td>Each year a tree adds two layers of wood under its bark. A light ring is fast spring growth, when conditions are good; a dark ring is slower summer growth, when it is drier and hotter. Thinner growth means a harder year.</td><td>Climate events in the recent past, such as drought, flooding and forest fires, going back hundreds (sometimes thousands) of years.</td></tr>
+      <tr><td>Fossils</td><td>The remains or traces of ancient organisms. Organisms are adapted to their environment, so the type of fossil shows what the climate was like. A tropical fish fossil in the rock of an Arctic island means that island was once much warmer.</td><td>Climate much further back in the past.</td></tr>
+      <tr><td>Ice cores</td><td>Ice fields in the Arctic and Antarctica add a thin layer each year. Drills pull out long core samples. <b>Dust and ash</b> show volcanic eruptions and forest fires; <b>pollen</b> shows which plants were alive; the <b>size and shape of the ice crystals</b> show temperature and humidity; <b>air bubbles</b> show how much oxygen, carbon dioxide and other gases were in the air. Oxygen isotopes in the ice also show past temperature.</td><td>The atmosphere and temperature going back hundreds of thousands of years (800 000 years in the Antarctic data of Figure 2.21B).</td></tr></tbody></table>`, [], true],
+  ['25', '25', 'The anthropogenic greenhouse effect', 'Explain how human produced greenhouse gases contribute to the enhanced greenhouse effect and an increased rate of global warming.', [
+    'The <b>greenhouse effect</b> is natural: greenhouse gases absorb heat radiated from Earth’s surface and radiate it again, warming the atmosphere. It keeps Earth at about 14 °C instead of about −18 °C (Part 1, concept 5).',
+    'Since the Industrial Revolution (when factories began burning coal to run steam engines), humans have added more and more greenhouse gases. This <b>enhances</b> the natural greenhouse effect: the <b>anthropogenic</b> (human-caused) greenhouse effect.',
+    '<b>Carbon dioxide</b>: mostly from burning fossil fuels (coal, oil and natural gas) for industry, electricity, heating and vehicles. Deforestation adds more: fewer trees remove CO<sub>2</sub> by photosynthesis, and logging debris is often burned.',
+    '<b>Methane</b> (absorbs 25 times more heat than CO<sub>2</sub>): farming (cows, goats and sheep; flooded rice fields), landfills, and extracting fossil fuels. <b>Nitrous oxide</b> (300 times more): farming, fertilizers and vehicle exhaust. <b>Halocarbons</b> such as CFCs: made only by humans, thousands of times more potent; banned because they damage the ozone layer, but they last thousands of years.',
+    'More greenhouse gases absorb more of the heat Earth radiates, so Earth keeps more energy than it sends to space and the average temperature rises. Earth’s climate has changed before, but over thousands or millions of years. The current warming is happening very quickly: an <b>increased rate</b> of global warming. The textbook says the average has risen almost 1 °C since the 1800s, and it has kept rising since.',
+    'Ice-core data (Figure 2.21B) show that over the last 800 000 years, when carbon dioxide went up, Earth’s temperature went up, and when it went down, the temperature went down.',
+    '<b>Global warming</b> is the rise in average temperature. <b>Climate change</b> means changes in all parts of weather (temperature, precipitation, wind and storms) over a long time.'], '', ['energy-budget']],
+  ['26', '26', 'Climate change and marine ecosystems', 'Describe how climate change impacts marine ecosystems.', [],
+    `<table class="mini"><thead><tr><th>Type of change (Table 2.3)</th><th>Effects on aquatic ecosystems</th></tr></thead><tbody>
+      <tr><td>Melting sea ice</td><td>The polar regions are warming the most, and sea ice that has lasted since the last ice age is melting. Polar bears, which hunt off the ice, are threatened. Inuit travel over and hunt off the sea ice, so their traditional way of life is threatened too.</td></tr>
+      <tr><td>New food chains</td><td>Krill, tiny animals at the bottom of the food chain, eat plankton that thrive under sea ice. As the ice disappears there are about 20% fewer krill than 30 years ago, which threatens everything that eats them. Warmer water also pushes larger species to new areas: sockeye and pink salmon were first seen at Banks Island (Northwest Territories) in 1993, changing the food chains they left and the ones they joined.</td></tr>
+      <tr><td>Warmer oceans</td><td>Coral reefs, nurseries and shelter for sea life, are dying. Corals live with algae that feed them; in warm water the corals expel the algae, turn white (<b>bleaching</b>) and die. Warming also slows ocean currents (warmer water sinks less), which may change how currents warm and cool nearby land.</td></tr>
+      <tr><td>Rising sea level</td><td>Warming water molecules move faster and take up more room, so the ocean expands. Melting glaciers and mountain snow packs add more water. The textbook predicts a rise of 20 cm to 40 cm in the next 100 years (newer estimates are higher). Organisms, including people, in low-lying coastal areas are forced to move.</td></tr>
+      <tr><td>More violent storms</td><td>Warm water transfers heat to the air above, making it less stable, so tropical storms and hurricanes can grow more powerful.</td></tr></tbody></table>`, ['deep-currents'], true],
+  ['L', '★', 'Effects on land and human health', 'From the booklet notes (pp. 73–74): effects on the land and on human health.', [],
+    `<table class="mini"><thead><tr><th>Type of change (Table 2.4)</th><th>Effects</th></tr></thead><tbody>
+      <tr><td>Changing organisms</td><td>Some organisms adapt by changing their habitat or behaviour; others can’t. More than one million species may be endangered worldwide. In Canada, fewer migratory birds (like the summer tanager) fly south for the winter, and many that stay don’t survive to spring.</td></tr>
+      <tr><td>Melting land ice</td><td>Glaciers and permafrost are melting fast: up to 25% of the remaining glacial ice could be gone by 2050. Canada’s North is warming faster than anywhere on Earth. Thawing permafrost makes the ground shift, so houses collapse and trees tilt (“drunken forests”).</td></tr>
+      <tr><td>New deserts</td><td>In places like southern Alberta, temperatures are rising while rainfall drops, leading to <b>desertification</b> (the spread of deserts). Farmland stops supporting crops and reservoirs and groundwater can run dry: food and drinking-water shortages.</td></tr>
+      <tr><td>More flooding</td><td>Climate varies by region: some areas get heavy rain that floods, others are flooded by severe storms such as hurricanes, and rising sea levels flood low-lying coastlines.</td></tr>
+      <tr><td>Human health</td><td>Heat waves, floods, hurricanes and severe storms are becoming more frequent, bringing injury, illness and homelessness. Some diseases, and the insects and animals that carry them, thrive as places get warmer and wetter. West Nile virus, carried by mosquitoes, reached New York in 1999 and has spread north into Ontario and other parts of Canada.</td></tr></tbody></table>`, [], true],
+  ['27', '27', 'Defending a position', 'Defend a position regarding climate change.', [
+    'A position is a <b>claim</b> backed by <b>evidence</b> and <b>reasoning</b>. For example: “Human activity is causing most of today’s climate change, so we should cut greenhouse gas emissions.”',
+    '<b>Evidence</b> (use facts, not feelings): Earth’s average temperature has risen since the 1880s, faster than in the past (Figure 2.21A); ice cores show carbon dioxide and temperature rising and falling together for 800 000 years (Figure 2.21B), and carbon dioxide is now far higher than at any time in that record; sea ice and glaciers are shrinking; sea level is rising.',
+    '<b>Reasoning</b>: connect the evidence to the science. More greenhouse gases absorb more infrared, so Earth keeps more energy.',
+    '<b>Answer the other side</b>: “Climate has always changed”: yes, but slowly; today’s change is much faster and matches the rise in human-made greenhouse gases. “It was a cold winter”: one season in one place is weather, not climate.',
+    'You can also defend a position about what to do (renewable energy, protecting coastlines, using less fuel). The same rules apply: a clear claim, real evidence, and reasoning that links them.'], '', [], true]
+];
+const CARD_OF = {}; CARDS.forEach(c => { CARD_OF[c[0]] = c; });
+const cardLabel = id => id === 'R' ? 'Part 1 refresher' : /^E/.test(id) ? 'Extreme weather' : id === 'L' ? 'Land and health' : 'Concept ' + id;
+
+/* ================= PART 3: practice questions ================= */
+// [card id, question, [options], correct index, why it is right, figure (optional: 'map' or a front type)]
+const MC = [
+  ['E1', 'You see lightning and count 12 seconds before you hear the thunder. About how far away is the strike?', ['1 km', '4 km', '12 km', '36 km'], 1, '12 s ÷ 3 s per km = about 4 km.'],
+  ['E1', 'In which stage of a thunderstorm are lightning, hail and heavy rain the worst?', ['cumulus', 'mature', 'dissipating'], 1, 'In the mature stage the updraft and downdraft are both active.'],
+  ['E1', 'What is a tornado?', ['A violently spinning column of air reaching from a thunderstorm to the ground', 'A large tropical storm with an eye', 'A strong east-coast winter storm', 'A band of fast wind high in the atmosphere'], 0,
+    'A tornado comes down from a thunderstorm. The others are a hurricane, a nor’easter and a jet stream.'],
+  ['E1', 'Tornadoes are rated EF0 to EF5 on the Enhanced Fujita scale using…', ['the damage they cause', 'the amount of rain', 'their width', 'the air pressure'], 0, 'The EF rating comes from the damage, and the wind speeds that damage implies.'],
+  ['E2', 'What does a hurricane need to form?', ['Ocean water of about 26.5 °C or warmer, at least about 5° from the equator', 'Cold ocean water right at the equator', 'Dry land and dry air', 'Snow cover and a cold front'], 0,
+    'Warm water supplies the energy, and away from the equator the Coriolis effect can make the storm spin.'],
+  ['E2', 'Why does a hurricane weaken once it moves over land or cold water?', ['It loses its supply of warm, moist air, its energy source', 'The land pushes it back out to sea', 'Cold water speeds it up', 'The eye closes'], 0,
+    'Without warm ocean water there is no more energy from evaporation and condensation, and land friction slows the winds.'],
+  ['E2', 'The calm, often clear centre of a hurricane is the…', ['eye', 'eyewall', 'front', 'storm surge'], 0, 'In the eye, air sinks, so it is calm. The eyewall around it has the strongest winds.'],
+  ['E2', 'In the northern hemisphere, hurricanes spin…', ['clockwise', 'counterclockwise'], 1, 'Like every low pressure system in the northern hemisphere, they spin counterclockwise.'],
+  ['E3', 'A nor’easter forms when…', ['cold, dry Arctic air meets warm, moist air from over the Gulf Stream along the east coast', 'warm tropical water near the equator heats the air', 'the trade winds reverse in the Pacific', 'two cold air masses meet over the Prairies'], 0,
+    'The big temperature difference between the two air masses powers the storm.'],
+  ['E3', 'A storm drops 30 cm of snow, but the winds are light and you can see 2 km. Is it a blizzard?', ['Yes, because there is so much snow', 'No: a blizzard needs strong winds and visibility under 0.5 km for at least 3 hours'], 1,
+    'A blizzard is about wind and visibility, not how much snow falls.'],
+  ['E4', 'During El Niño, the surface water of the eastern tropical Pacific becomes…', ['warmer than normal', 'colder than normal'], 0, 'The trade winds weaken, so warm water spreads back east.'],
+  ['E4', 'Why do fish catches off Peru drop during El Niño?', ['Upwelling of cold, nutrient-rich water weakens, so there is less food for fish', 'The water gets too cold', 'Hurricanes destroy the boats', 'The trade winds get stronger'], 0,
+    'Fish depend on the nutrients brought up by upwelling. Warm surface water blocks it.'],
+  ['E4', 'Which is a typical La Niña effect in eastern North America?', ['Colder, snowier winters', 'Fewer hurricanes', 'Much warmer winters', 'Weaker trade winds'], 0, 'La Niña strengthens the trade winds and tends to bring colder, snowier eastern winters and longer hurricane seasons.'],
+  ['21', 'Which instrument measures air pressure?', ['barometer', 'hygrometer', 'anemometer', 'rain gauge'], 0, 'A barometer measures air pressure, in kPa.'],
+  ['21', 'An anemometer measures…', ['wind direction', 'wind speed', 'humidity', 'rainfall'], 1, 'Its cups spin faster as the wind gets stronger. Wind direction comes from a wind vane.'],
+  ['21', 'What does a hygrometer measure?', ['temperature', 'humidity', 'air pressure', 'cloud height'], 1, 'Humidity, usually as relative humidity (%).'],
+  ['21', 'A rain gauge reading is given in…', ['mm', 'kPa', '%', 'km/h'], 0, 'Rainfall is measured as a depth, in millimetres.'],
+  ['21', 'A wind vane points toward the north. Which way is the wind blowing from?', ['from the north (a north wind)', 'from the south', 'from the east', 'from the west'], 0,
+    'A wind vane points into the wind, toward where it comes from. Winds are named for where they come from.'],
+  ['21', 'Which technology shows where precipitation is falling right now and which way it is moving?', ['weather radar', 'barometer', 'weather balloon', 'thermometer'], 0, 'Radar waves bounce off raindrops and snowflakes.'],
+  ['21', 'Which technology measures temperature, pressure and humidity high above the ground?', ['weather balloon (radiosonde)', 'rain gauge', 'wind vane', 'weather radar'], 0, 'The balloon carries a radiosonde up through the atmosphere and radios back its readings.'],
+  ['21', 'What do the sensors on weather satellites detect?', ['infrared (heat) radiation and visible light', 'sound waves', 'rainfall in mm at the ground', 'air pressure at the ground'], 0,
+    'Infrared sensors detect heat; visible light sensors detect different types of clouds.'],
+  ['21', 'Which of these is remote sensing technology?', ['weather radar', 'a rain gauge', 'a thermometer', 'a wind vane'], 0,
+    'Remote sensing collects data from a distance without touching what it observes. Weather radar and weather satellites are examples.'],
+  ['21', 'A geostationary (GOES) weather satellite…', ['stays over the same spot above the equator and watches it all the time', 'orbits over the poles about 14 times a day', 'floats on a balloon', 'sits on the ground'], 0,
+    'GOES orbit about 36 000 km above the equator at the same speed Earth turns. Polar orbiting (POES) satellites are the ones that scan the whole globe.'],
+  ['21', 'The barometer reading has been falling all morning. What weather is most likely coming?', ['Clouds and precipitation, as a low approaches', 'Clear, dry skies', 'No change', 'A heat wave'], 0,
+    'Falling pressure means a low pressure system is coming.'],
+  ['22', 'On this map, where is long, steady precipitation most likely?', ['A', 'B', 'C', 'E'], 0, 'A is ahead of the warm front, where warm air slides gently up over cold air.', 'map'],
+  ['22', 'On this map, where are the winds stronger, at D or at E?', ['D', 'E', 'the same'], 0, 'The isobars are much closer together at D. Close isobars mean strong wind.', 'map'],
+  ['22', 'On this map, point C has just had the cold front pass. What is the weather doing there?', ['Getting colder and clearing, with the pressure rising', 'Getting warmer with steady rain', 'Staying foggy for days', 'Pressure falling fast'], 0,
+    'Behind a cold front comes colder, denser air: clearing skies, falling temperature, rising pressure.', 'map'],
+  ['22', 'Isobars are lines that join places with the same…', ['temperature', 'air pressure', 'rainfall', 'wind speed'], 1, 'Iso = equal, bar = pressure.'],
+  ['22', 'Lines on a weather map that join places with the same temperature are called…', ['isobars', 'isotherms', 'fronts', 'jet streams'], 1, 'Iso = equal, therm = heat. Isobars join places with the same pressure.'],
+  ['22', 'On a series of weather maps, the temperature and pressure at your town start changing quickly. What does that often mean?', ['A front is approaching', 'A high pressure system has settled in for days', 'The map is wrong', 'Nothing will change'], 0,
+    'Quickly changing temperature or pressure often indicates an approaching front.'],
+  ['22', 'What does this weather map symbol show?', ['warm front', 'cold front', 'stationary front', 'occluded front'], 2, 'Blue triangles and red semicircles on opposite sides: a stationary front.', 'stat'],
+  ['22', 'What does this weather map symbol show?', ['warm front', 'cold front', 'stationary front', 'occluded front'], 0, 'Red semicircles on a red line: a warm front.', 'warm'],
+  ['23', 'A short range forecast predicts the weather for…', ['up to 48 hours', '3 to 7 days', 'a whole season', '30 years'], 0, 'Short range: up to 48 hours. Long range: 3 to 7 days.'],
+  ['23', 'A long range forecast predicts the weather for…', ['up to 6 hours', 'up to 48 hours', '3 to 7 days', 'the next 100 years'], 2, 'Long range forecasts cover 3 to 7 days and are less accurate than short range ones.'],
+  ['23', 'Which forecast is usually the most accurate?', ['tomorrow’s forecast', 'a forecast for 6 days from now', 'next winter’s forecast', 'they are all equally accurate'], 0,
+    'Short range forecasts are the most accurate. The farther ahead a forecast goes, the less reliable it is.'],
+  ['23', 'What is the main limitation of weather forecasting?', ['The atmosphere is very unpredictable, and computer models have to make assumptions about how it will behave', 'There are no thermometers in Canada', 'Weather never changes', 'Satellites can’t see clouds'], 0,
+    'The atmosphere is one of the most unpredictable systems on Earth, and model assumptions are right in some situations and not in others.'],
+  ['23', 'A forecaster assumes the weather happening now will continue for the next few hours. This is called…', ['nowcasting', 'persistence forecasting', 'long range forecasting', 'weather lore'], 1,
+    'Persistence forecasting assumes current weather will persist. It is accurate only for a few hours because the atmosphere keeps changing.'],
+  ['23', 'How much has technology improved forecasting?', ['Today’s 5-day forecasts are as accurate as 2-day forecasts were 20 years ago', 'Not at all', 'Forecasts are now always perfect', 'Forecasts got worse'], 0,
+    'Better satellites, radar, computers and models have made forecasts much more accurate, but never perfect.'],
+  ['23', 'Why is long range forecasting better at predicting a cold winter for the whole east coast than for one small town?', ['Computer models deal with large-scale patterns; local terrain and winds change local weather in ways models can’t predict', 'Small towns have no weather', 'The east coast is always cold', 'Models only work for towns'], 0,
+    'Models work on a global scale, so local features like cliffs and valleys aren’t captured well.'],
+  ['24', 'Each year a tree adds a light ring and a dark ring. What does the light ring show?', ['Fast spring growth, when growing conditions are good', 'A forest fire', 'Slow growth in a hot, dry summer', 'The tree’s age in months'], 0,
+    'Light = rapid spring growth in good conditions. Dark = slower summer growth when it is drier and hotter.'],
+  ['24', 'Scientists find a layer of ash in an ice core. What does it tell them?', ['A volcano erupted or a forest fire burned when that layer formed', 'The ice melted that year', 'It was a very snowy year', 'Animals lived on the ice'], 0,
+    'Dust and ash trapped in the ice record events such as volcanic eruptions and forest fires.'],
+  ['24', 'Tiny air bubbles trapped in ice cores tell scientists…', ['what the atmosphere was like when the ice formed, including its carbon dioxide', 'how old the glacier’s rocks are', 'how fast the wind blew', 'where the ice came from'], 0,
+    'The bubbles are samples of old air, so scientists can measure past greenhouse gas levels.'],
+  ['24', 'A fossil of a tropical fish is found in the rock of an Arctic island. What does it suggest?', ['The climate there was once much warmer', 'Fish can live anywhere', 'A bird dropped it there', 'It has always been cold there'], 0,
+    'Organisms are adapted to their environment, so a fossil shows what the climate was like where and when it lived.'],
+  ['25', 'Which human activity adds the most carbon dioxide to the atmosphere?', ['burning fossil fuels', 'planting trees', 'using wind turbines', 'recycling'], 0, 'Coal, oil and natural gas release carbon dioxide when burned.'],
+  ['25', 'How do extra greenhouse gases increase the rate of global warming?', ['They absorb more of the infrared Earth gives off and send more back down, so Earth keeps more energy than it loses', 'They make the Sun brighter', 'They thin the ozone layer, which lets in heat', 'They raise Earth’s albedo'], 0,
+    'This upsets the energy budget: more energy in than out, so the temperature rises. The ozone hole is a separate problem.'],
+  ['25', 'What is the difference between global warming and climate change?', ['Global warming is the rise in average temperature; climate change is all the long-term changes in weather patterns that come with it', 'They mean exactly the same thing', 'Climate change only means colder winters', 'Global warming only happens in summer'], 0,
+    'Warming is one part of climate change. Changes to precipitation, storms, sea ice and sea level are others.'],
+  ['25', 'Which greenhouse gas do cows, rice fields and landfills add to the air?', ['methane', 'oxygen', 'nitrogen', 'ozone'], 0, 'Methane absorbs 25 times more heat than carbon dioxide.'],
+  ['25', 'Which greenhouse gases are produced only by humans?', ['halocarbons, such as CFCs', 'carbon dioxide', 'water vapour', 'methane'], 0,
+    'Halocarbons like CFCs are industrial chemicals. The others are made naturally too; humans just add more.'],
+  ['25', 'How does cutting down forests add to the greenhouse effect?', ['Fewer trees remove carbon dioxide by photosynthesis, and burning the debris releases more', 'Trees give off methane', 'Stumps reflect sunlight', 'It doesn’t'], 0,
+    'Deforestation means less CO2 is taken out of the air, and burning logging debris adds CO2.'],
+  ['26', 'How does melting sea ice affect polar bears and the Inuit?', ['Polar bears hunt off the ice, and Inuit travel and hunt on it, so both lose what they depend on', 'They get more food', 'It has no effect', 'They can travel farther'], 0,
+    'Loss of sea ice threatens polar bears’ survival and the Inuit traditional way of life.'],
+  ['26', 'Why do coral reefs bleach (turn white) as the ocean warms?', ['In warm water the corals expel the algae that feed them, and then they die', 'Salt builds up on them', 'Sunlight bleaches them like paint', 'Fish eat the colour'], 0,
+    'Corals depend on algae for food. Without them, the corals turn white and die.'],
+  ['26', 'Why are there about 20% fewer krill than 30 years ago?', ['They eat plankton that thrive under sea ice, and the sea ice is disappearing', 'Whales have stopped eating them', 'The ocean is getting colder', 'They moved to lakes'], 0,
+    'Krill are at the bottom of the food chain, so their decline threatens many other species.'],
+  ['26', 'Sea level rises as Earth warms mainly because…', ['seawater expands as it warms and melting land ice adds water', 'floating sea ice melts', 'it rains more over the ocean', 'the ocean floor sinks'], 0,
+    'Floating sea ice is already in the water, so melting it hardly changes sea level. Land ice adds new water.'],
+  ['26', 'Sockeye and pink salmon were first seen at Banks Island in the Arctic in 1993. What is this an example of?', ['New food chains forming as warmer water pushes species into new areas', 'Salmon evolving to live in ice', 'Rising sea level', 'A stationary front'], 0,
+    'The salmon change the food chains they leave and the ones they join.'],
+  ['L', 'Which is an effect of climate change on human health in Canada?', ['West Nile virus, carried by mosquitoes, has spread north into Ontario', 'Fewer heat waves', 'Fewer floods', 'Diseases can no longer spread'], 0,
+    'Warmer, wetter conditions help some diseases and the insects that carry them spread.'],
+  ['L', 'Thawing permafrost in Canada’s North makes…', ['the ground shift, so houses collapse and trees tilt (“drunken forests”)', 'new glaciers form', 'the ground freeze harder', 'deserts form in the Arctic'], 0,
+    'Permafrost is soil that is supposed to stay frozen. When it thaws, the ground loses its solid foundation.'],
+  ['L', 'Rising temperatures and less rain in places like southern Alberta can lead to…', ['desertification: the spread of deserts', 'more glaciers', 'more sea ice', 'colder winters'], 0,
+    'Farmland can stop supporting crops, and reservoirs and groundwater can run dry.'],
+  ['L', 'Melting glaciers on land…', ['raise sea level and shrink the rivers that depend on them', 'lower sea level', 'have no effect on people', 'make deserts wetter'], 0,
+    'Land ice adds water to the ocean, and glacier-fed rivers lose their summer meltwater over time.'],
+  ['27', 'Which is the strongest way to defend a position on climate change?', ['Give scientific evidence, such as measured carbon dioxide levels and temperature records, and explain how it supports your claim', 'Say it was cold last winter', 'Say what most of your friends think', 'Use one very hot day as proof'], 0,
+    'A strong position has a clear claim, real evidence and reasoning that links them.'],
+  ['27', 'A classmate says: “We got lots of snow this winter, so global warming isn’t real.” What is wrong with this argument?', ['It mixes up weather (one season in one place) with climate (long-term global averages)', 'Snow can’t happen anymore', 'Nothing is wrong with it', 'Global warming only affects the ocean'], 0,
+    'Climate is about long-term averages over the whole Earth. One snowy winter in one place doesn’t change the trend.'],
+  ['R', 'Out of every 100 units of sunlight reaching Earth, about how many are absorbed by land and water?', ['5', '20', '25', '50'], 3, 'About 50. 25 are reflected by clouds, 20 absorbed by the atmosphere, 5 reflected by the surface.'],
+  ['R', 'Which change of state releases thermal energy?', ['melting', 'evaporation', 'sublimation', 'condensation'], 3, 'Condensation releases energy; melting, evaporation and sublimation absorb it.'],
+  ['R', 'An air mass forms over the cold North Atlantic Ocean. What type is it?', ['continental polar', 'maritime polar', 'maritime tropical', 'continental tropical'], 1, 'Maritime = over the ocean (humid), polar = cold.'],
+  ['R', 'In the northern hemisphere, winds around a high pressure system blow…', ['outward and clockwise', 'inward and counterclockwise', 'straight up', 'inward and clockwise'], 0, 'Sinking air spreads outward, and the Coriolis effect turns it clockwise.'],
+  ['R', 'Newfoundland’s weather usually arrives from the west because we are in the…', ['trade winds', 'prevailing westerlies', 'polar easterlies', 'doldrums'], 1, 'Between 30° and 60° N, the prevailing westerlies carry weather from west to east.'],
+  ['R', 'Why is the coast cooler in summer and milder in winter than places inland?', ['Water has a high specific heat capacity, so the ocean warms and cools slowly', 'The coast gets less sunlight', 'Coastal air is thinner', 'Inland places are closer to the Sun'], 0,
+    'The ocean is a heat sink, and the air over it follows its slow temperature changes.'],
+  ['R', 'Which seawater is most likely to sink and start a deep ocean current?', ['warm and fresh', 'warm and salty', 'cold and fresh', 'cold and salty'], 3, 'Cold, salty water is the densest.'],
+  ['R', 'Why is St. John’s often foggy?', ['Warm, moist air from over the Gulf Stream cools over the cold Labrador Current', 'The Labrador Current is warm', 'Icebergs give off steam', 'The jet stream makes fog'], 0,
+    'Cooled to its dew point, the air’s water vapour condenses into fog.']
+];
+// Shuffle the options (the same way on every visit) so the right answer isn't always in the same place.
+// Numbers, letters and ordered sets (stages, directions of spin) keep their natural order.
+const ORDERED = /^([d.−]+( °C| km)?|[A-E]|the same|cumulus|mature|dissipating|clockwise|counterclockwise|warmer than normal|colder than normal)$/;
+const QS = MC.map(([sec, q, opts, k, why, fig], i) => {
+  let ord = opts.map((_, j) => j);
+  if (!opts.every(o => ORDERED.test(o))) { let s = 97 + i * 7919; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647; rnd(); rnd(); rnd();
+    for (let j = ord.length - 1; j > 0; j--) { const r = Math.floor(rnd() * (j + 1)); [ord[j], ord[r]] = [ord[r], ord[j]]; } }
+  return { id: 'q' + i, sec, q, opts: ord.map(j => opts[j]), k: ord.indexOf(k), why, fig };
+});
+// mix the concepts so practice is mixed, but keep the same order on every visit
+const Q = (() => { const a = QS.slice(); let s = 1206; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; })();
+
+function renderCards() {
+  $('#concepts').innerHTML = CARDS.map(([id, badge, t, ask, pts, extra, , wide]) => `<section class="cc${wide ? ' wide' : ''}" id="c-${id}"><h3><span class="cn">${badge}</span>${esc(t)}</h3>
+    <p class="ask">${esc(ask)}</p>${pts.length ? `<ul>${pts.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}${extra}
+    <div class="cfoot" id="cf-${id}"></div></section>`).join('');
+}
+function renderFoots() {
+  CARDS.forEach(([id, , , , , , links]) => {
+    const ids = Q.filter(q => q.sec === id).map(q => q.id), d = ids.filter(x => store.done[x]).length, next = ids.find(x => !store.done[x]);
+    $('#c-' + id).classList.toggle('all', d === ids.length);
+    $('#cf-' + id).innerHTML = `<span class="cst">${d === ids.length ? '✓ all ' + ids.length + ' questions done' : 'Practice: ' + d + ' of ' + ids.length + ' done'}</span>` +
+      (next ? `<button class="btn small" type="button" data-go="${next}">Practise ▶</button>` : '') +
+      links.map(l => `<a href="${SITE}${LINKS[l][0]}" target="_blank" rel="noopener">${esc(LINKS[l][1])} ↗</a>`).join(' ');
+  });
+  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => {
+    const el = $('#q-' + b.dataset.go); el.scrollIntoView({ block: 'center' }); const f = el.querySelector('button'); if (f) f.focus({ preventScroll: true });
+  }));
+}
+
+const state = {};   // per-question feedback this visit
+function qHTML(q, n) {
+  const done = store.done[q.id], fb = state[q.id] || (done ? { ok: true, txt: 'Done ✓' } : null);
+  return `<div class="q ${done ? 'done' : ''}" data-id="${q.id}" id="q-${q.id}"><span class="num">QUESTION ${n + 1} <span class="sec">· ${esc(cardLabel(q.sec).toUpperCase())}</span></span>
+    <p class="stem">${esc(q.q)}</p>${q.fig === 'map' ? figMap() : q.fig ? figFrontOnly(q.fig) : ''}
+    <div class="opts" role="group" aria-label="Answers">${q.opts.map((o, i) => `<button class="segbtn" type="button" data-q="${q.id}" data-v="${i}">${esc(o)}</button>`).join('')}</div>
+    <div class="fb ${fb ? (fb.ok ? 'good' : 'bad') : ''}" aria-live="polite">${fb ? fb.txt : ''}</div></div>`;
+}
+function wire(root) {
+  root.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => answer(b.dataset.q, +b.dataset.v)));
+  root.querySelectorAll('[data-back]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); $('#c-' + a.dataset.back).scrollIntoView({ block: 'start' }); }));
+}
+function renderQs() { $('#questions').innerHTML = Q.map((q, n) => qHTML(q, n)).join(''); wire($('#questions')); renderProgress(); }
+function answer(id, v) {
+  const q = Q.find(x => x.id === id), box = document.querySelector(`.q[data-id="${id}"]`), ok = v === q.k;
+  const txt = ok ? `<b>Right ✓</b> <span class="why">${esc(q.why)}</span>`
+    : `<b>Not quite.</b> <span class="why">Reread <a href="#c-${q.sec}" data-back="${q.sec}">${esc(CARD_OF[q.sec][2])}</a>, then try again.</span>`;
+  state[id] = { ok, txt };
+  if (ok && !store.done[id]) { store.done[id] = true; save(); }
+  box.outerHTML = qHTML(q, Q.indexOf(q));
+  const nb = document.querySelector(`.q[data-id="${id}"]`); wire(nb);
+  const f = nb.querySelector(`[data-v="${v}"]`); if (f) f.focus({ preventScroll: true });
+  renderProgress();
+}
+function renderProgress() {
+  renderFoots();
+  const n = Q.filter(q => store.done[q.id]).length;
+  $('#progBar').style.width = (100 * n / Q.length) + '%';
+  $('#progTxt').textContent = n === Q.length ? `All ${Q.length} questions done!` : `Part 3: ${n} of ${Q.length} questions done`;
+  if (n === Q.length && !store.shown) { store.shown = true; save(); showEnd(); }
+}
+
+/* ================= the end card ================= */
+let endFrom = null;
+function showEnd() {
+  const e = $('#endcard'); endFrom = document.activeElement; e.hidden = false;
+  e.querySelectorAll('.in').forEach(x => { x.style.animation = 'none'; void x.offsetWidth; x.style.animation = ''; });
+  e.focus();
+}
+function hideEnd() { $('#endcard').hidden = true; if (endFrom && endFrom.focus) endFrom.focus(); }
+$('#endcard').addEventListener('click', hideEnd);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#endcard').hidden) hideEnd(); });
+$('#resetAll').addEventListener('click', () => { store.done = {}; store.shown = false; save(); Object.keys(state).forEach(k => delete state[k]); renderQs(); });
+
+renderVocab(); renderCards(); renderQs();
+})();
+</script>
+</body></html>
