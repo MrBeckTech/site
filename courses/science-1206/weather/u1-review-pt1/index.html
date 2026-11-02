@@ -360,7 +360,7 @@ a{color:var(--tw-sky)}
     <div id="questions"></div>
     <div class="acts"><button class="btn small" type="button" id="resetAll">Clear my answers</button></div>
   </section>
-  <p class="foot">Science 1206 · Unit 1 Weather Dynamics · Test #1 review · Science 1206 textbook, Chapter 1, pp. 10–33. Numbers marked “about” are rounded. Your answers are saved on this device only.</p>
+  <p class="foot">Science 1206 · Unit 1 Weather Dynamics · Test #1 review · Science 1206 textbook, Chapter 1, pp. 9–33. Numbers marked “about” are rounded. Your answers are saved on this device only.</p>
 </div>
 <div id="endcard" class="endcard" role="dialog" aria-modal="true" aria-label="Review complete" hidden tabindex="-1">
   <div class="stripes" aria-hidden="true"></div>
@@ -544,14 +544,14 @@ const CARDS = [
       ['Weather lore', 'Sayings, often rhyming, used to make informal predictions. “Mare’s tails and mackerel scales make tall ships carry short sails”: those high, wispy ice-crystal clouds often come before a storm.'],
       ['7 causes of weather', 'Earth’s shape and sunlight · air masses · pressure systems · the Coriolis effect · global winds · fronts · ocean currents.']],
     extraAfter: true,
-    extra: `<div class="twin"><table class="mini"><thead><tr><th>6 components (Table 1.1)</th><th>Meaning</th></tr></thead><tbody>
+    extra: `<div class="twin"><table class="mini"><thead><tr><th>6 components (Table 1.1, p. 11)</th><th>Meaning</th></tr></thead><tbody>
       <tr><td>Temperature</td><td>how warm or cold: the average kinetic energy of the particles</td></tr>
       <tr><td>Precipitation</td><td>liquid or solid water that falls: rain, snow, hail</td></tr>
       <tr><td>Atmospheric pressure</td><td>the force of the air on the surface below it</td></tr>
       <tr><td>Humidity</td><td>the amount of water vapour in the air</td></tr>
       <tr><td>Wind speed and direction</td><td>how fast air moves, and where it comes from</td></tr>
       <tr><td>Sky cover</td><td>how much of the sky is covered by cloud</td></tr></tbody></table>
-      <table class="mini"><thead><tr><th>Earth’s spheres (Fig. 1.2)</th><th>What it is</th></tr></thead><tbody>
+      <table class="mini"><thead><tr><th>Earth’s spheres (Fig. 1.2, p. 13)</th><th>What it is</th></tr></thead><tbody>
       <tr><td>Atmosphere</td><td>the air: nitrogen, oxygen and other gases, 700+ km thick. All weather happens in the lowest 12 km (the troposphere).</td></tr>
       <tr><td>Lithosphere</td><td>the land: continental crust and oceanic crust</td></tr>
       <tr><td>Hydrosphere</td><td>water on or near the surface, including ice and water vapour</td></tr>
@@ -561,7 +561,7 @@ const CARDS = [
     key: 'Earth sends as much energy back to space as it absorbs, so its average temperature stays steady.',
     extra: EBAR,
     rows: [
-      ['Energy in', 'The bar above is Figure 1.4: what happens to every 100 units of sunlight. About half reaches and warms the surface.'],
+      ['Energy in', 'The bar above is Figure 1.4 (p. 14): what happens to every 100 units of sunlight. About half reaches and warms the surface.'],
       ['Energy out', 'The warmed surface gives off infrared radiation. Greenhouse gases absorb some and radiate it in all directions (some back down) before it escapes to space.'],
       ['The balance', 'Energy in = energy out. If more came in than went out, Earth would keep warming.']],
     links: ['energy-budget'] },
@@ -579,7 +579,7 @@ const CARDS = [
     rows: [
       ['Over land', 'Low specific heat capacity: heats and cools quickly, so the air above has big temperature swings.'],
       ['Over water', 'High specific heat capacity: warms and cools slowly, so the air above stays more even.'],
-      ['Coast vs. inland', 'Coastal places are cooler in summer and milder in winter (Figure 1.5: coastal Springdale vs. inland Badger).'],
+      ['Coast vs. inland', 'Coastal places are cooler in summer and milder in winter (Figure 1.5, p. 15: coastal Springdale vs. inland Badger).'],
       ['Sea breeze (day)', 'Land warms faster; warm air rises over the land and cooler sea air flows in to replace it.'],
       ['Land breeze (night)', 'Land cools faster, so the flow reverses: cooler air moves from land out to sea.']],
     links: ['heat-sinks'] },
@@ -652,13 +652,13 @@ const CARDS = [
       ['How it forms', 'Air sits over one area (thousands of square kilometres) for days or weeks. Most form over tropical or polar regions.'],
       ['Reading the name', 'Continental = over land, so dry. Maritime = over the ocean, so humid. Arctic = bitterly cold. Polar = cold. Tropical = warm.']],
     extraAfter: true,
-    extra: `<table class="mini"><thead><tr><th>Air mass (Table 1.2)</th><th>Forms over</th><th>Winter</th><th>Summer</th></tr></thead><tbody>
+    extra: `<table class="mini"><thead><tr><th>Air mass (Table 1.2, p. 27)</th><th>Forms over</th><th>Winter</th><th>Summer</th></tr></thead><tbody>
       <tr><td>Arctic</td><td>the Arctic</td><td>bitter cold, dry</td><td>cold, dry</td></tr>
       <tr><td>Continental polar</td><td>northern Canada</td><td>very cold, dry</td><td>cool, dry</td></tr>
       <tr><td>Continental tropical</td><td>southwestern U.S. and Mexico</td><td>warm, dry</td><td>hot, dry</td></tr>
       <tr><td>Maritime polar</td><td>North Pacific and North Atlantic</td><td>cold, humid</td><td>cool, humid</td></tr>
       <tr><td>Maritime tropical</td><td>Pacific, Gulf of Mexico and Atlantic</td><td>warm, humid</td><td>hot, humid</td></tr></tbody></table>`,
-    after: ['Figure 1.11 splits the ocean ones by source: maritime polar (Pacific) and (Atlantic); maritime tropical (Pacific), (Gulf) and (Atlantic).',
+    after: ['Figure 1.11 (p. 26) splits the ocean ones by source: maritime polar (Pacific) and (Atlantic); maritime tropical (Pacific), (Gulf) and (Atlantic).',
       'Newfoundland gets mostly maritime polar (Atlantic), continental polar and maritime tropical (Atlantic) air, plus Arctic air in winter.'],
     links: ['air-masses'] },
   { id: '13', t: 'High and low pressure systems', ask: 'Explain the formation of high and low pressure systems and describe their characteristic wind movements and associated weather.',
@@ -680,7 +680,7 @@ const CARDS = [
     links: ['coriolis-effect', 'global-winds'] },
   { id: '15', t: 'Global wind systems', ask: 'Identify global wind systems and relate prevailing winds to the movement of weather systems.',
     key: 'Weather systems are carried along by the prevailing winds.',
-    extra: `<table class="mini"><thead><tr><th>Wind system</th><th>Location</th><th>Path</th></tr></thead><tbody>
+    extra: `<table class="mini"><thead><tr><th>Wind system (Table 1.3, p. 29)</th><th>Location</th><th>Path</th></tr></thead><tbody>
       <tr><td>Trade winds</td><td>equator to 30° N and S</td><td>toward the equator, from the east (north-east in N, south-east in S)</td></tr>
       <tr><td>Prevailing westerlies</td><td>30° to 60° N and S</td><td>toward the poles, from the west</td></tr>
       <tr><td>Polar easterlies</td><td>60° to the poles</td><td>away from the poles, from the east</td></tr></tbody></table>`,
