@@ -419,7 +419,7 @@ Sim({
   title:"Earth's Energy Budget and Albedo",
   tag:'Section 1.1 · Figure 1.4',
   lead:'Follow 100 units of incoming sunlight. Where does each unit go, and why does Earth stay at a steady temperature?',
-  source:'Based on Science 1206, Chapter 1, pp. 13–16 (Earth’s energy budget, albedo, greenhouse effect).',
+  source:'Based on Science 1206, Chapter 1, pages 13–16 (Earth’s energy budget, albedo, greenhouse effect).',
   alt:'Animation of sunlight being reflected, absorbed and re-radiated as infrared by Earth and its atmosphere.',
   notice:[
     'Every unit of sunlight that arrives is eventually sent back to space. <b>Energy in = energy out</b>, so the average temperature stays steady.',
@@ -443,7 +443,7 @@ Sim({
     const SURF={mix:{n:'Land + sea (average)',a:5/55},ocean:{n:'Ocean',a:.05},forest:{n:'Forest',a:.12},crops:{n:'Crop field',a:.20},bare:{n:'Bare rock',a:.30},snow:{n:'Snow',a:.75}};
     const slots=[[50,150],[215,128],[380,156],[540,132],[680,160],[135,196]];
     let surf='mix', cover=50, ghg=1;
-    /* the four numbers of Figure 1.4 (p. 14). The sim opens here. */
+    /* the four numbers of Figure 1.4 (page 14). The sim opens here. */
     const FIG={cr:25,a:20,sr:5,sa:50};
     const atFig=()=>cover===50&&surf==='mix';
     const rows=Readout([['fig','Figure 1.4'],['c','Clouds & particles reflect'],['a','Atmosphere absorbs'],['sr','Surface reflects'],['sa','Surface absorbs'],['rf','Sunlight reflected to space'],['ir','Infrared sent to space'],['out','Total energy out'],['t','Estimated surface temp.']]);
@@ -471,7 +471,7 @@ Sim({
     const figBtn=Btn('Back to the textbook values (Figure 1.4)',()=>toFig(),'primary wide');
     const figWrap=h('div',{style:{gridColumn:'1 / -1'}},Btn('Back to the textbook values (Figure 1.4)',()=>toFig(),'primary wide'));
     const figPanel=h('div',{class:'hint',style:{lineHeight:'1.5',marginTop:'2px'}},
-      h('b',null,'Figure 1.4 (p. 14) — learn these four:'),h('br'),
+      h('b',null,'Figure 1.4 (page 14) — learn these four:'),h('br'),
       '25 % reflected by clouds and particles',h('br'),
       '20 % absorbed by particles in the atmosphere',h('br'),
       '5 % reflected by land and sea',h('br'),

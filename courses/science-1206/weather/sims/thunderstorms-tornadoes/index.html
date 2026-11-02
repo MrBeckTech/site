@@ -419,7 +419,7 @@ Sim({
   title:'Thunderstorms and Tornadoes',
   tag:'Section 1.2 · Extreme Weather',
   lead:'Watch a thunderstorm grow, mature and die. Find out why some air keeps rising, how lightning and thunder are linked, and how wind shear can twist a storm into a tornado.',
-  source:'Based on Science 1206, Chapter 1, p. 34 (thunderstorms and tornadoes, Figure 1.21). Values are typical and simplified. Real tornado strength depends on many factors besides wind shear.',
+  source:'Based on Science 1206, Chapter 1, page 34 (thunderstorms and tornadoes, Figure 1.21). Values are typical and simplified. Real tornado strength depends on many factors besides wind shear.',
   alt:'Four views: the three life-cycle stages of a thunderstorm, a temperature graph showing why air rises, a lightning and thunder distance tool, and a diagram of how wind shear forms a tornado.',
   tabs:[['life','Thunderstorm life cycle'],['lift','Why air keeps rising'],['light','Lightning and thunder'],['tor','How a tornado forms']],
   notice:[
@@ -442,7 +442,7 @@ Sim({
     ['What is wind shear and why does it matter for tornadoes?','Wind shear is a change in wind speed or direction with height. It creates a horizontal spinning tube of air that an updraft can tilt upright, forming a rotating column in the storm.']],
   init(ctx){
     const C=ctx.canvas(800,430),g=C.g;
-    const tt=12;   /* top of the troposphere, km (textbook p. 12) */
+    const tt=12;   /* top of the troposphere, km (textbook page 12) */
     const G=392,S=smooth;
     let clock=0,life=.18,lift={T:28,Td:19,L:7.5},light={d:5},dist=null,tor={s:0,shear:.5},play={life:true,tor:false};
     const mk=(rows)=>Readout(rows);
