@@ -57,6 +57,9 @@ a{color:inherit;text-decoration:none}
 .kind{margin-left:auto;font-family:var(--pix);font-size:7px;line-height:1;padding:4px 5px;border:2px solid #000;background:#3a2463;color:var(--ink2);white-space:nowrap}
 .kind.new{background:var(--coral);color:var(--night)}
 .extras{margin-top:12px}
+.part+.part{margin-top:16px;padding-top:12px;border-top:2px dashed #3a2463}
+.part .side{margin-top:10px;color:var(--ink2);font-size:8px}
+.part .extra{margin-top:6px;grid-template-columns:1fr}
 .extras .quests{grid-template-columns:1fr 1fr;column-gap:10px}
 
 /* locked regions */
@@ -129,23 +132,32 @@ a{color:inherit;text-decoration:none}
         <article class="log win" aria-labelledby="u2">
           <h3 id="u2">UNIT 2 · CHEMISTRY</h3>
           <p class="sub">Atoms, ions, bonds, naming compounds and chemical reactions.</p>
-          <ul class="quests">
-            <li><a href="courses/science-1206/chemistry/element-quest/"><span class="t">Element Quest</span><span class="kind new">NEW</span></a></li>
-            <li><a href="courses/science-1206/chemistry/atoms-ions-bonds/"><span class="t">Atoms, Ions and Bonds</span></a></li>
-            <li><a href="courses/science-1206/chemistry/ionic-compounds/"><span class="t">Ionic Compounds</span></a></li>
-            <li><a href="courses/science-1206/chemistry/molecular-naming/"><span class="t">Naming Molecular Compounds</span></a></li>
-            <li><a href="courses/science-1206/chemistry/balancing-lab/"><span class="t">Balancing Equations Lab</span><span class="kind new">NEW</span></a></li>
-            <li><a href="courses/science-1206/chemistry/mass-balance/"><span class="t">Conservation of Mass Bench</span><span class="kind new">NEW</span></a></li>
-            <li><a href="courses/science-1206/chemistry/word-equations/"><span class="t">Words to Balanced Equation</span><span class="kind new">NEW</span></a></li>
-            <li><a href="courses/science-1206/chemistry/reaction-types/"><span class="t">Reaction Types</span><span class="kind new">NEW</span></a></li>
-            <li><a href="courses/science-1206/chemistry/acid-base-lab/"><span class="t">Acids and Bases Test Bench</span><span class="kind new">NEW</span></a></li>
-            <li><a href="courses/science-1206/chemistry/neutralization-lab/"><span class="t">Neutralization Lab</span><span class="kind new">NEW</span></a></li>
-            <li><a href="courses/science-1206/chemistry/collision-lab/"><span class="t">Reaction Rates: Collision Lab</span><span class="kind new">NEW</span></a></li>
-          </ul>
-          <div class="extras">
-            <p class="label">SIDE QUESTS</p>
-            <ul class="quests" style="margin-top:8px;grid-template-columns:1fr">
+          <div class="part">
+            <p class="label">PART 1 · ATOMS, IONS AND NAMING</p>
+            <ul class="quests" style="margin-top:8px">
+              <li><a href="courses/science-1206/chemistry/element-quest/"><span class="t">Element Quest</span><span class="kind new">NEW</span></a></li>
+              <li><a href="courses/science-1206/chemistry/atoms-ions-bonds/"><span class="t">Atoms, Ions and Bonds</span></a></li>
+              <li><a href="courses/science-1206/chemistry/ionic-compounds/"><span class="t">Ionic Compounds</span></a></li>
+              <li><a href="courses/science-1206/chemistry/molecular-naming/"><span class="t">Naming Molecular Compounds</span></a></li>
+            </ul>
+            <p class="label side">SIDE QUESTS</p>
+            <ul class="quests extra">
               <li><a href="courses/science-1206/chemistry/part1-answer-key/"><span class="t">Booklet #1 Answer Key</span><span class="kind">KEY</span></a></li>
+            </ul>
+          </div>
+          <div class="part">
+            <p class="label">PART 2 · CHEMICAL REACTIONS</p>
+            <ul class="quests" style="margin-top:8px">
+              <li><a href="courses/science-1206/chemistry/balancing-lab/"><span class="t">Balancing Equations Lab</span><span class="kind new">NEW</span></a></li>
+              <li><a href="courses/science-1206/chemistry/mass-balance/"><span class="t">Conservation of Mass Bench</span><span class="kind new">NEW</span></a></li>
+              <li><a href="courses/science-1206/chemistry/word-equations/"><span class="t">Words to Balanced Equation</span><span class="kind new">NEW</span></a></li>
+              <li><a href="courses/science-1206/chemistry/reaction-types/"><span class="t">Reaction Types</span><span class="kind new">NEW</span></a></li>
+              <li><a href="courses/science-1206/chemistry/acid-base-lab/"><span class="t">Acids and Bases Test Bench</span><span class="kind new">NEW</span></a></li>
+              <li><a href="courses/science-1206/chemistry/neutralization-lab/"><span class="t">Neutralization Lab</span><span class="kind new">NEW</span></a></li>
+              <li><a href="courses/science-1206/chemistry/collision-lab/"><span class="t">Reaction Rates: Collision Lab</span><span class="kind new">NEW</span></a></li>
+            </ul>
+            <p class="label side">SIDE QUESTS</p>
+            <ul class="quests extra">
               <li><a href="courses/science-1206/chemistry/part2-crash-course/"><span class="t">Part 2 Crash Course</span><span class="kind new">NEW</span></a></li>
               <li><a href="courses/science-1206/chemistry/part2-review/"><span class="t">Unit 2 Part 2 Review</span><span class="kind new">NEW</span></a></li>
               <li><a href="courses/science-1206/chemistry/part2-answer-key/"><span class="t">Booklet #2 Answer Key</span><span class="kind new">NEW</span></a></li>
