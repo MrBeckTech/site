@@ -43,7 +43,17 @@ a{color:var(--sky)}
 .sub-h{font-weight:700;color:var(--sky);margin:12px 0 4px}
 
 /* part 2: concepts */
-.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px}
+.concepts{display:grid;grid-template-columns:1fr;gap:10px}
+.cc .key{margin:0 0 8px;padding:6px 10px;background:#241650;border-left:4px solid var(--mint);border-radius:3px;font-weight:700;max-width:90ch}
+.rows{display:grid;grid-template-columns:minmax(120px,180px) 1fr;margin:6px 0;border-top:1px solid #2a1850}
+.rows dt,.rows dd{margin:0;padding:5px 10px 5px 0;border-bottom:1px solid #2a1850;font-size:.94rem}
+.rows dt{font-weight:700;color:var(--gold)}
+.split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+.split .fig:first-child{margin-top:6px}
+.split .rows{grid-template-columns:minmax(96px,130px) 1fr}
+.twin{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cc ul.after{margin:6px 0 0;padding-left:1.1rem}
+@media(max-width:760px){.split,.twin{grid-template-columns:1fr}.rows{grid-template-columns:1fr}.rows dt{border-bottom:0;padding-bottom:0}}
 .cc{background:var(--panel);border:3px solid #000;border-left:6px solid #3a2463;border-radius:4px;padding:9px 12px;scroll-margin-top:60px}
 .cc.all{border-left-color:var(--mint)}
 .cc.wide{grid-column:1 / -1}
@@ -523,127 +533,208 @@ $('#vHide').addEventListener('click', () => { store.seen = {}; save(); renderVoc
 
 /* ================= PART 2: concepts (the booklet's Test #1 review, items 1-20) ================= */
 // [id, title, review-sheet wording, points (HTML allowed), extra HTML, sims, wide]
+// Each card: id, n (badge), t (title), ask (review-sheet wording), key (the idea in one line),
+// rows ([label, explanation]), extra (table or bar, under the rows), fig (diagram beside them), after (short notes), links (sims)
 const CARDS = [
-  ['B', 'Weather basics', 'From the booklet notes: weather, its six components, weather lore and Earth’s spheres.', [
-    '<b>Weather</b> is the physical conditions of the atmosphere at a specific time and place. It changes from day to day, often hour to hour. <b>Climate</b> is the pattern of weather in a region over a long time.',
-    'Six components of weather (Table 1.1): <b>temperature</b> (how warm or cold; the average kinetic energy of the particles), <b>precipitation</b> (any liquid or solid water that falls: rain, snow, hail), <b>atmospheric pressure</b> (the force of the atmosphere on the surface below it), <b>humidity</b> (the amount of water vapour in the air), <b>wind speed and direction</b> (how fast the air moves and the direction it comes from) and <b>sky cover</b> (how much of the sky is covered by cloud).',
-    '<b>Weather lore</b>: sayings, often rhyming, used to make informal predictions about the weather. Ex: “Mare’s tails and mackerel scales make tall ships carry short sails.” Those thin, wispy, high ice-crystal clouds often arrive ahead of a storm, so sailors lowered their sails for the wind to come.',
-    'Earth’s four spheres (Figure 1.2): <b>atmosphere</b> (the air: nitrogen, oxygen and other gases, more than 700 km thick; all weather happens in the lowest 12 km, the troposphere), <b>lithosphere</b> (the land: continental crust above sea level and oceanic crust on the ocean bottom), <b>hydrosphere</b> (water on or near the surface: oceans, rivers, ponds, ice, and water vapour in the air) and <b>biosphere</b> (all the places on land, in water and in the air that hold and support life).',
-    'Seven causes of weather: Earth’s shape and sunlight, air masses, pressure systems, the Coriolis effect, global winds, fronts and ocean currents.'], '', [], true],
-  ['1', 'Earth’s energy budget', 'Describe Earth’s energy budget (the flow of energy from the Sun to Earth, and the outward flow of energy from Earth).', [
-    'Out of every 100 units of sunlight reaching Earth: <b>25</b> are reflected by clouds and particles, <b>20</b> are absorbed by the atmosphere, <b>5</b> are reflected by land and sea, and <b>50</b> are absorbed by land and water (Figure 1.4).',
-    'The warmed surface gives off energy as <b>infrared radiation</b>. Greenhouse gases absorb some of it and send it back out in all directions, some back down to the surface.',
-    'The energy budget is the balance between energy in and energy out. Earth sends as much energy back to space as it absorbs, so its average temperature stays steady. If more came in than went out, Earth would warm.'], EBAR, ['energy-budget'], true],
-  ['2', 'Albedo and the hydrosphere as a heat sink', 'Describe the effect of albedo on absorption of radiant energy. Relate the high specific heat capacity of water, relative to land, to how the hydrosphere acts as a heat sink.', [
-    '<b>Albedo</b> is the reflectivity of a surface: how much of the energy hitting it is reflected. Light surfaces reflect, dark surfaces absorb. A snow-covered field reflects about 70–80% (high albedo), so less energy is absorbed and it stays cooler.',
-    'The same field growing crops in summer reflects only about 20% or less (lower albedo), so it absorbs more and warms more. Oceans and ponds have a low albedo: they absorb about 95% of the sunlight reaching them.',
-    '<b>Specific heat capacity</b> is how much (and how quickly) a substance absorbs and releases energy: the energy needed to raise 1 g of it by 1 °C. Water’s is much higher than land’s or air’s.',
-    'A <b>heat sink</b> is any substance that can absorb and hold a “pool” of energy without changing state. Water heats up and cools off slowly, so it can absorb a huge amount of energy with only a small rise in temperature and give it back slowly. Because there is so much of it, the hydrosphere is Earth’s great heat sink and has a big influence on weather.'], '', ['energy-budget', 'heat-sinks']],
-  ['3', 'Specific heat capacity and air temperature', 'How the specific heat capacity of different surfaces (land and water) affects the temperature of the air above it.', [
-    'Air takes on the temperature of the surface below it.',
-    'Land has a <b>low</b> specific heat capacity: it heats up quickly in the day and summer and cools quickly at night and in winter. Air over land has big temperature swings.',
-    'Water has a <b>high</b> specific heat capacity: it warms and cools slowly, so the air over it stays more even.',
-    'Coastal places are <b>cooler in summer</b> and <b>milder in winter</b> than inland places (Figure 1.5: coastal Springdale against inland Badger). On a summer day the land warms faster, warm air rises over it, and cooler sea air flows in: a <b>sea breeze</b>. At night it reverses: a <b>land breeze</b>.'], '', ['heat-sinks']],
-  ['4', 'From the surface to the atmosphere', 'Describe how energy absorbed by Earth’s surface is transferred to the atmosphere by conduction, convection and radiation.', [
-    '<b>Radiation</b>: the warm surface gives off infrared radiation. Greenhouse gases in the air absorb it. This is the biggest source of heat for the air near the ground. (Radiation needs no particles.)',
-    '<b>Conduction</b>: air particles touching the warm ground collide with it and gain energy. Only the thin layer of air in contact is heated this way.',
-    '<b>Convection</b>: the heated air expands, becomes less dense and rises, carrying energy upward. Cooler, denser air sinks to take its place, forming a loop (a convection current).'], '', ['heat-transfer']],
-  ['5', 'The greenhouse effect', 'Describe the greenhouse effect and relate it to how the atmosphere acts as a heat sink.', [
-    'Sunlight (mostly visible light) passes through the atmosphere and warms the surface. The surface gives off <b>infrared</b> radiation.',
-    '<b>Greenhouse gases</b> (water vapour, carbon dioxide and methane) absorb that infrared and give it off again in all directions, including back toward the ground.',
-    'This way the atmosphere absorbs and holds thermal energy: it acts as a <b>heat sink</b>.',
-    'Without this natural greenhouse effect, Earth’s average temperature would be about −18 °C instead of about 14 °C, too cold for life as we know it.'], '', ['energy-budget']],
-  ['6', 'Changes of state and heat', 'Relate changes of state (condensation, evaporation, melting, solidification, sublimation) to the absorption or release of heat.', [
-    'Changing state takes energy in or gives it out, even though the temperature doesn’t change while it happens.'],
-    `<table class="mini"><thead><tr><th>Absorbs heat (from the surroundings)</th><th>Releases heat (to the surroundings)</th></tr></thead><tbody>
+  { id: 'B', n: '★', t: 'Weather basics', ask: 'From the booklet notes: weather, its six components, weather lore and Earth’s spheres.',
+    key: 'Weather is what the atmosphere is doing at one time and place. Climate is the long-term pattern.',
+    rows: [
+      ['Weather', 'The physical conditions of the atmosphere at a specific time and place. It changes day to day, even hour to hour.'],
+      ['Climate', 'The pattern of weather in a region over a long time.'],
+      ['Weather lore', 'Sayings, often rhyming, used to make informal predictions. “Mare’s tails and mackerel scales make tall ships carry short sails”: those high, wispy ice-crystal clouds often come before a storm.'],
+      ['7 causes of weather', 'Earth’s shape and sunlight · air masses · pressure systems · the Coriolis effect · global winds · fronts · ocean currents.']],
+    extraAfter: true,
+    extra: `<div class="twin"><table class="mini"><thead><tr><th>6 components (Table 1.1)</th><th>Meaning</th></tr></thead><tbody>
+      <tr><td>Temperature</td><td>how warm or cold: the average kinetic energy of the particles</td></tr>
+      <tr><td>Precipitation</td><td>liquid or solid water that falls: rain, snow, hail</td></tr>
+      <tr><td>Atmospheric pressure</td><td>the force of the air on the surface below it</td></tr>
+      <tr><td>Humidity</td><td>the amount of water vapour in the air</td></tr>
+      <tr><td>Wind speed and direction</td><td>how fast air moves, and where it comes from</td></tr>
+      <tr><td>Sky cover</td><td>how much of the sky is covered by cloud</td></tr></tbody></table>
+      <table class="mini"><thead><tr><th>Earth’s spheres (Fig. 1.2)</th><th>What it is</th></tr></thead><tbody>
+      <tr><td>Atmosphere</td><td>the air: nitrogen, oxygen and other gases, 700+ km thick. All weather happens in the lowest 12 km (the troposphere).</td></tr>
+      <tr><td>Lithosphere</td><td>the land: continental crust and oceanic crust</td></tr>
+      <tr><td>Hydrosphere</td><td>water on or near the surface, including ice and water vapour</td></tr>
+      <tr><td>Biosphere</td><td>everywhere life exists: on land, in water and in the air</td></tr></tbody></table></div>`,
+    links: [] },
+  { id: '1', t: 'Earth’s energy budget', ask: 'Describe Earth’s energy budget (the flow of energy from the Sun to Earth, and the outward flow of energy from Earth).',
+    key: 'Earth sends as much energy back to space as it absorbs, so its average temperature stays steady.',
+    extra: EBAR,
+    rows: [
+      ['Energy in', 'The bar above is Figure 1.4: what happens to every 100 units of sunlight. About half reaches and warms the surface.'],
+      ['Energy out', 'The warmed surface gives off infrared radiation. Greenhouse gases absorb some and radiate it in all directions (some back down) before it escapes to space.'],
+      ['The balance', 'Energy in = energy out. If more came in than went out, Earth would keep warming.']],
+    links: ['energy-budget'] },
+  { id: '2', t: 'Albedo and the hydrosphere as a heat sink', ask: 'Describe the effect of albedo on absorption of radiant energy. Relate the high specific heat capacity of water, relative to land, to how the hydrosphere acts as a heat sink.',
+    key: 'Light surfaces reflect sunlight. Water stores huge amounts of energy, so the hydrosphere is Earth’s great heat sink.',
+    rows: [
+      ['Albedo', 'How much of the energy hitting a surface it reflects. Light surfaces reflect; dark surfaces absorb and warm up.'],
+      ['Examples', 'Snow-covered field: 70–80% reflected (high albedo). Same field with summer crops: 20% or less. Oceans and ponds: absorb about 95% (low albedo).'],
+      ['Specific heat capacity', 'How much (and how quickly) a substance absorbs and releases energy: the energy needed to raise 1 g by 1 °C. Water’s is much higher than land’s or air’s.'],
+      ['Heat sink', 'Any substance that can absorb and hold a “pool” of energy without changing state.'],
+      ['Why water?', 'It takes a lot of energy to change water’s temperature, so it warms and cools slowly, storing energy and releasing it slowly. There is so much water on Earth that it has a big influence on weather.']],
+    links: ['energy-budget', 'heat-sinks'] },
+  { id: '3', t: 'Specific heat capacity and air temperature', ask: 'How the specific heat capacity of different surfaces (land and water) affects the temperature of the air above it.',
+    key: 'Air takes on the temperature of the surface below it, so air over land and air over water behave very differently.',
+    rows: [
+      ['Over land', 'Low specific heat capacity: heats and cools quickly, so the air above has big temperature swings.'],
+      ['Over water', 'High specific heat capacity: warms and cools slowly, so the air above stays more even.'],
+      ['Coast vs. inland', 'Coastal places are cooler in summer and milder in winter (Figure 1.5: coastal Springdale vs. inland Badger).'],
+      ['Sea breeze (day)', 'Land warms faster; warm air rises over the land and cooler sea air flows in to replace it.'],
+      ['Land breeze (night)', 'Land cools faster, so the flow reverses: cooler air moves from land out to sea.']],
+    links: ['heat-sinks'] },
+  { id: '4', t: 'From the surface to the atmosphere', ask: 'Describe how energy absorbed by Earth’s surface is transferred to the atmosphere by conduction, convection and radiation.',
+    key: 'Sunlight mostly passes through the air and warms the ground. The ground then warms the air three ways.',
+    rows: [
+      ['Radiation', 'The ground gives off infrared; greenhouse gases absorb it. This is the biggest source of heat for the air near the surface. Needs no particles.'],
+      ['Conduction', 'Air particles touching the warm ground collide with it and gain energy. Only heats the thin layer of air in contact.'],
+      ['Convection', 'The warmed air expands, becomes less dense and rises; cooler, denser air sinks to take its place. This loop is a convection current.']],
+    links: ['heat-transfer'] },
+  { id: '5', t: 'The greenhouse effect', ask: 'Describe the greenhouse effect and relate it to how the atmosphere acts as a heat sink.',
+    key: 'Greenhouse gases absorb the heat the surface gives off and radiate it back, so the atmosphere holds energy like a heat sink.',
+    rows: [
+      ['1. Sunlight in', 'Mostly visible light. It passes through the air and warms the surface.'],
+      ['2. Infrared out', 'The warm surface gives off infrared radiation.'],
+      ['3. Absorbed', 'Greenhouse gases (water vapour, carbon dioxide, methane) absorb it and radiate it in all directions, including back down.'],
+      ['Result', 'Earth averages about 14 °C instead of about −18 °C: warm enough for life.']],
+    links: ['energy-budget'] },
+  { id: '6', t: 'Changes of state and heat', ask: 'Relate changes of state (condensation, evaporation, melting, solidification, sublimation) to the absorption or release of heat.',
+    key: 'Changing state absorbs or releases heat, while the temperature stays the same.',
+    extra: `<table class="mini"><thead><tr><th>Absorbs heat (from the surroundings)</th><th>Releases heat (to the surroundings)</th></tr></thead><tbody>
       <tr><td><span class="abs">Melting</span>: solid → liquid</td><td><span class="rel">Solidification (freezing)</span>: liquid → solid</td></tr>
       <tr><td><span class="abs">Evaporation</span>: liquid → gas</td><td><span class="rel">Condensation</span>: gas → liquid</td></tr>
-      <tr><td><span class="abs">Sublimation</span>: solid → gas</td><td><span class="rel">Deposition</span>: gas → solid (frost)</td></tr></tbody></table>
-      <ul><li>Each pair is opposite: the energy absorbed one way is released the other way. Transpiration (water evaporating from plant leaves) also absorbs energy.</li></ul>`, ['water-cycle']],
-  ['7', 'Latent heat', 'Define the latent heat of fusion and vapourization.', [
-    '<b>Latent heat of fusion</b>: the energy a substance absorbs to melt (solid → liquid) without changing temperature. The same amount is released when it freezes. Water: 334 J/g.',
-    '<b>Latent heat of vapourization</b>: the energy a substance absorbs to evaporate (liquid → gas) without changing temperature. The same amount is released when it condenses. Water: 2260 J/g, almost 7 times more.',
-    '“Latent” means hidden: the energy goes into changing state, not into raising the temperature, so a thermometer doesn’t show it. Ice water stays at 0 °C until all the ice has melted.'], '', ['water-cycle']],
-  ['8', 'Heat transfer in the water cycle', 'Describe and explain heat transfer in the water cycle.', [
-    'The <b>water cycle</b> moves water between the oceans, the air and the land by evaporation, condensation and precipitation. It moves energy too.',
-    'Water <b>evaporates</b> (mostly from warm tropical oceans) and absorbs energy. That cools the ocean and stores the energy in the water vapour.',
-    'Winds carry the vapour up and away, sometimes thousands of kilometres. When it <b>condenses</b> into clouds, it releases that energy and warms the air there. This energy powers storms.',
-    'So the water cycle moves heat from the surface up into the atmosphere, and from the tropics toward the poles.'], '', ['water-cycle']],
-  ['9', 'Convection and advection', 'Describe and explain convection and advection and their relation to air and water currents.', [
-    '<b>Convection</b> is a <b>vertical</b> transfer of energy: warm, less dense fluid rises and cool, denser fluid sinks.',
-    '<b>Advection</b> is a <b>horizontal</b> transfer of energy: the large-scale sideways movement of air (or water) carrying energy with it. Wind is advection in the air; ocean currents are advection in the water.',
-    '<b>Advection fog</b> forms when warm, moist air moves over a cooler surface (cold ocean water or cold land). The air cools and its water vapour condenses.',
-    'Together they make a <b>convection current</b>: rise, move sideways, sink, move back. A sea breeze is one: air rises over warm land, sinks over the cool sea, and blows back onto land along the surface.',
-    'The same loops drive global winds and deep ocean currents.'], '', ['heat-transfer', 'heat-sinks']],
-  ['10', 'Earth’s shape and unequal heating', 'Relate Earth’s shape and the angle of incoming solar energy to the unequal heating of Earth’s surface.', [
-    'Earth is a sphere, so sunlight hits different places at different angles.',
-    'Near the <b>equator</b> the Sun is nearly overhead. Its rays strike almost straight on, so the energy is concentrated on a small area: more energy per square metre, so it is warmer.',
-    'Near the <b>poles</b> the rays strike at a low angle. The same energy is spread over a much larger area, and it passes through more atmosphere first (more is reflected and absorbed on the way). Less energy per square metre, so it is colder.',
-    'Snow and ice near the poles also have a high albedo, so they reflect even more.'], figSun(), [], true],
-  ['11', 'Heating, density and pressure', 'Describe and explain how heat transfer from Earth’s surfaces to the air directly above affects air density, movement and pressure in the atmosphere.', [
-    'Air over a <b>warm</b> surface is heated. Its particles move faster and spread out, so the air becomes <b>less dense</b> and <b>rises</b>. Less air presses down, so the surface pressure is <b>low</b>.',
-    'Air over a <b>cold</b> surface cools. Its particles slow down and pack closer, so the air becomes <b>denser</b> and <b>sinks</b>. More air presses down, so the surface pressure is <b>high</b>.',
-    'Air then moves from high pressure to low pressure: that is <b>wind</b>. The bigger the pressure difference, the stronger the wind.',
-    '<b>Humidity</b> changes pressure too. Water vapour is lighter than the nitrogen and oxygen it replaces, so humid air is less dense and exerts less pressure. A falling barometer suggests warm, humid air is coming; a rising one suggests cool, dry weather.',
-    'Pressure also drops with height: about 101.3 kPa at sea level, and only about 10% of that at the top of the troposphere.'], '', ['atmosphere-pressure', 'pressure-systems']],
-  ['12', 'Air masses', 'Describe the formation and characteristics of air masses (arctic, continental polar, continental tropical, maritime polar, maritime tropical).', [
-    'An <b>air mass</b> is a very large mass of air with nearly the same temperature, humidity and pressure throughout. It forms when air sits over one area (thousands of square kilometres) for days or weeks and takes on the properties of that surface. Most form over tropical or polar regions.',
-    '<b>Continental</b> = formed over land, so dry. <b>Maritime</b> = formed over the ocean, so humid. <b>Arctic</b> = bitterly cold, <b>polar</b> = cold, <b>tropical</b> = warm.'],
-    `<table class="mini"><thead><tr><th>Air mass (Table 1.2)</th><th>Forms over</th><th>Winter</th><th>Summer</th></tr></thead><tbody>
+      <tr><td><span class="abs">Sublimation</span>: solid → gas</td><td><span class="rel">Deposition</span>: gas → solid (frost)</td></tr></tbody></table>`,
+    after: ['Each pair is opposite: the energy absorbed one way is released the other way.', 'Transpiration (water evaporating from plant leaves) also absorbs energy.'],
+    links: ['water-cycle'] },
+  { id: '7', t: 'Latent heat', ask: 'Define the latent heat of fusion and vapourization.',
+    key: '“Latent” means hidden: this energy changes the state, not the temperature, so a thermometer doesn’t show it.',
+    rows: [
+      ['Latent heat of fusion', 'Energy absorbed to melt (solid → liquid) with no temperature change; the same amount is released on freezing. Water: 334 J/g.'],
+      ['Latent heat of vapourization', 'Energy absorbed to evaporate (liquid → gas) with no temperature change; the same amount is released on condensing. Water: 2260 J/g, almost 7 times more.'],
+      ['Example', 'Ice water stays at 0 °C until all the ice has melted.']],
+    links: ['water-cycle'] },
+  { id: '8', t: 'Heat transfer in the water cycle', ask: 'Describe and explain heat transfer in the water cycle.',
+    key: 'The water cycle moves energy as well as water: absorbed where water evaporates, released where it condenses.',
+    rows: [
+      ['Evaporation', 'Mostly from warm tropical oceans. Absorbs energy, cooling the water left behind (evaporative cooling).'],
+      ['Transport', 'Winds carry the water vapour up and away, sometimes thousands of kilometres.'],
+      ['Condensation', 'Forms clouds and releases the stored energy, warming the air there. This energy powers storms.'],
+      ['Overall', 'Heat moves up from the surface into the atmosphere, and from the tropics toward the poles.']],
+    links: ['water-cycle'] },
+  { id: '9', t: 'Convection and advection', ask: 'Describe and explain convection and advection and their relation to air and water currents.',
+    key: 'Convection moves energy up and down. Advection moves it sideways.',
+    rows: [
+      ['Convection', 'Vertical: warm, less dense fluid rises; cool, denser fluid sinks.'],
+      ['Advection', 'Horizontal: the large-scale sideways movement of air (wind) or water (currents), carrying energy with it.'],
+      ['Together', 'A convection current: rise, move sideways, sink, move back. A sea breeze is one. The same loops drive global winds and deep ocean currents.'],
+      ['Advection fog', 'Warm, moist air moves over a cooler surface (cold ocean or land), cools, and its water vapour condenses.']],
+    links: ['heat-transfer', 'heat-sinks'] },
+  { id: '10', t: 'Earth’s shape and unequal heating', ask: 'Relate Earth’s shape and the angle of incoming solar energy to the unequal heating of Earth’s surface.',
+    key: 'Earth is a sphere, so the same sunlight is concentrated near the equator and spread out near the poles.',
+    rows: [
+      ['Near the equator', 'The Sun is nearly overhead and its rays hit almost straight on. The energy lands on a small area: more energy per square metre, so it is warmer.'],
+      ['Near the poles', 'The rays hit at a low angle. The same energy spreads over a much larger area, and travels through more atmosphere first (more is reflected and absorbed). Less energy per square metre, so it is colder.'],
+      ['Also', 'Polar snow and ice have a high albedo, so they reflect even more.']],
+    fig: figSun(), links: [] },
+  { id: '11', t: 'Heating, density and pressure', ask: 'Describe and explain how heat transfer from Earth’s surfaces to the air directly above affects air density, movement and pressure in the atmosphere.',
+    key: 'Warm air rises (low pressure), cold air sinks (high pressure), and air flows from high to low as wind.',
+    rows: [
+      ['Warm surface', 'Air is heated, its particles spread out, it becomes less dense and rises. Less air presses down: low surface pressure.'],
+      ['Cold surface', 'Air cools, its particles pack closer, it becomes denser and sinks. More air presses down: high surface pressure.'],
+      ['Wind', 'Air moves from high pressure to low pressure. The bigger the difference, the stronger the wind.'],
+      ['Humidity', 'Water vapour is lighter than the nitrogen and oxygen it replaces, so humid air is less dense and has lower pressure. Falling barometer: warm, humid air coming. Rising: cool, dry weather.'],
+      ['Altitude', 'About 101.3 kPa at sea level, and only about 10% of that at the top of the troposphere.']],
+    links: ['atmosphere-pressure', 'pressure-systems'] },
+  { id: '12', t: 'Air masses', ask: 'Describe the formation and characteristics of air masses (arctic, continental polar, continental tropical, maritime polar, maritime tropical).',
+    key: 'An air mass takes on the temperature and humidity of the surface it forms over.',
+    rows: [
+      ['Air mass', 'A very large mass of air with nearly the same temperature, humidity and pressure throughout.'],
+      ['How it forms', 'Air sits over one area (thousands of square kilometres) for days or weeks. Most form over tropical or polar regions.'],
+      ['Reading the name', 'Continental = over land, so dry. Maritime = over the ocean, so humid. Arctic = bitterly cold. Polar = cold. Tropical = warm.']],
+    extraAfter: true,
+    extra: `<table class="mini"><thead><tr><th>Air mass (Table 1.2)</th><th>Forms over</th><th>Winter</th><th>Summer</th></tr></thead><tbody>
       <tr><td>Arctic</td><td>the Arctic</td><td>bitter cold, dry</td><td>cold, dry</td></tr>
       <tr><td>Continental polar</td><td>northern Canada</td><td>very cold, dry</td><td>cool, dry</td></tr>
       <tr><td>Continental tropical</td><td>southwestern U.S. and Mexico</td><td>warm, dry</td><td>hot, dry</td></tr>
       <tr><td>Maritime polar</td><td>North Pacific and North Atlantic</td><td>cold, humid</td><td>cool, humid</td></tr>
-      <tr><td>Maritime tropical</td><td>the Pacific, the Gulf of Mexico and the Atlantic</td><td>warm, humid</td><td>hot, humid</td></tr></tbody></table>
-      <ul><li>Figure 1.11 splits the ocean ones by where they form: maritime polar (Pacific) and (Atlantic); maritime tropical (Pacific), (Gulf) and (Atlantic).</li>
-      <li>Newfoundland is mostly affected by maritime polar (Atlantic), continental polar and maritime tropical (Atlantic) air, plus Arctic air in winter.</li></ul>`, ['air-masses']],
-  ['13', 'High and low pressure systems', 'Explain the formation of high and low pressure systems and describe their characteristic wind movements and associated weather.', [
-    '<b>High pressure</b> forms when an air mass cools over an ocean or a cold region on land. Its particles lose kinetic energy, so it becomes denser and contracts, drawing in more air from the upper troposphere. The added weight raises the surface pressure. The dense air sinks and flows <b>outward and clockwise</b> (northern hemisphere). Sinking air warms and dries, so highs often bring <b>clear skies</b>.',
-    '<b>Low pressure</b> forms when an air mass travels over warm land or ocean. It warms, expands and rises, pushing away air in the upper troposphere, so the pressure at the surface drops and air is drawn in. Winds flow <b>inward and counterclockwise</b> (northern hemisphere). Rising air cools and its water vapour condenses, so lows often bring <b>clouds and wet weather</b>.',
-    'In the southern hemisphere both directions are reversed (the Coriolis effect turns the other way).',
-    'On a map, <b>isobars</b> join places with the same pressure. The closer together they are, the stronger the wind.'], '', ['pressure-systems']],
-  ['14', 'Convection currents + the Coriolis effect', 'Describe how the combination of convection currents and the Coriolis effect create global wind patterns.', [
-    '<b>Convection</b>: the equator is heated most, so air rises there (low pressure), flows toward the poles high up, cools and sinks near 30° (high pressure), then flows back toward the equator along the surface. Similar loops form between 30° and 60° and between 60° and the poles: three loops in each hemisphere.',
-    'Without spin, surface winds would blow straight north or south. The <b>Coriolis effect</b> (Earth rotating underneath the moving air) turns moving air to the <b>right</b> in the northern hemisphere and to the <b>left</b> in the southern hemisphere.',
-    'So the winds end up blowing from the east or west, forming the global wind belts.'], '', ['coriolis-effect', 'global-winds']],
-  ['15', 'Global wind systems', 'Identify global wind systems and relate prevailing winds to the movement of weather systems.', [],
-    `<table class="mini"><thead><tr><th>Wind system</th><th>Location</th><th>Path</th></tr></thead><tbody>
-      <tr><td>Trade winds</td><td>equator to 30° N and S</td><td>toward the equator, from the north-east (N) or south-east (S)</td></tr>
-      <tr><td>Prevailing westerlies</td><td>30° to 60° N and S</td><td>toward the poles, from the west (south-west in the N, north-west in the S)</td></tr>
-      <tr><td>Polar easterlies</td><td>60° to the poles</td><td>away from the poles, from the east</td></tr></tbody></table>
-      ${figWinds()}
-      <ul><li>Weather systems are carried by the prevailing winds. Canada (and Newfoundland, at about 47° N) is in the <b>prevailing westerlies</b>, so our weather usually moves in from the <b>west</b>.</li>
-      <li>In the tropics the trade winds carry weather systems, such as young hurricanes, toward the <b>west</b>. When those storms drift north into the westerlies, they turn and head north-east, sometimes toward Newfoundland.</li></ul>`, ['global-winds'], true],
-  ['16', 'The polar jet stream', 'Describe the effects of the polar jet stream on the development, severity and movement of local weather systems.', [
-    'A <b>jet stream</b> is a narrow band of fast-moving wind, up to 300 km/h or more, at altitudes of 10 km to 12 km, blowing generally from west to east. It forms from a large temperature difference in the upper air combined with the Coriolis effect.',
-    'The <b>polar jet streams</b> (the major ones, about 40° to 60° N and S) separate the polar easterlies from the prevailing westerlies. The minor <b>subtropical jets</b> (about 20° to 30°) are where the trade winds meet the westerlies.',
-    '<b>Development</b>: storms form along jet streams and grow into large weather systems.',
-    '<b>Movement</b>: weather systems generally follow the path of the jet. Where it dips south, cold air moves toward the tropics; where it bulges north, warm air moves toward the poles.',
-    '<b>Severity</b>: the jet moves air of different temperatures from one region to another, which affects how intense the weather is. Its speed depends on the temperature difference between the air masses: a bigger difference makes a faster jet and stronger storms (so it is stronger in winter).',
-    'Newfoundland is close to the polar jet most of the year, which is why our weather changes so fast.'], '', ['jet-streams']],
-  ['17', 'Fronts', 'Describe the development of warm, cold, stationary and occluded fronts and their associated weather conditions.', [
-    'A <b>front</b> is the zone where two air masses with different characteristics meet. It can be hundreds of kilometres wide and thousands long. The warmer, less dense air is pushed upward; as it rises it cools, its water vapour condenses, and clouds and precipitation form. An approaching front means a change in the weather.',
-    '<b>Cold front</b>: cold air wedges under warm air and lifts it steeply. Tall cumulonimbus clouds, a short burst of heavy rain or thunderstorms, then clearing, colder air, rising pressure and a wind shift.',
-    '<b>Warm front</b>: warm air slides up gently over cold air. Cloud thickens slowly; long periods of steady rain or snow, then warmer, more humid air.',
-    '<b>Stationary front</b>: two air masses meet but neither advances, so the boundary stalls (often between air masses with small temperature and pressure differences). Cloudy, damp weather can last for days.',
-    '<b>Occluded front</b> (occluded means obstructed): a fast cold front overtakes a warm front and forces the warm air up off the ground. Clouds and precipitation, usually as the storm is weakening.'], figFronts(), ['weather-fronts'], true],
-  ['18', 'Surface currents move thermal energy', 'Describe how surface currents move thermal energy around Earth.', [
-    '<b>Surface currents</b> are created by the <b>wind</b>. There are five major sets, one in each main ocean basin. Because of the Coriolis effect they turn <b>clockwise</b> in the northern hemisphere and <b>counterclockwise</b> in the southern hemisphere.',
-    'Warm currents near the equator flow west. When they reach a continent they turn toward the poles, carrying warm tropical water to colder places (like the Gulf Stream). They give off heat to the air, warming the coasts they pass.',
-    'As that water cools it meets land again and flows back toward the equator as a <b>cold current</b> (like the Canary Current), cooling the coasts it passes.',
-    'Currents on the western side of an ocean basin are narrow and fast; those on the eastern side are wide and slow.',
-    'This is advection: the oceans carry energy from the equator toward the poles and help even out Earth’s temperatures.'], '', ['surface-currents']],
-  ['19', 'Gulf Stream and Labrador Current', 'Describe the effects of the Gulf Stream and Labrador Current on local weather.', [
-    '<b>Gulf Stream</b>: a fast, warm current from the Gulf of Mexico and Caribbean, north along the coast of North America to the Grand Banks, then across the Atlantic toward Europe. It brings warm, moist air to our coast, so winters here are milder than inland Canada (average January low: −8 °C in St. John’s, −14 °C in Ottawa), and it feeds energy to storms such as nor’easters.',
-    '<b>Labrador Current</b>: a cold current bringing Arctic water south along the coast of Labrador and Newfoundland. It cools the air (cool summers, a later spring), and carries sea ice and icebergs from the west coast of Greenland.',
-    '<b>Fog</b>: near the Grand Banks, warm, moist air from over the Gulf Stream moves over the cold Labrador Current water and cools until its water vapour condenses. This is advection fog, and it is why St. John’s is one of the foggiest places in the world.'], '', ['surface-currents']],
-  ['20', 'Deep ocean currents', 'Explain how differences in temperature and salt content form deep ocean currents that move thermal energy around Earth.', [
-    'Seawater gets <b>denser</b> when it is <b>colder</b> and when it is <b>saltier</b>. Dense water sinks below less dense water.',
-    'In the North Atlantic (near Greenland and the Labrador Sea) and around Antarctica, surface water is chilled by cold air. When sea ice forms it leaves its salt behind, so the water gets saltier too. This cold, salty water <b>sinks</b> and flows along the ocean floor.',
-    'It spreads through all the oceans, slowly rises again (upwelling) and returns as warm surface currents. This loop is called <b>thermohaline circulation</b> (thermo = heat, haline = salt), or the <b>ocean conveyor belt</b>. One trip takes about 1000 years.',
-    'It moves thermal energy: warm surface water flows toward the North Atlantic, gives up its heat to the air (warming the region), then sinks.'], '', ['deep-currents']]
+      <tr><td>Maritime tropical</td><td>Pacific, Gulf of Mexico and Atlantic</td><td>warm, humid</td><td>hot, humid</td></tr></tbody></table>`,
+    after: ['Figure 1.11 splits the ocean ones by source: maritime polar (Pacific) and (Atlantic); maritime tropical (Pacific), (Gulf) and (Atlantic).',
+      'Newfoundland gets mostly maritime polar (Atlantic), continental polar and maritime tropical (Atlantic) air, plus Arctic air in winter.'],
+    links: ['air-masses'] },
+  { id: '13', t: 'High and low pressure systems', ask: 'Explain the formation of high and low pressure systems and describe their characteristic wind movements and associated weather.',
+    key: 'Highs: sinking air and clear skies. Lows: rising air, clouds and precipitation.',
+    extra: `<table class="mini"><thead><tr><th></th><th>High pressure (H)</th><th>Low pressure (L)</th></tr></thead><tbody>
+      <tr><td>Forms when</td><td>an air mass cools over an ocean or cold land. It gets denser, contracts, and pulls in air from above, so more weight presses down.</td><td>an air mass warms over warm land or ocean. It expands and rises, pushing air away up high, so less weight presses down.</td></tr>
+      <tr><td>Air</td><td>sinks</td><td>rises</td></tr>
+      <tr><td>Wind (northern hemisphere)</td><td>outward, clockwise</td><td>inward, counterclockwise</td></tr>
+      <tr><td>Weather</td><td>sinking air warms and dries: clear skies</td><td>rising air cools, water vapour condenses: clouds and wet weather</td></tr></tbody></table>`,
+    after: ['In the southern hemisphere the wind directions are reversed.', 'On a map, isobars join places with the same pressure. The closer together they are, the stronger the wind.'],
+    links: ['pressure-systems'] },
+  { id: '14', t: 'Convection currents + the Coriolis effect', ask: 'Describe how the combination of convection currents and the Coriolis effect create global wind patterns.',
+    key: 'Unequal heating sets up convection loops, and Earth’s spin turns the winds so they blow from the east or west.',
+    rows: [
+      ['Convection', 'The equator is heated most, so air rises there (low pressure), flows toward the poles up high, sinks near 30° (high pressure) and flows back along the surface. Loops also form from 30° to 60° and from 60° to the poles: three per hemisphere.'],
+      ['Coriolis effect', 'Earth rotates under the moving air, so its path curves: right in the northern hemisphere, left in the southern.'],
+      ['Result', 'Instead of blowing straight north or south, the winds blow from the east or west: the global wind belts.'],
+      ['Doldrums', 'A calm, low pressure belt near the equator (5° N to 5° S) where air rises and winds are light or absent.']],
+    links: ['coriolis-effect', 'global-winds'] },
+  { id: '15', t: 'Global wind systems', ask: 'Identify global wind systems and relate prevailing winds to the movement of weather systems.',
+    key: 'Weather systems are carried along by the prevailing winds.',
+    extra: `<table class="mini"><thead><tr><th>Wind system</th><th>Location</th><th>Path</th></tr></thead><tbody>
+      <tr><td>Trade winds</td><td>equator to 30° N and S</td><td>toward the equator, from the east (north-east in N, south-east in S)</td></tr>
+      <tr><td>Prevailing westerlies</td><td>30° to 60° N and S</td><td>toward the poles, from the west</td></tr>
+      <tr><td>Polar easterlies</td><td>60° to the poles</td><td>away from the poles, from the east</td></tr></tbody></table>`,
+    rows: [
+      ['Canada and NL', 'We are in the prevailing westerlies (NL is about 47° N), so most of our weather arrives from the west.'],
+      ['The tropics', 'The trade winds carry weather systems, like young hurricanes, west. When those storms drift north into the westerlies, they turn north-east, sometimes toward Newfoundland.']],
+    fig: figWinds(), links: ['global-winds'] },
+  { id: '16', t: 'The polar jet stream', ask: 'Describe the effects of the polar jet stream on the development, severity and movement of local weather systems.',
+    key: 'Jet streams are fast winds high up. Storms form along them, follow them, and are strengthened by them.',
+    rows: [
+      ['What it is', 'A narrow band of fast wind (up to 300 km/h or more), 10 km to 12 km up, blowing west to east. Caused by a big temperature difference in the upper air plus the Coriolis effect.'],
+      ['Where', 'Polar jets (the major ones): about 40° to 60° N and S, between the polar easterlies and the westerlies. Subtropical jets (minor): about 20° to 30°.'],
+      ['Development', 'Storms form along jet streams and grow into large weather systems.'],
+      ['Movement', 'Weather systems generally follow the jet’s path. Where it dips south, cold air comes toward the tropics; where it bulges north, warm air goes toward the poles.'],
+      ['Severity', 'It carries air of different temperatures between regions. A bigger temperature difference means a faster jet and stronger storms, so it is stronger in winter.'],
+      ['Newfoundland', 'We sit near the polar jet most of the year, which is why our weather changes so fast.']],
+    links: ['jet-streams'] },
+  { id: '17', t: 'Fronts', ask: 'Describe the development of warm, cold, stationary and occluded fronts and their associated weather conditions.',
+    key: 'Where air masses meet, warm air is pushed up, cools, and makes clouds and precipitation.',
+    rows: [
+      ['Front', 'The zone where two air masses with different characteristics meet: hundreds of km wide, thousands long. An approaching front means a change in the weather.'],
+      ['Cold front', 'Cold air wedges under warm air and lifts it steeply. Tall cumulonimbus, a short burst of heavy rain or thunderstorms, then clearing, colder and rising pressure.'],
+      ['Warm front', 'Warm air slides gently up over cold air. Cloud thickens slowly; long, steady rain or snow; then warmer and more humid.'],
+      ['Stationary front', 'Neither air mass advances, so the boundary stalls (often small temperature and pressure differences). Cloudy, damp weather for days.'],
+      ['Occluded front', '“Occluded” means obstructed. A fast cold front overtakes a warm front and lifts the warm air off the ground. Clouds and precipitation as the storm weakens.']],
+    fig: figFronts(), links: ['weather-fronts'] },
+  { id: '18', t: 'Surface currents move thermal energy', ask: 'Describe how surface currents move thermal energy around Earth.',
+    key: 'Wind-driven currents carry warm water toward the poles and cold water back toward the equator.',
+    rows: [
+      ['Cause', 'Wind. There are five major sets of surface currents, one in each main ocean basin.'],
+      ['Direction', 'The Coriolis effect turns them clockwise in the northern hemisphere and counterclockwise in the southern.'],
+      ['Warm currents', 'Water near the equator flows west, then turns toward the poles at a continent (like the Gulf Stream). It gives heat to the air, warming the coasts it passes.'],
+      ['Cold currents', 'Cooled water flows back toward the equator (like the Canary Current), cooling the coasts it passes.'],
+      ['Speed', 'Currents on the western side of an ocean basin are narrow and fast; on the eastern side, wide and slow.'],
+      ['Big picture', 'This is advection: the oceans carry energy from the equator toward the poles.']],
+    links: ['surface-currents'] },
+  { id: '19', t: 'Gulf Stream and Labrador Current', ask: 'Describe the effects of the Gulf Stream and Labrador Current on local weather.',
+    key: 'A warm current and a cold current meet off our coast, and that shapes our weather.',
+    rows: [
+      ['Gulf Stream (warm)', 'From the Gulf of Mexico and Caribbean, north along the coast to the Grand Banks, then toward Europe. Brings warm, moist air: milder winters than inland Canada (average January low −8 °C in St. John’s vs. −14 °C in Ottawa). Feeds energy to nor’easters.'],
+      ['Labrador Current (cold)', 'Brings Arctic water south along Labrador and Newfoundland. Cool summers, a later spring, and sea ice and icebergs from the west coast of Greenland.'],
+      ['Fog', 'Near the Grand Banks, warm, moist air from over the Gulf Stream crosses the cold Labrador Current water, cools, and its water vapour condenses: advection fog. That is why St. John’s is one of the foggiest places in the world.']],
+    links: ['surface-currents'] },
+  { id: '20', t: 'Deep ocean currents', ask: 'Explain how differences in temperature and salt content form deep ocean currents that move thermal energy around Earth.',
+    key: 'Cold, salty water sinks and drives a slow, worldwide conveyor belt that carries heat.',
+    rows: [
+      ['Density', 'Colder water is denser. Saltier water is denser. Dense water sinks below less dense water.'],
+      ['Where it sinks', 'The North Atlantic (near Greenland and the Labrador Sea) and around Antarctica. Surface water is chilled by cold air, and forming sea ice leaves its salt behind.'],
+      ['The loop', 'It flows along the ocean floor through all the oceans, slowly rises (upwelling) and returns as warm surface currents. This is thermohaline circulation (thermo = heat, haline = salt), the great ocean conveyor belt. One trip takes about 1000 years.'],
+      ['Moving heat', 'Warm surface water gives its heat to the air in the North Atlantic before it sinks.']],
+    links: ['deep-currents'] }
 ];
-const CARD_OF = {}; CARDS.forEach(c => { CARD_OF[c[0]] = c; });
+const CARD_OF = {}; CARDS.forEach(c => { CARD_OF[c.id] = c; });
+const linkHTML = s => `<a href="${SIMS}${s}/" target="_blank" rel="noopener">Sim ${esc(SIM_NAME[s])} ↗</a>`;
 const cardLabel = id => id === 'B' ? 'Weather basics' : 'Concept ' + id;
 
 /* ================= PART 3: practice questions ================= */
@@ -759,23 +850,27 @@ const Q = (() => { const a = QS.slice(); let s = 1206; const rnd = () => (s = (s
   for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; })();
 
 function renderCards() {
-  $('#concepts').innerHTML = CARDS.map(([id, t, ask, pts, extra, sims, wide]) => `<section class="cc${wide ? ' wide' : ''}" id="c-${id}"><h3><span class="cn">${id === 'B' ? '★' : id}</span>${esc(t)}</h3>
-    <p class="ask">${esc(ask)}</p>${pts.length ? `<ul>${pts.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}${extra}
-    <div class="cfoot" id="cf-${id}"></div></section>`).join('');
+  $('#concepts').innerHTML = CARDS.map(c => {
+    const rows = c.rows ? `<dl class="rows">${c.rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${v}</dd>`).join('')}</dl>` : '';
+    const body = c.extraAfter ? rows + (c.extra || '') : (c.extra || '') + rows;
+    return `<section class="cc" id="c-${c.id}"><h3><span class="cn">${c.n || c.id}</span>${esc(c.t)}</h3>
+      <p class="ask">${esc(c.ask)}</p><p class="key">${c.key}</p>
+      ${c.fig ? `<div class="split"><div>${body}</div><div>${c.fig}</div></div>` : body}
+      ${c.after ? `<ul class="after">${c.after.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
+      <div class="cfoot" id="cf-${c.id}"></div></section>`;
+  }).join('');
 }
 function renderFoots() {
-  CARDS.forEach(([id, , , , , sims]) => {
-    const ids = Q.filter(q => q.sec === id).map(q => q.id), d = ids.filter(x => store.done[x]).length, next = ids.find(x => !store.done[x]);
-    const box = $('#c-' + id); box.classList.toggle('all', d === ids.length);
-    $('#cf-' + id).innerHTML = `<span class="cst">${d === ids.length ? '✓ all ' + ids.length + ' questions done' : 'Practice: ' + d + ' of ' + ids.length + ' done'}</span>` +
-      (next ? `<button class="btn small" type="button" data-go="${next}">Practise ▶</button>` : '') +
-      sims.map(s => `<a href="${SIMS}${s}/" target="_blank" rel="noopener">Sim ${esc(SIM_NAME[s])} ↗</a>`).join(' ');
+  CARDS.forEach(c => {
+    const ids = Q.filter(q => q.sec === c.id).map(q => q.id), d = ids.filter(x => store.done[x]).length, next = ids.find(x => !store.done[x]);
+    $('#c-' + c.id).classList.toggle('all', d === ids.length);
+    $('#cf-' + c.id).innerHTML = `<span class="cst">${d === ids.length ? '✓ all ' + ids.length + ' questions done' : 'Practice: ' + d + ' of ' + ids.length + ' done'}</span>` +
+      (next ? `<button class="btn small" type="button" data-go="${next}">Practise ▶</button>` : '') + c.links.map(linkHTML).join(' ');
   });
   document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => {
     const el = $('#q-' + b.dataset.go); el.scrollIntoView({ block: 'center' }); const f = el.querySelector('button'); if (f) f.focus({ preventScroll: true });
   }));
 }
-
 const state = {};   // per-question feedback this visit
 function qHTML(q, n) {
   const done = store.done[q.id], fb = state[q.id] || (done ? { ok: true, txt: 'Done ✓' } : null);
@@ -792,7 +887,7 @@ function renderQs() { $('#questions').innerHTML = Q.map((q, n) => qHTML(q, n)).j
 function answer(id, v) {
   const q = Q.find(x => x.id === id), box = document.querySelector(`.q[data-id="${id}"]`), ok = v === q.k;
   const txt = ok ? `<b>Right ✓</b> <span class="why">${esc(q.why)}</span>`
-    : `<b>Not quite.</b> <span class="why">Reread <a href="#c-${q.sec}" data-back="${q.sec}">${esc(cardLabel(q.sec))}: ${esc(CARD_OF[q.sec][1])}</a>, then try again.</span>`;
+    : `<b>Not quite.</b> <span class="why">Reread <a href="#c-${q.sec}" data-back="${q.sec}">${esc(cardLabel(q.sec))}: ${esc(CARD_OF[q.sec].t)}</a>, then try again.</span>`;
   state[id] = { ok, txt };
   if (ok && !store.done[id]) { store.done[id] = true; save(); }
   box.outerHTML = qHTML(q, Q.indexOf(q));

@@ -42,7 +42,17 @@ a{color:var(--sky)}
 .vocab tr.grp td{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--sky);padding-top:10px}
 
 /* part 2: concepts */
-.concepts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px}
+.concepts{display:grid;grid-template-columns:1fr;gap:10px}
+.cc .key{margin:0 0 8px;padding:6px 10px;background:#241650;border-left:4px solid var(--mint);border-radius:3px;font-weight:700;max-width:90ch}
+.rows{display:grid;grid-template-columns:minmax(120px,180px) 1fr;margin:6px 0;border-top:1px solid #2a1850}
+.rows dt,.rows dd{margin:0;padding:5px 10px 5px 0;border-bottom:1px solid #2a1850;font-size:.94rem}
+.rows dt{font-weight:700;color:var(--gold)}
+.split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+.split .fig:first-child{margin-top:6px}
+.split .rows{grid-template-columns:minmax(96px,130px) 1fr}
+.twin{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cc ul.after{margin:6px 0 0;padding-left:1.1rem}
+@media(max-width:760px){.split,.twin{grid-template-columns:1fr}.rows{grid-template-columns:1fr}.rows dt{border-bottom:0;padding-bottom:0}}
 .cc{background:var(--panel);border:3px solid #000;border-left:6px solid #3a2463;border-radius:4px;padding:9px 12px;scroll-margin-top:60px}
 .cc.all{border-left-color:var(--mint)}
 .cc.wide{grid-column:1 / -1}
@@ -471,98 +481,144 @@ $('#vHide').addEventListener('click', () => { store.seen = {}; save(); renderVoc
 
 /* ================= PART 2: concepts (Unit Test review) ================= */
 // [id, badge, title, review-sheet wording, points (HTML allowed), extra HTML, links, wide]
+// Each card: id, n (badge), t (title), ask (review-sheet wording), key (the idea in one line),
+// rows ([label, explanation]), extra (table, above the rows unless extraAfter), fig (diagram beside them), after (short notes), links
 const CARDS = [
-  ['R', '↺', 'Part 1 refresher', 'Concepts 1 to 20 from the Test #1 review are on the Unit Test too.', [
-    'Energy budget, albedo, heat sinks, conduction, convection, radiation and advection, the greenhouse effect, changes of state and latent heat, the water cycle, unequal heating, air masses, pressure systems, the Coriolis effect, global winds, the jet stream, fronts, and surface and deep ocean currents.',
-    'They are all explained in the Part 1 review, with practice questions. A few refreshers are mixed into the questions on this page.'], '', ['pt1'], true],
-  ['E1', '⚡', 'Thunderstorms and tornadoes', 'Extreme weather (booklet pp. 34–45): thunderstorm and tornado.', [
-    'A <b>thunderstorm</b> is named for the lightning, thunder, strong winds and hail or rain it produces. Water vapour in rising warm air condenses and releases thermal energy, which heats the air so it keeps rising. This builds a cumulonimbus cloud (thunderhead) that can reach the top of the troposphere and spread into an “anvil” shape.',
-    'Thunderstorms need <b>unstable</b> air: moist air rising quickly up a mountain or within a cold air mass, sea breezes in the tropics, or an advancing cold front (less often a warm front).',
-    'Three stages: <b>cumulus</b> (updraft only), <b>mature</b> (updraft and downdraft: the worst rain, hail and lightning), <b>dissipating</b> (the downdraft cuts off the warm air).',
-    '<b>Lightning</b> is a giant electric spark. <b>Thunder</b> is the sound of air heated so quickly by lightning that it expands explosively. Count the seconds between the flash and the thunder and divide by 3 for the distance in kilometres.',
-    'A <b>tornado</b> is a violent, funnel-shaped column of rotating air that touches the ground. It can form when strong high-altitude horizontal winds hit the rapidly rising air in a large thunderstorm and make it rotate. This spinning vortex is a <b>funnel cloud</b>; when it touches the ground it becomes a tornado. Surface winds can reach 400 km/h. Tornadoes are rated EF0 to EF5 on the Enhanced Fujita scale, by the damage they do.',
-    'Tornadoes are rare in Newfoundland: the cold ocean keeps the air near the ground cool and stable.'], '', ['thunderstorms-tornadoes']],
-  ['E2', '⚡', 'Hurricanes', 'Extreme weather (booklet pp. 34–45): hurricane.', [
-    'A <b>hurricane</b> is a massive spinning storm that forms in the tropics. It becomes a hurricane when its sustained winds are <b>more than 119 km/h</b>. The textbook says winds may reach 240 km/h; the strongest storms go higher. The same storms are called cyclones near the Indian Ocean and typhoons in the western Pacific.',
-    'How one forms (Figure 1.22): warm air absorbs moisture from the warm ocean and rises. The water vapour condenses into clouds and rain, releasing thermal energy, which makes the air less dense so it rises faster. The rising air leaves low pressure at the surface, and air rushes in to replace it. The Coriolis effect makes that air spin: <b>counterclockwise</b> in the northern hemisphere. More condensation releases more energy, and the storm spins faster.',
-    'It needs warm ocean water (about 26.5 °C or warmer), and it has to form at least about 5° from the equator so the Coriolis effect can spin it. The calm <b>eye</b> is surrounded by the <b>eyewall</b> (the strongest winds) and spiral rainbands.',
-    'Hurricane season is late summer to early fall, when the oceans store the most thermal energy. Over land or cold water a hurricane loses its energy source and weakens.',
-    'Dangers: wind, flooding rain and <b>storm surge</b>. Hurricane Igor (2010) caused power loss, flooding and washed-out roads and bridges in the province; Hurricane Matthew (2016) also washed out roads.'], '', ['hurricanes']],
-  ['E3', '⚡', 'Nor’easters and blizzards', 'Extreme weather (booklet pp. 34–45): nor’easter.', [
-    'A <b>nor’easter</b> is a powerful storm on the east coast, named for its winds from the northeast. It brings high winds, heavy precipitation, flooding and surging waves.',
-    'It forms when two air masses meet: cold, dry Arctic air (carried by the jet stream) pushing down across eastern Canada and the northern U.S., and warm, humid air that picked up heat and moisture over the Gulf of Mexico or the Gulf Stream. The temperature difference fuels the storm. Warm air is pulled up the east side of the storm, creating an area of low pressure.',
-    'Nor’easters rotate counterclockwise, usually happen from September to April, and look like a huge comma from space.',
-    'They can bring hurricane-force winds, but they form differently: from two clashing air masses, not from warm tropical water.',
-    'A <b>blizzard</b> is a violent winter storm with freezing temperatures, strong winds and blowing snow. In a blizzard, winds are more than 56 km/h and visibility is less than 0.5 km for at least 3 hours. The snow doesn’t have to be falling: wind can blow snow that is already on the ground. Blizzards often form on the northwest side of a strong storm.'], '', ['noreasters-blizzards']],
-  ['E4', '⚡', 'El Niño and La Niña', 'Extreme weather (booklet pp. 34–45): El Niño and La Niña.', [
-    '<b>Normal</b>: the trade winds push warm surface water west across the Pacific, and cold, nutrient-rich water rises (upwelling) off South America.',
-    '<b>El Niño</b> (every few years): the winds across the South Pacific reverse and flow east, and the ocean surface near the equator in the eastern Pacific warms. Upwelling off Peru weakens, so fish catches drop.',
-    'About 25% of the world’s weather patterns are affected in an El Niño year. Coastal western North America gets unusually warm, wet winters, often with flooding; other places get drought. On the Atlantic coast there are fewer hurricanes and tornadoes, and they are less intense.',
-    '<b>La Niña</b> is the opposite: the winds flowing west across the South Pacific get stronger and the surface water near the equator cools. It magnifies the usual patterns: in eastern North America, winters are colder and snowier, and tornado and hurricane seasons can be longer and more powerful.',
-    'Scientists have not yet pinpointed exactly what causes El Niño and La Niña.'], '', ['el-nino-la-nina']],
-  ['21', '21', 'Weather instruments and technology', 'Know what each weather instrument and weather technology measures, units, etc.', [
-    '<b>Qualitative</b> observations use the senses (how the wind sounds, how foggy it looks). <b>Quantitative</b> observations are measurements made with instruments (Table 2.1).'],
-    `<table class="mini"><thead><tr><th>Instrument</th><th>Measures</th><th>Units</th><th>How it works</th></tr></thead><tbody>
-      <tr><td>Barometer</td><td>atmospheric pressure</td><td>kPa (home ones may use millibars or mmHg)</td><td>An aneroid barometer has a sealed, flexible cell of air. High pressure squeezes it more than low pressure; the change moves a needle. Falling pressure: a low is coming. Rising: fair weather.</td></tr>
-      <tr><td>Rain gauge</td><td>rainfall</td><td>mm</td><td>A funnel catches rain over a large area; the narrow body is marked in mm. A tipping-bucket gauge measures electronically. Snowfall is measured with a marked pole, in cm.</td></tr>
-      <tr><td>Hygrometer</td><td>relative humidity</td><td>%</td><td>Digital, or two thermometers (wet bulb and dry bulb). Evaporation cools the wet bulb; the bigger the difference, the drier the air. No difference = 100%.</td></tr>
-      <tr><td>Thermometer</td><td>air temperature</td><td>°C</td><td>Alcohol in a narrow tube expands and rises as it warms. Others use metals or electric current.</td></tr>
-      <tr><td>Wind vane</td><td>wind direction</td><td>compass points (16)</td><td>Shaped like an arrow with a big tail. The wind turns the tail so the arrow points to where the wind is coming from.</td></tr>
-      <tr><td>Anemometer</td><td>wind speed</td><td>km/h</td><td>The wind catches its open cups and spins them; the rotation gives the speed.</td></tr>
-      <tr><td>Weather balloon</td><td>temperature, pressure and humidity high up; wind speed and direction</td><td>°C, kPa, %, km/h</td><td>A hydrogen balloon carries a <b>radiosonde</b> (instruments + radio transmitter) that sends data back. Tracking the balloon gives the wind. It expands as it rises, bursts, and a parachute brings the radiosonde down.</td></tr>
-      <tr><td>Weather radar</td><td>location and intensity of precipitation</td><td>images</td><td>Remote sensing. Radio waves are reflected by rain, snow and hail; heavier precipitation reflects more. It can see through clouds, so its main job is detecting precipitation. <b>Doppler radar</b> also measures whether it is moving toward or away and how fast, giving a storm’s direction and speed: an early warning system.</td></tr>
-      <tr><td>Weather satellite</td><td>cloud cover; development and movement of weather systems</td><td>images</td><td>Remote sensing in orbit. Infrared (heat) sensors and visible light sensors. <b>GOES</b> (geostationary) satellites sit about 36 000 km above the equator and watch the same spot all the time. <b>POES</b> (polar orbiting) satellites circle over the poles about 14 times a day and scan the whole globe.</td></tr></tbody></table>
-      <ul><li><b>Remote sensing technology</b> collects weather data from a distance, without touching what it observes. Examples: weather radar and weather satellites.</li></ul>`, [], true],
-  ['22', '22', 'Reading a weather map', 'Interpret a weather map, weather map symbols and be able to describe weather conditions.', [
-    '<b>H</b> = high pressure: clear, dry weather; winds blow outward and clockwise. <b>L</b> = low pressure: clouds and precipitation; winds blow inward and counterclockwise.',
-    '<b>Isobars</b> join places with the same atmospheric pressure (in kPa). The closer together they are, the stronger the wind. <b>Isotherms</b> join places with the same temperature.',
-    'Fronts (Table 2.2): a <b>cold front</b> is the leading edge of an advancing cold air mass. A <b>warm front</b> is the retreating edge of a cold air mass as a warm air mass approaches. A <b>stationary front</b> is a boundary between two air masses that are not moving. An <b>occluded front</b> forms when a fast cold front overtakes a slow warm front.',
-    'A low usually has a warm front ahead of it and a cold front trailing behind. Ahead of the warm front: thickening cloud and long, steady precipitation. Between the fronts: warm and humid. Behind the cold front: colder, clearing, pressure rising.',
-    'To forecast from maps, look at: where the fronts are, and how fast and which way they are moving; where the pressure systems are (the weather is often unsettled where two pressure systems meet); and how close the isobars or isotherms are and how fast that is changing. Quickly changing temperature or pressure often means a front is coming.',
-    'Weather systems over Canada move from <b>west to east</b> with the prevailing westerlies, so look west to see what is coming.'],
-    `<div class="figrow">${figMap()}${figFronts()}</div>`, ['maplab', 'weather-fronts'], true],
-  ['23', '23', 'Forecasting: limits and improvements', 'Discuss limitations of weather forecasting and how forecasting has improved.', [
-    '<b>Short range forecast</b>: up to <b>48 hours</b>. Quite accurate, especially for when and where weather systems form and how they move, and for temperature and wind. Techniques: <b>persistence forecasting</b> (assume the current weather continues; good for only a few hours) and <b>nowcasting</b> (up to about 6 hours, using radar and satellites; good for tracking storms), plus analyzing weather maps.',
-    '<b>Long range forecast</b>: <b>3 to 7 days</b>. Made with computer statistical analysis of past weather data and computer models of the atmosphere (which also use sea surface temperatures, sea ice and snow cover). Several models are usually run and their results averaged.',
-    '<b>Limitations</b>: the main one is that the atmosphere is one of the most unpredictable systems on Earth, so the farther ahead a forecast goes, the less reliable it is. Computer models have to make assumptions about how the atmosphere will behave, and those are right in some situations and not others. Models are better at large-scale patterns than small ones: local terrain (like the cliffs at Cape St. Mary’s) and local winds change the weather in ways models can’t predict.',
-    '<b>Improvements</b>: better technology (satellites, radar, computers and models). Today’s 5-day forecasts are as accurate as 2-day forecasts were 20 years ago.',
-    '<b>Why it matters</b>: farmers plan planting, harvesting and frost protection; fishers and offshore workers need marine forecasts to stay safe; road crews, airlines and ferries plan around storms. The Meteorological Service of Canada (Environment Canada) makes forecasts and warnings, and runs the Canadian Hurricane Centre.'], '', []],
-  ['24', '24', 'Clues to past climates', 'Describe how ice cores, tree rings and fossils infer past conditions of Earth.', [
-    'Direct measurements of temperature, humidity and precipitation go back only about 200 years. For older climates, scientists use three main sources: trees, fossils and ice cores.'],
-    `<table class="mini"><thead><tr><th>Method</th><th>How it works</th><th>What it tells us</th></tr></thead><tbody>
-      <tr><td>Tree rings</td><td>Each year a tree adds two layers of wood under its bark. A light ring is fast spring growth, when conditions are good; a dark ring is slower summer growth, when it is drier and hotter. Thinner growth means a harder year.</td><td>Climate events in the recent past, such as drought, flooding and forest fires, going back hundreds (sometimes thousands) of years.</td></tr>
-      <tr><td>Fossils</td><td>The remains or traces of ancient organisms. Organisms are adapted to their environment, so the type of fossil shows what the climate was like. A tropical fish fossil in the rock of an Arctic island means that island was once much warmer.</td><td>Climate much further back in the past.</td></tr>
-      <tr><td>Ice cores</td><td>Ice fields in the Arctic and Antarctica add a thin layer each year. Drills pull out long core samples. <b>Dust and ash</b> show volcanic eruptions and forest fires; <b>pollen</b> shows which plants were alive; the <b>size and shape of the ice crystals</b> show temperature and humidity; <b>air bubbles</b> show how much oxygen, carbon dioxide and other gases were in the air. Oxygen isotopes in the ice also show past temperature.</td><td>The atmosphere and temperature going back hundreds of thousands of years (800 000 years in the Antarctic data of Figure 2.21B).</td></tr></tbody></table>`, [], true],
-  ['25', '25', 'The anthropogenic greenhouse effect', 'Explain how human produced greenhouse gases contribute to the enhanced greenhouse effect and an increased rate of global warming.', [
-    'The <b>greenhouse effect</b> is natural: greenhouse gases absorb heat radiated from Earth’s surface and radiate it again, warming the atmosphere. It keeps Earth at about 14 °C instead of about −18 °C (Part 1, concept 5).',
-    'Since the Industrial Revolution (when factories began burning coal to run steam engines), humans have added more and more greenhouse gases. This <b>enhances</b> the natural greenhouse effect: the <b>anthropogenic</b> (human-caused) greenhouse effect.',
-    '<b>Carbon dioxide</b>: mostly from burning fossil fuels (coal, oil and natural gas) for industry, electricity, heating and vehicles. Deforestation adds more: fewer trees remove CO<sub>2</sub> by photosynthesis, and logging debris is often burned.',
-    '<b>Methane</b> (absorbs 25 times more heat than CO<sub>2</sub>): farming (cows, goats and sheep; flooded rice fields), landfills, and extracting fossil fuels. <b>Nitrous oxide</b> (300 times more): farming, fertilizers and vehicle exhaust. <b>Halocarbons</b> such as CFCs: made only by humans, thousands of times more potent; banned because they damage the ozone layer, but they last thousands of years.',
-    'More greenhouse gases absorb more of the heat Earth radiates, so Earth keeps more energy than it sends to space and the average temperature rises. Earth’s climate has changed before, but over thousands or millions of years. The current warming is happening very quickly: an <b>increased rate</b> of global warming. The textbook says the average has risen almost 1 °C since the 1800s, and it has kept rising since.',
-    'Ice-core data (Figure 2.21B) show that over the last 800 000 years, when carbon dioxide went up, Earth’s temperature went up, and when it went down, the temperature went down.',
-    '<b>Global warming</b> is the rise in average temperature. <b>Climate change</b> means changes in all parts of weather (temperature, precipitation, wind and storms) over a long time.'], '', ['energy-budget']],
-  ['26', '26', 'Climate change and marine ecosystems', 'Describe how climate change impacts marine ecosystems.', [],
-    `<table class="mini"><thead><tr><th>Type of change (Table 2.3)</th><th>Effects on aquatic ecosystems</th></tr></thead><tbody>
-      <tr><td>Melting sea ice</td><td>The polar regions are warming the most, and sea ice that has lasted since the last ice age is melting. Polar bears, which hunt off the ice, are threatened. Inuit travel over and hunt off the sea ice, so their traditional way of life is threatened too.</td></tr>
-      <tr><td>New food chains</td><td>Krill, tiny animals at the bottom of the food chain, eat plankton that thrive under sea ice. As the ice disappears there are about 20% fewer krill than 30 years ago, which threatens everything that eats them. Warmer water also pushes larger species to new areas: sockeye and pink salmon were first seen at Banks Island (Northwest Territories) in 1993, changing the food chains they left and the ones they joined.</td></tr>
-      <tr><td>Warmer oceans</td><td>Coral reefs, nurseries and shelter for sea life, are dying. Corals live with algae that feed them; in warm water the corals expel the algae, turn white (<b>bleaching</b>) and die. Warming also slows ocean currents (warmer water sinks less), which may change how currents warm and cool nearby land.</td></tr>
-      <tr><td>Rising sea level</td><td>Warming water molecules move faster and take up more room, so the ocean expands. Melting glaciers and mountain snow packs add more water. The textbook predicts a rise of 20 cm to 40 cm in the next 100 years (newer estimates are higher). Organisms, including people, in low-lying coastal areas are forced to move.</td></tr>
-      <tr><td>More violent storms</td><td>Warm water transfers heat to the air above, making it less stable, so tropical storms and hurricanes can grow more powerful.</td></tr></tbody></table>`, ['deep-currents'], true],
-  ['L', '★', 'Effects on land and human health', 'From the booklet notes (pp. 73–74): effects on the land and on human health.', [],
-    `<table class="mini"><thead><tr><th>Type of change (Table 2.4)</th><th>Effects</th></tr></thead><tbody>
-      <tr><td>Changing organisms</td><td>Some organisms adapt by changing their habitat or behaviour; others can’t. More than one million species may be endangered worldwide. In Canada, fewer migratory birds (like the summer tanager) fly south for the winter, and many that stay don’t survive to spring.</td></tr>
-      <tr><td>Melting land ice</td><td>Glaciers and permafrost are melting fast: up to 25% of the remaining glacial ice could be gone by 2050. Canada’s North is warming faster than anywhere on Earth. Thawing permafrost makes the ground shift, so houses collapse and trees tilt (“drunken forests”).</td></tr>
-      <tr><td>New deserts</td><td>In places like southern Alberta, temperatures are rising while rainfall drops, leading to <b>desertification</b> (the spread of deserts). Farmland stops supporting crops and reservoirs and groundwater can run dry: food and drinking-water shortages.</td></tr>
-      <tr><td>More flooding</td><td>Climate varies by region: some areas get heavy rain that floods, others are flooded by severe storms such as hurricanes, and rising sea levels flood low-lying coastlines.</td></tr>
-      <tr><td>Human health</td><td>Heat waves, floods, hurricanes and severe storms are becoming more frequent, bringing injury, illness and homelessness. Some diseases, and the insects and animals that carry them, thrive as places get warmer and wetter. West Nile virus, carried by mosquitoes, reached New York in 1999 and has spread north into Ontario and other parts of Canada.</td></tr></tbody></table>`, [], true],
-  ['27', '27', 'Defending a position', 'Defend a position regarding climate change.', [
-    'A position is a <b>claim</b> backed by <b>evidence</b> and <b>reasoning</b>. For example: “Human activity is causing most of today’s climate change, so we should cut greenhouse gas emissions.”',
-    '<b>Evidence</b> (use facts, not feelings): Earth’s average temperature has risen since the 1880s, faster than in the past (Figure 2.21A); ice cores show carbon dioxide and temperature rising and falling together for 800 000 years (Figure 2.21B), and carbon dioxide is now far higher than at any time in that record; sea ice and glaciers are shrinking; sea level is rising.',
-    '<b>Reasoning</b>: connect the evidence to the science. More greenhouse gases absorb more infrared, so Earth keeps more energy.',
-    '<b>Answer the other side</b>: “Climate has always changed”: yes, but slowly; today’s change is much faster and matches the rise in human-made greenhouse gases. “It was a cold winter”: one season in one place is weather, not climate.',
-    'You can also defend a position about what to do (renewable energy, protecting coastlines, using less fuel). The same rules apply: a clear claim, real evidence, and reasoning that links them.'], '', [], true]
+  { id: 'R', n: '↺', t: 'Part 1 refresher', ask: 'Concepts 1 to 20 from the Test #1 review are on the Unit Test too.',
+    key: 'The Unit Test covers the whole unit, so review Part 1 as well.',
+    rows: [
+      ['Topics', 'Energy budget, albedo, heat sinks, conduction, convection, radiation and advection, the greenhouse effect, changes of state and latent heat, the water cycle, unequal heating, air masses, pressure systems, the Coriolis effect, global winds, the jet stream, fronts, and surface and deep ocean currents.'],
+      ['Where', 'All explained in the Part 1 review, with practice. A few refresher questions are mixed into this page.']],
+    links: ['pt1'] },
+  { id: 'E1', n: '⚡', t: 'Thunderstorms and tornadoes', ask: 'Extreme weather (booklet pp. 34–45): thunderstorm and tornado.',
+    key: 'Rising warm, moist air releases energy as it condenses, building storms that can spin up tornadoes.',
+    rows: [
+      ['Thunderstorm', 'Named for the lightning, thunder, strong winds and hail or rain it produces. Water vapour in rising warm air condenses and releases heat, so the air keeps rising and builds a cumulonimbus (thunderhead) that can reach the top of the troposphere and spread into an “anvil”.'],
+      ['What sets one off', 'Unstable air: moist air rising quickly up a mountain or within a cold air mass, sea breezes in the tropics, or an advancing cold front (less often a warm front).'],
+      ['Three stages', 'Cumulus (updraft only) → mature (updraft and downdraft: the worst rain, hail and lightning) → dissipating (the downdraft cuts off the warm air).'],
+      ['Lightning and thunder', 'Lightning is a giant electric spark. Thunder is the sound of air heated so fast it expands explosively. Seconds between flash and thunder ÷ 3 = distance in km.'],
+      ['Tornado', 'A violent, funnel-shaped column of rotating air that touches the ground. Strong high-altitude horizontal winds make the rising air in a large thunderstorm rotate into a funnel cloud; when it touches the ground it is a tornado. Winds up to 400 km/h. Rated EF0 to EF5 by the damage it does.'],
+      ['In Newfoundland', 'Tornadoes are rare: the cold ocean keeps the air near the ground cool and stable.']],
+    links: ['thunderstorms-tornadoes'] },
+  { id: 'E2', n: '⚡', t: 'Hurricanes', ask: 'Extreme weather (booklet pp. 34–45): hurricane.',
+    key: 'Warm ocean water fuels a massive spinning storm, which weakens once it moves over land or cold water.',
+    rows: [
+      ['Hurricane', 'A massive spinning tropical storm, called a hurricane once its sustained winds are more than 119 km/h. The textbook says winds may reach 240 km/h; the strongest go higher. Called cyclones near the Indian Ocean and typhoons in the western Pacific.'],
+      ['How it forms', 'Warm air picks up moisture from the warm ocean and rises → the water vapour condenses, releasing heat, so the air rises faster → low pressure at the surface pulls air in → the Coriolis effect spins it (counterclockwise in the northern hemisphere) → more condensation, faster spin.'],
+      ['Needs', 'Ocean water of about 26.5 °C or warmer, at least about 5° from the equator (so the Coriolis effect can spin it).'],
+      ['Structure', 'A calm eye, the eyewall around it (strongest winds) and spiral rainbands.'],
+      ['Season', 'Late summer to early fall, when the oceans hold the most heat. It weakens over land or cold water.'],
+      ['Dangers', 'Wind, flooding rain and storm surge. Igor (2010) and Matthew (2016) flooded the province and washed out roads and bridges.']],
+    links: ['hurricanes'] },
+  { id: 'E3', n: '⚡', t: 'Nor’easters and blizzards', ask: 'Extreme weather (booklet pp. 34–45): nor’easter.',
+    key: 'A nor’easter is powered by two clashing air masses. A blizzard is defined by wind, visibility and time.',
+    rows: [
+      ['Nor’easter', 'A powerful east-coast storm with winds from the northeast: high winds, heavy precipitation, flooding and surging waves.'],
+      ['How it forms', 'Cold, dry Arctic air (carried by the jet stream) meets warm, humid air from over the Gulf of Mexico or the Gulf Stream. The temperature difference fuels the storm; warm air pulled up its east side creates the low.'],
+      ['Features', 'Turns counterclockwise, usually September to April, and looks like a huge comma from space.'],
+      ['Vs. a hurricane', 'It can have hurricane-force winds, but its energy comes from clashing air masses, not warm tropical water.'],
+      ['Blizzard', 'A violent winter storm: winds over 56 km/h and visibility under 0.5 km for at least 3 hours. The snow can be blowing off the ground rather than falling. Often on the northwest side of a strong storm.']],
+    links: ['noreasters-blizzards'] },
+  { id: 'E4', n: '⚡', t: 'El Niño and La Niña', ask: 'Extreme weather (booklet pp. 34–45): El Niño and La Niña.',
+    key: 'Every few years the Pacific’s winds and water temperatures shift, and weather changes around the world.',
+    extra: `<table class="mini"><thead><tr><th></th><th>El Niño</th><th>La Niña</th></tr></thead><tbody>
+      <tr><td>Winds across the South Pacific</td><td>reverse and flow east</td><td>flow west, stronger than normal</td></tr>
+      <tr><td>Eastern Pacific near the equator</td><td>surface water warms; upwelling off Peru weakens, so fish catches drop</td><td>surface water cools</td></tr>
+      <tr><td>World effects</td><td>about 25% of the world’s weather patterns change; drought in some places</td><td>magnifies the usual patterns</td></tr>
+      <tr><td>North America</td><td>west coast: unusually warm, wet winters, often flooding. Atlantic coast: fewer, weaker hurricanes and tornadoes.</td><td>east: colder, snowier winters; longer, more powerful tornado and hurricane seasons</td></tr></tbody></table>`,
+    after: ['Scientists have not yet pinpointed exactly what causes El Niño and La Niña.'],
+    links: ['el-nino-la-nina'] },
+  { id: '21', n: '21', t: 'Weather instruments and technology', ask: 'Know what each weather instrument and weather technology measures, units, etc.',
+    key: 'Instruments measure the weather where they are. Radar and satellites (remote sensing) measure it from a distance.',
+    extraAfter: true,
+    rows: [
+      ['Qualitative vs. quantitative', 'Qualitative observations use the senses (how foggy it looks). Quantitative ones are measurements with instruments (Table 2.1).'],
+      ['Remote sensing', 'Collects data from a distance without touching what it observes: weather radar and weather satellites.']],
+    extra: `<table class="mini"><thead><tr><th>Instrument</th><th>Measures (units)</th><th>How it works</th></tr></thead><tbody>
+      <tr><td>Barometer</td><td>atmospheric pressure (kPa)</td><td>Aneroid: high pressure squeezes a sealed air cell more than low pressure, moving a needle. Falling = a low is coming; rising = fair weather.</td></tr>
+      <tr><td>Rain gauge</td><td>rainfall (mm)</td><td>A funnel catches rain into a narrow tube marked in mm. (Snowfall: a marked pole, in cm.)</td></tr>
+      <tr><td>Hygrometer</td><td>relative humidity (%)</td><td>Digital, or wet and dry bulbs: evaporation cools the wet bulb; the bigger the difference, the drier the air. No difference = 100%.</td></tr>
+      <tr><td>Thermometer</td><td>air temperature (°C)</td><td>Alcohol in a narrow tube expands and rises as it warms.</td></tr>
+      <tr><td>Wind vane</td><td>wind direction (16 compass points)</td><td>The arrow points to where the wind is coming from.</td></tr>
+      <tr><td>Anemometer</td><td>wind speed (km/h)</td><td>The wind spins its open cups.</td></tr>
+      <tr><td>Weather balloon</td><td>temperature, pressure and humidity high up; wind</td><td>Carries a radiosonde (instruments + radio) that sends data down. Tracking the balloon gives wind speed and direction. It bursts up high; a parachute brings the radiosonde back.</td></tr>
+      <tr><td>Weather radar</td><td>where precipitation is and how heavy</td><td>Radio waves bounce off rain, snow and hail, even through cloud. Doppler radar also gives a storm’s direction and speed: an early warning.</td></tr>
+      <tr><td>Weather satellite</td><td>clouds; weather systems forming and moving</td><td>Infrared (heat) and visible light sensors. GOES: 36 000 km above the equator, always watching the same spot. POES: over the poles about 14 times a day, scanning the whole globe.</td></tr></tbody></table>`,
+    links: [] },
+  { id: '22', n: '22', t: 'Reading a weather map', ask: 'Interpret a weather map, weather map symbols and be able to describe weather conditions.',
+    key: 'Maps show highs, lows, isobars and fronts. Watching how they change over time gives a short range forecast.',
+    rows: [
+      ['H and L', 'High: clear and dry; winds blow out, clockwise. Low: clouds and precipitation; winds blow in, counterclockwise.'],
+      ['Isobars, isotherms', 'Isobars join places with equal pressure (closer together = stronger wind). Isotherms join places with equal temperature.'],
+      ['Fronts (Table 2.2)', 'Cold: the leading edge of advancing cold air. Warm: the retreating edge of cold air as warm air arrives. Stationary: not moving. Occluded: a cold front has overtaken a warm front.'],
+      ['Around a low', 'Ahead of the warm front (A): thickening cloud, long steady precipitation. Between the fronts (B): warm and humid. Behind the cold front (C): colder, clearing, pressure rising.'],
+      ['To forecast', 'Where are the fronts, and how fast and which way are they moving? Where are the pressure systems? (Weather is unsettled where two meet.) Are isobars or isotherms changing quickly? That often means a front is coming. Systems here move west to east.']],
+    fig: figMap() + figFronts(), links: ['maplab', 'weather-fronts'] },
+  { id: '23', n: '23', t: 'Forecasting: limits and improvements', ask: 'Discuss limitations of weather forecasting and how forecasting has improved.',
+    key: 'The farther ahead a forecast goes, the less reliable it is, but forecasts keep getting better.',
+    extra: `<table class="mini"><thead><tr><th></th><th>Short range forecast</th><th>Long range forecast</th></tr></thead><tbody>
+      <tr><td>Covers</td><td><b>up to 48 hours</b></td><td><b>3 to 7 days</b></td></tr>
+      <tr><td>Accuracy</td><td>quite accurate: when and where systems form and move, temperature, wind</td><td>less reliable; better for large areas than one town</td></tr>
+      <tr><td>Methods</td><td><b>Persistence</b>: assume the current weather continues (good for a few hours). <b>Nowcasting</b>: up to about 6 hours with radar and satellites (tracking storms). Weather maps.</td><td>Computer statistical analysis of past weather, plus computer models of the atmosphere (also using sea temperature, sea ice and snow cover). Several models are run and averaged.</td></tr></tbody></table>`,
+    rows: [
+      ['Main limitation', 'The atmosphere is one of the most unpredictable systems on Earth. Models must make assumptions that fit some situations but not others, and they can’t predict effects of local terrain (like the cliffs at Cape St. Mary’s) or local winds.'],
+      ['Improvements', 'Better satellites, radar, computers and models: today’s 5-day forecast is as accurate as a 2-day forecast was 20 years ago.'],
+      ['Why it matters', 'Farming (planting, harvest, frost), fishing and offshore safety, roads, airlines and ferries. The Meteorological Service of Canada makes forecasts and warnings and runs the Canadian Hurricane Centre.']],
+    links: [] },
+  { id: '24', n: '24', t: 'Clues to past climates', ask: 'Describe how ice cores, tree rings and fossils infer past conditions of Earth.',
+    key: 'Direct weather records go back only about 200 years. Trees, fossils and ice cores record what came before.',
+    extra: `<table class="mini"><thead><tr><th>Method</th><th>How it works</th><th>Tells us about</th></tr></thead><tbody>
+      <tr><td>Tree rings</td><td>Each year a tree adds a light ring (fast spring growth, good conditions) and a dark ring (slower summer growth, drier and hotter). Thinner growth = a harder year.</td><td>droughts, floods and forest fires, hundreds (sometimes thousands) of years back</td></tr>
+      <tr><td>Fossils</td><td>Organisms are adapted to their climate. A tropical fish fossil in the rock of an Arctic island means it was once much warmer there.</td><td>climate much further back</td></tr>
+      <tr><td>Ice cores</td><td>Arctic and Antarctic ice adds a thin layer each year. In the core: <b>dust and ash</b> → eruptions and fires; <b>pollen</b> → plants alive then; <b>ice crystal size and shape</b> → temperature and humidity; <b>air bubbles</b> → oxygen, carbon dioxide and other gases; <b>oxygen isotopes</b> → temperature.</td><td>the atmosphere and temperature over hundreds of thousands of years (800 000 in Figure 2.21B)</td></tr></tbody></table>`,
+    links: [] },
+  { id: '25', n: '25', t: 'The anthropogenic greenhouse effect', ask: 'Explain how human produced greenhouse gases contribute to the enhanced greenhouse effect and an increased rate of global warming.',
+    key: 'Human-made greenhouse gases strengthen the natural greenhouse effect, so Earth is warming much faster than before.',
+    rows: [
+      ['Natural effect', 'Greenhouse gases absorb heat radiated from the surface and radiate it again, keeping Earth at about 14 °C instead of −18 °C.'],
+      ['Anthropogenic', '“Human-caused”: our added gases enhance that effect. It began with the Industrial Revolution, when factories burned coal to run steam engines.']],
+    extraAfter: true,
+    extra: `<table class="mini"><thead><tr><th>Gas</th><th>Human sources</th><th>Heat absorbed</th></tr></thead><tbody>
+      <tr><td>Carbon dioxide</td><td>burning fossil fuels (industry, electricity, heating, vehicles); deforestation (fewer trees doing photosynthesis, and burned logging debris)</td><td>the baseline</td></tr>
+      <tr><td>Methane</td><td>cows, goats and sheep; flooded rice fields; landfills; extracting fossil fuels</td><td>25 × CO<sub>2</sub></td></tr>
+      <tr><td>Nitrous oxide</td><td>farming, fertilizers, vehicle exhaust</td><td>300 × CO<sub>2</sub></td></tr>
+      <tr><td>Halocarbons (CFCs)</td><td>made only by humans (old coolants and solvents); banned for damaging the ozone layer, but they last thousands of years</td><td>thousands × CO<sub>2</sub></td></tr></tbody></table>`,
+    after: [
+      '<b>How it warms:</b> more gases absorb more of the heat Earth gives off, so Earth keeps more energy than it loses and the average temperature rises.',
+      '<b>The rate:</b> past climate changes took thousands to millions of years; this one is happening very quickly. The textbook says almost 1 °C since the 1800s, and it has kept rising since.',
+      '<b>Evidence:</b> ice cores (Figure 2.21B) show carbon dioxide and temperature rising and falling together for 800 000 years.',
+      '<b>Words:</b> global warming = the rise in average temperature. Climate change = long-term changes in all of weather: temperature, precipitation, wind and storms.'],
+    links: ['energy-budget'] },
+  { id: '26', n: '26', t: 'Climate change and marine ecosystems', ask: 'Describe how climate change impacts marine ecosystems.',
+    key: 'Warming water and melting ice change what can live where in the ocean.',
+    extra: `<table class="mini"><thead><tr><th>Change (Table 2.3)</th><th>Effects on aquatic ecosystems</th></tr></thead><tbody>
+      <tr><td>Melting sea ice</td><td>The polar regions are warming the most. Polar bears (which hunt off the ice) and Inuit (who travel and hunt on it) are threatened.</td></tr>
+      <tr><td>New food chains</td><td>Krill eat plankton that thrive under sea ice; there are about 20% fewer krill than 30 years ago, threatening everything that eats them. Salmon first reached Banks Island (N.W.T.) in 1993, changing the food chains they left and joined.</td></tr>
+      <tr><td>Warmer oceans</td><td>Corals expel the algae that feed them, turn white (bleaching) and die. Warming also slows ocean currents.</td></tr>
+      <tr><td>Rising sea level</td><td>Warmer water expands, and melting glaciers and snow packs add water. The textbook predicts 20–40 cm in 100 years (newer estimates are higher). Low-lying coastal life, including people, must move.</td></tr>
+      <tr><td>More violent storms</td><td>Warm water heats the air above it, making it unstable, so hurricanes can grow stronger.</td></tr></tbody></table>`,
+    links: ['deep-currents'] },
+  { id: 'L', n: '★', t: 'Effects on land and human health', ask: 'From the booklet notes (pp. 73–74): effects on the land and on human health.',
+    key: 'On land, climate change shifts where things can live and makes extreme weather more common.',
+    extra: `<table class="mini"><thead><tr><th>Change (Table 2.4)</th><th>Effects</th></tr></thead><tbody>
+      <tr><td>Changing organisms</td><td>Some adapt; others can’t. More than a million species may be endangered. Fewer migratory birds (like the summer tanager) fly south, and many that stay don’t survive the winter.</td></tr>
+      <tr><td>Melting land ice</td><td>Up to 25% of glacial ice could be gone by 2050. Canada’s North is warming fastest: thawing permafrost shifts the ground, so houses collapse and trees tilt (“drunken forests”).</td></tr>
+      <tr><td>New deserts</td><td>Hotter, drier places like southern Alberta face desertification: lost farmland, dry reservoirs and wells.</td></tr>
+      <tr><td>More flooding</td><td>From heavy rain, hurricanes, and rising seas flooding low coastlines.</td></tr>
+      <tr><td>Human health</td><td>More heat waves, floods and storms: injury, illness and homelessness. Disease carriers spread: West Nile virus (mosquitoes) reached New York in 1999 and is now in Ontario and beyond.</td></tr></tbody></table>`,
+    links: [] },
+  { id: '27', n: '27', t: 'Defending a position', ask: 'Defend a position regarding climate change.',
+    key: 'Make a clear claim, back it with scientific evidence, and explain how the evidence supports it.',
+    rows: [
+      ['Claim', 'Example: “Human activity is causing most of today’s climate change, so we should cut greenhouse gas emissions.”'],
+      ['Evidence', 'Average temperature rising since the 1880s, faster than before (Figure 2.21A). Ice cores: carbon dioxide and temperature moved together for 800 000 years, and carbon dioxide is now far above anything in that record (Figure 2.21B). Shrinking sea ice and glaciers. Rising sea level.'],
+      ['Reasoning', 'More greenhouse gases absorb more heat, so Earth keeps more energy.'],
+      ['The other side', '“Climate always changes”: yes, but slowly; today’s change is fast and matches rising greenhouse gases. “It was a cold winter”: that is weather, not climate.'],
+      ['Positions on action', 'Renewable energy, protecting coastlines, using less fuel: the same rules apply.']],
+    links: [] }
 ];
-const CARD_OF = {}; CARDS.forEach(c => { CARD_OF[c[0]] = c; });
+const CARD_OF = {}; CARDS.forEach(c => { CARD_OF[c.id] = c; });
+const linkHTML = l => `<a href="${SITE}${LINKS[l][0]}" target="_blank" rel="noopener">${esc(LINKS[l][1])} ↗</a>`;
 const cardLabel = id => id === 'R' ? 'Part 1 refresher' : /^E/.test(id) ? 'Extreme weather' : id === 'L' ? 'Land and health' : 'Concept ' + id;
 
 /* ================= PART 3: practice questions ================= */
@@ -690,23 +746,27 @@ const Q = (() => { const a = QS.slice(); let s = 1206; const rnd = () => (s = (s
   for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; })();
 
 function renderCards() {
-  $('#concepts').innerHTML = CARDS.map(([id, badge, t, ask, pts, extra, , wide]) => `<section class="cc${wide ? ' wide' : ''}" id="c-${id}"><h3><span class="cn">${badge}</span>${esc(t)}</h3>
-    <p class="ask">${esc(ask)}</p>${pts.length ? `<ul>${pts.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}${extra}
-    <div class="cfoot" id="cf-${id}"></div></section>`).join('');
+  $('#concepts').innerHTML = CARDS.map(c => {
+    const rows = c.rows ? `<dl class="rows">${c.rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${v}</dd>`).join('')}</dl>` : '';
+    const body = c.extraAfter ? rows + (c.extra || '') : (c.extra || '') + rows;
+    return `<section class="cc" id="c-${c.id}"><h3><span class="cn">${c.n || c.id}</span>${esc(c.t)}</h3>
+      <p class="ask">${esc(c.ask)}</p><p class="key">${c.key}</p>
+      ${c.fig ? `<div class="split"><div>${body}</div><div>${c.fig}</div></div>` : body}
+      ${c.after ? `<ul class="after">${c.after.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
+      <div class="cfoot" id="cf-${c.id}"></div></section>`;
+  }).join('');
 }
 function renderFoots() {
-  CARDS.forEach(([id, , , , , , links]) => {
-    const ids = Q.filter(q => q.sec === id).map(q => q.id), d = ids.filter(x => store.done[x]).length, next = ids.find(x => !store.done[x]);
-    $('#c-' + id).classList.toggle('all', d === ids.length);
-    $('#cf-' + id).innerHTML = `<span class="cst">${d === ids.length ? '✓ all ' + ids.length + ' questions done' : 'Practice: ' + d + ' of ' + ids.length + ' done'}</span>` +
-      (next ? `<button class="btn small" type="button" data-go="${next}">Practise ▶</button>` : '') +
-      links.map(l => `<a href="${SITE}${LINKS[l][0]}" target="_blank" rel="noopener">${esc(LINKS[l][1])} ↗</a>`).join(' ');
+  CARDS.forEach(c => {
+    const ids = Q.filter(q => q.sec === c.id).map(q => q.id), d = ids.filter(x => store.done[x]).length, next = ids.find(x => !store.done[x]);
+    $('#c-' + c.id).classList.toggle('all', d === ids.length);
+    $('#cf-' + c.id).innerHTML = `<span class="cst">${d === ids.length ? '✓ all ' + ids.length + ' questions done' : 'Practice: ' + d + ' of ' + ids.length + ' done'}</span>` +
+      (next ? `<button class="btn small" type="button" data-go="${next}">Practise ▶</button>` : '') + c.links.map(linkHTML).join(' ');
   });
   document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => {
     const el = $('#q-' + b.dataset.go); el.scrollIntoView({ block: 'center' }); const f = el.querySelector('button'); if (f) f.focus({ preventScroll: true });
   }));
 }
-
 const state = {};   // per-question feedback this visit
 function qHTML(q, n) {
   const done = store.done[q.id], fb = state[q.id] || (done ? { ok: true, txt: 'Done ✓' } : null);
@@ -723,7 +783,7 @@ function renderQs() { $('#questions').innerHTML = Q.map((q, n) => qHTML(q, n)).j
 function answer(id, v) {
   const q = Q.find(x => x.id === id), box = document.querySelector(`.q[data-id="${id}"]`), ok = v === q.k;
   const txt = ok ? `<b>Right ✓</b> <span class="why">${esc(q.why)}</span>`
-    : `<b>Not quite.</b> <span class="why">Reread <a href="#c-${q.sec}" data-back="${q.sec}">${esc(CARD_OF[q.sec][2])}</a>, then try again.</span>`;
+    : `<b>Not quite.</b> <span class="why">Reread <a href="#c-${q.sec}" data-back="${q.sec}">${esc(CARD_OF[q.sec].t)}</a>, then try again.</span>`;
   state[id] = { ok, txt };
   if (ok && !store.done[id]) { store.done[id] = true; save(); }
   box.outerHTML = qHTML(q, Q.indexOf(q));
