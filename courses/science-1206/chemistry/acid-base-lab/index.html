@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Acids and Bases Test Bench | Science 1206</title>
+<meta name="tw-titlecard" content="CHEMISTRY · PART 2|ACIDS &amp; BASES|TEST BENCH.">
+<style>:root{
+  --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --warm:#ff9a4d;
+  --radius:6px; --focus:#5df2a4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif}
+.app{max-width:1180px;margin:0 auto;padding:8px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 8px}
+.hd h1{margin:0}
+.lead{flex-basis:100%;margin:2px 0 0;font-size:.95rem}
+.card{padding:12px 14px;margin:0 0 10px}
+.wtitle{font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1.6;color:var(--sky);margin:0 0 6px;font-weight:400}
+.wtitle.mint{color:var(--mint)}
+[hidden]{display:none!important}
+sub,sup{font-size:.62em;line-height:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+.plain p{margin:4px 0;max-width:76ch}
+.plain summary{cursor:pointer;list-style:none;font-family:'Press Start 2P','Courier New',monospace;font-size:10px;color:var(--sky);padding:2px 0}
+.plain summary::-webkit-details-marker{display:none}
+.plain summary::before{content:'▶ '}
+.plain[open] summary::before{content:'▼ '}
+.plain .go{margin-top:8px}
+
+.btn,.tab,.segbtn{appearance:none;font:inherit;font-weight:700;padding:7px 12px;min-height:38px;cursor:pointer}
+.btn:disabled,.segbtn:disabled{opacity:.45;cursor:not-allowed}
+.btn.small{padding:4px 9px;min-height:32px;font-size:.9rem}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.seg{display:flex;flex-wrap:wrap;gap:5px}
+.segbtn{text-align:left;font-size:.88rem;padding:4px 8px;min-height:32px}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+
+.term{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:help;
+  text-decoration:underline dotted var(--sky);text-underline-offset:3px;text-decoration-thickness:2px}
+#tip{position:absolute;z-index:50;max-width:300px;background:var(--panel);color:var(--ink);border:3px solid #000;
+  border-left:6px solid var(--sky);border-radius:4px;padding:7px 10px;font-size:.92rem;box-shadow:4px 4px 0 #000}
+
+.say{background:var(--panel);border:3px solid #000;border-left:6px solid var(--sky);border-radius:4px;padding:8px 11px;margin:8px 0;font-size:.96rem}
+.say p{margin:3px 0}
+.say.good{border-left-color:var(--mint);background:#0f2219}
+.say.bad{border-left-color:var(--coral);background:#2a0f18}
+.say.warm{border-left-color:var(--warm);background:#24130f}
+.say.hint{border-left-color:var(--gold)}
+.say .tag{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;display:block;margin-bottom:3px;color:var(--gold)}
+.say.good .tag{color:var(--mint)} .say.bad .tag{color:var(--coral)} .say.warm .tag{color:var(--warm)}
+.score{font:400 24px/1 'VT323','Courier New',monospace;color:var(--gold)}
+
+/* bench */
+.bench{display:grid;grid-template-columns:250px minmax(0,1fr) 330px;gap:10px;align-items:start}
+@media(max-width:1100px){.bench{grid-template-columns:1fr 1fr}}
+.samples{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.samples .segbtn{font-size:.85rem;padding:3px 6px;min-height:30px}
+.samples .segbtn.unk{text-align:center}
+.samples .segbtn .ok{color:var(--mint);margin-left:3px}
+.stage{background:var(--panel);border:3px solid #000;border-radius:4px}
+.stage svg{display:block;width:100%;height:auto}
+.tests{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:6px}
+.tests .segbtn{font-size:.8rem;text-align:center;padding:3px 4px;min-height:40px;line-height:1.15}
+.res{width:100%;border-collapse:collapse;background:var(--panel);border:3px solid #000;font-size:.88rem}
+.res th{font-family:'Press Start 2P','Courier New',monospace;font-size:7px;font-weight:400;color:var(--ink2);text-align:left;padding:6px;border-bottom:2px solid #3a2463}
+.res td{padding:3px 6px;border-bottom:1px solid #2a1850;vertical-align:middle}
+.res td.empty{color:#6c5a92}
+.sw{display:inline-block;width:16px;height:16px;border:2px solid #000;border-radius:3px;vertical-align:-3px;margin-right:5px}
+.idf{background:#0e0820;border:2px solid #3a2463;border-radius:3px;padding:8px;margin-top:8px}
+.idf input{width:70px;height:34px;font:400 24px/1 'VT323','Courier New',monospace;color:var(--gold);background:#160d2b;border:2px solid var(--rim);border-radius:3px;text-align:center}
+
+/* properties card */
+.props{width:100%;border-collapse:collapse;background:var(--panel);border:3px solid #000;font-size:.92rem}
+.props th{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;font-weight:400;color:var(--ink2);text-align:left;padding:6px 8px;border-bottom:2px solid #3a2463}
+.props td{padding:4px 8px;border-bottom:1px solid #2a1850}
+.props td.k{font-weight:700;width:150px}
+.props td.lock{color:#6c5a92}
+
+/* x10 */
+.scale svg{display:block;width:100%;height:auto}
+.x10{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.x10 label{font-weight:700;display:flex;justify-content:space-between}
+.x10 output{font:400 24px/1 'VT323','Courier New',monospace;color:var(--gold)}
+.x10 input{width:100%;height:30px;accent-color:var(--gold)}
+.big{font-size:1.5rem;font-weight:700;text-align:center;margin:8px 0}
+
+/* classify */
+.absq{background:var(--panel);border:3px solid #000;border-radius:4px;padding:14px;text-align:center;margin:0 0 8px}
+.absq .f{font-size:2.2rem;font-weight:700}
+.absq .n{color:var(--ink2);font-size:1.05rem}
+.four{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.four .segbtn{text-align:center;min-height:44px;font-size:1rem}
+
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px;margin-top:10px}
+.learn .card{margin:0}
+.learn p{margin:4px 0}
+.foot{margin:12px 4px 0;font-size:.82rem}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<div id="app" class="app">
+  <header class="hd">
+    <h1>Acids and Bases Test Bench</h1>
+    <span class="pill">SCIENCE 1206 · UNIT 2</span>
+    <p class="lead">Test everyday liquids with indicators, find the pH, and sort acids, bases and salts.</p>
+  </header>
+
+  <details class="card plain" id="plain" open>
+    <summary>IN PLAIN WORDS</summary>
+    <p>Acids and bases are two opposite teams. In water, acids bring <b>H<sup>+</sup></b> (hydrogen ions). Bases bring <b>OH<sup>−</sup></b> (hydroxide ions).</p>
+    <p>The <b>pH scale</b> is a "sour-to-slippery" ruler from 0 to 14, with 7 in the middle. Below 7 is acidic (like sour lemon juice). 7 is neutral (pure water). Above 7 is basic (like slippery soap).</p>
+    <p>We never taste or touch chemicals to test them. We use <b>indicators</b> instead: they change colour.</p>
+    <button class="btn primary go" id="goBtn" type="button">Start ▶</button>
+  </details>
+
+  <div id="lab" hidden>
+    <div class="tabs" role="tablist" aria-label="Activity">
+      <button class="tab" role="tab" data-tab="bench" type="button">Test Bench</button>
+      <button class="tab" role="tab" data-tab="tool" type="button">Pick the Tool</button>
+      <button class="tab" role="tab" data-tab="x10" type="button">×10 per Step</button>
+      <button class="tab" role="tab" data-tab="abs" type="button">Acid, Base or Salt?</button>
+    </div>
+
+    <section class="card" id="benchTab" aria-label="Test bench">
+      <div class="bench">
+        <div>
+          <span class="wtitle mint">1 · PICK A SAMPLE</span>
+          <div class="samples" role="group" aria-label="Samples" id="samples"></div>
+        </div>
+        <div>
+          <span class="wtitle mint">2 · RUN A TEST</span>
+          <div class="stage"><svg id="stage" viewBox="0 0 400 220" role="img" aria-label="Test result"></svg></div>
+          <div class="tests" role="group" aria-label="Tests" id="tests"></div>
+        </div>
+        <div>
+          <span class="wtitle mint">3 · RESULTS</span>
+          <div id="result" aria-live="polite"></div>
+          <table class="res" id="resTable"></table>
+          <div id="idForm"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="propsTab" aria-label="Properties card">
+      <h2 class="wtitle mint">PROPERTIES CARD</h2>
+      <p style="margin:0 0 6px;font-size:.92rem">This fills in as you discover things. Test acids and bases to unlock each box.</p>
+      <table class="props" id="props"></table>
+      <div class="say bad"><span class="tag">LAB SAFETY</span><p><b>Never taste or touch anything in the lab.</b> We know how acids taste only from safe foods, like lemons and vinegar. Strong acids and strong bases can burn your skin and eyes.</p></div>
+    </section>
+
+    <section class="card" id="toolTab" hidden aria-label="Pick the tool">
+      <h2 class="wtitle mint">PICK THE TOOL</h2>
+      <p style="margin:0 0 6px">Which test is best for each job? Different jobs need different tools.</p>
+      <div id="toolBox"></div>
+    </section>
+
+    <section class="card" id="x10Tab" hidden aria-label="pH scale explorer">
+      <h2 class="wtitle mint">EACH STEP IS ×10</h2>
+      <p style="margin:0 0 6px">Going down one pH step means 10 times more H<sup>+</sup>, so 10 times more acidic. Pick two pH values to compare.</p>
+      <div class="scale"><svg id="scaleSvg" viewBox="0 0 760 150" role="img" aria-label="pH scale"></svg></div>
+      <div class="x10">
+        <div><label for="pa"><span>First pH</span><output id="paOut"></output></label><input type="range" id="pa" min="0" max="14" step="1" value="2"></div>
+        <div><label for="pb"><span>Second pH</span><output id="pbOut"></output></label><input type="range" id="pb" min="0" max="14" step="1" value="5"></div>
+      </div>
+      <div id="x10Out" aria-live="polite"></div>
+    </section>
+
+    <section class="card" id="absTab" hidden aria-label="Acid, base or salt">
+      <div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between">
+        <h2 class="wtitle mint" style="margin:0">ACID, BASE OR SALT?</h2>
+        <span>Right on the first try: <span class="score" id="aScore">0</span> of <span class="score" id="aTotal">0</span></span>
+      </div>
+      <div class="say"><span class="tag">THE RULES</span>
+        <p><b>H first</b> (like HCl) → <b>acid</b>. <b>Metal + OH</b> (like NaOH) → <b>base</b>. <b>Metal + another ion</b> (like NaCl) → <b>salt</b>. Water and other molecular compounds (like CH<sub>4</sub>) are none of these.</p></div>
+      <div class="absq"><div class="f" id="aF"></div><div class="n" id="aN"></div></div>
+      <div class="four" role="group" aria-label="Your answer" id="aPick"></div>
+      <div id="aFb" aria-live="polite"></div>
+      <div class="acts"><button class="btn small" type="button" id="aNext">Skip ▶</button></div>
+    </section>
+  </div>
+
+  <div class="learn">
+    <section class="card">
+      <h2 class="wtitle">INDICATORS</h2>
+      <p><b>Litmus:</b> blue litmus turns red in acid. Red litmus turns blue in base. Near neutral, neither changes.</p>
+      <p><b>Phenolphthalein:</b> colourless in acids and neutral solutions. Pink above about pH 8.2.</p>
+      <p><b>Universal indicator / pH paper:</b> a colour for each pH: red (acid) → green (7) → purple (base).</p>
+      <p><b>Red cabbage juice:</b> red or pink in acid, purple near neutral, green or yellow in base.</p>
+      <p><b>pH meter:</b> gives the exact number.</p>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">WHY BOTH CONDUCT</h2>
+      <p>Acids and bases both make ions in water: H<sup>+</sup> or OH<sup>−</sup>. Ions carry electric charge, so the solutions conduct electricity.</p>
+      <p>Salt water conducts too, because salt makes ions. Distilled water has almost no ions, so it barely conducts.</p>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">REMEMBER</h2>
+      <p>The pH values here are <b>approximate</b>. Real lemon juice, for example, can be anywhere from about 2 to 2.6.</p>
+      <p><b>Most</b> acids react with metals like magnesium, giving off hydrogen gas. <b>Most</b> bases don't.</p>
+    </section>
+  </div>
+  <p class="foot">Science 1206 · Unit 2 Chemical Reactions · NL Science 10, Section 4.2. Your progress is saved on this device only.</p>
+</div>
+<div id="tip" role="tooltip" hidden></div>
+
+<script id="chem-core">
+/* Chemistry core: pure data and rules, no DOM. tools/test-chem.mjs checks them in Node. */
+const CHEM = (() => {
+  function tokens(f) {
+    const s = String(f).replace(/\((?:s|l|g|aq)\)/g, '').replace(/\^.*$/, '').trim();
+    let i = 0;
+    const num = () => { let d = ''; while (i < s.length && /\d/.test(s[i])) d += s[i++]; return d ? +d : 1; };
+    function group(close) {
+      const out = [];
+      while (i < s.length) {
+        const ch = s[i];
+        if (ch === '(') { i++; const start = i, kids = group(')'); if (s[i] !== ')') throw new Error('Unclosed bracket in ' + f); const text = s.slice(start, i); i++; out.push({ kids, text, n: num() }); }
+        else if (ch === ')') { if (close !== ')') throw new Error('Unexpected ) in ' + f); return out; }
+        else if (/[A-Z]/.test(ch)) { let el = ch; i++; while (i < s.length && /[a-z]/.test(s[i])) el += s[i++]; out.push({ el, n: num() }); }
+        else throw new Error('Cannot read "' + ch + '" in ' + f);
+      }
+      if (close) throw new Error('Unclosed bracket in ' + f);
+      return out;
+    }
+    return group(null);
+  }
+  function addAtoms(toks, mult, out) { for (const t of toks) { if (t.el) out[t.el] = (out[t.el] || 0) + t.n * mult; else addAtoms(t.kids, t.n * mult, out); } return out; }
+  const atoms = f => addAtoms(tokens(f), 1, {});
+
+  /* Acid, base or salt, from the formula (strong acids and bases only):
+     H first -> acid; metal + OH -> base; metal + another anion -> salt; otherwise none (water, molecular compounds). */
+  const METALS = new Set('Li Na K Rb Cs Be Mg Ca Sr Ba Al Zn Fe Cu Ag Pb Sn Ni Mn Cr Hg'.split(' '));
+  function absClass(f) {
+    const t = tokens(f), first = t[0], last = t[t.length - 1];
+    if (f === 'H2O') return 'none';                       // water: H first, but neutral
+    if (first.el === 'H' && t.length > 1) return 'acid';
+    if (first.el && METALS.has(first.el)) {
+      const oh = last.kids ? last.text === 'OH' : t.length >= 3 && t[t.length - 2].el === 'O' && t[t.length - 2].n === 1 && last.el === 'H' && last.n === 1;
+      return oh ? 'base' : 'salt';
+    }
+    return 'none';
+  }
+  const ABS_BANK = [
+    ['HCl', 'hydrochloric acid', 'acid'], ['HBr', 'hydrobromic acid', 'acid'], ['HI', 'hydroiodic acid', 'acid'],
+    ['HNO3', 'nitric acid', 'acid'], ['H2SO4', 'sulfuric acid', 'acid'], ['HClO4', 'perchloric acid', 'acid'],
+    ['NaOH', 'sodium hydroxide', 'base'], ['KOH', 'potassium hydroxide', 'base'], ['LiOH', 'lithium hydroxide', 'base'],
+    ['Ca(OH)2', 'calcium hydroxide', 'base'], ['Ba(OH)2', 'barium hydroxide', 'base'],
+    ['NaCl', 'sodium chloride', 'salt'], ['KNO3', 'potassium nitrate', 'salt'], ['CaCl2', 'calcium chloride', 'salt'],
+    ['Na2SO4', 'sodium sulfate', 'salt'], ['MgBr2', 'magnesium bromide', 'salt'], ['KI', 'potassium iodide', 'salt'],
+    ['LiBr', 'lithium bromide', 'salt'], ['Ca(NO3)2', 'calcium nitrate', 'salt'],
+    ['H2O', 'water', 'none'], ['CH4', 'methane', 'none'], ['CH3OH', 'methanol', 'none']
+  ];
+
+  /* Samples: approximate pH. look = colour of the liquid itself; ions = how well it conducts. */
+  const SAMPLES = [
+    { id: 'lemon', name: 'lemon juice', pH: 2.0, look: '#f3e9a0', ions: 'some', food: true },
+    { id: 'vinegar', name: 'vinegar', pH: 2.8, look: '#ece6d0', ions: 'some', food: true },
+    { id: 'pop', name: 'pop (cola)', pH: 3.0, look: '#5a2e18', ions: 'some', food: true },
+    { id: 'coffee', name: 'coffee', pH: 5.0, look: '#4a2c1a', ions: 'some', food: true },
+    { id: 'milk', name: 'milk', pH: 6.5, look: '#f6f3ea', ions: 'some', food: true },
+    { id: 'water', name: 'distilled water', pH: 7.0, look: '#cfe3f5', ions: 'none' },
+    { id: 'sea', name: 'seawater', pH: 8.0, look: '#bcd9e8', ions: 'lots' },
+    { id: 'soda', name: 'baking soda solution', pH: 8.5, look: '#dde7ee', ions: 'lots', food: true },
+    { id: 'antacid', name: 'antacid', pH: 10.0, look: '#eeeeee', ions: 'some' },
+    { id: 'ammonia', name: 'ammonia cleaner', pH: 11.5, look: '#d6e6ef', ions: 'some' },
+    { id: 'bleach', name: 'bleach', pH: 12.5, look: '#eef0c8', ions: 'lots' },
+    { id: 'oven', name: 'oven cleaner', pH: 13.0, look: '#dfe6ea', ions: 'lots' }
+  ];
+  const UNKNOWN_PH = [1.5, 4.5, 7.0, 9.0, 11.0, 13.5];
+
+  /* Indicator rules */
+  const litmusBlue = pH => pH < 5 ? 'red' : 'blue';        // blue litmus turns red only in acid
+  const litmusRed = pH => pH > 8 ? 'blue' : 'red';          // red litmus turns blue only in base
+  const phen = pH => pH >= 8.2 ? 'pink' : 'colourless';
+  const UNIVERSAL = [['#c81e2b', 'red'], ['#d7191c', 'red'], ['#ee4035', 'red'], ['#f37736', 'orange'], ['#fdae61', 'orange-yellow'],
+    ['#fee08b', 'yellow'], ['#d9ef8b', 'yellow-green'], ['#4caf50', 'green'], ['#2ca58d', 'blue-green'], ['#3288bd', 'blue'],
+    ['#3f5fbf', 'dark blue'], ['#5e3c99', 'violet'], ['#6a3d9a', 'purple'], ['#542788', 'purple'], ['#40004b', 'dark purple']];
+  const universal = pH => { const k = Math.max(0, Math.min(14, Math.round(pH))); return { col: UNIVERSAL[k][0], word: UNIVERSAL[k][1], about: k }; };
+  function cabbage(pH) {
+    if (pH < 3) return { col: '#d0103a', word: 'red' };
+    if (pH < 5) return { col: '#e64f9a', word: 'pink' };
+    if (pH < 6.8) return { col: '#9b4f9e', word: 'violet' };
+    if (pH <= 7.5) return { col: '#7a4fa0', word: 'purple' };
+    if (pH < 9) return { col: '#4466c4', word: 'blue' };
+    if (pH < 10.5) return { col: '#2a9d8f', word: 'blue-green' };
+    if (pH < 12.5) return { col: '#4caf50', word: 'green' };
+    return { col: '#e3d04a', word: 'yellow' };
+  }
+  const magnesium = pH => pH < 2.5 ? 'fizz' : pH < 4.5 ? 'slow' : 'none';
+  const kind = pH => pH < 6.95 ? 'acid' : pH > 7.05 ? 'base' : 'neutral';
+
+  return { tokens, atoms, absClass, ABS_BANK, METALS, SAMPLES, UNKNOWN_PH, litmusBlue, litmusRed, phen, universal, cabbage, magnesium, kind };
+})();
+if (typeof module !== 'undefined') module.exports = CHEM;
+</script>
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+/* chem(): the one formatter for every formula on this page.
+   "H2SO4" -> H<sub>2</sub>SO<sub>4</sub>; "OH^-" -> OH<sup>−</sup>. Only " + " with spaces is a plus sign. */
+function chem(s) {
+  return String(s).split(/(\s+\+\s+|\s*->\s*|\s*→\s*)/).map(part => {
+    const op = part.trim();
+    if (op === '+' && part !== '+') return ' + ';
+    if (op === '->' || op === '→') return ' → ';
+    let out = '', i = 0;
+    while (i < part.length) {
+      const ch = part[i], prev = part[i - 1] || '';
+      if (/\d/.test(ch) && /[A-Za-z)\]]/.test(prev)) {
+        let d = ''; while (i < part.length && /\d/.test(part[i])) d += part[i++];
+        out += `<sub>${d}</sub>`; continue;
+      }
+      if (ch === '^') {
+        let q = ''; i++; while (i < part.length && /[\d+\-]/.test(part[i])) q += part[i++];
+        out += `<sup>${q.replace('-', '−')}</sup>`; continue;
+      }
+      out += esc(ch); i++;
+    }
+    return out;
+  }).join('');
+}
+const cap = s => s.startsWith('pH') ? s : s[0].toUpperCase() + s.slice(1);   // never "PH"
+
+/* Progress: this device only */
+const KEY = 'acid-base-lab:v1';
+let store = { seen: false, found: {}, ids: {}, absRight: 0, absTotal: 0, tools: {} };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) store = Object.assign(store, s); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+
+/* tap-to-define words */
+const DEF = {
+  indicator: 'A substance that changes colour in acids or bases. It does the testing for us.',
+  neutral: 'pH 7: not an acid and not a base. Pure water is neutral.',
+  ion: 'An atom or group of atoms with an electric charge, like H^+ or OH^-.',
+  conduct: 'Let electricity flow through. Solutions conduct when they have ions in them.',
+  salt: 'An ionic compound made of a metal ion and a non-metal ion (not OH^-), like NaCl or KNO3.'
+};
+const T = (word, key) => `<button type="button" class="term" data-def="${key}">${word}</button>`;
+const tip = $('#tip');
+let tipFor = null;
+function showTip(el) {
+  tipFor = el; tip.innerHTML = chem(DEF[el.dataset.def]); tip.hidden = false;
+  const r = el.getBoundingClientRect();
+  tip.style.left = Math.max(8, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - 316)) + 'px';
+  tip.style.top = (window.scrollY + r.bottom + 6) + 'px';
+}
+const hideTip = () => { tip.hidden = true; tipFor = null; };
+document.addEventListener('click', e => {
+  const t = e.target.closest('.term[data-def]');
+  if (t) { tipFor === t ? hideTip() : showTip(t); } else if (!e.target.closest('#tip')) hideTip();
+});
+document.addEventListener('focusin', e => { const t = e.target.closest('.term[data-def]'); if (t) showTip(t); });
+document.addEventListener('focusout', e => { if (e.target.closest('.term[data-def]')) hideTip(); });
+document.addEventListener('mouseover', e => { const t = e.target.closest('.term[data-def]'); if (t && tipFor !== t) showTip(t); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
+
+/* ================= TEST BENCH ================= */
+// unknowns A-F: the same six pH values, shuffled for each visit
+const unkPH = CHEM.UNKNOWN_PH.slice();
+for (let i = unkPH.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [unkPH[i], unkPH[j]] = [unkPH[j], unkPH[i]]; }
+const UNK = 'ABCDEF'.split('').map((L, i) => ({ id: 'unk' + L, name: 'Unknown ' + L, pH: unkPH[i], look: '#d6e2ec', ions: Math.abs(unkPH[i] - 7) > 3 ? 'lots' : Math.abs(unkPH[i] - 7) < 0.1 ? 'none' : 'some', unknown: true }));
+const ALL = [...CHEM.SAMPLES, ...UNK];
+const TESTS = [
+  ['blue', 'Blue litmus'], ['red', 'Red litmus'], ['phen', 'Phenol­phthalein'], ['uni', 'Universal indicator'],
+  ['cab', 'Red cabbage juice'], ['meter', 'pH meter'], ['mg', 'Magnesium ribbon'], ['cond', 'Conductivity']
+];
+const TN = Object.fromEntries(TESTS.map(t => [t[0], t[1].replace('­', '')]));
+const B = { s: null, test: null, done: {} };     // done[sampleId][test] = true (this visit)
+const sample = () => ALL.find(x => x.id === B.s);
+
+function result(s, test) {
+  const p = s.pH;
+  switch (test) {
+    case 'blue': { const c = CHEM.litmusBlue(p); return { col: c === 'red' ? '#e25a6a' : '#4f7fd8', word: c === 'red' ? 'turns red' : 'stays blue (no change)', tell: c === 'red' ? 'an acid' : 'not an acid' }; }
+    case 'red': { const c = CHEM.litmusRed(p); return { col: c === 'blue' ? '#4f7fd8' : '#e25a6a', word: c === 'blue' ? 'turns blue' : 'stays red (no change)', tell: c === 'blue' ? 'a base' : 'not a base' }; }
+    case 'phen': { const c = CHEM.phen(p); return { col: c === 'pink' ? '#ff6fb5' : null, word: c === 'pink' ? 'turns pink' : 'stays colourless', tell: c === 'pink' ? 'a base (above pH 8.2)' : 'an acid, neutral, or only a weak base' }; }
+    case 'uni': { const u = CHEM.universal(p); return { col: u.col, word: `${u.word}: about pH ${u.about}`, tell: CHEM.kind(u.about) === 'neutral' ? 'neutral' : CHEM.kind(u.about) === 'acid' ? 'acidic' : 'basic' }; }
+    case 'cab': { const c = CHEM.cabbage(p); return { col: c.col, word: c.word, tell: ['red', 'pink'].includes(c.word) ? 'acidic' : ['violet', 'purple'].includes(c.word) ? 'close to neutral' : 'basic' }; }
+    case 'meter': return { col: null, word: `pH ${p.toFixed(1)}`, tell: CHEM.kind(p) === 'neutral' ? 'neutral' : CHEM.kind(p) === 'acid' ? 'acidic' : 'basic' };
+    case 'mg': { const m = CHEM.magnesium(p); return { col: null, word: m === 'fizz' ? 'fizzes: lots of bubbles' : m === 'slow' ? 'a few slow bubbles' : 'no reaction', tell: m === 'none' ? 'no reaction with the metal' : 'bubbles of hydrogen gas (H2): it reacts with the metal' }; }
+    case 'cond': return { col: null, word: s.ions === 'lots' ? 'bulb glows brightly' : s.ions === 'some' ? 'bulb glows dimly' : 'bulb stays off', tell: s.ions === 'none' ? 'almost no ions' : s.ions === 'lots' ? 'lots of ions' : 'some ions' };
+  }
+}
+function renderSamples() {
+  $('#samples').innerHTML = ALL.map(s => `<button class="segbtn ${s.unknown ? 'unk' : ''}" type="button" data-s="${s.id}" aria-pressed="${B.s === s.id}">${esc(s.unknown ? s.name : cap(s.name))}${s.unknown && store.ids[s.id + ':' + s.pH] ? '<span class="ok">✓</span>' : ''}</button>`).join('');
+  $('#samples').querySelectorAll('[data-s]').forEach(b => b.addEventListener('click', () => { B.s = b.dataset.s; B.test = null; renderBench(); const t = $('#tests [data-t]'); if (t) t.focus(); }));
+}
+function renderBench() {
+  renderSamples();
+  const s = sample();
+  $('#tests').innerHTML = TESTS.map(([k, n]) => `<button class="segbtn" type="button" data-t="${k}" aria-pressed="${B.test === k}" ${s ? '' : 'disabled'}>${n}</button>`).join('');
+  $('#tests').querySelectorAll('[data-t]').forEach(b => b.addEventListener('click', () => runTest(b.dataset.t)));
+  drawStage();
+  renderResults();
+}
+function runTest(t) {
+  const s = sample(); if (!s) return;
+  B.test = t; (B.done[s.id] = B.done[s.id] || {})[t] = true;
+  discover(s, t);
+  renderBench();
+  const b = $(`#tests [data-t="${t}"]`); if (b) b.focus();
+}
+function drawStage() {
+  const s = sample(), svg = $('#stage');
+  if (!s) { svg.innerHTML = `<text x="200" y="115" text-anchor="middle" fill="#c3b2e6" font-size="15">Pick a sample to start.</text>`; return; }
+  const t = B.test, r = t ? result(s, t) : null;
+  const liquid = r && r.col && ['phen', 'uni', 'cab'].includes(t) ? r.col : s.look;
+  let g = `<text x="12" y="22" fill="#f6efff" font-size="15" font-weight="700">${esc(cap(s.name))}</text>`;
+  // beaker
+  g += `<rect x="70" y="80" width="90" height="110" rx="4" fill="rgba(190,215,255,.06)" stroke="rgba(190,215,255,.75)" stroke-width="3"/>
+        <rect x="73" y="120" width="84" height="67" fill="${liquid}" opacity=".85"/>`;
+  if (!t) g += `<text x="200" y="60" fill="#c3b2e6" font-size="13">Now pick a test below.</text>`;
+  if (t === 'blue' || t === 'red') {
+    const dry = t === 'blue' ? '#4f7fd8' : '#e25a6a';
+    g += `<rect x="240" y="50" width="26" height="140" fill="${dry}" stroke="#000" stroke-width="2"/><rect x="240" y="130" width="26" height="60" fill="${r.col}" stroke="#000" stroke-width="2"/>
+          <text x="276" y="92" fill="#c3b2e6" font-size="12">dry end</text><text x="276" y="166" fill="#f6efff" font-size="12">dipped end</text>`;
+  }
+  if (t === 'phen' || t === 'uni' || t === 'cab') g += `<text x="176" y="112" fill="#c3b2e6" font-size="12">+ a few drops of</text><text x="176" y="128" fill="#c3b2e6" font-size="12">${esc(TN[t].toLowerCase())}</text>
+     <rect x="260" y="140" width="40" height="40" rx="4" fill="${r.col || s.look}" stroke="#000" stroke-width="2"/><text x="310" y="166" fill="#f6efff" font-size="12">colour</text>`;
+  if (t === 'meter') g += `<rect x="236" y="56" width="128" height="58" rx="6" fill="#2f3440" stroke="#000" stroke-width="2"/><rect x="246" y="66" width="108" height="38" fill="#0b1a12"/>
+     <text x="300" y="95" text-anchor="middle" fill="#5df2a4" font-size="28" font-family="VT323,monospace">pH ${s.pH.toFixed(1)}</text>
+     <path d="M300 114 C300 140 200 120 130 150" stroke="#8e99a8" stroke-width="3" fill="none"/><rect x="124" y="100" width="10" height="80" fill="#8e99a8"/>`;
+  if (t === 'mg') {
+    const m = CHEM.magnesium(s.pH);
+    g += `<rect x="108" y="96" width="8" height="88" fill="#cfd6de" stroke="#000" stroke-width="1"/>`;
+    const n = m === 'fizz' ? 12 : m === 'slow' ? 4 : 0;
+    for (let k = 0; k < n; k++) g += `<circle cx="${102 + (k % 3) * 8}" cy="180" r="${2 + (k % 2)}" fill="none" stroke="#fff" stroke-width="1.3"><animate attributeName="cy" from="182" to="124" dur="${(m === 'fizz' ? 0.9 : 2.2) + (k % 4) * 0.2}s" begin="${k * 0.15}s" repeatCount="indefinite"/></circle>`;
+    const h2 = 'H<tspan baseline-shift="sub" font-size="70%">2</tspan>';
+    g += `<text x="200" y="140" fill="#f6efff" font-size="13">${m === 'none' ? 'no bubbles' : m === 'fizz' ? `lots of bubbles (${h2} gas)` : `a few bubbles (${h2} gas)`}</text>`;
+  }
+  if (t === 'cond') {
+    const glow = s.ions === 'lots' ? 1 : s.ions === 'some' ? 0.4 : 0;
+    g += `<line x1="100" y1="100" x2="100" y2="180" stroke="#b8c0cc" stroke-width="5"/><line x1="130" y1="100" x2="130" y2="180" stroke="#b8c0cc" stroke-width="5"/>
+      <path d="M100 100 V60 H190 M130 100 V75 H190 M260 60 H300 M260 75 H300" stroke="#c3b2e6" stroke-width="2" fill="none"/>
+      <rect x="190" y="52" width="70" height="32" rx="4" fill="#2f3440" stroke="#000"/><text x="225" y="73" text-anchor="middle" fill="#c3b2e6" font-size="11">battery</text>
+      ${glow ? `<circle cx="320" cy="66" r="${26 + 12 * glow}" fill="rgba(255,210,63,${0.25 * glow})"/>` : ''}
+      <circle cx="320" cy="66" r="18" fill="${glow ? `rgba(255,220,90,${0.4 + 0.6 * glow})` : '#3a3550'}" stroke="#000" stroke-width="2"/><text x="320" y="110" text-anchor="middle" fill="#f6efff" font-size="12">bulb</text>`;
+  }
+  if (r) g += `<text x="12" y="212" fill="#ffd23f" font-size="14" font-weight="700">${esc(TN[t])}: ${esc(r.word)}</text>`;
+  svg.innerHTML = g;
+  svg.setAttribute('aria-label', r ? `${s.name}, ${TN[t]}: ${r.word}` : s.name);
+}
+function renderResults() {
+  const s = sample();
+  if (!s) { $('#result').innerHTML = `<div class="say"><p>Pick a sample, then try the tests. Each result shows a colour <i>and</i> words.</p></div>`; $('#resTable').innerHTML = ''; $('#idForm').innerHTML = ''; return; }
+  const t = B.test, r = t ? result(s, t) : null;
+  $('#result').innerHTML = r ? `<div class="say"><span class="tag">${esc(TN[t].toUpperCase())}</span><p>${r.col ? `<span class="sw" style="background:${r.col}"></span>` : ''}<b>${esc(cap(r.word))}.</b> That means ${chem(r.tell)}.</p>${testNote(s, t)}</div>` : '';
+  const done = B.done[s.id] || {};
+  $('#resTable').innerHTML = `<thead><tr><th scope="col">TEST</th><th scope="col">RESULT FOR ${esc(s.name.toUpperCase())}</th></tr></thead><tbody>${TESTS.map(([k]) => {
+    if (!done[k]) return `<tr><td>${TN[k]}</td><td class="empty">not tried yet</td></tr>`;
+    const x = result(s, k);
+    return `<tr><td>${TN[k]}</td><td>${x.col ? `<span class="sw" style="background:${x.col}"></span>` : ''}${esc(x.word)}</td></tr>`;
+  }).join('')}</tbody>`;
+  renderIdForm(s);
+}
+function testNote(s, t) {
+  if (t === 'blue' && CHEM.litmusBlue(s.pH) === 'blue' && s.pH < 7) return `<p>Weak acids near pH 5–7 may not change litmus. Try universal indicator or a pH meter.</p>`;
+  if (t === 'red' && CHEM.litmusRed(s.pH) === 'red' && s.pH > 7) return `<p>A weak base close to 7 may not change litmus. Try universal indicator or a pH meter.</p>`;
+  if (t === 'mg' && CHEM.magnesium(s.pH) === 'none' && s.pH > 7) return `<p>Most bases don't react with metals like magnesium.</p>`;
+  if (t === 'mg' && CHEM.magnesium(s.pH) !== 'none') return `<p>Most acids react with metals like magnesium. The bubbles are hydrogen gas.</p>`;
+  if (t === 'cond') return `<p>Acids and bases make ${T('ions', 'ion')} in water, so they ${T('conduct', 'conduct')}. Weak ones make fewer ions, so the bulb is dimmer.${s.id === 'sea' ? ' Seawater is full of salt ions, so it conducts well even though it is only slightly basic.' : ''}</p>`;
+  return '';
+}
+function renderIdForm(s) {
+  const box = $('#idForm');
+  if (!s.unknown) { box.innerHTML = ''; return; }
+  const key = s.id + ':' + s.pH, solved = store.ids[key];
+  if (solved) { box.innerHTML = `<div class="say good"><span class="tag">IDENTIFIED ✓</span><p>${esc(s.name)} is ${CHEM.kind(s.pH) === 'neutral' ? 'neutral' : 'a' + (CHEM.kind(s.pH) === 'acid' ? 'n acid' : ' base')}, pH ${s.pH.toFixed(1)}.</p></div>`; return; }
+  box.innerHTML = `<div class="idf"><b>What is ${esc(s.name)}?</b>
+      <div class="seg" role="group" aria-label="Acid, neutral or base" style="margin:6px 0">${['acid', 'neutral', 'base'].map(k => `<button class="segbtn" type="button" data-k="${k}" aria-pressed="${B.guess === k}">${cap(k)}</button>`).join('')}</div>
+      <label>About what pH? <input id="phGuess" inputmode="decimal" autocomplete="off" value="${esc(B.guessPH || '')}"></label>
+      <div class="acts"><button class="btn primary small" type="button" id="idCheck">Check ✓</button></div><div id="idFb">${B.idFb || ''}</div></div>`;
+  box.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => { B.guess = b.dataset.k; B.guessPH = $('#phGuess').value; renderIdForm(s); $(`#idForm [data-k="${B.guess}"]`).focus(); }));
+  $('#phGuess').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); checkId(s); } });
+  $('#idCheck').addEventListener('click', () => checkId(s));
+}
+function checkId(s) {
+  B.guessPH = $('#phGuess').value;
+  const est = parseFloat(String(B.guessPH).replace(',', '.')), k = CHEM.kind(s.pH);
+  const done = Object.keys(B.done[s.id] || {});
+  let fb;
+  if (!B.guess) fb = 'Choose acid, neutral or base first.';
+  else if (isNaN(est)) fb = 'Type a pH number from 0 to 14.';
+  else if (B.guess !== k) fb = done.length ? `Not yet. Look at your results again: ${done.slice(0, 2).map(t => `${TN[t]} ${result(s, t).word}`).join('; ')}. Below 7 is acidic, 7 is neutral, above 7 is basic.` : 'Run some tests first! Universal indicator or a pH meter is a good start.';
+  else if (Math.abs(est - s.pH) > 1) fb = `Right team! But the pH is further off. ${done.includes('meter') ? 'Check the pH meter reading.' : done.includes('uni') ? 'Check the universal indicator colour again.' : 'Try universal indicator or the pH meter for the number.'}`;
+  if (fb) { B.idFb = `<div class="say bad"><p>${fb}</p></div>`; renderIdForm(s); return; }
+  store.ids[s.id + ':' + s.pH] = true; save(); B.idFb = ''; B.guess = null; B.guessPH = '';
+  renderBench();
+}
+
+/* Properties card: unlocked by what students actually test */
+const PROPS = [
+  ['taste', 'Taste (from foods only)', 'sour (lemons, vinegar)', 'bitter (baking soda)'],
+  ['feel', 'Feel', 'strong acids burn skin', 'slippery, like soap; strong bases burn skin'],
+  ['litmus', 'Litmus', 'blue litmus turns red', 'red litmus turns blue'],
+  ['metal', 'Reaction with metals', 'most react: hydrogen gas bubbles', 'most don\'t react'],
+  ['pH', 'pH', 'below 7', 'above 7'],
+  ['cond', 'Conductivity', 'conduct electricity (they make ions)', 'conduct electricity (they make ions)'],
+  ['ions', 'Ions produced in water', 'H^+ (hydrogen ions)', 'OH^- (hydroxide ions)'],
+  ['sol', 'Solubility', 'dissolve in water', 'many dissolve in water']
+];
+function discover(s, t) {
+  if (s.unknown) return;     // unknowns don't count until they're identified
+  const k = CHEM.kind(s.pH), side = k === 'acid' ? 'a' : k === 'base' ? 'b' : null;
+  if (!side) return;
+  const f = store.found, set = key => { f[key + ':' + side] = true; };
+  if (t === 'blue' && side === 'a' && CHEM.litmusBlue(s.pH) === 'red') set('litmus');
+  if (t === 'red' && side === 'b' && CHEM.litmusRed(s.pH) === 'blue') set('litmus');
+  if (t === 'mg') set('metal');
+  if (t === 'meter' || t === 'uni') { set('pH'); set('sol'); }
+  if (t === 'cond' && s.ions !== 'none') { set('cond'); set('ions'); }
+  if (side === 'a' && s.food && s.pH < 4) set('taste');
+  if (side === 'b' && s.id === 'soda') set('taste');
+  if (side === 'b' && s.pH > 11) set('feel');
+  if (side === 'a' && s.pH < 3) set('feel');
+  save(); renderProps();
+}
+function renderProps() {
+  const f = store.found, cell = (key, side, txt) => f[key + ':' + side] ? `<td>${chem(txt)}</td>` : `<td class="lock">🔒 test ${side === 'a' ? 'an acid' : 'a base'} to find out</td>`;
+  $('#props').innerHTML = `<thead><tr><th scope="col">PROPERTY</th><th scope="col">ACIDS</th><th scope="col">BASES</th></tr></thead><tbody>${
+    PROPS.map(([k, n, a, b]) => `<tr><td class="k">${n}</td>${cell(k, 'a', a)}${cell(k, 'b', b)}</tr>`).join('')}</tbody>`;
+}
+
+/* ================= PICK THE TOOL ================= */
+const TOOLS = [['litmus', 'Litmus paper'], ['paper', 'pH paper / universal indicator'], ['meter', 'pH meter'], ['phen', 'Phenolphthalein']];
+const JOBS = [
+  { q: 'A liquid spilled on the lab bench. You need a quick answer: is it an acid or a base?', best: ['litmus'], ok: ['paper'],
+    why: 'Litmus is quick and cheap, and it gives a clear yes or no: red for acid, blue for base. pH paper works too, but you only need to know acid or base.' },
+  { q: 'Your fish tank should stay between pH 6.5 and 7.5. Is it OK?', best: ['paper', 'meter'],
+    why: 'You need a number, not just "acid or base". pH paper gives an approximate pH. A pH meter gives the exact value.' },
+  { q: 'A farmer wants to know the pH of the soil before planting blueberries.', best: ['paper', 'meter'],
+    why: 'Soil pH needs a number. Mix the soil with distilled water and use pH paper, or a pH meter for the exact value.' },
+  { q: 'A lab report asks for the pH to one decimal place, like 8.3.', best: ['meter'],
+    why: 'Only a pH meter gives the exact value. Indicator colours only give a rough number.' },
+  { q: 'You want a colourless liquid to turn bright pink only if it is basic.', best: ['phen'],
+    why: 'Phenolphthalein is colourless in acids and neutral solutions and turns pink above about pH 8.2.' }
+];
+function renderTools() {
+  $('#toolBox').innerHTML = JOBS.map((j, i) => {
+    const pick = store.tools[i];
+    const good = pick && j.best.includes(pick), okish = pick && (j.ok || []).includes(pick);
+    return `<div class="say ${pick ? good ? 'good' : okish ? 'warm' : 'bad' : ''}"><p><b>${i + 1}.</b> ${esc(j.q)}</p>
+      <div class="seg" role="group" aria-label="Tool for job ${i + 1}">${TOOLS.map(([k, n]) => `<button class="segbtn" type="button" data-job="${i}" data-tool="${k}" aria-pressed="${pick === k}">${n}</button>`).join('')}</div>
+      ${pick ? `<p><b>${good ? 'Good choice ✓' : okish ? 'That works, but…' : 'Not the best tool.'}</b> ${esc(j.why)}</p>` : ''}</div>`;
+  }).join('');
+  $('#toolBox').querySelectorAll('[data-job]').forEach(b => b.addEventListener('click', () => { store.tools[+b.dataset.job] = b.dataset.tool; save(); renderTools(); $(`[data-job="${b.dataset.job}"][data-tool="${b.dataset.tool}"]`).focus(); }));
+}
+
+/* ================= x10 PER STEP ================= */
+function renderX10() {
+  const a = +$('#pa').value, b = +$('#pb').value;
+  $('#paOut').textContent = 'pH ' + a; $('#pbOut').textContent = 'pH ' + b;
+  const X = p => 30 + p * 50;
+  let g = '';
+  for (let p = 0; p <= 14; p++) { const u = CHEM.universal(p); g += `<rect x="${X(p) - 25}" y="40" width="50" height="34" fill="${u.col}" stroke="#000" stroke-width="1"/><text x="${X(p)}" y="62" text-anchor="middle" font-size="14" font-weight="700" fill="${p >= 9 || p <= 2 ? '#fff' : '#1b1030'}">${p}</text>`; }
+  g += `<text x="${X(3)}" y="92" text-anchor="middle" fill="#c3b2e6" font-size="13">← more acidic (sour)</text><text x="${X(7)}" y="92" text-anchor="middle" fill="#c3b2e6" font-size="13">neutral</text><text x="${X(11)}" y="92" text-anchor="middle" fill="#c3b2e6" font-size="13">more basic (slippery) →</text>`;
+  const lo = Math.min(a, b), hi = Math.max(a, b);
+  for (let p = lo; p < hi; p++) g += `<path d="M${X(p) + 4} 34 Q${X(p) + 25} 14 ${X(p + 1) - 4} 34" stroke="#ffd23f" stroke-width="2" fill="none"/><text x="${X(p) + 25}" y="16" text-anchor="middle" fill="#ffd23f" font-size="11">×10</text>`;
+  [[a, '▲ 1st'], [b, '▲ 2nd']].forEach(([p, l], k) => { g += `<text x="${X(p)}" y="${112 + k * 16}" text-anchor="middle" fill="#f6efff" font-size="13" font-weight="700">${l}</text>`; });
+  $('#scaleSvg').innerHTML = g;
+  const n = hi - lo, times = Math.pow(10, n).toLocaleString('en-CA');
+  let out;
+  if (!n) out = `<p class="big">Same pH: same acidity.</p>`;
+  else {
+    const line = (lo <= 7 || hi <= 7) && !(lo > 7) ? `pH ${lo} is <b>${times}×</b> more acidic than pH ${hi}.` : `pH ${hi} is <b>${times}×</b> more basic than pH ${lo}.`;
+    const both = lo > 7 ? `<p>(pH ${lo} has ${times}× more H<sup>+</sup>, and pH ${hi} has ${times}× more OH<sup>−</sup>.)</p>` : '';
+    out = `<p class="big">${n} step${n > 1 ? 's' : ''} apart → 10<sup>${n}</sup> = ${times}</p><p class="big" style="font-size:1.2rem">${line}</p>${both}`;
+  }
+  $('#x10Out').innerHTML = out;
+}
+$('#pa').addEventListener('input', renderX10); $('#pb').addEventListener('input', renderX10);
+
+/* ================= ACID, BASE OR SALT ================= */
+const AB = { order: [], i: 0, tries: 0, done: false, fb: '' };
+const ANS = [['acid', 'Acid'], ['base', 'Base'], ['salt', 'Salt'], ['none', 'None of these']];
+function nextAbs() {
+  if (!AB.order.length || AB.i >= AB.order.length - 1) { AB.order = CHEM.ABS_BANK.map((_, i) => i); for (let i = AB.order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [AB.order[i], AB.order[j]] = [AB.order[j], AB.order[i]]; } AB.i = 0; }
+  else AB.i++;
+  Object.assign(AB, { tries: 0, done: false, fb: '' }); renderAbs();
+}
+function absWhy(f, name, k) {
+  const t = CHEM.tokens(f), first = t[0].el;
+  if (f === 'H2O') return `Water starts with H, but it is neutral (pH 7). It is the one to watch out for: not an acid, not a base, not a salt.`;
+  if (k === 'acid') return `${chem(f)} starts with H, so it is an acid. In water it gives H<sup>+</sup> ions. (${cap(name)} is a strong acid.)`;
+  if (k === 'base') return `${chem(f)} is a metal (${first}) + OH. In water it gives OH<sup>−</sup> ions, so it is a base.`;
+  if (k === 'salt') return `${chem(f)} is a metal (${first}) + another ion, not OH. That makes it a ${T('salt', 'salt')}.`;
+  if (f === 'CH3OH') return `${chem(f)} ends in OH, but it starts with carbon, not a metal. It is a molecular compound (methanol), so it doesn't make OH<sup>−</sup> ions. Not a base.`;
+  if (f === 'CH4') return `${chem(f)} has H in it, but H is not first. It is a molecular compound (methane, a fuel). Not an acid.`;
+  return `${chem(f)} is a molecular compound, so it is none of these.`;
+}
+function renderAbs() {
+  const [f, name] = CHEM.ABS_BANK[AB.order[AB.i]];
+  $('#aF').innerHTML = chem(f); $('#aN').textContent = name;
+  $('#aPick').innerHTML = ANS.map(([k, n]) => `<button class="segbtn" type="button" data-a="${k}" ${AB.done ? 'disabled' : ''}>${n}</button>`).join('');
+  $('#aPick').querySelectorAll('[data-a]').forEach(b => b.addEventListener('click', () => pickAbs(b.dataset.a)));
+  $('#aFb').innerHTML = AB.fb;
+  $('#aNext').textContent = AB.done ? 'Next ▶' : 'Skip ▶'; $('#aNext').classList.toggle('primary', AB.done);
+  $('#aScore').textContent = store.absRight; $('#aTotal').textContent = store.absTotal;
+}
+function pickAbs(v) {
+  const [f, name] = CHEM.ABS_BANK[AB.order[AB.i]], k = CHEM.absClass(f);
+  AB.tries++;
+  if (v === k) {
+    if (AB.tries === 1) store.absRight++; store.absTotal++; save();
+    AB.done = true; AB.fb = `<div class="say good"><span class="tag">RIGHT ✓</span><p>${absWhy(f, name, k)}</p></div>`;
+    renderAbs(); $('#aNext').focus(); return;
+  }
+  AB.fb = `<div class="say bad"><span class="tag">NOT ${v === 'none' ? '"NONE"' : v.toUpperCase()}</span><p>Look at the first element: is it H, or a metal? Then look at the end: is it OH?</p></div>`;
+  renderAbs(); const b = $(`[data-a="${v}"]`); if (b) b.focus();
+}
+$('#aNext').addEventListener('click', () => { nextAbs(); $('[data-a]').focus(); });
+
+/* ================= tabs + start ================= */
+function setTab(t) {
+  document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === t)));
+  $('#benchTab').hidden = $('#propsTab').hidden = t !== 'bench';
+  $('#toolTab').hidden = t !== 'tool'; $('#x10Tab').hidden = t !== 'x10'; $('#absTab').hidden = t !== 'abs';
+  if (t === 'abs' && !AB.order.length) nextAbs();
+}
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => setTab(b.dataset.tab)));
+function startLab() { $('#lab').hidden = false; $('#plain').open = false; store.seen = true; save(); }
+$('#goBtn').addEventListener('click', () => { startLab(); const b = $('[data-s]'); if (b) b.focus(); });
+renderBench(); renderProps(); renderTools(); renderX10();
+if (store.seen) startLab();
+setTab('bench');
+})();
+</script>
+</body></html>

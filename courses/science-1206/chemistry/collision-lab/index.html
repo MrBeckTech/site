@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reaction Rates Collision Lab | Science 1206</title>
+<meta name="tw-titlecard" content="CHEMISTRY · PART 2|COLLISION|THEORY.">
+<meta name="tw-canvas" content="off">
+<style>:root{
+  --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --warm:#ff9a4d;
+  --radius:6px; --focus:#5df2a4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif}
+.app{max-width:1180px;margin:0 auto;padding:8px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 8px}
+.hd h1{margin:0}
+.lead{flex-basis:100%;margin:2px 0 0;font-size:.95rem}
+.card{padding:12px 14px;margin:0 0 10px}
+.wtitle{font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1.6;color:var(--sky);margin:0 0 6px;font-weight:400}
+.wtitle.mint{color:var(--mint)}
+[hidden]{display:none!important}
+sub,sup{font-size:.62em;line-height:0}
+
+.plain p{margin:4px 0;max-width:76ch}
+.plain summary{cursor:pointer;list-style:none;font-family:'Press Start 2P','Courier New',monospace;font-size:10px;color:var(--sky);padding:2px 0}
+.plain summary::-webkit-details-marker{display:none}
+.plain summary::before{content:'▶ '}
+.plain[open] summary::before{content:'▼ '}
+.plain .go{margin-top:8px}
+
+.btn,.segbtn{appearance:none;font:inherit;font-weight:700;padding:7px 12px;min-height:38px;cursor:pointer}
+.btn:disabled,.segbtn:disabled{opacity:.45;cursor:not-allowed}
+.btn.small{padding:4px 9px;min-height:32px;font-size:.9rem}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.segbtn{font-size:.85rem;padding:3px 8px;min-height:30px}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
+
+.term{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:help;
+  text-decoration:underline dotted var(--sky);text-underline-offset:3px;text-decoration-thickness:2px}
+#tip{position:absolute;z-index:50;max-width:300px;background:var(--panel);color:var(--ink);border:3px solid #000;
+  border-left:6px solid var(--sky);border-radius:4px;padding:7px 10px;font-size:.92rem;box-shadow:4px 4px 0 #000}
+
+.say{background:var(--panel);border:3px solid #000;border-left:6px solid var(--sky);border-radius:4px;padding:8px 11px;margin:8px 0;font-size:.95rem}
+.say p{margin:3px 0}
+.say.good{border-left-color:var(--mint);background:#0f2219}
+.say.warm{border-left-color:var(--warm);background:#24130f}
+.say.hint{border-left-color:var(--gold)}
+.say .tag{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;display:block;margin-bottom:3px;color:var(--gold)}
+.say.good .tag{color:var(--mint)} .say.warm .tag{color:var(--warm)}
+
+.lab{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:10px;align-items:start}
+@media(max-width:1000px){.lab{grid-template-columns:1fr}}
+.stage{background:var(--panel);border:3px solid #000;border-radius:4px}
+.stage canvas,.stage svg{display:block;width:100%;height:auto}
+.counts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px}
+.counts div{background:#0e0820;border:2px solid #3a2463;border-radius:3px;padding:3px 8px;font-size:.78rem;color:var(--ink2)}
+.counts b{display:block;font:400 24px/1 'VT323','Courier New',monospace;color:var(--mint)}
+.counts .s b{color:var(--gold)}
+.ctl{margin:0 0 4px}
+.ctl .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-weight:700;font-size:.93rem}
+.ctl output{font:400 20px/1 'VT323','Courier New',monospace;color:var(--gold);white-space:nowrap}
+.ctl input[type=range]{width:100%;height:22px;margin:0;accent-color:var(--gold)}
+.ctl .why{font-size:.8rem;color:var(--ink2)}
+.ctl.off{opacity:.55}
+.chk{display:flex;gap:8px;align-items:center;font-weight:700;font-size:.93rem}
+.chk input{width:18px;height:18px;accent-color:var(--gold)}
+.graphs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.graphs .cap{font-size:.78rem;color:var(--ink2);margin:2px 2px 0}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}
+.rl{background:var(--panel);border:3px solid #000;border-radius:4px;padding:8px 10px}
+.rl h3{margin:0 0 2px;font-size:1rem}
+.rl .f{font-family:'Press Start 2P','Courier New',monospace;font-size:7px;color:var(--mint);display:block;margin-bottom:4px}
+.rl p{margin:3px 0;font-size:.92rem}
+
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px;margin-top:10px}
+.learn .card{margin:0}
+.learn p{margin:4px 0}
+.learn ol{margin:4px 0 0;padding-left:1.2rem}
+.foot{margin:12px 4px 0;font-size:.82rem}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<div id="app" class="app">
+  <header class="hd">
+    <h1>Collision Lab</h1>
+    <span class="pill">SCIENCE 1206 · UNIT 2</span>
+    <p class="lead">Reaction rates: what makes a reaction faster or slower? Change one thing at a time and watch the collisions.</p>
+  </header>
+
+  <details class="card plain" id="plain" open>
+    <summary>IN PLAIN WORDS</summary>
+    <p>Particles only react when they crash into each other. Think of bumper cars.</p>
+    <p>More cars, faster cars, or more open space to get hit, and you get more crashes.</p>
+    <p>But a crash only "counts" if it is <b>hard enough</b> and hits the <b>right spot</b>. In this lab, the right spot is the gold sticky side on each particle.</p>
+    <p>The <b>reaction rate</b> is how fast the reaction happens: how many new particles are made each second.</p>
+    <button class="btn primary go" id="goBtn" type="button">Start ▶</button>
+  </details>
+
+  <section class="card" id="lab" hidden aria-label="Collision lab">
+    <div class="lab">
+      <div>
+        <div class="stage"><canvas id="cv" width="640" height="380" role="img" aria-label="Particle box"></canvas></div>
+        <div class="counts" aria-live="off">
+          <div>Collisions per second<b id="cColl">0</b></div>
+          <div class="s">Successful per second<b id="cSucc">0</b></div>
+          <div>Products made (AB)<b id="cProd">0</b></div>
+          <div>Reactants left<b id="cLeft">0</b></div>
+        </div>
+        <div class="acts"><button class="btn" type="button" id="pause">Pause ❚❚</button><button class="btn small" type="button" id="reset">Start again</button>
+          <span style="font-size:.85rem;color:#c3b2e6">A <span style="color:#6ad3ff">●</span> + B <span style="color:#ff9a4d">●</span> → AB. Gold edge = sticky side.</span></div>
+      </div>
+      <div>
+        <div class="ctl"><div class="row"><span>Reaction</span></div>
+          <div class="seg" role="group" aria-label="Reaction" id="modePick"></div></div>
+        <div class="ctl"><div class="row"><label for="temp">Temperature</label><output id="tempOut"></output></div>
+          <input type="range" id="temp" min="1" max="5" step="1" value="3"><div class="why">changes: how often and how hard they hit</div></div>
+        <div class="ctl" id="concCtl"><div class="row"><label for="conc">Concentration (particles of each)</label><output id="concOut"></output></div>
+          <input type="range" id="conc" min="8" max="30" step="2" value="20"><div class="why">changes: how often they hit</div></div>
+        <div class="ctl"><label class="chk"><input type="checkbox" id="solid"> A is a solid block (surface area)</label>
+          <div class="seg" role="group" aria-label="Pieces" id="piecePick" style="margin-top:4px"></div><div class="why" id="expOut">changes: how many A particles can be reached</div></div>
+        <div class="ctl"><div class="seg"><button class="segbtn" type="button" id="cat" aria-pressed="false">Catalyst: OFF</button>
+          <button class="segbtn" type="button" id="light" aria-pressed="false">Light: OFF</button></div>
+          <div class="why" id="lightWhy">Catalyst changes: the energy needed. Light only matters for the light-sensitive reaction.</div></div>
+        <div class="graphs">
+          <div><div class="stage"><svg id="hist" viewBox="0 0 180 106" role="img" aria-label="Collision energies"></svg></div><p class="cap" id="histCap">Energy of recent A–B collisions</p></div>
+          <div><div class="stage"><svg id="rate" viewBox="0 0 180 106" role="img" aria-label="Reaction rate"></svg></div><p class="cap">Rate: products made per second</p></div>
+        </div>
+      </div>
+    </div>
+    <div id="explain" aria-live="polite"></div>
+  </section>
+
+  <section class="card" aria-label="Real life">
+    <h2 class="wtitle mint">REACTION RATES IN REAL LIFE</h2>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <div class="learn">
+    <section class="card">
+      <h2 class="wtitle">COLLISION THEORY</h2>
+      <p>Particles react only when they collide:</p>
+      <ol><li><b>often enough</b> (more collisions per second),</li><li>with <b>enough energy</b> (the energy needed is called the activation energy),</li><li>and in the <b>right orientation</b> (the right spot).</li></ol>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">THE FIVE FACTORS</h2>
+      <p><b>Temperature:</b> faster particles hit more often and harder.</p>
+      <p><b>Concentration:</b> more particles in the same space hit more often.</p>
+      <p><b>Surface area:</b> smaller pieces have more particles on the outside to hit.</p>
+      <p><b>Catalyst:</b> lowers the energy needed. It doesn't make particles collide more often, and it isn't used up.</p>
+      <p><b>Light:</b> gives energy to particles, but only in light-sensitive reactions.</p>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">WHY IT SLOWS DOWN</h2>
+      <p>Watch the rate graph: the reaction is fastest at the start. As reactants get used up, there are fewer of them to collide, so the rate drops.</p>
+    </section>
+  </div>
+  <p class="foot">Science 1206 · Unit 2 Chemical Reactions · NL Science 10, Section 4.1. This is a simple 2-D model: the particles and speeds are not to scale. Your progress is saved on this device only.</p>
+</div>
+<div id="tip" role="tooltip" hidden></div>
+
+<script id="chem-core">
+/* Collision engine: pure functions, no DOM. tools/test-chem.mjs runs it in Node to check the collision-theory rules.
+   A reaction A + B -> AB happens only when an A and a B collide
+     1) with enough energy (the energy along the line between their centres must reach the energy needed), and
+     2) with the right orientation (each one's sticky side faces the other).
+   Temperature sets the speeds. A catalyst lowers the energy needed and changes nothing else.
+   Light (light-sensitive reaction only) gives single particles a temporary energy boost. */
+const CHEM = (() => {
+  const W = 640, H = 380, R = 9, PR = 12;
+  const TEMP = [0.45, 0.7, 1, 1.45, 2.0];          // cold, cool, room, warm, hot (relative temperature)
+  const TEMP_WORD = ['cold', 'cool', 'room temperature', 'warm', 'hot'];
+  const SIGMA = 80;                                 // speed spread at room temperature (px per second)
+  const EA = 1.5 * SIGMA * SIGMA;                   // energy needed for the ordinary reaction
+  const CAT = 0.45;                                 // a catalyst lowers the energy needed to 45%
+  const DARK = 2.4;                                 // the light-sensitive reaction needs far more energy without light
+  const PIECES = { 1: [[8, 6]], 2: [[6, 4], [6, 4]], 4: [[4, 3], [4, 3], [4, 3], [4, 3]], 8: Array(8).fill([3, 2]) };   // 48 A particles each way
+  function rng(seed) { let s = (seed >>> 0) || 1; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; }
+  function gauss(r) { let u = 0; while (!u) u = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * r()); }
+  const sigma = o => SIGMA * Math.sqrt(TEMP[o.temp - 1]);
+  const energyNeeded = o => EA * (o.mode === 'light' ? DARK : 1) * (o.catalyst ? CAT : 1);
+  function create(o, seed) {
+    const w = { o: Object.assign({ temp: 3, n: 20, solid: false, pieces: 1, catalyst: false, mode: 'normal', light: false, react: true }, o),
+      r: rng(seed || 1), parts: [], t: 0, coll: [], succ: [], fx: [], energies: [], photonT: 0, products: 0, would: 0, collisions: 0 };
+    const sg = sigma(w.o), taken = [];
+    const free = (x, y, rad) => taken.every(p => Math.hypot(p.x - x, p.y - y) > p.rad + rad + 2);
+    const add = (t, x, y, fixed, extra) => { const p = Object.assign({ t, x, y, vx: fixed ? 0 : gauss(w.r) * sg, vy: fixed ? 0 : gauss(w.r) * sg,
+      ang: w.r() * Math.PI * 2, spin: (w.r() - 0.5) * 2.4, fixed: !!fixed, en: 0, rad: R }, extra); w.parts.push(p); taken.push(p); return p; };
+    if (w.o.solid) {
+      const blocks = PIECES[w.o.pieces], cols = blocks.length <= 2 ? blocks.length : blocks.length / 2, rows = blocks.length <= 2 ? 1 : 2;
+      blocks.forEach(([bw, bh], k) => {
+        const cx = W * ((k % cols) + 0.5) / cols, cy = H * (Math.floor(k / cols) + 0.5) / rows, d = 2 * R + 1;
+        for (let i = 0; i < bw; i++) for (let j = 0; j < bh; j++) add('A', cx + (i - (bw - 1) / 2) * d, cy + (j - (bh - 1) / 2) * d, true, { piece: k, gx: i, gy: j });
+      });
+    }
+    const place = t => { for (let k = 0; k < 400; k++) { const x = R + 4 + w.r() * (W - 2 * R - 8), y = R + 4 + w.r() * (H - 2 * R - 8); if (free(x, y, R)) return add(t, x, y, false); } };
+    if (!w.o.solid) for (let k = 0; k < w.o.n; k++) place('A');
+    for (let k = 0; k < w.o.n; k++) place('B');
+    return w;
+  }
+  // a particle's sticky side faces (dx, dy) if it is within 90 degrees of that direction
+  const faces = (p, dx, dy) => Math.cos(p.ang) * dx + Math.sin(p.ang) * dy > 0;
+  function step(w, dt) {
+    const o = w.o, sg = sigma(o), Ea = energyNeeded(o), ps = w.parts;
+    // the surroundings hold the temperature steady
+    const mob = ps.filter(p => !p.fixed);
+    if (mob.length) { const rms = Math.sqrt(mob.reduce((s, p) => s + p.vx * p.vx + p.vy * p.vy, 0) / mob.length), want = Math.SQRT2 * sg;
+      if (rms > 0) { const f = 1 + 0.03 * (want / rms - 1); mob.forEach(p => { p.vx *= f; p.vy *= f; }); } }
+    for (const p of ps) {
+      p.ang += p.spin * dt; if (p.en > 0) p.en -= dt;
+      if (p.fixed) continue;
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      if (p.x < p.rad) { p.x = p.rad; p.vx = Math.abs(p.vx); } if (p.x > W - p.rad) { p.x = W - p.rad; p.vx = -Math.abs(p.vx); }
+      if (p.y < p.rad) { p.y = p.rad; p.vy = Math.abs(p.vy); } if (p.y > H - p.rad) { p.y = H - p.rad; p.vy = -Math.abs(p.vy); }
+    }
+    // light: photons give a reactant particle extra energy for a short time
+    if (o.mode === 'light' && o.light) {
+      w.photonT -= dt;
+      while (w.photonT <= 0) { w.photonT += 0.12; const c = ps.filter(p => (p.t === 'A' || p.t === 'B') && !p.dead); if (c.length) { const p = c[Math.floor(w.r() * c.length)]; p.en = 2.5; w.fx.push({ k: 'photon', x: p.x, y: p.y, t: w.t }); } }
+    }
+    for (let i = 0; i < ps.length; i++) {
+      const a = ps[i]; if (a.dead) continue;
+      for (let j = i + 1; j < ps.length; j++) {
+        const b = ps[j]; if (b.dead || (a.fixed && b.fixed)) continue;
+        const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy), min = a.rad + b.rad;
+        if (d >= min || d === 0) continue;
+        const nx = dx / d, ny = dy / d, vn = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;   // closing speed
+        // push apart
+        const over = min - d;
+        if (a.fixed) { b.x += nx * over; b.y += ny * over; } else if (b.fixed) { a.x -= nx * over; a.y -= ny * over; }
+        else { a.x -= nx * over / 2; a.y -= ny * over / 2; b.x += nx * over / 2; b.y += ny * over / 2; }
+        if (vn <= 0) continue;
+        const pair = (a.t === 'A' && b.t === 'B') || (a.t === 'B' && b.t === 'A');
+        if (pair) {
+          // collision energy: two equal moving particles share it (reduced mass 1/2); hitting a fixed solid gives the full amount
+          const E = (a.fixed || b.fixed ? 0.5 : 0.25) * vn * vn, enough = E >= Ea || a.en > 0 || b.en > 0, angle = faces(a, nx, ny) && faces(b, -nx, -ny);
+          w.collisions++; w.coll.push(w.t);
+          w.energies.push(E); if (w.energies.length > 80) w.energies.shift();
+          if (enough && angle) w.would++;
+          if (enough && angle && o.react) {
+            w.products++; w.succ.push(w.t);
+            const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+            w.fx.push({ k: 'hit', x: mx, y: my, t: w.t });
+            // the product keeps the pair's momentum; off a fixed solid it bounces away from the block
+            const P = { t: 'P', x: mx, y: my, vx: (a.vx + b.vx) / 2, vy: (a.vy + b.vy) / 2, ang: Math.atan2(ny, nx), spin: (w.r() - 0.5) * 1.2, fixed: false, en: 0, rad: PR };
+            if (a.fixed || b.fixed) {
+              const m = a.fixed ? b : a, ox = a.fixed ? nx : -nx, oy = a.fixed ? ny : -ny, out = m.vx * ox + m.vy * oy;
+              P.vx = m.vx - (out < 0 ? 2 * out * ox : 0); P.vy = m.vy - (out < 0 ? 2 * out * oy : 0); P.x = m.x; P.y = m.y;
+            }
+            a.dead = b.dead = true; ps.push(P);
+            break;
+          }
+          if (!(enough && angle)) w.fx.push({ k: 'bonk', x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, t: w.t });
+        }
+        // bounce (equal masses; a fixed particle doesn't move)
+        if (a.fixed) { const k = 2 * ((b.vx * nx + b.vy * ny)); b.vx -= k * nx; b.vy -= k * ny; }
+        else if (b.fixed) { const k = 2 * ((a.vx * nx + a.vy * ny)); a.vx -= k * nx; a.vy -= k * ny; }
+        else { a.vx -= vn * nx; a.vy -= vn * ny; b.vx += vn * nx; b.vy += vn * ny; }
+      }
+    }
+    w.parts = ps.filter(p => !p.dead);
+    w.t += dt;
+    const keep = w.t - 1;   // keep 1 s of events for the per-second counters (the page keeps its own history)
+    while (w.coll.length && w.coll[0] < keep) w.coll.shift();
+    while (w.succ.length && w.succ[0] < keep) w.succ.shift();
+    w.fx = w.fx.filter(f => w.t - f.t < 0.5).slice(-40);
+  }
+  // fixed A particles with an open side (nothing next to them in their block) can be reached
+  function exposed(w) {
+    const A = w.parts.filter(p => p.fixed && p.t === 'A'), at = new Set(A.map(p => p.piece + ':' + p.gx + ':' + p.gy));
+    return A.filter(p => [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([x, y]) => !at.has(p.piece + ':' + (p.gx + x) + ':' + (p.gy + y)))).length;
+  }
+  return { W, H, R, PR, TEMP, TEMP_WORD, SIGMA, EA, CAT, DARK, PIECES, create, step, exposed, energyNeeded, faces };
+})();
+if (typeof module !== 'undefined') module.exports = CHEM;
+</script>
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* chem(): the one formatter for every formula on this page. "CO2" -> CO<sub>2</sub>; "->" -> →. Only " + " with spaces is a plus sign. */
+function chem(s) {
+  return String(s).split(/(\s+\+\s+|\s*->\s*|\s*→\s*)/).map(part => {
+    const op = part.trim();
+    if (op === '+' && part !== '+') return ' + ';
+    if (op === '->' || op === '→') return ' → ';
+    const m = part.match(/^(\d+)\s*(?=[A-Z(\[])/);
+    let out = '', i = 0;
+    if (m) { out += m[1]; i = m[0].length; }
+    while (i < part.length) {
+      const ch = part[i], prev = part[i - 1] || '';
+      if (/\d/.test(ch) && /[A-Za-z)\]]/.test(prev)) { let d = ''; while (i < part.length && /\d/.test(part[i])) d += part[i++]; out += `<sub>${d}</sub>`; continue; }
+      out += esc(ch); i++;
+    }
+    return out;
+  }).join('');
+}
+
+/* Settings are kept on this device only */
+const KEY = 'collision-lab:v1';
+let store = { seen: false };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) store = Object.assign(store, s); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+
+/* tap-to-define words */
+const DEF = {
+  rate: 'How fast a reaction happens: how much product is made each second.',
+  activation: 'The smallest amount of energy a collision needs for the particles to react. Also called activation energy.',
+  orientation: 'Which way the particles face when they hit. They must hit at the right spot to react.',
+  catalyst: 'A substance that speeds up a reaction by lowering the energy needed. It is not used up.',
+  enzyme: 'A catalyst made by living things. Your body uses thousands of them.'
+};
+const T = (word, key) => `<button type="button" class="term" data-def="${key}">${word}</button>`;
+const tip = $('#tip');
+let tipFor = null;
+function showTip(el) {
+  tipFor = el; tip.innerHTML = chem(DEF[el.dataset.def]); tip.hidden = false;
+  const r = el.getBoundingClientRect();
+  tip.style.left = Math.max(8, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - 316)) + 'px';
+  tip.style.top = (window.scrollY + r.bottom + 6) + 'px';
+}
+const hideTip = () => { tip.hidden = true; tipFor = null; };
+document.addEventListener('click', e => {
+  const t = e.target.closest('.term[data-def]');
+  if (t) { tipFor === t ? hideTip() : showTip(t); } else if (!e.target.closest('#tip')) hideTip();
+});
+document.addEventListener('focusin', e => { const t = e.target.closest('.term[data-def]'); if (t) showTip(t); });
+document.addEventListener('focusout', e => { if (e.target.closest('.term[data-def]')) hideTip(); });
+document.addEventListener('mouseover', e => { const t = e.target.closest('.term[data-def]'); if (t && tipFor !== t) showTip(t); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
+
+/* ================= the simulation ================= */
+const O = { temp: 3, n: 20, solid: false, pieces: 1, catalyst: false, mode: 'normal', light: false };
+let world = null, playing = !reduced, raf = 0, last = 0, seed = 1;
+const hist = [];      // products made in each whole second, for the rate graph
+let secStart = 0, secCount = 0;
+function restart() {
+  world = CHEM.create(Object.assign({}, O), seed++);
+  hist.length = 0; secStart = 0; secCount = 0; lastProducts = 0;
+  renderControls(); drawGraphs(); draw(performance.now()); kick();
+}
+let lastProducts = 0;
+function tick(now) {
+  raf = 0;
+  if (document.hidden) return;
+  const dt = Math.min(0.05, (now - last) / 1000 || 0); last = now;
+  if (playing && dt > 0) {
+    // small fixed steps keep collisions accurate on slow Chromebooks
+    let left = dt; while (left > 0) { const h = Math.min(1 / 60, left); CHEM.step(world, h); left -= h; }
+    secCount += world.products - lastProducts; lastProducts = world.products;
+    if (world.t - secStart >= 1) { hist.push(secCount); if (hist.length > 40) hist.shift(); secStart = world.t; secCount = 0; drawGraphs(); }
+    updateCounts();
+  }
+  draw(now);
+  if (playing && !document.hidden && !$('#lab').hidden) raf = requestAnimationFrame(tick);
+}
+const kick = () => { if (!raf && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(tick); } };
+document.addEventListener('visibilitychange', () => { if (document.hidden) { if (raf) cancelAnimationFrame(raf); raf = 0; } else kick(); });
+
+function updateCounts() {
+  $('#cColl').textContent = world.coll.length;
+  $('#cSucc').textContent = world.succ.length;
+  $('#cProd').textContent = world.products;
+  $('#cLeft').textContent = world.parts.filter(p => p.t === 'A' || p.t === 'B').length;
+}
+
+/* drawing: theme colours, plus letters so colour is never the only signal */
+const cv = $('#cv'), ctx = cv.getContext('2d');
+const DPR = Math.min(2, window.devicePixelRatio || 1);
+cv.width = CHEM.W * DPR; cv.height = CHEM.H * DPR; ctx.scale(DPR, DPR);
+const COL = { A: '#6ad3ff', B: '#ff9a4d' };
+function ball(x, y, r, fill, label, ang, glow) {
+  const g = ctx;
+  if (glow) { g.fillStyle = 'rgba(255,210,63,.35)'; g.beginPath(); g.arc(x, y, r + 6, 0, 6.29); g.fill(); }
+  g.fillStyle = fill; g.beginPath(); g.arc(x, y, r, 0, 6.29); g.fill();
+  g.strokeStyle = '#000'; g.lineWidth = 1.5; g.stroke();
+  if (ang != null) { g.strokeStyle = '#ffd23f'; g.lineWidth = 4; g.beginPath(); g.arc(x, y, r - 1.5, ang - 0.9, ang + 0.9); g.stroke(); }
+  g.fillStyle = '#1b1030'; g.font = "700 10px 'Atkinson Hyperlegible',sans-serif"; g.textAlign = 'center'; g.fillText(label, x, y + 3.5);
+}
+function draw(now) {
+  const g = ctx, w = world;
+  g.clearRect(0, 0, CHEM.W, CHEM.H);
+  g.fillStyle = '#0e0820'; g.fillRect(0, 0, CHEM.W, CHEM.H);
+  // light: photons from the top
+  if (O.mode === 'light' && O.light) {
+    g.strokeStyle = 'rgba(255,210,63,.5)'; g.lineWidth = 2;
+    for (let k = 0; k < 6; k++) { const x = (k * 113 + now / 4) % CHEM.W; g.beginPath(); for (let y = 0; y < 60; y += 4) g.lineTo(x + Math.sin((y + now / 30) / 5) * 4, y); g.stroke(); }
+  }
+  // the solid's outline
+  if (O.solid) {
+    g.strokeStyle = 'rgba(195,178,230,.25)'; g.lineWidth = 1;
+    const fixed = w.parts.filter(p => p.fixed);
+    fixed.forEach(p => { g.strokeRect(p.x - 9.5, p.y - 9.5, 19, 19); });
+  }
+  for (const p of w.parts) {
+    if (p.t === 'P') {   // product AB: an A and a B joined at their sticky sides
+      const dx = Math.cos(p.ang) * 6.5, dy = Math.sin(p.ang) * 6.5;
+      ball(p.x - dx, p.y - dy, 7, COL.A, 'A', null); ball(p.x + dx, p.y + dy, 7, COL.B, 'B', null);
+      g.strokeStyle = '#5df2a4'; g.lineWidth = 2; g.beginPath(); g.arc(p.x, p.y, 15, 0, 6.29); g.stroke();
+    } else ball(p.x, p.y, CHEM.R, COL[p.t], p.t, p.ang, p.en > 0);
+  }
+  // collision effects: a gold burst when it works, a small grey ring when it bounces
+  for (const f of w.fx) {
+    const age = (w.t - f.t) / 0.5;
+    if (f.k === 'hit') { g.strokeStyle = `rgba(255,210,63,${1 - age})`; g.lineWidth = 3; g.beginPath(); for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; g.moveTo(f.x + Math.cos(a) * 8, f.y + Math.sin(a) * 8); g.lineTo(f.x + Math.cos(a) * (14 + age * 10), f.y + Math.sin(a) * (14 + age * 10)); } g.stroke(); }
+    else if (f.k === 'bonk') { g.strokeStyle = `rgba(195,178,230,${0.6 * (1 - age)})`; g.lineWidth = 1.5; g.beginPath(); g.arc(f.x, f.y, 4 + age * 8, 0, 6.29); g.stroke(); }
+  }
+  if (!playing) { g.fillStyle = 'rgba(14,8,32,.6)'; g.fillRect(0, 0, CHEM.W, CHEM.H); g.fillStyle = '#ffd23f'; g.font = "8px 'Press Start 2P',monospace"; g.textAlign = 'center'; g.fillText('PAUSED', CHEM.W / 2, CHEM.H / 2); }
+}
+function drawGraphs() {
+  const w = world, Ea = CHEM.energyNeeded(O), Emax = CHEM.EA * 3.2, bins = 12, counts = new Array(bins).fill(0);
+  w.energies.forEach(E => { counts[Math.min(bins - 1, Math.floor(E / Emax * bins))]++; });
+  const top = Math.max(4, ...counts), bw = 160 / bins, ex = 12 + Math.min(1, Ea / Emax) * 160;
+  let h = `<line x1="12" y1="92" x2="174" y2="92" stroke="#3a2463"/>`;
+  counts.forEach((c, k) => { const ok = (k + 0.5) / bins * Emax >= Ea; h += `<rect x="${12 + k * bw + 1}" y="${92 - c / top * 76}" width="${bw - 2}" height="${c / top * 76}" fill="${ok ? '#5df2a4' : '#6c5a92'}"/>`; });
+  h += `<line x1="${ex}" y1="10" x2="${ex}" y2="92" stroke="#ff5d73" stroke-width="2" stroke-dasharray="3 2"/><text x="${Math.min(150, ex + 3)}" y="18" fill="#ff5d73" font-size="9">energy needed</text>`;
+  h += `<text x="12" y="104" fill="#c3b2e6" font-size="9">low energy</text><text x="174" y="104" text-anchor="end" fill="#c3b2e6" font-size="9">high energy</text>`;
+  $('#hist').innerHTML = h;
+  const enough = w.energies.filter(E => E >= Ea).length;
+  $('#histCap').textContent = w.energies.length ? `Energy of recent A–B collisions: ${Math.round(100 * enough / w.energies.length)}% had enough (green)` : 'Energy of recent A–B collisions (green = enough)';
+  const rmax = Math.max(3, ...hist);
+  let r = `<line x1="12" y1="92" x2="174" y2="92" stroke="#3a2463"/><line x1="12" y1="10" x2="12" y2="92" stroke="#3a2463"/>`;
+  if (hist.length > 1) r += `<polyline points="${hist.map((v, k) => `${12 + k * 162 / 39},${92 - v / rmax * 76}`).join(' ')}" fill="none" stroke="#ffd23f" stroke-width="2"/>`;
+  r += `<text x="16" y="18" fill="#c3b2e6" font-size="9">${rmax}/s</text><text x="174" y="104" text-anchor="end" fill="#c3b2e6" font-size="9">time (last 40 s) →</text>`;
+  $('#rate').innerHTML = r;
+}
+
+/* ================= controls and explanations ================= */
+const EXPLAIN = {
+  temp: () => `<div class="say"><span class="tag">TEMPERATURE: ${CHEM.TEMP_WORD[O.temp - 1].toUpperCase()}</span><p>${O.temp >= 3
+    ? 'Hotter particles move faster. They collide <b>more often</b>, and they hit <b>harder</b>, so more collisions have enough energy. The rate goes up.'
+    : 'Colder particles move slower. They collide <b>less often</b>, and they hit <b>more softly</b>, so fewer collisions have enough energy. The rate goes down.'}</p>
+    <p>Collision theory: temperature changes <b>how often</b> and <b>how hard</b>. Watch the energy graph shift.</p></div>`,
+  conc: () => `<div class="say"><span class="tag">CONCENTRATION: ${O.n} OF EACH</span><p>More particles in the same space bump into each other <b>more often</b>. They don't hit any harder. The rate changes because the number of collisions per second changes.</p>
+    <p>Collision theory: concentration changes <b>how often</b>.</p></div>`,
+  solid: () => O.solid ? `<div class="say"><span class="tag">SURFACE AREA: ${O.pieces} PIECE${O.pieces > 1 ? 'S' : ''}</span><p>A is now a solid. Only the A particles on the <b>outside</b> can be hit. Breaking the same solid into smaller pieces puts more of it on the outside: ${CHEM.exposed(world)} of 48 A particles can be reached now.</p>
+    <p>Collision theory: surface area changes <b>how often</b>, by letting more particles be reached.</p></div>`
+    : `<div class="say"><span class="tag">SURFACE AREA</span><p>Tick "A is a solid block" to turn A into a solid. Then split it into 2, 4 or 8 pieces.</p></div>`,
+  cat: () => `<div class="say ${O.catalyst ? 'good' : ''}"><span class="tag">CATALYST: ${O.catalyst ? 'ON' : 'OFF'}</span><p>A ${T('catalyst', 'catalyst')} lowers the ${T('energy needed', 'activation')} (see the red line on the energy graph). Particles collide <b>just as often</b> as before, and just as hard, but more of their collisions now have enough energy. The catalyst isn't used up.</p>
+    <p>Collision theory: a catalyst changes <b>the energy needed</b>. It does not change how often particles collide: compare collisions per second.</p></div>`,
+  light: () => O.mode !== 'light' ? `<div class="say warm"><span class="tag">LIGHT</span><p>This ordinary reaction isn't light-sensitive, so light makes no difference. Choose "Light-sensitive" to try it.</p></div>`
+    : `<div class="say ${O.light ? 'good' : ''}"><span class="tag">LIGHT: ${O.light ? 'ON' : 'OFF'}</span><p>This is a <b>light-sensitive reaction</b> (like hydrogen with chlorine, or the chemicals in old photographic film). In the dark it needs a lot of energy, so almost nothing happens. Light gives some particles extra energy (they glow), so their collisions can work.</p>
+    <p>Collision theory: light changes <b>how much energy</b> particles have, but only for light-sensitive reactions.</p></div>`,
+  mode: () => O.mode === 'light' ? EXPLAIN.light() : `<div class="say"><span class="tag">ORDINARY REACTION</span><p>A + B → AB. Watch for the gold bursts: those are collisions that were hard enough <i>and</i> hit sticky side to sticky side.</p></div>`
+};
+function explain(k) { $('#explain').innerHTML = EXPLAIN[k](); }
+function renderControls() {
+  $('#modePick').innerHTML = [['normal', 'Ordinary'], ['light', 'Light-sensitive']].map(([k, n]) => `<button class="segbtn" type="button" data-mode="${k}" aria-pressed="${O.mode === k}">${n}</button>`).join('');
+  $('#modePick').querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => { O.mode = b.dataset.mode; if (O.mode !== 'light') O.light = false; restart(); explain('mode'); $(`[data-mode="${O.mode}"]`).focus(); }));
+  $('#piecePick').innerHTML = [1, 2, 4, 8].map(k => `<button class="segbtn" type="button" data-pc="${k}" aria-pressed="${O.pieces === k}" ${O.solid ? '' : 'disabled'}>${k === 1 ? '1 block' : k + ' pieces'}</button>`).join('');
+  $('#piecePick').querySelectorAll('[data-pc]').forEach(b => b.addEventListener('click', () => { O.pieces = +b.dataset.pc; restart(); explain('solid'); $(`[data-pc="${O.pieces}"]`).focus(); }));
+  $('#tempOut').textContent = CHEM.TEMP_WORD[O.temp - 1];
+  $('#temp').value = O.temp;
+  $('#conc').value = O.n;
+  $('#concOut').textContent = (O.n <= 12 ? 'low' : O.n <= 22 ? 'medium' : 'high') + ': ' + O.n;
+  $('#solid').checked = O.solid;
+  $('#expOut').textContent = O.solid ? `changes: how many A can be reached: ${CHEM.exposed(world)} of 48 on the outside` : 'changes: how many A particles can be reached';
+  $('#concCtl .row label').textContent = O.solid ? 'Concentration of B' : 'Concentration (particles of each)';
+  $('#cat').setAttribute('aria-pressed', String(O.catalyst)); $('#cat').textContent = 'Catalyst: ' + (O.catalyst ? 'ON' : 'OFF');
+  $('#light').setAttribute('aria-pressed', String(O.light)); $('#light').textContent = 'Light: ' + (O.light ? 'ON' : 'OFF');
+  $('#light').disabled = O.mode !== 'light';
+  $('#lightWhy').textContent = O.mode === 'light' ? 'Catalyst changes: the energy needed. Light changes: the energy particles have.' : 'Catalyst changes: the energy needed. Light only matters for the light-sensitive reaction.';
+  updateCounts();
+}
+// temperature, catalyst and light change the running box; concentration and surface area start a fresh box
+$('#temp').addEventListener('input', e => { O.temp = +e.target.value; world.o.temp = O.temp; renderControls(); explain('temp'); drawGraphs(); });
+$('#conc').addEventListener('input', e => { O.n = +e.target.value; restart(); explain('conc'); });
+$('#solid').addEventListener('change', e => { O.solid = e.target.checked; restart(); explain('solid'); });
+$('#cat').addEventListener('click', () => { O.catalyst = !O.catalyst; world.o.catalyst = O.catalyst; renderControls(); explain('cat'); drawGraphs(); });
+$('#light').addEventListener('click', () => { if (O.mode !== 'light') return; O.light = !O.light; world.o.light = O.light; renderControls(); explain('light'); });
+$('#pause').addEventListener('click', () => { playing = !playing; $('#pause').textContent = playing ? 'Pause ❚❚' : 'Play ▶'; if (playing) kick(); else draw(performance.now()); });
+$('#reset').addEventListener('click', () => { restart(); explain('mode'); });
+
+/* ================= real life ================= */
+const REAL = [
+  { t: 'Food in the fridge', f: 'TEMPERATURE', p: 'Cold slows the reactions that make food go bad. The particles move slower, so they collide less often and less hard.', set: { temp: 1 }, k: 'temp' },
+  { t: 'Kindling vs a log', f: 'SURFACE AREA', p: 'Small sticks light easily, but a big log is slow to catch. Small pieces have more wood on the outside for oxygen to hit.', set: { solid: true, pieces: 8 }, k: 'solid' },
+  { t: 'Flour dust explosions', f: 'SURFACE AREA', p: 'A sack of flour burns slowly. A cloud of fine flour dust has a huge surface area, so it can burn so fast that it explodes. Flour mills control dust and sparks for this reason.', set: { solid: true, pieces: 8 }, k: 'solid' },
+  { t: 'Chewing your food', f: 'SURFACE AREA', p: 'Chewing breaks food into small pieces. More surface means your digestive chemicals can reach more of it at once.', set: { solid: true, pieces: 4 }, k: 'solid' },
+  { t: 'Enzymes', f: 'CATALYST', p: `${T('Enzymes', 'enzyme')} are catalysts made by your body. They lower the energy needed for reactions like breaking down food, so they happen fast at body temperature.`, set: { catalyst: true }, k: 'cat' },
+  { t: 'Catalytic converters', f: 'CATALYST', p: `A car's catalytic converter holds metals like platinum. They speed up reactions that turn poisonous gases into safer ones, like ${chem('2CO + 2NO -> 2CO2 + N2')}. The metals aren't used up.`, set: { catalyst: true }, k: 'cat' }
+];
+$('#cards').innerHTML = REAL.map((c, i) => `<div class="rl"><span class="f">${c.f}</span><h3>${esc(c.t)}</h3><p>${c.p}</p><button class="btn small" type="button" data-real="${i}">Show me in the lab ▲</button></div>`).join('');
+$('#cards').querySelectorAll('[data-real]').forEach(b => b.addEventListener('click', () => {
+  const c = REAL[+b.dataset.real];
+  Object.assign(O, { temp: 3, n: 20, solid: false, pieces: 1, catalyst: false, mode: 'normal', light: false }, c.set);
+  restart(); explain(c.k);
+  $('#lab').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+}));
+
+/* ================= start ================= */
+function startLab() { $('#lab').hidden = false; $('#plain').open = false; store.seen = true; save(); kick(); }
+$('#goBtn').addEventListener('click', () => { startLab(); $('#temp').focus(); });
+if (reduced) { playing = false; $('#pause').textContent = 'Play ▶'; }
+restart(); explain('mode');
+if (store.seen) startLab();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => draw(performance.now()));
+})();
+</script>
+</body></html>
