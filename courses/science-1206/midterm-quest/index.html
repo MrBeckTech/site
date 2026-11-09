@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Midterm Quest | Science 1206</title>
+<meta name="tw-titlecard" content="SCIENCE 1206 · MIDTERM|QUEST|GET READY.">
+<meta name="tw-canvas" content="off">
+<style>
+/* Twilight Menu page: shared theme (fonts, windows, buttons, World Map button, title card) is inlined below by tools/apply-theme.mjs. */
+:root{
+  --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --warm:#ff9a4d;
+  --pix:'Press Start 2P','Courier New',monospace; --term:'VT323','Courier New',monospace;
+  --body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif; --radius:6px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 var(--body)}
+.app{max-width:820px;margin:0 auto;padding:8px 12px 32px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:4px 0 12px}
+.hd h1{margin:0}
+.lead{flex-basis:100%;margin:2px 0 0}
+#game{display:grid;gap:14px}
+.card{min-width:0}
+h2{font:400 11px/1.6 var(--pix);color:var(--mint);margin:0 0 10px}
+sub,sup{font-size:.7em;line-height:0}
+[hidden]{display:none!important}
+
+/* realm menu */
+.realms{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.realms{grid-template-columns:1fr}}
+.realm{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center;text-align:left;width:100%;
+  background:var(--panel);color:var(--ink);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463;
+  padding:10px 12px;cursor:pointer;font:inherit}
+.realm:hover,.realm:focus-visible{box-shadow:inset 0 0 0 2px var(--gold)}
+.realm canvas{width:56px;height:56px;image-rendering:pixelated}
+.realm b{display:block;font:400 10px/1.6 var(--pix);color:var(--gold)}
+.realm small{display:block;color:var(--ink2);line-height:1.35;font-size:.9rem}
+.realm .best{color:var(--mint);margin-top:3px}
+.realm.boss{grid-column:1/-1}
+.how{margin:0;padding-left:20px;display:grid;gap:4px}
+.how b{color:var(--gold)}
+
+/* battle */
+.hud{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.hearts{font-size:22px;color:var(--coral);letter-spacing:2px;line-height:1}
+.hearts .gone{opacity:.25}
+.xp{font:400 26px/1 var(--term);color:var(--gold)}
+.arena{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;margin-top:8px}
+.arena canvas{width:96px;height:96px;image-rendering:pixelated;background:var(--panel);border:3px solid #000;border-radius:4px}
+.mname{font:400 10px/1.6 var(--pix);color:var(--warm)}
+.bar{height:16px;border:3px solid #000;border-radius:4px;background:var(--panel);margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--coral);transition:width .35s steps(6)}
+.qcount{color:var(--ink2);font-size:.9rem;margin-top:4px}
+.shake{animation:shake .35s steps(4)}
+.flash{animation:flash .35s steps(2)}
+@keyframes shake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+@keyframes flash{50%{filter:brightness(3) saturate(0)}}
+.tag{font:400 9px/1.6 var(--pix);color:var(--sky);margin-bottom:8px}
+.q{font-size:1.2rem;font-weight:700;margin:0;line-height:1.4}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt{display:grid;grid-template-columns:46px 1fr;gap:10px;align-items:center;text-align:left;min-height:50px;padding:8px 12px;cursor:pointer}
+.opt .k{font:400 24px/1 var(--term);color:var(--gold);text-align:center;white-space:nowrap}
+.opt:disabled{cursor:default;opacity:.6}
+.opt.right{background:#0f2219;box-shadow:inset 0 0 0 2px var(--mint);opacity:1}
+.opt.wrong{background:#2a0f18;box-shadow:inset 0 0 0 2px var(--coral);opacity:1}
+.opt.right .k::after{content:' ✓';color:var(--mint)} .opt.wrong .k::after{content:' ✗';color:var(--coral)}
+.callout{margin-top:12px;padding:10px 14px}
+.callout h3{font:400 10px/1.6 var(--pix);margin:0 0 4px}
+.callout.good h3{color:var(--mint)} .callout.bad h3{color:var(--coral)}
+.callout p{margin:0}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn{padding:10px 16px;min-height:44px;cursor:pointer;font-size:1rem}
+.btn:disabled:not(.opt){opacity:.45;cursor:default;transform:none}
+
+/* balancing */
+.eq{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:1.4rem;font-weight:700;margin-top:12px}
+.eq input{width:46px;height:40px;text-align:center;font:400 30px/1 var(--term);color:var(--gold);background:#0e0820;border:2px solid var(--rim);border-radius:3px}
+.eq input:focus{outline:3px solid var(--mint);outline-offset:1px}
+.eq .sp{white-space:nowrap}
+.eq .op{color:var(--ink2)}
+.tally-wrap{overflow-x:auto;margin-top:10px}
+table.tally{border-collapse:collapse;background:var(--panel);border:3px solid #000;min-width:240px}
+.tally th,.tally td{border-bottom:1px solid #2a1850;padding:3px 14px;text-align:center}
+.tally th{font:400 8px/1.6 var(--pix);color:var(--ink2);border-bottom:2px solid #3a2463}
+.tally td{font:400 24px/1.1 var(--term)}
+.tally td.ok{color:var(--mint)} .tally td.no{color:var(--coral)}
+.tally td.ok::after{content:' ✓';font-size:.7em} .tally td.no::after{content:' ✗';font-size:.7em}
+.hint{color:var(--ink2);font-size:.95rem;margin:8px 0 0}
+.hint.warn{color:var(--gold)} .hint.bad{color:#ffb3bd}
+
+/* results */
+.big{font:400 40px/1 var(--term);color:var(--gold);margin:4px 0}
+.review{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.review li{background:var(--panel);border:3px solid #000;border-left:6px solid var(--coral);border-radius:4px;padding:8px 12px}
+.review .a{color:var(--mint);font-weight:700}
+.review p{margin:4px 0 0;color:var(--ink2)}
+.review .src{font:400 8px/1.6 var(--pix);color:var(--sky);display:block;margin-bottom:2px}
+
+/* end card: '90s anime episode ending (from chemistry/part2-review) */
+.endcard{position:fixed;inset:0;z-index:9998;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;cursor:pointer;overflow:hidden}
+.endcard .stripes{position:absolute;inset:-20% -10%;background:repeating-linear-gradient(-28deg,transparent 0 46px,rgba(255,210,63,.9) 46px 58px,transparent 58px 120px,rgba(255,93,115,.85) 120px 128px,transparent 128px 190px,rgba(106,211,255,.8) 190px 196px);
+  opacity:.22;animation:slide 6s linear infinite}
+@keyframes slide{to{transform:translateX(190px)}}
+.endcard .k{font:400 clamp(10px,1.4vw,14px)/1.6 'Press Start 2P','Courier New',monospace;color:var(--gold);position:relative;letter-spacing:.06em}
+.endcard .big{font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.92;position:relative;transform-origin:left;transform:scaleX(.72);white-space:nowrap;margin:0}
+.endcard .l1{font-size:clamp(40px,8vw,96px);color:#fff}
+.endcard .l2{font-size:clamp(52px,11vw,132px);color:var(--gold)}
+.endcard .sub{position:relative;font:italic 700 clamp(14px,2vw,22px)/1.3 'Atkinson Hyperlegible',sans-serif;color:var(--sky);margin-top:14px}
+.endcard .close{position:absolute;right:18px;bottom:14px;font-size:13px;color:#888}
+.endcard .in{animation:pop .6s cubic-bezier(.2,1.4,.4,1) both}
+.endcard .in.d2{animation-delay:.25s} .endcard .in.d3{animation-delay:.5s} .endcard .in.d4{animation-delay:.8s}
+@keyframes pop{from{opacity:0;transform:translateX(-40px) scaleX(.72)}to{opacity:1}}
+
+@media (max-width:480px){
+  .arena{grid-template-columns:72px 1fr}
+  .arena canvas{width:72px;height:72px}
+  .q{font-size:1.1rem}
+}
+@media (prefers-reduced-motion:reduce){.shake,.flash,.endcard .stripes,.endcard .in{animation:none}.bar i{transition:none}}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<div class="app" id="app">
+  <header class="hd">
+    <h1>MIDTERM QUEST</h1><span class="pill">SCIENCE 1206</span>
+    <p class="lead">Review for the midterm: all of Unit 1 (Weather) and all of Unit 2 (Chemistry). Every answer comes with an explanation, right or wrong.</p>
+  </header>
+  <main id="game"></main>
+</div>
+
+<div id="endcard" class="endcard" role="dialog" aria-modal="true" aria-label="Final Boss defeated" hidden tabindex="-1">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="k in">MIDTERM QUEST · FINAL BOSS DEFEATED</div>
+  <div class="big l1 in d2">SEE YOU</div>
+  <div class="big l2 in d3">AT THE MIDTERM...</div>
+  <div class="sub in d4">You survived every round. Good luck!</div>
+  <div class="close">click or press Esc to close</div>
+</div>
+
+<script>
+(() => {
+'use strict';
+/* ---------- sprites (10 x 10 pixel art, drawn in theme colours) ---------- */
+const SPR = {
+  wx1:   { map: ["...aaaa...",".aaaaaaaa.","aaaaaaaaaa","aawwaawwaa","aaebaaebaa","aaaaaaaaaa",".aaabbaaa.","..y..y..y.",".y..y..y..","y..y..y..."], c: {a:"#8f80c2",b:"#3a2a5a",e:"#120a1f",w:"#ffffff",y:"#ffd23f"} },
+  wx2:   { map: ["..aaaaaa..",".a......a.","a..bbbb..a","a.b....b.a","a.b.ww.b.a","a.b.ee.b.a","a.b....b.a","a..bbbb..a",".a......a.","..aaaaaa.."], c: {a:"#6ad3ff",b:"#c3b2e6",w:"#ffffff",e:"#1b1030"} },
+  chem1: { map: ["....aa....","...aaaa...","..aaaaaa..",".aawaawaa.",".aaeaaeaa.","aaaaaaaaaa","aaabbbbaaa","aaaaaaaaaa",".aaaaaaaa.","..b.bb.b.."], c: {a:"#5df2a4",b:"#1e6b47",e:"#120a1f",w:"#ffffff"} },
+  chem2: { map: ["..bbbbbb..",".baaaaaab.",".bayaayab.",".baaaaaab.","bbbabbabbb","baaaaaaaab","ba.aaaa.ab","bb.abba.bb","...a..a...","..bb..bb.."], c: {a:"#ff9a4d",b:"#6b2a10",y:"#ffd23f"} },
+  boss:  { map: ["b........b","bb......bb",".baaaaaab.","aaaaaaaaaa","aayyaayyaa","aaaaaaaaaa","aawbwbwbaa",".aaaaaaaa.","..a....a..",".aa....aa."], c: {a:"#b04aff",b:"#e6e0ff",y:"#5df2a4",w:"#ffffff"} }
+};
+function drawSprite(cv, key) {
+  const s = SPR[key]; cv.width = 10; cv.height = 10;
+  const x = cv.getContext('2d'); x.clearRect(0, 0, 10, 10);
+  s.map.forEach((row, j) => [...row].forEach((ch, i) => { if (s.c[ch]) { x.fillStyle = s.c[ch]; x.fillRect(i, j, 1, 1); } }));
+}
+
+/* ---------- question bank: [question, [correct, ...wrong], explanation]. Choices are shuffled at runtime. ---------- */
+const BANK = {
+/* Unit 1, Test #1 review: concepts 1 to 20 */
+wx1: [
+ ["Which statement describes CLIMATE, not weather?", ["Winters here are usually cold and snowy, year after year","It is foggy and cool in St. John's this morning","A thunderstorm with hail hit Gander yesterday afternoon","Tomorrow will be windy, with rain in the evening"], "Weather is what the atmosphere is doing at one time and place. Climate is the pattern of weather in a region over a long time: years, decades or longer."],
+ ["Oceans, rivers, ice and the water vapour in the air together make up the…", ["Hydrosphere","Lithosphere","Biosphere","Atmosphere"], "The hydrosphere is all the water on or near Earth's surface, including ice and water vapour. The lithosphere is the land, the biosphere is everywhere life is found, and the atmosphere is the layer of gases."],
+ ["Earth's average temperature stays steady because…", ["Earth sends as much energy back to space as it absorbs","Earth absorbs all of the sunlight that reaches it","Sunlight cannot pass through the atmosphere","Clouds block all incoming energy"], "This balance is Earth's energy budget. If Earth absorbed more energy than it gave off, it would keep warming; if it gave off more, it would keep cooling."],
+ ["Of all the sunlight that reaches Earth, about how much is absorbed by the SURFACE (land and water)?", ["About 50%","About 5%","About 20%","About 100%"], "Of every 100 units of sunlight: about 25 are reflected by clouds and particles, 5 are reflected by land and sea, 20 are absorbed by the atmosphere, and 50 are absorbed by the surface."],
+ ["Which type of energy transfer does NOT need particles?", ["Radiation","Conduction","Convection","Advection"], "Radiation travels as electromagnetic waves, so sunlight can cross empty space to reach Earth. Conduction, convection and advection all need particles of air, water or rock."],
+ ["On a hot day, air right above a sunny parking lot warms up because it touches the hot pavement. This is…", ["Conduction","Radiation","Advection","Sublimation"], "Conduction passes energy from particle to particle where they touch: the energetic particles of the hot pavement collide with the air particles touching it."],
+ ["Advection is…", ["A horizontal (sideways) transfer of energy","A vertical transfer of energy as warm fluid rises","Energy travelling as waves","Energy passed between particles that touch"], "Convection moves energy up and down (warm, less dense fluid rises; cool, denser fluid sinks). Advection moves it sideways. Together they make convection currents in the air and the ocean."],
+ ["Which surface has the HIGHEST albedo?", ["Fresh snow","Dark ocean water","Asphalt road","Pine forest"], "Albedo is how much light a surface reflects. Fresh snow is bright white and reflects most of the sunlight that hits it, so it absorbs little energy."],
+ ["Specific heat capacity is…", ["The heat 1 g of a substance absorbs to warm by 1 °C","How much of the sunlight a surface reflects","The temperature at which a substance starts to boil","How quickly heat travels through a piece of metal"], "Water has a very high specific heat capacity: it must absorb a lot of heat to warm up, and it releases a lot as it cools. That is why the hydrosphere is a great heat sink."],
+ ["On a sunny summer afternoon at the coast, the air over the land is warmer than the air over the water. Why?", ["Land has a lower specific heat capacity, so it heats faster","Land has a higher specific heat capacity, so it heats faster","Water reflects all of the sunlight that reaches it","The Sun's rays reach the land but not the water"], "Air takes on the temperature of the surface below it. Land warms quickly; water warms slowly. The warm air over the land rises and cooler air from over the water flows in: a sea breeze."],
+ ["Why does St. John's have milder winters than places far inland?", ["The ocean stores summer heat and releases it in winter","The coast is a little closer to the Sun in winter","Cold air from the ocean can't reach the coast","Wind never blows near the coast in winter"], "Water warms and cools slowly, so the ocean acts as a heat sink. In winter it gives back heat it stored in summer, keeping the coast milder. (In summer it keeps the coast cooler.)"],
+ ["Without the natural greenhouse effect, Earth's average temperature would be about…", ["About −18 °C instead of 14 °C","About 14 °C, the same as now","About 30 °C, like a hot summer day","About 100 °C, the boiling point of water"], "Greenhouse gases absorb heat given off by Earth's surface and radiate it again, some of it back down. The natural greenhouse effect keeps Earth livable."],
+ ["Greenhouse gases warm Earth by…", ["Absorbing heat from the surface and radiating it again","Reflecting sunlight before it reaches the ground","Making a hole in the ozone layer that lets in heat","Blocking sunlight so less of it can escape"], "Sunlight mostly passes through the air and warms the surface. The warm surface gives off heat, and greenhouse gases (water vapour, carbon dioxide, methane…) absorb it and radiate it again, so the atmosphere holds energy like a heat sink."],
+ ["During condensation, heat is…", ["Released","Absorbed","Neither absorbed nor released","Absorbed only at night"], "Condensation is gas → liquid. Changing to a state where the particles are closer together releases heat. That released heat is what powers thunderstorms and hurricanes."],
+ ["Sublimation is a change from…", ["Solid to gas","Gas to solid","Liquid to gas","Solid to liquid"], "Sublimation skips the liquid stage: ice or snow turns straight into water vapour. It absorbs heat. (The reverse, gas straight to solid, is called deposition.)"],
+ ["Sweat cooling you down is an example of…", ["Evaporation absorbing heat","Condensation releasing heat","Melting releasing heat","Freezing absorbing heat"], "Evaporation (liquid → gas) absorbs heat. The sweat takes that heat from your skin as it evaporates, so you cool down. Melting and evaporation absorb heat; freezing and condensation release it."],
+ ["Ice at 0 °C keeps absorbing heat but stays at 0 °C until it has all melted. Where does the energy go?", ["Into changing the state: latent heat of fusion","It is destroyed as the ice melts","Into the latent heat of vapourization","Into cooling the ice below 0 °C"], "\"Latent\" means hidden. This energy changes the state, not the temperature, so a thermometer doesn't show it. Fusion = melting/freezing. Vapourization = evaporating/condensing."],
+ ["In the water cycle, energy is absorbed where water ______ and released where it ______.", ["evaporates; condenses","condenses; evaporates","freezes; melts","condenses; sublimates"], "The water cycle moves energy as well as water. Water evaporating from warm oceans absorbs heat; when that vapour condenses into clouds, often far away, it releases the heat into the air there."],
+ ["Why is the equator warmer than the poles?", ["Sunlight hits it more directly, concentrating the energy","It is much closer to the Sun than the poles are","It has more oceans, which make their own heat","The poles get no sunlight at any time of year"], "Earth is a sphere. Near the poles, sunlight arrives at a low angle, so the same energy is spread over a bigger area and passes through more air. This unequal heating drives winds and ocean currents."],
+ ["Air over a warm surface becomes…", ["Less dense, so it rises and creates low pressure","More dense, so it sinks and creates high pressure","Less dense, so it sinks","More dense, so it rises"], "Warm air expands and becomes less dense, so it rises: low pressure below. Cold air is denser and sinks: high pressure. Air then flows from high to low pressure as wind."],
+ ["Wind blows…", ["From high pressure to low pressure","From low pressure to high pressure","Only from the ocean to the land","Only from north to south"], "Air is pushed from where the pressure is high toward where it is low. The bigger the difference over a short distance, the stronger the wind."],
+ ["An air mass is…", ["A huge body of air with about the same temperature and humidity","The boundary where a warm and a cold body of air meet","A spinning storm that forms around a low pressure centre","A layer of the atmosphere, such as the troposphere"], "An air mass takes on the temperature and humidity of the surface it forms over. Where two air masses meet, there is a front."],
+ ["Which air mass is WARM and MOIST?", ["Maritime tropical (mT)","Continental polar (cP)","Continental tropical (cT)","Maritime polar (mP)"], "Maritime = forms over water = moist. Tropical = warm. mT air forms over the warm Caribbean and Gulf of Mexico."],
+ ["A cold, dry air mass that forms over the land in the far north is…", ["Continental polar (cP)","Maritime tropical (mT)","Maritime polar (mP)","Continental tropical (cT)"], "Continental = forms over land = dry. Polar = cold. So cP air is cold and dry. (Arctic air, from over the Arctic ice, is even colder.)"],
+ ["Maritime polar (mP) air forms over…", ["Cold northern oceans, so it is cool and humid","Hot, dry land in Mexico","The frozen Arctic land, so it is dry","The warm Gulf of Mexico"], "Maritime = over water = humid. Polar = cold. mP air is cold and humid in winter and cool and humid in summer. Continental tropical (cT) air is the one from hot, dry land in the southwestern U.S. and Mexico."],
+ ["A HIGH pressure system usually brings…", ["Clear, dry weather: air sinks and winds blow outward, clockwise","Clouds and precipitation: air rises and winds blow inward","Thunderstorms every afternoon","Fog, because the air is rising"], "In a high, cool dense air sinks and spreads out. Sinking air warms, so clouds don't form. In the northern hemisphere the winds blow outward and clockwise."],
+ ["In the northern hemisphere, air around a LOW pressure system moves…", ["Counterclockwise and inward, bringing clouds and precipitation","Clockwise and outward, bringing clear, dry skies and sun","Clockwise and inward, bringing clear skies and calm air","Counterclockwise and outward, bringing dry, sunny weather"], "In a low, warm air rises, so the surrounding air flows in and turns counterclockwise. Rising air cools and its water vapour condenses into clouds, rain or snow."],
+ ["In the northern hemisphere, the Coriolis effect turns moving air…", ["To the right","To the left","Toward the equator, always","It doesn't turn: it goes straight"], "Earth's rotation makes anything moving straight across its surface curve: to the right in the northern hemisphere and to the left in the southern hemisphere."],
+ ["Global wind belts form because…", ["Unequal heating makes convection currents that Earth's spin turns","The Moon's gravity pulls the air around Earth in loops","Mountain ranges push the air sideways into belts","Ocean currents drag the air along above them"], "The equator is heated more than the poles, so air rises in some places and sinks in others, making convection loops. Earth's spin turns those winds so they blow from the east or the west."],
+ ["Which winds carry most weather across Canada, and which way?", ["The prevailing westerlies, from west to east","The trade winds, from east to west","The polar easterlies, from south to north","The jet stream, from north to south"], "Most of southern Canada, where most people live, is between 30° and 60° N, where the prevailing westerlies blow. That's why weather in Ontario often reaches Newfoundland a day or two later."],
+ ["Between the equator and 30°, the trade winds blow…", ["Toward the equator, from the east","Toward the poles, from the west","Straight north","From the west"], "Trade winds blow toward the equator from the east (from the north-east in the northern hemisphere). Polar easterlies blow from the east between 60° and the poles. Westerlies blow between 30° and 60°."],
+ ["The polar jet stream affects our weather by…", ["Steering storms along its path and making them stronger","Blocking every storm from reaching Atlantic Canada","Heating the ocean surface far below it, day and night","Pushing all the clouds up into the stratosphere"], "Jet streams are very fast winds high in the troposphere (about 10–12 km up). Storms tend to form along the jet stream, follow it, and are strengthened by it."],
+ ["Which front brings short, heavy rain or thunderstorms, then colder air?", ["Cold front","Warm front","Stationary front","Occluded front"], "At a cold front, cold air pushes under warm air and lifts it steeply. Fast-rising air makes tall clouds and short, heavy storms. Colder air arrives behind it."],
+ ["A warm front usually brings…", ["Long, steady precipitation as warm air slides up over cold air","Short, violent thunderstorms as cold air lifts warm air steeply","Clear skies, because the warm air sinks below the cold air","No change, because warm fronts never bring clouds"], "At a warm front, warm air slides gently up and over the cold air. The gentle rise makes wide layers of cloud and long, steady rain or snow ahead of the front."],
+ ["An occluded front forms when…", ["A cold front catches up to a warm front and lifts the warm air","A warm front stops moving and stays in one place for days","Two warm air masses meet and both rise together","A cold front moves out over the ocean and slows down"], "Cold fronts move faster than warm fronts. When one catches up, the warm air between them is lifted completely off the ground. Map symbol: purple, with triangles and half-circles on the same side."],
+ ["On a weather map, a red line with half-circles is a…", ["Warm front","Cold front","Stationary front","Isobar"], "Warm front = red half-circles. Cold front = blue triangles. Stationary = red half-circles and blue triangles on opposite sides. Occluded = purple, both on the same side."],
+ ["Surface ocean currents are driven mainly by…", ["Wind","Differences in density","The Moon","Earthquakes"], "Surface currents are pushed by the wind. They carry warm water from the tropics toward the poles and cold water back toward the equator, moving thermal energy around Earth."],
+ ["The Labrador Current is…", ["A cold current flowing south past us, bringing icebergs","A warm current flowing north from the Caribbean","A slow, deep current along the floor near the equator","A fast wind high in the atmosphere above Labrador"], "The Labrador Current brings cold Arctic water (and icebergs) south along our coast and cools it. The Gulf Stream is the warm one."],
+ ["Which two currents meet off Newfoundland and cause fog?", ["The warm Gulf Stream and the cold Labrador Current","The Labrador Current and the trade winds","The Gulf Stream and the jet stream","Two deep ocean currents"], "Warm, moist air over the Gulf Stream drifts over the cold Labrador Current. The air cools and its water vapour condenses into fog over the Grand Banks."],
+ ["Deep ocean currents are caused by differences in…", ["Temperature and salt content (density)","Wind speed and direction at the surface","The phases of the Moon each month","Air pressure above the ocean"], "Cold, salty water is dense, so it sinks near the poles and creeps along the ocean floor. This drives a slow, worldwide conveyor belt that carries heat. Surface currents, by contrast, are pushed by wind."]
+],
+/* Unit 1, Unit Test review: extreme weather, instruments, forecasting, climate change */
+wx2: [
+ ["What keeps the air rising inside a growing thunderstorm?", ["Condensing water vapour releases heat, keeping the air warm","Cold air sinking from above pushes the warm air up","Lightning heats the air inside the cloud, so it rises","The Coriolis effect spins the air upward faster"], "As warm, moist air rises it cools and its water vapour condenses, releasing heat. That heat keeps the air warmer (less dense) than the air around it, so it keeps rising and builds a cumulonimbus cloud (thunderhead)."],
+ ["The MATURE stage of a thunderstorm is when…", ["Updrafts and downdrafts both happen; the storm is at its worst","Only updrafts happen, as the cumulus cloud grows taller","The downdraft cuts off the warm air and the storm fades","The cloud is just starting to form from rising air"], "Three stages: cumulus (updraft only) → mature (updraft and downdraft: the worst weather) → dissipating (the downdraft cuts off the warm air)."],
+ ["You see lightning and hear the thunder 9 seconds later. About how far away is the storm?", ["3 km","9 km","27 km","1 km"], "Light arrives almost instantly, but sound travels about 1 km every 3 seconds. Seconds ÷ 3 = distance in km: 9 ÷ 3 = 3 km."],
+ ["A tornado is…", ["A violent, rotating funnel of air that touches the ground","A spinning storm that forms over warm ocean water","A funnel cloud that stays high up and never lands","A winter storm with strong winds and blowing snow"], "Strong winds high up make the rising air in a big thunderstorm rotate into a funnel cloud. Once it touches the ground it is a tornado. Tornadoes are rated EF0 to EF5 by the damage they do."],
+ ["Why are tornadoes rare in Newfoundland?", ["The cold ocean keeps the air near the ground cool and stable","Newfoundland is too far north to have thunderstorms","The Labrador Current blows them away","Tornadoes only form in the southern hemisphere"], "Tornadoes need strong, unstable rising air. The cold ocean around us keeps the air near the ground cool and stable."],
+ ["Where does a hurricane get its energy?", ["Heat released as water vapour from the warm ocean condenses","Cold, dry Arctic air clashing with warm, humid air","The jet stream's fast winds feeding it from above","Electricity from lightning strikes heating its centre"], "Warm air picks up moisture from warm ocean water and rises. The vapour condenses and releases heat, so the air rises faster, the surface pressure drops, more air rushes in, and the Coriolis effect spins it."],
+ ["A hurricane needs ocean water of about…", ["About 26.5 °C or warmer","About 0 °C or warmer","About 10 °C or warmer","About 50 °C or warmer"], "Hurricanes form over ocean water of about 26.5 °C or warmer, at least about 5° from the equator (so the Coriolis effect can spin them). That's why the season is late summer to early fall, when the oceans hold the most heat."],
+ ["Why does a hurricane weaken once it moves over land or cold water?", ["It loses its supply of warm, moist air","The Coriolis effect is stronger over land","Land reflects all of its rain","Cold water makes it spin faster"], "A hurricane runs on the heat released by condensing water vapour from warm ocean water. Over land or cold water that fuel is cut off."],
+ ["The calm centre of a hurricane is the…", ["Eye","Eyewall","Rainband","Anvil"], "The eye is calm, often with clear sky. The eyewall around it has the strongest winds. Spiral rainbands curl out from the centre."],
+ ["A storm is called a hurricane once its sustained winds are more than…", ["119 km/h","40 km/h","10 km/h","500 km/h"], "A tropical storm becomes a hurricane at sustained winds over 119 km/h. The same kind of storm is called a typhoon in the western Pacific and a cyclone near the Indian Ocean."],
+ ["A nor'easter gets its energy from…", ["Cold Arctic air clashing with warm, humid air from the south","Warm tropical ocean water, the same way as a hurricane","Sea breezes blowing in from the cold Labrador Current","Heat from El Niño warming the whole Atlantic"], "A nor'easter can have hurricane-force winds, but its energy comes from the big temperature difference between two clashing air masses, not from warm tropical water. Usually September to April."],
+ ["By the textbook's definition, a blizzard has…", ["Winds over 56 km/h, visibility under 0.5 km, for 3+ hours","More than 30 cm of new snow falling in a single day","Any snowfall that comes with a strong wind","Temperatures below −30 °C with light snow"], "A blizzard is defined by wind, visibility and time, not by how much snow falls. The snow can be blowing off the ground rather than falling."],
+ ["El Niño is when…", ["Surface water in the eastern Pacific near the equator warms","The Atlantic Ocean near Newfoundland freezes over","The trade winds across the Pacific become much stronger","The jet stream disappears for the whole winter"], "During El Niño the winds across the South Pacific weaken and can even reverse to flow east, and warm surface water spreads to the eastern Pacific. It changes weather patterns around the world."],
+ ["La Niña is when…", ["Westward winds across the Pacific strengthen; equator water cools","The eastern Pacific near the equator warms more than normal","The winds across the Pacific reverse and flow to the east","The Gulf Stream stops flowing past Newfoundland"], "La Niña is the opposite of El Niño. In eastern North America it tends to bring colder, snowier winters and longer, more powerful tornado and hurricane seasons."],
+ ["During an El Niño year, the Atlantic coast usually gets…", ["Fewer, weaker hurricanes","More, stronger hurricanes","No change at all","Tornadoes every week"], "El Niño changes about a quarter of the world's weather patterns. For North America's west coast it brings warm, wet winters; for the Atlantic coast, fewer and weaker hurricanes and tornadoes."],
+ ["A barometer measures ______, and a FALLING reading means ______.", ["air pressure (kPa); a low is coming","air pressure (kPa); fair weather is coming","temperature (°C); it is cooling","humidity (%); the air is drying out"], "A barometer measures atmospheric pressure in kilopascals. Falling pressure means a low is approaching; rising pressure usually means fair weather."],
+ ["An anemometer measures…", ["Wind speed","Wind direction","Air pressure","Humidity"], "Anemometer = wind speed (km/h; the wind spins its cups). Wind vane = direction. Barometer = pressure (kPa). Hygrometer = relative humidity (%). Rain gauge = rainfall (mm)."],
+ ["A wind vane's arrow points…", ["In the direction the wind is coming FROM","In the direction the wind is going","Always north","Toward low pressure"], "A west wind comes from the west, and the wind vane's arrow points west. Winds are always named for where they come from."],
+ ["A hygrometer measures…", ["Relative humidity (%)","Rainfall (mm)","Air pressure (kPa)","Wind speed (km/h)"], "Relative humidity compares the water vapour in the air with the most the air could hold at that temperature. With wet and dry bulbs: the bigger the difference between them, the drier the air."],
+ ["The main job of weather radar is to…", ["Find precipitation: where it is and how heavy","Take pictures of clouds from orbit around Earth","Measure the air pressure at the ground","Measure the temperature high in the sky"], "Radar sends out radio waves that bounce off rain, snow and hail, even through cloud. Doppler radar also shows which way and how fast a storm is moving. Satellites are the ones that watch clouds from orbit."],
+ ["Which two are examples of remote sensing?", ["Weather radar and weather satellites","A thermometer and a barometer","A rain gauge and a wind vane","An anemometer and a hygrometer"], "Remote sensing collects data from a distance, without touching what it observes. The other instruments measure the weather right where they are."],
+ ["A weather balloon carries a radiosonde. What does it do?", ["Measures conditions high up and radios the data down","Takes pictures of Earth's clouds from orbit","Measures rainfall at a weather station on the ground","Seeds clouds so that rain falls from them"], "The radiosonde sends data as the balloon rises. Tracking the balloon also gives wind speed and direction. High up the balloon bursts and a parachute brings the radiosonde back down."],
+ ["Which is a QUANTITATIVE weather observation?", ["The wind is 40 km/h from the west","It looks much foggier than it did yesterday","The sky looks dark and stormy to the west","It feels very cold outside this morning"], "Quantitative observations are measurements with numbers, made with instruments. Qualitative observations describe what you notice with your senses."],
+ ["On a weather map, isotherms join places that have the same…", ["Temperature","Air pressure","Rainfall","Wind speed"], "Isotherms join places with equal temperature. Isobars join places with equal pressure; the closer together the isobars, the stronger the wind."],
+ ["On a weather map, isobars drawn very close together mean…", ["Strong winds","No wind at all","Heavy fog","Very high temperatures"], "Close isobars mean the pressure changes a lot over a short distance, so air rushes from high to low pressure: strong wind."],
+ ["After a cold front passes, the weather usually becomes…", ["Colder and clearing, with pressure rising","Warmer and more humid, with pressure falling","Foggy for several days, with no wind","Calm, with long, steady rain for a day"], "Ahead of the warm front: thickening cloud and long, steady precipitation. Between the fronts: warm and humid. Behind the cold front: colder, clearing, pressure rising."],
+ ["Which forecast is the MOST reliable?", ["A short range forecast for tomorrow","A long range forecast for 7 days from now","They are always equally reliable","A forecast for next month"], "Short range forecasts cover up to 48 hours and are quite accurate. Long range forecasts cover 3 to 7 days and are less reliable. The farther ahead, the less reliable."],
+ ["Persistence forecasting assumes…", ["The current weather will continue","The weather will be the same as last year","The opposite weather is coming","Computer models are always right"], "Persistence works for a few hours. Nowcasting (up to about 6 hours) tracks storms with radar and satellites. Longer forecasts use computer models and statistics of past weather."],
+ ["Why can a forecast for your own town be wrong even when the models are good?", ["Models can't predict effects of local terrain and winds","Forecasters pick the weather at random each day","Satellites can't see clouds over small towns","The weather never changes, so models overthink it"], "The atmosphere is one of the most unpredictable systems on Earth. Models make assumptions that fit some situations but not others, and they miss local effects like the cliffs at Cape St. Mary's."],
+ ["Today's 5-day forecast is about as accurate as a 2-day forecast was 20 years ago. Why?", ["Better satellites, radar, computers and models","The weather has become simpler","There are fewer storms now","Forecasts are only made for big cities"], "More and better data (satellites, radar, weather balloons) plus faster computers and better models have steadily improved forecasts."],
+ ["A very thin tree ring tells you that year was…", ["A hard year for growth, such as a drought","An excellent year for growth, with lots of rain","A normal year, like every other year","The year the tree was first planted"], "Each year a tree adds a ring. Thick rings mean good growing conditions; thin rings mean a harder year. Tree rings record droughts, floods and fires hundreds of years back."],
+ ["A fossil of a tropical fish is found in the rock of an Arctic island. What does it tell us?", ["That place once had a much warmer climate","Fish can live anywhere","The fossil was carried there by a bird","The Arctic has always been warm"], "Living things are adapted to their climate. A tropical fish fossil means the area was once warm enough for tropical fish, much further back than tree rings or ice cores can reach."],
+ ["How do ice cores tell us about past climates?", ["Yearly layers trap air, dust and pollen that can be tested","The colour of the ice shows how much rain fell","Frozen fish fossils inside show the ocean temperature","Old ice melts faster, which shows how warm it was"], "Snow builds up in yearly layers. Air bubbles show past carbon dioxide and other gases; oxygen isotopes and ice crystals show temperature; dust and ash show eruptions and fires; pollen shows the plants alive then."],
+ ["The ENHANCED (anthropogenic) greenhouse effect is caused mainly by…", ["Humans burning fossil fuels and cutting down forests","Volcanoes erupting more often than in the past","The ozone layer reflecting Earth's heat back down","Earth's orbit moving closer to the Sun each year"], "Anthropogenic means \"human-caused\". Burning fossil fuels and cutting forests add extra greenhouse gases, mostly carbon dioxide. They absorb more of the heat Earth gives off, so Earth keeps more energy than it loses and its average temperature rises."],
+ ["Which greenhouse gas comes from cows, flooded rice fields and landfills?", ["Methane","Carbon dioxide","Nitrous oxide","Oxygen"], "Methane absorbs about 25 times as much heat as carbon dioxide. Carbon dioxide comes mostly from burning fossil fuels and from deforestation; nitrous oxide from farming, fertilizers and vehicle exhaust."],
+ ["How does cutting down forests add to the greenhouse effect?", ["Fewer trees take in CO₂, and burning the debris releases more","Cut trees give off large amounts of methane as they dry","Bare stumps reflect more sunlight back up into the air","Logging machines thin the ozone layer above the forest"], "Trees remove carbon dioxide from the air for photosynthesis. Removing them leaves more CO₂ in the air, and burning logging debris adds even more."],
+ ["Climate change means…", ["Long-term changes in temperature, precipitation, wind and storms","Only that average temperatures are rising, nothing else","One unusually cold winter or one very hot summer","The hole in the ozone layer over Antarctica growing"], "Global warming is the rise in Earth's average temperature. Climate change is broader: long-term changes in all parts of the weather."],
+ ["Why are many corals turning white and dying?", ["Warm water makes them expel the algae that feed them","They are being eaten by more and more krill","Sea ice is spreading over the reefs and shading them","The water around them is getting colder each year"], "Corals depend on algae living inside them for food. In water that is too warm they push the algae out, turn white and can die."],
+ ["Sea level is rising mainly because…", ["Warm water expands, and melting land ice adds water","More rain is falling on the ocean than before","The ocean floor is slowly rising and pushing water up","Bigger waves are pushing more water onto the land"], "As water warms it takes up more space. Ice melting on land (glaciers, snow packs) adds new water to the ocean. Low-lying coasts flood, and the life there, including people, must move."],
+ ["Melting sea ice threatens polar bears because…", ["They hunt seals from the ice","They eat the ice","Ice keeps them warm","They lay eggs on the ice"], "Polar regions are warming the most. Less sea ice means less hunting ground for polar bears and harder travel and hunting for the Inuit."],
+ ["Thawing permafrost in Canada's North causes…", ["Shifting ground: houses collapse and trees tilt","More sea ice forming along the Arctic coast","Colder winters across all of Canada every year","Fewer mosquitoes, so diseases spread less"], "Permafrost is ground that stays frozen all year. When it thaws, the ground slumps and shifts. Climate change also spreads disease carriers, like the mosquitoes that carry West Nile virus."],
+ ["Someone says, \"It was a cold winter, so global warming isn't real.\" The best scientific reply is…", ["One winter is weather; climate is the long-term average, which is rising","Agree: one cold winter proves global warming is not happening","Winters don't count, because science only uses summer data","Weather and climate mean the same thing, so they're right"], "To defend a position: make a claim, back it with evidence (temperature records, ice cores, shrinking ice, rising seas) and explain how the evidence supports it."],
+ ["Which is SCIENTIFIC EVIDENCE that humans are changing the climate?", ["Ice cores: CO₂ is far above anything in 800 000 years","Many people say summers feel hotter than they used to","A news story about one bad heat wave last summer","It rained a lot more than usual last week"], "Good evidence is measured data: ice cores show CO₂ and temperature moving together for 800 000 years, and average temperatures have risen since the 1880s faster than before."]
+],
+/* Unit 2, Booklet #1: lab safety, atoms and ions, bonding, naming */
+chem1: [
+ ["In WHMIS, the 'W' stands for…", ["Workplace","Warning","Worldwide","Waste"], "WHMIS = Workplace Hazardous Materials Information System: Canada's system of warning symbols and safety information for dangerous materials."],
+ ["What does an SDS give you?", ["Safety information about one chemical","A list of every element and its mass","The steps for writing up a lab report","A map of the school's emergency exits"], "SDS = Safety Data Sheet. It covers the hazards of one substance, how to handle, store and dispose of it safely, and first aid if something goes wrong."],
+ ["The WHMIS 'flame over circle' pictogram warns of…", ["An oxidizing hazard","A flammable hazard","A gas under pressure","A corrosive material"], "Oxidizers can start a fire or make one burn hotter, for example by giving off oxygen. The plain flame is for flammable materials; the gas cylinder is for gases under pressure; corrosion is for corrosive materials."],
+ ["Which WHMIS pictogram has a round border instead of a red diamond?", ["Biohazardous infectious materials","Skull and crossbones (acute toxicity)","Exploding bomb (explosive hazards)","Health hazard (chronic health effects)"], "Biohazardous infectious materials use a round black border. The others are in red diamonds. Skull and crossbones = acute toxicity (can kill)."],
+ ["The halogens are in group…", ["17","1","2","18"], "Group 1 = alkali metals, group 2 = alkaline earth metals, group 17 = halogens, group 18 = noble gases."],
+ ["Why don't the noble gases normally form ions?", ["Their valence shells are already full","They have no valence electrons at all","They are metals, so they share electrons","They are too heavy to lose electrons"], "Atoms gain or lose electrons to get a full outer shell. Noble gases already have one, so they are stable as they are."],
+ ["Hydrogen is a special case on the periodic table because it…", ["Can lose an electron (H⁺) or gain one (H⁻)","Is a noble gas with a full outer shell","Has no protons, only one electron","Is the heaviest element in the universe"], "Hydrogen doesn't belong to one group. Sometimes it loses its electron (H⁺), sometimes it gains one (H⁻), and sometimes it shares (H₂O, NH₃)."],
+ ["Metals usually form…", ["Positive ions (cations) by losing electrons","Negative ions (anions) by gaining electrons","No ions at all","Neutral molecules"], "Metals have only a few valence electrons, so it's easier to give them away. Losing negative electrons leaves more protons than electrons: a positive ion."],
+ ["A negative ion is called…", ["An anion","A cation","A molecule","An isotope"], "Cation = positive (lost electrons). Anion = negative (gained electrons). Non-metal anions get an -ide ending: chloride, oxide, nitride."],
+ ["A chlorine atom (2, 8, 7) becomes an ion by…", ["Gaining 1 electron to become Cl⁻","Losing 7 electrons to become Cl⁷⁺","Gaining 2 electrons to become Cl²⁻","Losing 1 electron to become Cl⁺"], "Chlorine needs just 1 more electron to fill its outer shell. 17 protons and 18 electrons gives a charge of 1−."],
+ ["Sodium (2, 8, 1) forms which ion?", ["Na⁺","Na⁻","Na²⁺","Na⁷⁻"], "Losing its one valence electron is much easier than gaining 7. Then it has 11 protons and 10 electrons (2, 8): a charge of 1+."],
+ ["How are the 12 electrons arranged in a magnesium ATOM?", ["2, 8, 2","2, 10","8, 4","2, 8, 8"], "Fill the shells from the inside: 2, then 8, then the last 2. The ion Mg²⁺ loses those last 2, leaving 2, 8."],
+ ["How many electrons does the ion Mg²⁺ have?", ["10","12","14","2"], "A magnesium atom has 12 protons and 12 electrons. It loses 2 electrons, leaving 10. 12 protons − 10 electrons = a charge of 2+."],
+ ["Sodium has atomic number 11 and an atomic mass of 23. How many neutrons does it have?", ["12","11","23","34"], "Neutrons = atomic mass (rounded) − atomic number = 23 − 11 = 12. The atomic number is the number of protons."],
+ ["In an ionic bond, electrons are…", ["Transferred from a metal to a non-metal","Shared equally between two non-metals","Destroyed as the two ions attract","Shared between two metal atoms"], "Ionic = transfer: the metal gives electrons to the non-metal, then the positive and negative ions attract. Covalent = sharing between non-metals."],
+ ["Which pair of elements would form an IONIC compound?", ["Potassium and sulfur","Carbon and oxygen","Nitrogen and hydrogen","Sulfur and oxygen"], "Potassium is a metal and sulfur is a non-metal, so they form ions: K₂S. The other pairs are two non-metals, so they share electrons and form molecular compounds."],
+ ["Which is a MOLECULAR compound?", ["CO₂","NaCl","CaCO₃","KMnO₄"], "CO₂ is made of two non-metals joined by covalent bonds. NaCl, CaCO₃ and KMnO₄ each have a metal ion, so they are ionic."],
+ ["Which property belongs to IONIC compounds?", ["High melting points; hard, brittle crystals","Low melting points; soft, waxy solids","Usually gases or liquids at room temperature","Never conduct electricity, even when melted"], "Ionic compounds are crystalline solids held together by strong attractions throughout the lattice, so their melting points are high. They conduct electricity when dissolved or melted."],
+ ["Which compound conducts electricity when dissolved in water?", ["NaCl (table salt)","C₁₂H₂₂O₁₁ (sucrose)","CH₄ (methane)","H₂O₂ (hydrogen peroxide)"], "NaCl is ionic. In water it separates into Na⁺ and Cl⁻ ions that can move and carry current. Molecular compounds like sucrose don't form ions."],
+ ["Which element exists as a diatomic molecule?", ["Nitrogen (N₂)","Neon (Ne)","Sodium (Na)","Carbon (C)"], "Remember HONClBrIF: H₂, O₂, N₂, Cl₂, Br₂, I₂, F₂. Phosphorus (P₄) and sulfur (S₈) are special polyatomic elements."],
+ ["The correct name for CO is…", ["carbon monoxide","monocarbon monoxide","carbon oxide","carbon(II) oxide"], "Molecular: use prefixes, but never 'mono' on the first element. Drop the double vowel: 'monooxide' becomes 'monoxide'."],
+ ["The correct name for N₂O₄ is…", ["dinitrogen tetroxide","nitrogen oxide","nitrogen(IV) oxide","dinitrogen pentoxide"], "Both elements are non-metals, so use prefixes: 2 = di, 4 = tetra. Drop the double vowel: 'tetraoxide' becomes 'tetroxide'."],
+ ["The correct name for P₄O₁₀ is…", ["tetraphosphorus decoxide","phosphorus oxide","tetraphosphorus decaoxide","phosphorus(X) oxide"], "4 = tetra, 10 = deca. 'decaoxide' drops the double vowel to become 'decoxide'. Roman numerals are only for multivalent metals in ionic compounds."],
+ ["The formula for carbon tetrachloride is…", ["CCl₄","C₄Cl","CCl","C₄Cl₄"], "Prefixes become subscripts: no prefix on carbon = 1, tetra = 4 chlorines."],
+ ["The formula for sulfur hexafluoride is…", ["SF₆","S₆F","SF","S₆F₆"], "No prefix on sulfur = 1 sulfur. Hexa = 6 fluorines. Prefixes: mono 1, di 2, tri 3, tetra 4, penta 5, hexa 6, hepta 7, octa 8, nona 9, deca 10."],
+ ["Laughing gas is…", ["N₂O, dinitrogen monoxide","NO₂, nitrogen dioxide","NH₃, ammonia","O₃, ozone"], "Learn the common ones: water H₂O, methane CH₄, ammonia NH₃, hydrogen peroxide H₂O₂, laughing gas N₂O, ozone O₃, glucose C₆H₁₂O₆, sucrose C₁₂H₂₂O₁₁."],
+ ["Glucose has the formula…", ["C₆H₁₂O₆","C₁₂H₂₂O₁₁","CH₄","H₂O₂"], "Glucose = C₆H₁₂O₆. Sucrose (table sugar) = C₁₂H₂₂O₁₁. Methane = CH₄. Hydrogen peroxide = H₂O₂."],
+ ["Ammonia has the formula…", ["NH₃","NH₄","N₂O","NO₃"], "Ammonia = NH₃. NH₄⁺ is the ammonium ion, N₂O is laughing gas, and NO₃⁻ is the nitrate ion."],
+ ["The formula for aluminum oxide is…", ["Al₂O₃","AlO","Al₃O₂","AlO₃"], "Al³⁺ and O²⁻. Criss-cross the charge numbers: Al₂O₃. Check: 2(+3) + 3(−2) = 0."],
+ ["The formula for calcium oxide is…", ["CaO","Ca₂O₂","Ca₂O","CaO₂"], "Ca²⁺ and O²⁻ criss-cross to Ca₂O₂, then reduce to the lowest ratio: CaO. Check: +2 − 2 = 0."],
+ ["The formula for lithium nitride is…", ["Li₃N","LiN₃","LiN","Li₂N₃"], "Li⁺ and N³⁻. It takes three 1+ charges to balance one 3− charge, so Li₃N."],
+ ["The correct name for FeCl₃ is…", ["iron(III) chloride","iron chloride","iron trichloride","iron(I) chloride"], "Iron is multivalent. 3 chlorides × (1−) = 3−, on 1 iron, so the iron is 3+: iron(III). Ionic compounds never use prefixes like 'tri'."],
+ ["The correct name for CuF is…", ["copper(I) fluoride","copper(II) fluoride","copper fluoride","copper monofluoride"], "Copper is multivalent. One fluoride is 1−, so the one copper must be 1+: copper(I)."],
+ ["The correct name for PbO₂ is…", ["lead(IV) oxide","lead(II) oxide","lead dioxide","lead(I) oxide"], "2 oxides × (2−) = 4− in total, on 1 lead, so the lead is 4+: lead(IV) oxide. Always do the math; don't just read the subscript."],
+ ["The formula for iron(III) oxide is…", ["Fe₂O₃","FeO","FeO₃","Fe₃O₂"], "The (III) means Fe³⁺. With O²⁻, criss-cross: Fe₂O₃. Check: 2(+3) + 3(−2) = 0."],
+ ["The formula for magnesium hydroxide is…", ["Mg(OH)₂","MgOH₂","Mg₂(OH)","Mg₂OH"], "Mg²⁺ needs two OH⁻. When you need more than one polyatomic ion, put it in brackets: Mg(OH)₂."],
+ ["The formula for ammonium phosphate is…", ["(NH₄)₃PO₄","NH₄PO₄","NH₄(PO₄)₃","(NH₄)₂PO₄"], "Ammonium is NH₄⁺ and phosphate is PO₄³⁻. It takes three 1+ ions to balance one 3− ion, and the brackets show three whole ammonium ions."],
+ ["The correct name for Na₂CO₃ is…", ["sodium carbonate","disodium carbonide","sodium carbon oxide","sodium(II) carbonate"], "CO₃²⁻ is the polyatomic ion carbonate. Use its name exactly as on your ion sheet. Sodium is not multivalent, so no Roman numeral."],
+ ["The correct name for Mg(NO₂)₂ is…", ["magnesium nitrite","magnesium nitrate","magnesium nitride","magnesium(II) nitrite"], "NO₂⁻ is nitrite and NO₃⁻ is nitrate. Nitride is N³⁻ on its own. Magnesium is not multivalent, so no Roman numeral."],
+ ["Why do molecular compounds need prefixes but ionic compounds don't?", ["Two non-metals can combine in more than one ratio (CO, CO₂)","Ionic compounds are too small to need any prefixes","Prefixes only work when a metal is in the compound","Molecular compounds have charges that must be shown"], "In an ionic compound the charges decide the ratio, so there is only one possible formula. Non-metals share electrons in different ratios, so the prefix tells you which compound it is."]
+],
+/* Unit 2, Booklet #2: equations, conservation of mass, reaction types, acids and bases, rates */
+chem2: [
+ ["In CH₄ + 2O₂ → CO₂ + 2H₂O, the PRODUCTS are…", ["CO₂ and H₂O","CH₄ and O₂","Only CO₂","CH₄, O₂, CO₂ and H₂O"], "Reactants are what you start with, on the left of the arrow. Products are what is made, on the right."],
+ ["How many HYDROGEN atoms are in 2H₂O?", ["4","2","3","1"], "Multiply the coefficient by the subscript: 2 × 2 = 4 hydrogen atoms (and 2 × 1 = 2 oxygen atoms)."],
+ ["How many OXYGEN atoms are in Ca(OH)₂?", ["2","1","3","4"], "The 2 outside the brackets multiplies everything inside: (OH)₂ = 2 O and 2 H."],
+ ["How many OXYGEN atoms are in 3Al₂(SO₄)₃?", ["36","12","4","7"], "Inside one formula: (SO₄)₃ has 4 × 3 = 12 oxygen. The coefficient 3 means three formulas: 3 × 12 = 36."],
+ ["How many atoms in total are in one molecule of C₆H₁₂O₆?", ["24","3","6","72"], "6 carbon + 12 hydrogen + 6 oxygen = 24 atoms."],
+ ["When balancing an equation, you may change…", ["Only the coefficients","Only the subscripts","Both coefficients and subscripts","Nothing"], "Changing a subscript makes a different substance (H₂O → H₂O₂ turns water into hydrogen peroxide). Only change the coefficients in front."],
+ ["On its own (not in a compound), chlorine is written as…", ["Cl₂","Cl","Cl⁻","Cl₃"], "HONClBrIF: hydrogen, oxygen, nitrogen, chlorine, bromine, iodine and fluorine come in pairs when they are on their own. In a compound, use the charges instead (NaCl)."],
+ ["3.4 g of H₂ reacts with 10 g of O₂. What mass of water forms?", ["13.4 g","6.6 g","10 g","34 g"], "Law of conservation of mass: mass of reactants = mass of products. 3.4 g + 10 g = 13.4 g."],
+ ["23.6 g of HgO breaks down into Hg and 13.0 g of O₂. What mass of Hg forms?", ["10.6 g","36.6 g","13.0 g","23.6 g"], "The products must add up to 23.6 g. 23.6 g − 13.0 g = 10.6 g of mercury."],
+ ["Lithium reacts with 5.7 g of oxygen to make 24.6 g of lithium oxide. What mass of lithium reacted?", ["18.9 g","30.3 g","5.7 g","24.6 g"], "Reactants must add up to the 24.6 g of product. 24.6 g − 5.7 g = 18.9 g of lithium."],
+ ["15 g of baking soda + 10 g of vinegar in an open beaker leaves 23 g. What happened?", ["2 g of gas escaped; mass was conserved","2 g of mass was destroyed by the reaction","The scale is broken and needs fixing","2 g of mass turned into heat energy"], "Mass is never destroyed. 25 g went in; the 2 g that's 'missing' is carbon dioxide gas that escaped from the open beaker."],
+ ["Baking soda and vinegar react inside a sealed bag. Afterwards, the mass of the bag is…", ["The same as before","Less, because gas was made","More, because gas was made","Zero"], "Atoms are only rearranged, never made or destroyed. In a sealed container the gas can't escape, so the mass stays the same."],
+ ["Steel wool burns in an open dish and gets HEAVIER. Why?", ["Oxygen from the air joins the iron","Burning creates new iron atoms","The ash soaks up water from the air","The heat from the flame has mass"], "Mass is conserved: the extra mass is oxygen from the air that combined with the iron to form iron oxide."],
+ ["2H₂O → 2H₂ + O₂ is which type of reaction?", ["Decomposition","Formation (synthesis)","Single replacement","Combustion"], "One reactant breaks apart into two or more products: AB → A + B. That's decomposition."],
+ ["2Na + Cl₂ → 2NaCl is which type of reaction?", ["Formation (synthesis)","Decomposition","Single replacement","Combustion"], "Two reactants join into one product: A + B → AB. That's formation (synthesis)."],
+ ["Zn + 2HCl → ZnCl₂ + H₂ is which type of reaction?", ["Single replacement","Double replacement","Decomposition","Formation (synthesis)"], "An element (Zn) takes the place of an element in a compound (it replaces H): A + BC → AC + B is single replacement."],
+ ["AgNO₃ + NaCl → AgCl + NaNO₃ is which type of reaction?", ["Double replacement","Single replacement","Combustion","Decomposition"], "Two compounds swap partners: AB + CD → AD + CB. Ag ends up with Cl, and Na ends up with NO₃."],
+ ["CH₄ + 2O₂ → CO₂ + 2H₂O is which type of reaction?", ["Combustion","Formation (synthesis)","Double replacement","Decomposition"], "A hydrocarbon (a compound of only carbon and hydrogen) burns in oxygen and makes carbon dioxide and water. That's combustion."],
+ ["S₈ + 8O₂ → 8SO₂ is which type of reaction?", ["Formation (synthesis)","Combustion","Decomposition","Single replacement"], "Sulfur burns, but it is not a hydrocarbon, so in this course it is not combustion. Two reactants make one product: formation."],
+ ["3KOH + H₃PO₄ → K₃PO₄ + 3H₂O is a neutralization. Neutralization is a type of…", ["Double replacement","Single replacement","Formation (synthesis)","Decomposition"], "An acid and a base swap partners (AB + CD → AD + CB) to make a salt and water, so neutralization is a kind of double replacement."],
+ ["A gas stove has a yellow, sooty flame. What is happening?", ["Incomplete combustion: not enough oxygen","Complete combustion: plenty of oxygen","Neutralization of the gas by the air","Decomposition of the gas into elements"], "Complete combustion (plenty of oxygen) makes carbon dioxide and water, with a blue flame. Without enough oxygen it also makes carbon monoxide (CO) and soot (C), with a yellow flame."],
+ ["Why do homes need carbon monoxide detectors?", ["CO is colourless, odourless and poisonous","CO smells bad and makes rooms stuffy","CO makes flames burn a bright blue","CO is a strong acid that burns skin"], "You can't see or smell carbon monoxide, so a detector is the only warning. It comes from incomplete combustion in furnaces, stoves and engines."],
+ ["A solution with a pH of 3 is…", ["An acid","A base","Neutral","Pure water"], "Below 7 = acidic, 7 = neutral, above 7 = basic."],
+ ["A solution with a pH of 11 is…", ["A base","An acid","Neutral","A salt"], "Above 7 = basic. The higher the pH, the more basic."],
+ ["How many times more acidic is pH 2 than pH 4?", ["100 times","2 times","20 times","10 times"], "Each pH step is 10 times. Two steps = 10 × 10 = 100 times."],
+ ["How many times more acidic is pH 3 than pH 6?", ["1000 times","3 times","30 times","300 times"], "Three pH steps: 10 × 10 × 10 = 1000 times."],
+ ["In water, acids produce…", ["H⁺ ions","OH⁻ ions","Salt","No ions"], "Acids make H⁺ ions in water. Bases make OH⁻ ions. Because both make ions, both conduct electricity."],
+ ["A substance turns red litmus paper blue. It is…", ["A base","An acid","Neutral","A metal"], "Bases turn red litmus blue. Acids turn blue litmus red. Tip: Base = Blue."],
+ ["Which is a property of BASES?", ["Bitter taste and slippery feel","Sour taste","Reacts with most metals, like magnesium","Turns blue litmus red"], "Bases: bitter, slippery, turn red litmus blue, pH above 7, make OH⁻ in water. Acids: sour, turn blue litmus red, react with most metals, pH below 7, make H⁺ in water. Never taste or touch chemicals in the lab."],
+ ["Magnesium ribbon fizzes when it is dropped into a solution. The solution is most likely…", ["An acid","A base","Pure water","A salt solution"], "Acids react with most metals, like magnesium. The fizz is hydrogen gas."],
+ ["Phenolphthalein is added to oven cleaner (pH 13). What colour does it turn?", ["Pink","Colourless","Red","Green"], "Phenolphthalein is colourless in acids and neutral solutions, and pink in bases. Universal indicator and pH paper give a different colour for each pH."],
+ ["HNO₃ is…", ["An acid: nitric acid","A base called nitrogen hydroxide","A salt called nitrate","Neutral"], "HNO₃ makes H⁺ ions in water, so it is an acid. Many acids have formulas that start with H (HCl, H₂SO₄, HNO₃), but not everything that starts with H is an acid: H₂O is neutral."],
+ ["Which of these is a salt?", ["KBr","HNO₃","NaOH","CH₄"], "A salt is an ionic compound of a metal ion and a non-metal ion (not OH⁻). HNO₃ is an acid, NaOH is a base, and CH₄ is a molecular compound."],
+ ["When an acid reacts with a base, the products are…", ["A salt and water","Hydrogen and oxygen gas","Carbon dioxide and water","Two new, stronger acids"], "This is neutralization: acid + base → salt + water. Example: HCl + NaOH → NaCl + H₂O. The H⁺ and OH⁻ join to make water."],
+ ["You add base to an acid one drop at a time. When the amounts match exactly, the pH is…", ["7","1","10","14"], "As base is added the pH moves toward 7. It is exactly 7 (neutral) only when the acid and base amounts match."],
+ ["An antacid tablet (CaCO₃) fizzes in stomach acid. What are the bubbles?", ["Carbon dioxide","Hydrogen gas","Oxygen gas","Water vapour"], "A carbonate reacting with an acid makes a salt, water and carbon dioxide gas. Antacids neutralize extra stomach acid."],
+ ["According to collision theory, particles react when they collide…", ["With enough energy and the right orientation","Only when the room is dark and cool","Slowly, so they can stick together","Only when they are dissolved in water"], "Particles must collide, hit with enough energy (at least the activation energy), and hit facing the right way."],
+ ["Raising the temperature speeds up a reaction because the particles…", ["Move faster, colliding more often and harder","Get bigger, so they are easier to hit","Slow down, so they stick together longer","Turn into catalysts that lower the energy"], "Hotter particles move faster, so they collide more often and with more energy, so more collisions succeed. That's also why food lasts longer in the fridge."],
+ ["Why does powdered sugar react faster than a sugar cube?", ["More surface area, so more particles can collide","It is heavier, so its particles hit harder","It has more atoms per gram than a cube","It is colder, so it reacts more easily"], "Breaking a solid into small pieces exposes many more particles at once, so more collisions happen each second. Kindling catches fire faster than a big log for the same reason."],
+ ["Why does a more concentrated acid react faster with zinc?", ["More acid particles in the same space, so more collisions","Its particles are bigger, so they are easier to hit","It is always hotter than a weaker acid","Concentrated acids act as their own catalyst"], "Concentration is how much is dissolved in a given volume. More particles crowded together means they collide more often."],
+ ["A catalyst speeds up a reaction by…", ["Lowering the activation energy, without being used up","Making particles collide more often, then being used up","Heating the reactants so they move faster","Adding extra reactant particles to the mix"], "With a lower activation energy, more of the collisions that already happen have enough energy to work. A catalyst doesn't make particles collide more often. Enzymes in your body are catalysts."]
+]
+};
+
+/* balancing puzzles: [reactants], [products], lowest coefficients, type */
+const BAL = [
+ [["K","Cl2"],["KCl"],[2,1,2],"formation (synthesis)"],
+ [["Al","O2"],["Al2O3"],[4,3,2],"formation (synthesis)"],
+ [["N2","H2"],["NH3"],[1,3,2],"formation (synthesis)"],
+ [["N2","F2"],["NF3"],[1,3,2],"formation (synthesis)"],
+ [["Fe","O2"],["Fe2O3"],[4,3,2],"formation (synthesis)"],
+ [["P4","Cl2"],["PCl3"],[1,6,4],"formation (synthesis)"],
+ [["KClO3"],["KCl","O2"],[2,2,3],"decomposition"],
+ [["H2O2"],["H2O","O2"],[2,2,1],"decomposition"],
+ [["Ag2O"],["Ag","O2"],[2,4,1],"decomposition"],
+ [["CH4","O2"],["CO2","H2O"],[1,2,1,2],"combustion"],
+ [["C3H8","O2"],["CO2","H2O"],[1,5,3,4],"combustion"],
+ [["C2H6","O2"],["CO2","H2O"],[2,7,4,6],"combustion"],
+ [["Na","H2O"],["NaOH","H2"],[2,2,2,1],"single replacement"],
+ [["AgNO3","Cu"],["Cu(NO3)2","Ag"],[2,1,1,2],"single replacement"],
+ [["Zn","HCl"],["ZnCl2","H2"],[1,2,1,1],"single replacement"],
+ [["Al","HCl"],["AlCl3","H2"],[2,6,2,3],"single replacement"],
+ [["Cl2","KI"],["KCl","I2"],[1,2,2,1],"single replacement"],
+ [["CaCl2","Na3PO4"],["Ca3(PO4)2","NaCl"],[3,2,1,6],"double replacement"],
+ [["FeCl3","NaOH"],["Fe(OH)3","NaCl"],[1,3,1,3],"double replacement"],
+ [["KOH","H3PO4"],["K3PO4","H2O"],[3,1,1,3],"double replacement (neutralization)"]
+];
+
+const SRC = { wx1:"WEATHER · TEST #1 TOPICS", wx2:"WEATHER · UNIT TEST TOPICS", chem1:"CHEMISTRY · BOOKLET 1", chem2:"CHEMISTRY · BOOKLET 2", bal:"CHEMISTRY · BALANCING" };
+const REALMS = [
+ { id:"wx1",   name:"Weather Wastes", sub:"Unit 1 · Energy, air masses, pressure, winds, fronts, currents", mon:"STORMCLOUD",    deal:{ wx1:10 } },
+ { id:"wx2",   name:"Storm Peaks",    sub:"Unit 1 · Extreme weather, instruments, forecasting, climate change", mon:"HURRICANE EYE", deal:{ wx2:10 } },
+ { id:"chem1", name:"Ion Caverns",    sub:"Unit 2 · Booklet 1 · Safety, atoms, ions, naming", mon:"ION SLIME",     deal:{ chem1:10 } },
+ { id:"chem2", name:"Reaction Forge", sub:"Unit 2 · Booklet 2 · Equations, reactions, acids, rates", mon:"FORGE GOLEM",   deal:{ chem2:7, bal:3 } },
+ { id:"boss",  name:"Final Boss",     sub:"Everything mixed · 20 rounds", mon:"MIDTERM DEMON", deal:{ wx1:4, wx2:4, chem1:4, chem2:5, bal:3 } }
+];
+const HEARTS = 5;
+
+/* ---------- helpers ---------- */
+const $game = document.getElementById('game');
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+const fmt = f => esc(f).replace(/(\)|[A-Za-z])(\d+)/g, '$1<sub>$2</sub>');
+function parse(f) {
+  const stack = [{}]; let i = 0;
+  const num = () => { let s = ''; while (i < f.length && /\d/.test(f[i])) s += f[i++]; return s ? +s : 1; };
+  while (i < f.length) {
+    const ch = f[i];
+    if (ch === '(') { stack.push({}); i++; }
+    else if (ch === ')') { i++; const m = num(), top = stack.pop(), cur = stack[stack.length - 1]; for (const k in top) cur[k] = (cur[k] || 0) + top[k] * m; }
+    else { let el = f[i++]; while (i < f.length && /[a-z]/.test(f[i])) el += f[i++]; const m = num(), cur = stack[stack.length - 1]; cur[el] = (cur[el] || 0) + m; }
+  }
+  return stack[0];
+}
+const gcd = (a, b) => b ? gcd(b, a % b) : a;
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem('mq-' + k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem('mq-' + k, JSON.stringify(v)); } catch (e) {} }
+};
+
+/* ---------- game state ---------- */
+let G = null;
+
+function buildDeck(realm) {
+  const deck = [];
+  for (const [src, k] of Object.entries(realm.deal)) {
+    if (src === 'bal') shuffle(BAL).slice(0, k).forEach(b => deck.push({ kind:'bal', r:b[0], p:b[1], ans:b[2], type:b[3], src }));
+    else shuffle(BANK[src]).slice(0, k).forEach(([q, ch, ex]) => deck.push({ kind:'mc', q, right:ch[0], choices:shuffle(ch), ex, src }));
+  }
+  return shuffle(deck);
+}
+
+function start(id) {
+  const realm = REALMS.find(r => r.id === id);
+  G = { realm, deck: buildDeck(realm), i: 0, hp: HEARTS, xp: 0, right: 0, missed: [], answered: false };
+  renderQ();
+}
+
+/* ---------- screens ---------- */
+function home() {
+  G = null;
+  $game.innerHTML = `
+    <section class="card">
+      <h2>CHOOSE A REALM</h2>
+      <div class="realms">
+        ${REALMS.map(r => { const b = store.get('best-' + r.id); return `
+          <button class="realm${r.id === 'boss' ? ' boss' : ''}" type="button" data-realm="${r.id}" id="realm-${r.id}">
+            <canvas data-spr="${r.id}" aria-hidden="true"></canvas>
+            <span><b>${esc(r.name.toUpperCase())}</b><small>${esc(r.sub)}</small>
+            <small class="best">${b != null ? 'Best: ' + b + '%' : 'Not cleared yet'}</small></span>
+          </button>`; }).join('')}
+      </div>
+    </section>
+    <section class="card">
+      <h2>HOW TO PLAY</h2>
+      <ul class="how">
+        <li>You start with <b>${HEARTS} hearts</b>. A wrong answer costs one heart. Survive every round to clear the realm.</li>
+        <li>Each right answer hits the monster and earns <b>10 XP</b>. Get every round right to defeat it completely.</li>
+        <li>In the Reaction Forge and the Final Boss you also <b>balance equations</b>: type coefficients and watch the atom tally.</li>
+        <li>Keyboard: press <b>1–4</b> to answer and <b>Enter</b> to continue.</li>
+        <li>Keep your periodic table and polyatomic ion sheet handy, just like on the test.</li>
+        <li>Questions come from the Unit 1 reviews (Part 1 and Part 2) and from chemistry Booklets 1 and 2. Every run picks a new mix.</li>
+      </ul>
+    </section>`;
+  $game.querySelectorAll('canvas[data-spr]').forEach(c => drawSprite(c, c.dataset.spr));
+  $game.querySelectorAll('[data-realm]').forEach(b => b.onclick = () => start(b.dataset.realm));
+}
+
+const heartsHTML = () => '♥'.repeat(G.hp) + `<span class="gone">${'♥'.repeat(HEARTS - G.hp)}</span>`;
+
+function hud() {
+  const r = G.realm, total = G.deck.length;
+  return `
+  <section class="card" id="hud">
+    <div class="hud"><span class="hearts" role="img" aria-label="${G.hp} of ${HEARTS} hearts left">${heartsHTML()}</span><span class="xp">XP ${G.xp}</span></div>
+    <div class="arena">
+      <canvas id="mon" aria-hidden="true"></canvas>
+      <div>
+        <div class="mname">${esc(r.mon)}</div>
+        <div class="bar" aria-hidden="true"><i id="mhp" style="width:${100 * (total - G.right) / total}%"></i></div>
+        <div class="qcount">${esc(r.name)} · Round ${G.i + 1} of ${total}</div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function renderQ() {
+  const q = G.deck[G.i]; G.answered = false;
+  if (q.kind === 'mc') {
+    $game.innerHTML = `${hud()}
+      <section class="card">
+        <div class="tag">${SRC[q.src]}</div>
+        <p class="q" id="qtext">${esc(q.q)}</p>
+        <div class="opts" role="group" aria-labelledby="qtext">${q.choices.map((c, k) => `<button class="btn opt" type="button" data-k="${k}"><span class="k">${k + 1}</span><span>${esc(c)}</span></button>`).join('')}</div>
+        <div id="fb" aria-live="polite"></div>
+      </section>`;
+    $game.querySelectorAll('.opt').forEach(b => b.onclick = () => answerMC(+b.dataset.k));
+  } else {
+    let idx = 0;
+    const side = arr => arr.map(f => `<span class="sp"><input id="c${idx}" data-i="${idx++}" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="coefficient for ${esc(f)}" placeholder="1"> ${fmt(f)}</span>`).join(' <span class="op">+</span> ');
+    $game.innerHTML = `${hud()}
+      <section class="card">
+        <div class="tag">${SRC.bal} · BALANCE THE EQUATION</div>
+        <p class="q">Type a coefficient in each box. A blank box counts as 1.</p>
+        <div class="eq">${side(q.r)} <span class="op">→</span> ${side(q.p)}</div>
+        <div class="tally-wrap"><table class="tally" id="tally"></table></div>
+        <p class="hint">Change only the big numbers in front, never the small subscripts. Use the lowest whole numbers.</p>
+        <div class="row"><button class="btn primary" type="button" id="check">CHECK</button></div>
+        <div id="fb" aria-live="polite"></div>
+      </section>`;
+    $game.querySelectorAll('.eq input').forEach(inp => inp.addEventListener('input', () => { inp.value = inp.value.replace(/\D/g, ''); tally(); }));
+    document.getElementById('check').onclick = answerBal;
+    tally();
+    setTimeout(() => document.getElementById('c0')?.focus(), 30);
+  }
+  drawSprite(document.getElementById('mon'), G.realm.id);
+}
+
+function coefs() { return [...$game.querySelectorAll('.eq input')].map(i => i.value === '' ? 1 : +i.value); }
+
+function tally() {
+  const q = G.deck[G.i], c = coefs(), L = {}, R = {};
+  q.r.forEach((f, k) => { const p = parse(f); for (const e in p) L[e] = (L[e] || 0) + p[e] * c[k]; });
+  q.p.forEach((f, k) => { const p = parse(f); for (const e in p) R[e] = (R[e] || 0) + p[e] * c[q.r.length + k]; });
+  const els = [...new Set([...Object.keys(L), ...Object.keys(R)])];
+  document.getElementById('tally').innerHTML = `<tr><th scope="col">ATOM</th><th scope="col">LEFT</th><th scope="col">RIGHT</th></tr>` +
+    els.map(e => { const ok = L[e] === R[e], cl = ok ? 'ok' : 'no'; return `<tr><th scope="row" style="font:700 1rem var(--body);color:var(--ink)">${e}</th><td class="${cl}">${L[e] || 0}</td><td class="${cl}">${R[e] || 0}</td></tr>`; }).join('');
+  return els.every(e => L[e] === R[e]);
+}
+
+function hitMonster() {
+  G.right++; G.xp += 10;
+  const m = document.getElementById('mon'), bar = document.getElementById('mhp');
+  m.classList.remove('flash'); void m.offsetWidth; m.classList.add('flash');
+  document.querySelector('#hud .xp').textContent = 'XP ' + G.xp;
+  bar.style.width = (100 * (G.deck.length - G.right) / G.deck.length) + '%';
+}
+function getHit() {
+  G.hp--;
+  const w = document.getElementById('hud'); w.classList.remove('shake'); void w.offsetWidth; w.classList.add('shake');
+  const h = w.querySelector('.hearts'); h.innerHTML = heartsHTML(); h.setAttribute('aria-label', `${G.hp} of ${HEARTS} hearts left`);
+}
+
+function feedback(ok, html) {
+  const last = G.hp <= 0 || G.i === G.deck.length - 1;
+  document.getElementById('fb').innerHTML = `
+    <div class="callout ${ok ? 'good' : 'bad'}"><h3>${ok ? 'CRITICAL HIT!' : "OUCH! HERE'S WHY"}</h3><p>${html}</p></div>
+    <div class="row"><button class="btn primary" type="button" id="next">${last ? 'SEE RESULTS' : 'NEXT ▶'}</button></div>`;
+  const n = document.getElementById('next'); n.onclick = next; n.focus();
+}
+
+function answerMC(k) {
+  if (G.answered) return; G.answered = true;
+  const q = G.deck[G.i], ok = q.choices[k] === q.right;
+  $game.querySelectorAll('.opt').forEach((b, j) => {
+    b.disabled = true;
+    if (q.choices[j] === q.right) b.classList.add('right'); else if (j === k) b.classList.add('wrong');
+  });
+  if (ok) hitMonster(); else { getHit(); G.missed.push({ src: q.src, q: esc(q.q), a: esc(q.right), ex: esc(q.ex) }); }
+  feedback(ok, (ok ? '' : `The answer is <b>${esc(q.right)}</b>. `) + esc(q.ex));
+}
+
+function answerBal() {
+  if (G.answered) return;
+  const q = G.deck[G.i], c = coefs(), fb = document.getElementById('fb');
+  if (c.some(n => n < 1)) { fb.innerHTML = `<p class="hint bad">Every coefficient must be 1 or more.</p>`; return; }
+  const balanced = tally(), g = c.reduce(gcd);
+  if (balanced && g > 1) { fb.innerHTML = `<p class="hint warn">Balanced, but not the lowest whole numbers. Divide every coefficient by ${g} and check again.</p>`; return; }
+  G.answered = true;
+  $game.querySelectorAll('.eq input').forEach(i => i.disabled = true);
+  document.getElementById('check').disabled = true;
+  const eqStr = arr => arr.map(([n, f]) => (n > 1 ? n : '') + fmt(f)).join(' + ');
+  const ans = eqStr(q.r.map((f, k) => [q.ans[k], f])) + ' → ' + eqStr(q.p.map((f, k) => [q.ans[q.r.length + k], f]));
+  const typeTxt = ` This is a <b>${q.type}</b> reaction.`;
+  if (balanced) { hitMonster(); feedback(true, `Every atom count matches on both sides: ${ans}.${typeTxt}`); }
+  else {
+    getHit();
+    const ex = `The red rows in the tally show atoms that don't match yet. The balanced equation is ${ans}. Start with the biggest formula, count a polyatomic ion that stays the same on both sides as one unit, and leave lone elements for last.${typeTxt}`;
+    G.missed.push({ src: 'bal', q: 'Balance: ' + q.r.map(fmt).join(' + ') + ' → ' + q.p.map(fmt).join(' + '), a: ans, ex });
+    feedback(false, ex);
+  }
+}
+
+function next() {
+  if (G.hp <= 0 || G.i >= G.deck.length - 1) return results();
+  G.i++; renderQ(); window.scrollTo({ top: 0 });
+}
+
+function results() {
+  const total = G.deck.length, pct = Math.round(100 * G.right / total), won = G.hp > 0, perfect = G.right === total;
+  const id = G.realm.id, prev = store.get('best-' + id);
+  if (won && (prev == null || pct > prev)) store.set('best-' + id, pct);
+  const rank = pct >= 90 ? 'LEGENDARY HERO' : pct >= 75 ? 'KNIGHT' : pct >= 50 ? 'SQUIRE' : 'APPRENTICE';
+  const head = !won ? 'YOU WERE KNOCKED OUT' : perfect ? `${G.realm.mon} DEFEATED!` : 'REALM CLEARED!';
+  const line = !won
+    ? `You got ${G.right} right before running out of hearts. Read the explanations below, then try again: every run is a new mix.`
+    : `Rank: <b style="color:var(--gold)">${rank}</b> · ${G.xp} XP · ${pct}%` + (perfect ? '' : `. The ${esc(G.realm.mon)} got away with ${total - G.right} HP left: get every round right to defeat it.`);
+  $game.innerHTML = `
+    <section class="card">
+      <h2>${esc(head)}</h2>
+      <div class="big">${G.right} / ${total}</div>
+      <p>${line}</p>
+      <div class="row">
+        <button class="btn primary" type="button" id="again">TRY AGAIN</button>
+        <button class="btn" type="button" id="menu">CHOOSE A REALM</button>
+      </div>
+    </section>
+    ${G.missed.length ? `<section class="card"><h2>STUDY THESE</h2>
+      <ul class="review">${G.missed.map(m => `<li><span class="src">${SRC[m.src]}</span><b>${m.q}</b><div>Answer: <span class="a">${m.a}</span></div><p>${m.ex}</p></li>`).join('')}</ul></section>`
+      : `<section class="card"><h2>FLAWLESS RUN</h2><p>No mistakes. Try another realm or the Final Boss.</p></section>`}`;
+  document.getElementById('again').onclick = () => start(id);
+  document.getElementById('menu').onclick = home;
+  document.getElementById('again').focus();
+  window.scrollTo({ top: 0 });
+  if (won && id === 'boss') showEnd();
+}
+
+/* ---------- the end card (Final Boss survived) ---------- */
+const $end = document.getElementById('endcard');
+let endFrom = null;
+function showEnd() {
+  endFrom = document.activeElement; $end.hidden = false;
+  $end.querySelectorAll('.in').forEach(x => { x.style.animation = 'none'; void x.offsetWidth; x.style.animation = ''; });
+  $end.focus();
+}
+function hideEnd() { $end.hidden = true; if (endFrom && endFrom.focus) endFrom.focus(); }
+$end.addEventListener('click', hideEnd);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !$end.hidden) { hideEnd(); return; }
+  if (!G || !$end.hidden) return;
+  const q = G.deck[G.i], inInput = e.target.tagName === 'INPUT';
+  if (inInput && e.key === 'Enter' && !G.answered) { e.preventDefault(); answerBal(); return; }
+  if (inInput) return;
+  if (q && q.kind === 'mc' && !G.answered && /^[1-4]$/.test(e.key) && +e.key <= q.choices.length) answerMC(+e.key - 1);
+});
+
+home();
+})();
+</script>
+</body>
+</html>
