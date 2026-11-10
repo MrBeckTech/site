@@ -1148,7 +1148,6 @@ function go(i, scroll) {
   store.at = i; save();
   document.querySelectorAll('.lesson').forEach((s, k) => { s.hidden = k !== i; });
   renderProgress();
-  try { history.replaceState(null, '', '#lesson-' + (i + 1)); } catch (e) {}
   if (scroll) { const s = $('#lesson-' + (i + 1)); s.scrollIntoView({ block: 'start' }); const h = s.querySelector('h2'); h.tabIndex = -1; h.focus({ preventScroll: true }); }
 }
 function renderProgress() {
@@ -1175,6 +1174,12 @@ const fromHash = location.hash.match(/^#lesson-(\d)$/);
 if (fromHash && +fromHash[1] >= 1 && +fromHash[1] <= LESSONS.length) store.at = +fromHash[1] - 1;
 if (!(store.at >= 0 && store.at < LESSONS.length)) store.at = 0;
 renderLessons(); go(store.at, false);
+/* Always open at the top so the lesson menu is the first thing seen.
+   A #lesson-N link still picks the lesson, but the hash is cleared so the browser doesn't jump past the menu. */
+try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+if (location.hash) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+window.scrollTo(0, 0);
+addEventListener('load', () => { if (scrollY > 0 && !document.activeElement.closest('.lesson')) window.scrollTo(0, 0); });
 })();
 </script>
 </body></html>
