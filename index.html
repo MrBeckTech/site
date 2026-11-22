@@ -55,6 +55,18 @@ a{color:inherit;text-decoration:none}
 .n{font-family:var(--term);font-size:1.3rem;line-height:1;color:var(--mint);min-width:1.4em}
 .t{font-weight:700}
 .kind{margin-left:auto;font-family:var(--pix);font-size:7px;line-height:1;padding:4px 5px;border:2px solid #000;background:#3a2463;color:var(--ink2);white-space:nowrap}
+/* weather sim groups (drop-downs) */
+.groups{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;align-items:start}
+.group{background:var(--panel);border:3px solid #000;border-radius:4px}
+.group summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:2px}
+.group summary::-webkit-details-marker{display:none}
+.group summary::before{content:'▶';display:inline-block;font-size:.7em;color:var(--gold);transition:transform .15s}
+.group[open] summary::before{transform:rotate(90deg)}
+.group summary:hover,.group summary:focus-visible{background:#2d1b55}
+.g{font-family:var(--pix);font-size:9px;line-height:1.6;color:var(--ink)}
+.group summary:hover .g,.group[open] .g{color:var(--gold)}
+.cnt{margin-left:auto;font-family:var(--term);font-size:1.2rem;line-height:1;color:var(--mint);white-space:nowrap}
+.group .quests{border:0;border-top:2px dashed #3a2463;border-radius:0;padding:6px 8px 8px}
 .extras{margin-top:12px}
 .part+.part{margin-top:16px;padding-top:12px;border-top:2px dashed #3a2463}
 .part .side{margin-top:10px;color:var(--ink2);font-size:8px}
@@ -74,7 +86,7 @@ a{color:inherit;text-decoration:none}
   .logs{grid-template-columns:1fr}
 }
 @media(max-width:620px){
-  .quests.two{columns:1}
+  .quests.two,.groups{columns:1;grid-template-columns:1fr}
   .extras .quests,.locked{grid-template-columns:1fr}
   .region-hd{flex-wrap:wrap}
   .region-hd p{margin:0;width:100%}
@@ -98,27 +110,57 @@ a{color:inherit;text-decoration:none}
       <div class="logs">
         <article class="log win" aria-labelledby="u1">
           <h3 id="u1">UNIT 1 · WEATHER</h3>
-          <p class="sub">18 simulations, in the order we cover them.</p>
-          <ol class="quests two">
+          <p class="sub">18 simulations in six groups, in the order we cover them. Open a group to see its simulations.</p>
+          <div class="groups">
+            <details class="group">
+              <summary><span class="g">ENERGY AND HEAT</span><span class="cnt">01–03</span></summary>
+              <ol class="quests">
             <li><a href="courses/science-1206/weather/sims/energy-budget/"><span class="n">01</span><span class="t">Energy Budget and Albedo</span></a></li>
             <li><a href="courses/science-1206/weather/sims/heat-transfer/"><span class="n">02</span><span class="t">Conduction, Convection and Radiation</span></a></li>
             <li><a href="courses/science-1206/weather/sims/heat-sinks/"><span class="n">03</span><span class="t">Heat Sinks and Coastal Breezes</span></a></li>
+              </ol>
+            </details>
+            <details class="group">
+              <summary><span class="g">AIR AND WATER</span><span class="cnt">04–06</span></summary>
+              <ol class="quests">
             <li><a href="courses/science-1206/weather/sims/atmosphere-pressure/"><span class="n">04</span><span class="t">Layers of the Atmosphere</span></a></li>
             <li><a href="courses/science-1206/weather/sims/humidity/"><span class="n">05</span><span class="t">Humidity and Dew Point</span></a></li>
             <li><a href="courses/science-1206/weather/sims/water-cycle/"><span class="n">06</span><span class="t">The Water Cycle and Energy</span></a></li>
+              </ol>
+            </details>
+            <details class="group">
+              <summary><span class="g">AIR MASSES AND PRESSURE</span><span class="cnt">07–08</span></summary>
+              <ol class="quests">
             <li><a href="courses/science-1206/weather/sims/air-masses/"><span class="n">07</span><span class="t">Air Masses of North America</span></a></li>
             <li><a href="courses/science-1206/weather/sims/pressure-systems/"><span class="n">08</span><span class="t">High and Low Pressure Systems</span></a></li>
+              </ol>
+            </details>
+            <details class="group">
+              <summary><span class="g">WINDS AND FRONTS</span><span class="cnt">09–12</span></summary>
+              <ol class="quests">
             <li><a href="courses/science-1206/weather/sims/coriolis-effect/"><span class="n">09</span><span class="t">The Coriolis Effect</span></a></li>
             <li><a href="courses/science-1206/weather/sims/global-winds/"><span class="n">10</span><span class="t">Global Wind Systems</span></a></li>
             <li><a href="courses/science-1206/weather/sims/jet-streams/"><span class="n">11</span><span class="t">Jet Streams</span></a></li>
             <li><a href="courses/science-1206/weather/sims/weather-fronts/"><span class="n">12</span><span class="t">Weather Fronts</span></a></li>
+              </ol>
+            </details>
+            <details class="group">
+              <summary><span class="g">OCEAN CURRENTS</span><span class="cnt">13–15</span></summary>
+              <ol class="quests">
             <li><a href="courses/science-1206/weather/sims/surface-currents/"><span class="n">13</span><span class="t">Ocean Surface Currents</span></a></li>
             <li><a href="courses/science-1206/weather/sims/deep-currents/"><span class="n">14</span><span class="t">Deep Ocean Currents</span></a></li>
             <li><a href="courses/science-1206/weather/sims/el-nino-la-nina/"><span class="n">15</span><span class="t">El Niño and La Niña</span></a></li>
+              </ol>
+            </details>
+            <details class="group">
+              <summary><span class="g">SEVERE WEATHER</span><span class="cnt">16–18</span></summary>
+              <ol class="quests">
             <li><a href="courses/science-1206/weather/sims/thunderstorms-tornadoes/"><span class="n">16</span><span class="t">Thunderstorms and Tornadoes</span></a></li>
             <li><a href="courses/science-1206/weather/sims/hurricanes/"><span class="n">17</span><span class="t">Hurricanes</span></a></li>
             <li><a href="courses/science-1206/weather/sims/noreasters-blizzards/"><span class="n">18</span><span class="t">Nor'easters and Blizzards</span></a></li>
-          </ol>
+              </ol>
+            </details>
+          </div>
           <div class="extras">
             <p class="label">SIDE QUESTS</p>
             <ul class="quests" style="margin-top:8px">
