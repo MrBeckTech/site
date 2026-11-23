@@ -40,6 +40,7 @@ a{color:inherit;text-decoration:none}
 .region-hd h2{margin:0;font-family:var(--pix);font-weight:400;font-size:clamp(13px,1.6vw,17px);line-height:1.5;color:var(--region);text-shadow:3px 3px 0 #000}
 .region-hd p{margin:0 0 0 auto;color:var(--ink2);font-size:.95rem}
 .logs{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:18px;align-items:start}
+.logs{grid-template-rows:auto 1fr} .logs .tall{grid-row:span 2} /* Unit 2 is long: Unit 3 sits right under Unit 1, and the spare height goes below Unit 3 */
 
 /* quest logs */
 .log h3{margin:0;font-family:var(--pix);font-weight:400;font-size:12px;line-height:1.5;color:var(--gold)}
@@ -84,6 +85,7 @@ a{color:inherit;text-decoration:none}
 
 @media(max-width:980px){
   .logs{grid-template-columns:1fr}
+  .logs{grid-template-rows:none} .logs .tall{grid-row:auto}
 }
 @media(max-width:620px){
   .quests.two,.groups{columns:1;grid-template-columns:1fr}
@@ -171,7 +173,7 @@ a{color:inherit;text-decoration:none}
           </div>
         </article>
 
-        <article class="log win" aria-labelledby="u2">
+        <article class="log win tall" aria-labelledby="u2">
           <h3 id="u2">UNIT 2 · CHEMISTRY</h3>
           <p class="sub">Atoms, ions, bonds, naming compounds and chemical reactions.</p>
           <div class="part">
