@@ -1,0 +1,1356 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sig Fig Practice | Science 1206</title>
+<meta name="tw-titlecard" content="MOTION · SIM 02|SIG FIG|PRACTICE.">
+<meta name="tw-canvas" content="off">
+<style>:root{
+  --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --warm:#ff9a4d;
+  --radius:6px; --focus:#5df2a4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif}
+.app{max-width:1180px;margin:0 auto;padding:8px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 8px}
+.hd h1{margin:0}
+.lead{flex-basis:100%;margin:2px 0 0;font-size:.95rem}
+.card{padding:12px 14px;margin:0 0 10px}
+.wtitle{font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1.6;color:var(--sky);margin:0 0 6px;font-weight:400}
+.wtitle.mint{color:var(--mint)}
+[hidden]{display:none!important}
+sup{font-size:.62em;line-height:0}
+
+/* plain words */
+.plain p{margin:4px 0;max-width:72ch}
+.plain summary{cursor:pointer;list-style:none;font-family:'Press Start 2P','Courier New',monospace;font-size:10px;color:var(--sky);padding:2px 0}
+.plain summary::-webkit-details-marker{display:none}
+.plain summary::before{content:'▶ '}
+.plain[open] summary::before{content:'▼ '}
+.plain .go{margin-top:8px}
+
+/* buttons */
+.btn,.tab,.segbtn{appearance:none;font:inherit;font-weight:700;padding:7px 12px;min-height:38px;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.small{padding:4px 9px;min-height:32px;font-size:.9rem}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.modes{display:flex;gap:6px;align-items:center;margin-left:auto}
+.modes .lbl{font-family:'Press Start 2P','Courier New',monospace;font-size:9px;color:var(--ink2)}
+.toprow{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:0 0 8px}
+.toprow .tabs{margin:0}
+
+/* tap-to-define words */
+.term{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:help;
+  text-decoration:underline dotted var(--sky);text-underline-offset:3px;text-decoration-thickness:2px}
+#tip{position:absolute;z-index:50;max-width:300px;background:var(--panel);color:var(--ink);border:3px solid #000;
+  border-left:6px solid var(--sky);border-radius:4px;padding:7px 10px;font-size:.92rem;box-shadow:4px 4px 0 #000}
+
+/* question bar */
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 8px}
+.bar .lbl{font-family:'Press Start 2P','Courier New',monospace;font-size:9px;color:var(--ink2)}
+.pick{display:flex;flex-wrap:wrap;gap:4px}
+.pick button{min-width:28px;min-height:30px;padding:2px 5px;font:700 .9rem 'Atkinson Hyperlegible',system-ui,sans-serif;
+  background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94;cursor:pointer}
+.pick button.on{background:var(--gold);color:#1b1030;box-shadow:inset 0 -3px 0 #c99a00}
+.pick button.done::after{content:'✓';margin-left:2px;color:var(--mint)}
+.pick button.on.done::after{color:#0b5a32}
+.score{font:400 24px/1 'VT323','Courier New',monospace;color:var(--gold)}
+
+/* the question */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.qbox{background:var(--panel);border:3px solid #000;border-radius:4px;padding:10px 12px}
+.qtext{margin:0 0 6px;font-size:1.05rem}
+.big{font:400 44px/1.05 'VT323','Courier New',monospace;color:var(--gold);letter-spacing:.02em;white-space:nowrap}
+.big sup{font-size:.55em}
+.calc{display:inline-flex;align-items:center;gap:8px;margin:6px 0 2px;padding:3px 10px;background:#0e0820;border:2px solid var(--rim);border-radius:4px}
+.calc .k{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--ink2)}
+.calc .v{font:400 30px/1 'VT323','Courier New',monospace;color:var(--mint)}
+.chip{display:inline-block;font-family:'Press Start 2P','Courier New',monospace;font-size:7px;line-height:1;padding:4px 5px;margin-left:4px;
+  background:var(--sky);color:#1b1030;border:2px solid #000;border-radius:3px;vertical-align:middle;letter-spacing:0}
+.ans{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.ans label{font-weight:700}
+.ans input{width:210px;height:42px;padding:0 10px;font:400 30px/1 'VT323','Courier New',monospace;color:var(--gold);background:#0e0820;
+  border:2px solid var(--rim);border-radius:3px}
+.ans input.short{width:90px;text-align:center}
+.ans input:disabled{opacity:.7}
+.typehelp{margin:6px 0 0;font-size:.85rem;color:var(--ink2)}
+.choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+
+.say{background:var(--panel);border:3px solid #000;border-left:6px solid var(--sky);border-radius:4px;padding:8px 11px;margin:8px 0 0;font-size:.98rem}
+.say p{margin:3px 0}
+.say.good{border-left-color:var(--mint);background:#0f2219}
+.say.bad{border-left-color:var(--coral);background:#2a0f18}
+.say.warm{border-left-color:var(--warm);background:#24130f}
+.say.hint{border-left-color:var(--gold)}
+.say .tag{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;display:block;margin-bottom:3px;color:var(--gold)}
+.say.good .tag{color:var(--mint)} .say.bad .tag{color:var(--coral)} .say.warm .tag{color:var(--warm)}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+
+/* worked steps */
+.steps{list-style:none;margin:0;padding:0}
+.steps ul{margin:4px 0;padding-left:1.2rem}
+.steps>li{background:var(--panel);border:3px solid #000;border-radius:4px;padding:7px 10px;margin:0 0 6px}
+.steps>li>.n{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--gold);display:block;margin-bottom:3px}
+.steps .vt{font:400 26px/1.1 'VT323','Courier New',monospace;color:var(--ink);white-space:nowrap}
+.steps .vt sup{font-size:.55em}
+.cut{color:var(--coral);font-weight:700;padding:0 1px}
+.nexts{color:var(--sky);text-decoration:underline;text-underline-offset:3px}
+.helpwait{color:var(--ink2);font-size:.95rem;background:var(--panel);border:3px dashed #3a2463;border-radius:4px;padding:10px}
+
+/* digit boxes (counting and rounding) */
+.digits{display:flex;flex-wrap:wrap;align-items:flex-end;gap:3px;margin:6px 0 2px}
+.dg{display:flex;flex-direction:column;align-items:center;min-width:34px}
+.dg .d{font:400 34px/1 'VT323','Courier New',monospace;width:100%;text-align:center;padding:4px 4px 2px;border:3px solid #000;border-radius:4px;background:#2a1850;color:var(--ink)}
+.dg .r{font-size:.72rem;font-weight:700;margin-top:2px;white-space:nowrap}
+.dg.yes .d{background:var(--mint);color:#1b1030}
+.dg.yes .r{color:var(--mint)}
+.dg.no .d{background:#3b3550;color:#9d93b8;border-style:dashed}
+.dg.no .r{color:#a99fc4}
+.dg.pt{min-width:10px}
+.dg.pt .d{background:none;border-color:transparent;padding-left:0;padding-right:0}
+.dg.keep .d{background:var(--gold);color:#1b1030}
+.dg.next .d{background:#0e0820;color:var(--sky);border-color:var(--sky)}
+.dg.drop .d{background:#3b3550;color:#9d93b8;border-style:dashed}
+.dg.drop .r{color:#a99fc4}
+.dg.keep .r{color:var(--gold)} .dg.next .r{color:var(--sky)}
+.dg.sci .d{background:none;border-color:transparent;font-size:28px;color:var(--ink2);white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.85rem;color:var(--ink2);margin:4px 0 0}
+
+/* column addition picture */
+.cols{border-collapse:collapse;margin:6px 0;font:400 32px/1 'VT323','Courier New',monospace}
+.cols td{width:22px;text-align:center;padding:1px 1px}
+.cols td.op{width:26px;color:var(--ink2)}
+.cols td.pt{width:10px}
+.cols td.unk{color:var(--coral);font-size:22px}
+.cols td.nm{color:#8f86a8;text-decoration:line-through;text-decoration-color:var(--coral)}
+.cols tr.sum td{border-top:3px solid var(--ink2);padding-top:3px;color:var(--mint)}
+.cols tr.sum td.x{color:var(--coral);text-decoration:line-through;text-decoration-thickness:3px}
+.cols tr.fin td{color:var(--gold)}
+.cols td.hl{background:rgba(255,210,63,.13)}
+.sfs{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.sfs div{background:#0e0820;border:2px solid var(--rim);border-radius:4px;padding:4px 10px;text-align:center}
+.sfs b{display:block;font:400 28px/1 'VT323','Courier New',monospace;color:var(--ink)}
+.sfs span{font-size:.82rem;color:var(--ink2)}
+.sfs div.least{border-color:var(--gold)}
+.sfs div.least span{color:var(--gold);font-weight:700}
+.sfs div.ex{border-style:dashed}
+
+/* learn cards */
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px;margin-top:10px}
+.learn .card{margin:0}
+.learn ol,.learn ul{margin:4px 0 0;padding-left:1.2rem}
+.learn li{margin:4px 0}
+.learn p{margin:4px 0}
+.learn .wide{grid-column:1/-1}
+.rules{width:100%;border-collapse:collapse;background:var(--panel);border:3px solid #000;font-size:.95rem}
+.rules th{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;font-weight:400;color:var(--ink2);text-align:left;padding:7px 8px;border-bottom:2px solid #3a2463}
+.rules td{padding:5px 8px;border-bottom:1px solid #2a1850;vertical-align:top}
+.rules td.ex{font:400 22px/1.15 'VT323','Courier New',monospace;white-space:nowrap}
+.learn .ex{background:var(--panel);border:3px solid #000;border-radius:4px;padding:6px 8px;margin-top:8px}
+.foot{margin:12px 4px 0;font-size:.82rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(max-width:620px){.big{font-size:34px;white-space:normal}.ans input{width:160px}}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<div id="app" class="app">
+  <header class="hd">
+    <h1>Sig Fig Practice</h1>
+    <span class="pill">SCIENCE 1206 · UNIT 3</span>
+    <p class="lead">Count significant figures, round, and use the right rule for adding, subtracting, multiplying and dividing.</p>
+  </header>
+
+  <details class="card plain" id="plain" open>
+    <summary>IN PLAIN WORDS</summary>
+    <p>Sig figs are the digits you actually measured. A calculator spits out lots of digits, but it can't make your ruler any better.</p>
+    <p>So you round the answer to match the measurements you started with.</p>
+    <p>Every measurement is all the digits you are sure of, plus <b>one</b> estimated digit. A ruler reading of 67.85 cm has 4 sig figs: the 6, 7 and 8 come from the marks, and the 5 is the guess between two marks.</p>
+    <button class="btn primary go" id="goBtn" type="button">Start practising ▶</button>
+  </details>
+
+  <div id="lab" hidden>
+    <div class="toprow">
+      <div class="tabs" role="tablist" aria-label="Topic">
+        <button class="tab" role="tab" data-topic="count" type="button">Count</button>
+        <button class="tab" role="tab" data-topic="round" type="button">Round</button>
+        <button class="tab" role="tab" data-topic="add" type="button">Add and subtract</button>
+        <button class="tab" role="tab" data-topic="mul" type="button">Multiply and divide</button>
+        <button class="tab" role="tab" data-topic="rule" type="button">Which rule?</button>
+      </div>
+      <div class="modes" role="group" aria-label="Mode">
+        <span class="lbl">MODE</span>
+        <button class="segbtn" type="button" data-mode="guided" aria-pressed="true">Guided</button>
+        <button class="segbtn" type="button" data-mode="challenge" aria-pressed="false">Challenge (10)</button>
+      </div>
+    </div>
+
+    <section class="card" aria-label="Practice">
+      <div class="bar" id="bar"></div>
+      <div class="grid">
+        <div>
+          <div class="qbox" id="qbox"></div>
+          <div id="coach" aria-live="polite"></div>
+        </div>
+        <div>
+          <div class="wtitle mint" id="helpTitle">STEP BY STEP</div>
+          <div id="help"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="learn">
+    <section class="card wide">
+      <h2 class="wtitle">RULES FOR COUNTING SIGNIFICANT FIGURES</h2>
+      <table class="rules">
+        <thead><tr><th scope="col">RULE</th><th scope="col">EXAMPLES</th></tr></thead>
+        <tbody>
+          <tr><td><b>1.</b> Non-zero digits (1–9) are always significant.</td><td class="ex">34 → 2 SF &nbsp; 4257 → 4 SF &nbsp; 1.74 → 3 SF</td></tr>
+          <tr><td><b>2.</b> Zeros can be significant or not. It depends on where they are:</td><td></td></tr>
+          <tr><td><b>A.</b> Middle zeros (between non-zero digits) ARE significant.</td><td class="ex">507 → 3 SF &nbsp; 5009 → 4 SF</td></tr>
+          <tr><td><b>B.</b> Leading zeros (in front of the first non-zero digit) are NOT significant.</td><td class="ex">0.0015 → 2 SF &nbsp; 0.0108 → 3 SF</td></tr>
+          <tr><td><b>C.</b> Trailing zeros (at the end) are significant ONLY if the number has a decimal point.</td><td class="ex">520.0 → 4 SF &nbsp; 0.01010 → 4 SF<br>1500 → 2 SF &nbsp; 10800 → 3 SF</td></tr>
+        </tbody>
+      </table>
+      <p>Leading zeros are just placeholders that show how small a number is (0.0015 m = 1.5 mm, still only 2 digits measured). In scientific notation, every digit in the front number is significant: 1.50 × 10<sup>3</sup> has 3 SF.</p>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">ROUNDING</h2>
+      <p>If the digit to the right of the last digit you keep is <b>5 or more</b>, round up (add 1 to the last kept digit).</p>
+      <p>If it is <b>4 or less</b>, do not round up (the last kept digit stays the same).</p>
+      <p><b>"5 or more, let it soar. 4 or less, let it rest."</b></p>
+      <div class="ex">
+        <p><b>Example:</b> 0.0037421 to 3 SF</p>
+        <ol>
+          <li>Find the first significant digit and count over: 0.00374|21</li>
+          <li>Look at the very next digit: 2</li>
+          <li>2 is 4 or less, so leave the 4 alone and drop the rest: 0.00374 (keep the leading zeros as placeholders!)</li>
+        </ol>
+      </div>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">ADDING AND SUBTRACTING</h2>
+      <p>Round the answer to the same precision as the <b>least precise</b> measurement. For decimals, that means the <b>fewest decimal places</b>.</p>
+      <p>An answer can only be as precise as the least precise measurement you started with. A chain is only as strong as its weakest link.</p>
+      <div class="ex">
+        <p><b>Watch out:</b> whole numbers ending in zero, like 320. The 0 is not significant, so 320 is only known to the tens place. 320 + 12.5 = 332.5, and only the tens place can be trusted → <b>330</b> (3.3 × 10<sup>2</sup>). So the full rule is: round to the least precise place value.</p>
+      </div>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">MULTIPLYING AND DIVIDING</h2>
+      <p>The answer has the same number of significant figures as the measurement with the <b>fewest significant figures</b>.</p>
+      <p><b>Don't mix up the rules!</b><br>Adding / subtracting → count decimal places.<br>Multiplying / dividing → count significant figures.</p>
+      <div class="ex">
+        <p><b>Exact numbers don't limit sig figs.</b> Counted numbers and defined conversion factors are exact: 28 students, 1 km = 1000 m, 60 s = 1 min, 3.6.</p>
+        <p>50.0 km/h ÷ 3.6 = 13.888… The 3.6 is exact, so only 50.0 (3 SF) counts → <b>13.9 m/s</b> (not 14 m/s!).</p>
+      </div>
+      <p><b>Round only at the end.</b> In a problem with more than one step, keep all the calculator digits until the final answer. Then round once.</p>
+    </section>
+  </div>
+  <p class="foot">Science 1206 · Unit 3 Motion · Booklet #1: Significant Figures → Worksheet #3. Your progress is saved on this device only.</p>
+</div>
+<div id="tip" role="tooltip" hidden></div>
+
+<!--meas:start-->
+<script id="meas-core">
+/* MEAS: measurement maths for the Motion pages. Pure functions, no DOM.
+   Canonical copy: shared/meas-core.js. tools/inline-meas.mjs copies it into each page between
+   <!--meas:start--> and <!--meas:end-->, and tools/test-meas.mjs tests it in Node.
+   All arithmetic is exact decimal (BigInt digits × a power of ten), never floats, so 0.0305 to 2 SF is 0.031.
+   Conventions: NL Science 1206 Appendix A (see docs/motion-part1-plan.md §2.1). */
+const MEAS = (() => {
+  'use strict';
+  const B = BigInt, TEN = 10n;
+  const pow10 = k => TEN ** B(k);
+  const absB = n => n < 0n ? -n : n;
+
+  /* ---------- exact decimals: { n: BigInt, e: int } means n × 10^e ---------- */
+  const D = (n, e) => ({ n: B(n), e });
+  const isZero = d => d.n === 0n;
+  const digitsOf = d => absB(d.n).toString();
+  // exponent of the most significant digit (0.0072 -> -3, 1500 -> 3)
+  const msd = d => isZero(d) ? -Infinity : digitsOf(d).length - 1 + d.e;
+  function align(a, b) { const e = Math.min(a.e, b.e); return [a.n * pow10(a.e - e), b.n * pow10(b.e - e), e]; }
+  const add = (a, b) => { const [x, y, e] = align(a, b); return D(x + y, e); };
+  const sub = (a, b) => { const [x, y, e] = align(a, b); return D(x - y, e); };
+  const mul = (a, b) => D(a.n * b.n, a.e + b.e);
+  const neg = a => D(-a.n, a.e);
+  const absD = a => D(absB(a.n), a.e);
+  const cmp = (a, b) => { const [x, y] = align(a, b); return x < y ? -1 : x > y ? 1 : 0; };
+  const eq = (a, b) => cmp(a, b) === 0;
+  // Division to 40 significant digits (truncated). .inexact marks a quotient that did not end.
+  function div(a, b) {
+    if (b.n === 0n) throw new Error('divide by zero');
+    const k = Math.max(0, 40 - (digitsOf(a).length - digitsOf(b).length));
+    const num = a.n * pow10(k), q = num / b.n;
+    const out = D(q, a.e - b.e - k);
+    out.inexact = num % b.n !== 0n;
+    return out;
+  }
+  // Round to the place 10^p, half away from zero ("5 or more, let it soar")
+  function roundAt(d, p) {
+    if (d.e >= p) return D(d.n * pow10(d.e - p), p);
+    const k = pow10(p - d.e), a = absB(d.n);
+    let q = a / k; if ((a % k) * 2n >= k) q += 1n;
+    return D(d.n < 0n ? -q : q, p);
+  }
+  // Strip trailing zeros from n (same value, shortest form)
+  function trim(d) { let { n, e } = d; if (n === 0n) return D(0n, 0); while (n % TEN === 0n) { n /= TEN; e++; } return D(n, e); }
+
+  // Plain decimal string of n × 10^e, showing digits down to 10^e
+  function plainStr(d) {
+    const s = digitsOf(d), sign = d.n < 0n ? '-' : '';
+    if (d.e >= 0) return sign + (d.n === 0n ? '0' : s + '0'.repeat(d.e));
+    const k = -d.e, pad = s.padStart(k + 1, '0');
+    return sign + pad.slice(0, pad.length - k) + '.' + pad.slice(pad.length - k);
+  }
+  // Scientific-notation string with every digit of n shown: "3.20 × 10^3"
+  function sciStr(d) {
+    if (isZero(d)) return plainStr(d);
+    const s = digitsOf(d), sign = d.n < 0n ? '-' : '';
+    return `${sign}${s[0]}${s.length > 1 ? '.' + s.slice(1) : ''} × 10^${msd(d)}`;
+  }
+  // Calculator display: up to 9 significant digits, "…" when digits were cut off
+  function calcStr(d) {
+    const t = trim(d);
+    if (isZero(t)) return '0';
+    const s = digitsOf(t);
+    if (s.length <= 9 && !d.inexact) return plainStr(t);
+    return plainStr(trim(D(t.n / pow10(s.length - 9), t.e + s.length - 9))) + '…';
+  }
+
+  /* ---------- reading what a student typed ---------- */
+  const SUPS = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', '⁻': '-', '⁺': '+' };
+  const DIRS = {
+    e: ['EW', 1, 'E'], east: ['EW', 1, 'E'], w: ['EW', -1, 'W'], west: ['EW', -1, 'W'],
+    n: ['NS', 1, 'N'], north: ['NS', 1, 'N'], s: ['NS', -1, 'S'], south: ['NS', -1, 'S'],
+    right: ['LR', 1, 'right'], left: ['LR', -1, 'left'], up: ['UD', 1, 'up'], down: ['UD', -1, 'down'],
+    forward: ['FB', 1, 'forward'], forwards: ['FB', 1, 'forward'], backward: ['FB', -1, 'backward'], backwards: ['FB', -1, 'backward']
+  };
+  const UNITS = {
+    mm: 'mm', millimetre: 'mm', millimetres: 'mm', millimeter: 'mm', millimeters: 'mm',
+    cm: 'cm', centimetre: 'cm', centimetres: 'cm', centimeter: 'cm', centimeters: 'cm',
+    m: 'm', metre: 'm', metres: 'm', meter: 'm', meters: 'm',
+    km: 'km', kilometre: 'km', kilometres: 'km', kilometer: 'km', kilometers: 'km',
+    s: 's', sec: 's', secs: 's', second: 's', seconds: 's',
+    min: 'min', mins: 'min', minute: 'min', minutes: 'min',
+    h: 'h', hr: 'h', hrs: 'h', hour: 'h', hours: 'h',
+    'm/s': 'm/s', 'km/h': 'km/h', 'km/hr': 'km/h', kph: 'km/h',
+    g: 'g', kg: 'kg', '%': '%', step: 'steps', steps: 'steps', lap: 'laps', laps: 'laps'
+  };
+  const normUnit = u => { const k = u.replace(/\s+/g, ''); return UNITS[k] || UNITS[k.toLowerCase()] || k; };
+
+  // The number part of a string: mantissa text, exponent, and what is left over
+  const NUM = /^([+-]?)\s*(\d{1,3}(?:[   ,]\d{3})+(?:\.\d*)?|\d+\.?\d*|\.\d+)(?:\s*(?:[x×X*]\s*10\s*(?:\^|\*\*)?\s*\(?\s*([+-]?\d+)\s*\)?|[eE]([+-]?\d+)))?/;
+
+  function parse(str) {
+    let s = String(str == null ? '' : str).trim()
+      .replace(/[−–—]/g, '-')
+      .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, m => '^' + [...m].map(c => SUPS[c]).join(''))
+      .replace(/\^\^/g, '^');
+    const out = { raw: String(str == null ? '' : str), ok: false };
+    // direction: anything in [ ] wins; otherwise a trailing direction word
+    let dir = null;
+    const br = s.match(/\[\s*([^\]]*?)\s*\]/);
+    if (br) {
+      const w = br[1].toLowerCase();
+      if (!DIRS[w]) { out.error = 'dir'; out.dirText = br[1]; return out; }
+      dir = DIRS[w]; s = (s.slice(0, br.index) + ' ' + s.slice(br.index + br[0].length)).trim();
+    }
+    const m = s.match(NUM);
+    if (!m) { out.error = 'nan'; return out; }
+    let rest = s.slice(m[0].length).trim();
+    if (!dir) {
+      const words = rest.split(/\s+/);
+      const last = words[words.length - 1] || '', lw = last.toLowerCase();
+      // single letters N/E/S/W only count as a direction after a unit ("5.0 m S"), so "4.0 s" stays seconds
+      if (DIRS[lw] && (lw.length > 1 || (words.length > 1 && /^[NESW]$/.test(last)))) { dir = DIRS[lw]; words.pop(); rest = words.join(' '); }
+    }
+    if (/\d/.test(rest.replace(/[²³]|\^\s*-?\d/g, ''))) { out.error = 'nan'; return out; }
+    const mant = m[2].replace(/[   ,]/g, '');
+    const exp = m[3] != null ? +m[3] : m[4] != null ? +m[4] : 0;
+    const sci = m[3] != null || m[4] != null;
+    const hasPoint = mant.includes('.');
+    const digs = mant.replace('.', '').replace(/^0+(?=\d)/, '') || '0';
+    const decimals = hasPoint ? mant.length - mant.indexOf('.') - 1 : 0;
+    const sign = m[1] === '-' ? -1 : 1;
+    const val = D(B(digs) * B(sign), exp - decimals);
+    return Object.assign(out, {
+      ok: true, sign, explicitSign: !!m[1], mant, exp, sci, hasPoint, decimals,
+      value: val, sf: sigFigs(mant), lsd: lsdOf(mant) + exp,
+      unit: rest ? normUnit(rest) : '', dir: dir ? { axis: dir[0], sgn: dir[1], label: dir[2] } : null
+    });
+  }
+  // Exact value of a numeric string (no units)
+  const val = x => typeof x === 'object' ? x : parse(x).value;
+
+  /* ---------- counting sig figs (rule numbers from the slides: 1, 2A, 2B, 2C) ---------- */
+  function breakdown(input) {
+    const p = typeof input === 'string' ? parse(input) : input;
+    const mant = p.mant, hasPoint = mant.includes('.');
+    const chars = [...mant];
+    const isD = c => /\d/.test(c);
+    const firstNZ = chars.findIndex(c => /[1-9]/.test(c));
+    let lastNZ = -1; chars.forEach((c, i) => { if (/[1-9]/.test(c)) lastNZ = i; });
+    return chars.map((c, i) => {
+      if (!isD(c)) return { ch: c, counts: null, rule: '', why: 'decimal point' };
+      if (c !== '0') return { ch: c, counts: true, rule: '1', why: 'Non-zero digits always count.' };
+      if (firstNZ < 0) return hasPoint
+        ? { ch: c, counts: false, rule: '2B', why: 'A zero with no non-zero digit before it is a placeholder.' }
+        : { ch: c, counts: true, rule: '', why: 'The number zero.' };
+      if (i < firstNZ) return { ch: c, counts: false, rule: '2B', why: 'Leading zero: in front of the first non-zero digit, so it is only a placeholder.' };
+      if (i < lastNZ) return { ch: c, counts: true, rule: '2A', why: 'Middle zero: between non-zero digits, so it counts.' };
+      return hasPoint
+        ? { ch: c, counts: true, rule: '2C', why: 'Trailing zero with a decimal point, so it counts.' }
+        : { ch: c, counts: false, rule: '2C', why: 'Trailing zero with no decimal point, so it does not count.' };
+    });
+  }
+  // Count SF from the mantissa string (rule 2). "1500" -> 2, "1500." -> 4, "0.0072" -> 2.
+  function sigFigs(str) {
+    const p = /^[\d.]+$/.test(str) ? { mant: str } : parse(str);
+    if (!p.mant) return NaN;
+    const n = breakdown(p).filter(x => x.counts).length;
+    return n;
+  }
+  // Exponent of the last significant digit of a mantissa string (before any × 10^)
+  function lsdOf(mant) {
+    if (mant.includes('.')) return -(mant.length - mant.indexOf('.') - 1);
+    if (/^0+$/.test(mant)) return 0;
+    return mant.length - mant.replace(/0+$/, '').length;
+  }
+
+  /* ---------- rounding and formatting ---------- */
+  // A rounded result: shows the plain form when it shows the right number of SF, else scientific notation
+  function result(d, p, sf) {
+    const r = roundAt(d, p);
+    const plain = plainStr(r), sci = sciStr(r);
+    const sfShown = isZero(r) ? 0 : sigFigs(plain.replace('-', ''));
+    const best = isZero(r) || sfShown === sf ? plain : sci;
+    return { value: r, place: p, sf, plain, sci, best, plainOK: best === plain };
+  }
+  // Round to n sig figs. 3468 -> "3500"; 99.96 to 3 SF -> "1.00 × 10^2"; 0.0305 to 2 SF -> "0.031"
+  function roundSF(x, n) {
+    const d = val(x);
+    if (isZero(d)) return result(d, 0, 1);
+    let p = msd(d) - n + 1;
+    let r = roundAt(d, p);
+    if (msd(r) > msd(d)) p++; // 9.96 -> 10.0: the rounded number gained a digit
+    return result(d, p, n);
+  }
+  // Round to the place 10^p (p = -2 means hundredths)
+  function roundPlace(x, p) {
+    const d = val(x), r = roundAt(d, p);
+    return result(d, p, isZero(r) ? 0 : msd(r) - p + 1);
+  }
+
+  const PLACE = { 3: 'thousands', 2: 'hundreds', 1: 'tens', 0: 'ones', '-1': 'tenths', '-2': 'hundredths', '-3': 'thousandths',
+    '-4': 'ten-thousandths', '-5': 'hundred-thousandths', '-6': 'millionths' };
+  const placeName = p => PLACE[p] || `10^${p} place`;
+
+  /* ---------- the two calculation rules ---------- */
+  // terms: [{ v: '25.5' }, { op: '+', v: '34.270' }, ...] or a string "25.5 + 34.270"
+  function terms(x, ops) {
+    if (Array.isArray(x)) return x.map((t, i) => typeof t === 'string' ? { op: i ? ops[0] : null, v: t } : t);
+    const s = String(x).replace(/[−–]/g, '-').replace(/[()]/g, ' ');
+    const out = []; const re = new RegExp(`\\s*([${ops.join('').replace('-', '\\-')}])?\\s*(-?[\\d.]+(?:\\s*×\\s*10\\^-?\\d+)?)`, 'g');
+    let m; while ((m = re.exec(s))) {
+      if (!m[2]) break;
+      // a minus in front of the first number is its sign, not an operation
+      out.push(out.length ? { op: m[1] || ops[0], v: m[2] } : { op: null, v: (m[1] === '-' ? '-' : '') + m[2] });
+    }
+    return out;
+  }
+  // Adding and subtracting: round to the least precise place (fewest decimal places)
+  function addSub(x) {
+    const ts = terms(x, ['+', '-']).map(t => Object.assign({}, t, { p: parse(t.v) }));
+    let sum = D(0n, 0);
+    ts.forEach((t, i) => { sum = i && t.op === '-' ? sub(sum, t.p.value) : add(sum, t.p.value); });
+    const place = Math.max(...ts.map(t => t.p.lsd));
+    const least = ts.findIndex(t => t.p.lsd === place);
+    return Object.assign(roundPlace(sum, place), {
+      exact: sum, calc: calcStr(sum), placeName: placeName(place), least,
+      terms: ts.map(t => ({ op: t.op, v: t.v, place: t.p.lsd, decimals: Math.max(0, -t.p.lsd), placeName: placeName(t.p.lsd) }))
+    });
+  }
+  // Multiplying and dividing: round to the fewest SF. Terms marked exact (counted numbers, 3.6, 1000 ...) don't count.
+  function mulDiv(x, exactFlags) {
+    const ts = terms(x, ['×', '÷', '*', '/', 'x']).map((t, i) => Object.assign({}, t, { p: parse(t.v), exact: t.exact || !!(exactFlags && exactFlags[i]) }));
+    let r = D(1n, 0), inexact = false;
+    ts.forEach((t, i) => {
+      if (i && /[÷/]/.test(t.op)) { r = div(r, t.p.value); inexact = inexact || r.inexact; r = trim(r); r.inexact = inexact; }
+      else { r = mul(r, t.p.value); r.inexact = inexact; }
+    });
+    const counted = ts.filter(t => !t.exact);
+    const sf = counted.length ? Math.min(...counted.map(t => t.p.sf)) : Infinity;
+    // every number exact: nothing limits the answer, so keep it as it is
+    const res = sf === Infinity ? result(trim(r), trim(r).e, digitsOf(trim(r)).length) : roundSF(r, sf);
+    return Object.assign(res, {
+      exact: r, calc: calcStr(r), least: ts.findIndex(t => !t.exact && t.p.sf === sf),
+      terms: ts.map(t => ({ op: t.op, v: t.v, sf: t.p.sf, exact: t.exact }))
+    });
+  }
+
+  /* ---------- scientific notation and units ---------- */
+  function toSci(x, n) { const r = roundSF(x, n); return Object.assign(r, { best: r.sci }); }
+  function fromSci(x) { const p = parse(x); return { plain: plainStr(p.value), sf: p.sf, value: p.value }; }
+  // Exact conversion factors to base units, as fractions [num, den]
+  const FACT = { mm: [1n, 1000n], cm: [1n, 100n], m: [1n, 1n], km: [1000n, 1n], s: [1n, 1n], min: [60n, 1n], h: [3600n, 1n],
+    'm/s': [1n, 1n], 'km/h': [1000n, 3600n] };
+  const KIND = { mm: 'L', cm: 'L', m: 'L', km: 'L', s: 'T', min: 'T', h: 'T', 'm/s': 'V', 'km/h': 'V' };
+  function convert(x, from, to) {
+    const p = parse(x);
+    if (!FACT[from] || !FACT[to] || KIND[from] !== KIND[to]) throw new Error(`can't convert ${from} to ${to}`);
+    const [a, b] = FACT[from], [c, d] = FACT[to];
+    const r = div(mul(p.value, D(a * d, 0)), D(b * c, 0));
+    return Object.assign(roundSF(r, p.sf), { exact: r, calc: calcStr(r), from, to });
+  }
+  // Percent error = |theoretical − empirical| ÷ theoretical × 100%. Subtraction rule, then division rule; round only at the end.
+  function pctError(theo, emp) {
+    const t = parse(theo), e = parse(emp);
+    const diff = absD(sub(t.value, e.value));
+    const place = Math.max(t.lsd, e.lsd);
+    const dr = roundAt(diff, place);
+    if (isZero(dr)) return Object.assign(result(D(0n, 0), 0, 1), { diff, diffPlace: place, diffSF: 0, steps: [] });
+    const diffSF = msd(dr) - place + 1;
+    const sf = Math.min(diffSF, t.sf);
+    const q = mul(div(diff, t.value), D(100n, 0));
+    const res = roundSF(q, sf);
+    return Object.assign(res, {
+      diff, diffShown: plainStr(dr), diffPlace: place, diffSF, theoSF: t.sf, exact: q, calc: calcStr(q),
+      steps: [
+        `|${theo} − ${emp}| = ${plainStr(dr)} (subtracting: keep the ${placeName(place)} place, so ${diffSF} SF)`,
+        `${plainStr(dr)} ÷ ${theo} × 100% = ${calcStr(q)}%`,
+        `Fewest SF: ${plainStr(dr)} has ${diffSF}, ${theo} has ${t.sf}, and 100 is exact → ${sf} SF → ${res.best}%`
+      ]
+    });
+  }
+
+  /* ---------- grading: the shared feedback ladder ---------- */
+  // expected: { answer: '330', exact?: '332.5', rule: 'addsub' | 'muldiv' | 'sf' (default), unit?: 'm',
+  //             vector?: true, scalar?: true }   For a vector, answer carries its direction: '8 m [W]' or '-8'.
+  function grade(student, expected) {
+    const s = parse(student);
+    const want = parse(expected.answer);
+    if (!s.ok) return { level: 'nan', ok: false, msg: s.error === 'dir' ? `"${s.dirText}" isn't a direction. Use [N], [S], [E], [W], left, right, up or down.` : `Type a number, like ${expected.example || '97.8 m'}.` };
+    if (expected.unit && s.unit !== expected.unit) {
+      return { level: 'unit', ok: false, hint: true, msg: s.unit
+        ? `Check the unit. This answer is in ${expected.unit}, not ${s.unit}.`
+        : `Add the unit (${expected.unit}). Every final answer needs one.` };
+    }
+    if (!expected.unit && s.unit && s.unit !== '%') return { level: 'unit', ok: false, hint: true, msg: `This answer has no unit. Leave "${s.unit}" off.` };
+    const mag = absD(s.value), wantMag = absD(want.value);
+    const precise = expected.rule === 'addsub' ? 'place' : 'sf';
+    const sameP = precise === 'place' ? s.lsd === want.lsd : s.sf === want.sf;
+    if (!eq(mag, wantMag)) {
+      // Right value, wrong rounding? (unrounded calculator value, or rounded to the wrong precision)
+      const ex = expected.exact != null ? absD(val(String(expected.exact))) : null;
+      if (ex && (eq(mag, ex) || eq(roundAt(ex, s.lsd), mag))) return sfMsg(s, want, expected, eq(mag, ex));
+      return { level: 'value', ok: false, msg: 'Not yet. Check your working one step at a time.' };
+    }
+    if (!sameP) return sfMsg(s, want, expected, false);
+    if (expected.scalar && s.dir) return { level: 'scalar', ok: false, msg: 'That is a scalar. Leave the direction off.' };
+    if (expected.vector) {
+      const wantSigned = want.dir ? want.sign * want.dir.sgn : want.sign;
+      if (!s.dir && !(want.dir == null && s.explicitSign)) return { level: 'nodir', ok: false, msg: "That's a speed or a distance. Velocity and displacement need a direction." };
+      if (s.dir && want.dir && s.dir.axis !== want.dir.axis) return { level: 'dir', ok: false, msg: `Use the same kind of direction as the question (${want.dir.label}).` };
+      const got = s.sign * (s.dir ? s.dir.sgn : 1);
+      if (!isZero(want.value) && got !== wantSigned) return { level: 'dir', ok: false, msg: 'Check the sign. A negative answer means the negative direction ([W], [S], left or down).' };
+    }
+    return { level: 'correct', ok: true, msg: '✓ Correct.' };
+  }
+  function sfMsg(s, want, expected, unrounded) {
+    if (expected.rule === 'addsub') {
+      const d = n => n <= 0 ? `${-n} decimal place${n === -1 ? '' : 's'}` : `the ${placeName(n)} place`;
+      return { level: 'sf', ok: false, msg: unrounded
+        ? `That's the calculator answer. Adding or subtracting: round to the least precise measurement (${d(want.lsd)}).`
+        : `Right idea, wrong rounding. Adding or subtracting: round to the least precise measurement, which is ${d(want.lsd)}. Yours shows ${d(s.lsd)}.` };
+    }
+    if (!s.sci && !s.hasPoint && s.sf < want.sf && eq(absD(s.value), absD(want.value))) {
+      return { level: 'sf', ok: false, msg: `${s.mant} has only ${s.sf} sig fig${s.sf === 1 ? '' : 's'}. Write ${sciStr(roundAt(want.value, want.lsd))}${expected.unit ? ' ' + expected.unit : ''} to show ${want.sf}.`, sciNeeded: true };
+    }
+    const why = expected.rule === 'muldiv' ? 'Multiplying or dividing: the answer gets the fewest sig figs of the measurements.' : 'Count the sig figs again.';
+    return { level: 'sf', ok: false, msg: unrounded
+      ? `That's the calculator answer. ${why} That means ${want.sf} SF.`
+      : `Right idea, wrong rounding. ${why} The answer needs ${want.sf} SF; yours has ${s.sf}.` };
+  }
+
+  return { parse, sigFigs, breakdown, lsdOf, roundSF, roundPlace, addSub, mulDiv, toSci, fromSci, convert, pctError, grade,
+    placeName, plainStr, sciStr, calcStr, msd, D, add, sub, mul, div, roundAt, eq, trim };
+})();
+if (typeof module !== 'undefined') module.exports = MEAS;
+</script>
+<!--meas:end-->
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// A number string for the screen: minus signs, and "× 10^3" with a real superscript
+const num = s => esc(s).replace(/-/g, '−').replace(/×\s*10\^(−?\d+)/g, '× 10<sup>$1</sup>');
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const nz = () => String(ri(1, 9));
+const dg = () => String(ri(0, 9));
+const nzDigits = k => Array.from({ length: k }, nz).join('');
+const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+const sfWord = n => plural(n, 'sig fig');
+const dpWord = n => n <= 0 ? `${-n} decimal place${n === -1 ? '' : 's'}` : `the ${MEAS.placeName(n)} place`;
+
+/* Progress: this device only */
+const KEY = 'sig-fig-practice:v1';
+let store = { seen: false, solved: {}, best: {} };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) store = Object.assign(store, s); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+
+/* tap-to-define words */
+const DEF = {
+  sf: 'Significant figures: the digits in a measurement that are known with certainty, plus one final estimated (uncertain) digit.',
+  placeholder: 'A zero that only shows where the decimal point is (how big or small the number is). It was not measured, so it does not count.',
+  dp: 'Decimal places: how many digits come after the decimal point. 25.5 has 1. 34.270 has 3.',
+  exact: 'A counted number (28 students) or a defined conversion factor (1 km = 1000 m, 60 s = 1 min, 3.6). It has unlimited sig figs, so it never limits your answer.',
+  precise: 'How finely something is measured: which place value its last (estimated) digit is in.'
+};
+const T = (word, key) => `<button type="button" class="term" data-def="${key}">${word}</button>`;
+const tip = $('#tip');
+let tipFor = null;
+function showTip(el) {
+  tipFor = el; tip.textContent = DEF[el.dataset.def]; tip.hidden = false;
+  const r = el.getBoundingClientRect();
+  tip.style.left = Math.max(8, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - 316)) + 'px';
+  tip.style.top = (window.scrollY + r.bottom + 6) + 'px';
+}
+const hideTip = () => { tip.hidden = true; tipFor = null; };
+document.addEventListener('click', e => {
+  const t = e.target.closest('.term[data-def]');
+  if (t) { tipFor === t ? hideTip() : showTip(t); } else if (!e.target.closest('#tip')) hideTip();
+});
+document.addEventListener('focusin', e => { const t = e.target.closest('.term[data-def]'); if (t) showTip(t); });
+document.addEventListener('focusout', e => { if (e.target.closest('.term[data-def]')) hideTip(); });
+document.addEventListener('mouseover', e => { const t = e.target.closest('.term[data-def]'); if (t && tipFor !== t) showTip(t); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
+
+/* ---------- questions ---------- */
+// Count: { t:'count', s, answer }
+const mkCount = s => ({ t: 'count', s, answer: MEAS.sigFigs(s), id: 'c:' + s });
+// Round: { t:'round', s, n, r }
+const mkRound = (s, n) => ({ t: 'round', s, n, r: MEAS.roundSF(s, n), id: `r:${s}:${n}` });
+// Add/sub and mul/div: q is the written question; exact[] marks exact numbers, with a reason
+const mkAdd = q => ({ t: 'add', q, r: MEAS.addSub(q), id: 'a:' + q });
+const mkMul = (q, exact, why) => {
+  const r = MEAS.mulDiv(q, exact);
+  return { t: 'mul', q, exact: exact || [], why: why || '', r, id: 'm:' + q };
+};
+const mkRule = (text, op) => ({ t: 'rule', text, op, answer: /[+−-]/.test(op) ? 'dp' : 'sf', id: 'w:' + text });
+
+// Guided sets: the practice questions from the slides, in the same order
+const BANK = {
+  count: ['2.83', '36.77', '14.0', '0.0033', '0.02', '0.2410', '2.350', '1.00009', '3.25', '0.0056040', '1500', '10800', '6.0 × 10^3'].map(mkCount),
+  round: [['1.5587', 3], ['0.0037421', 3], ['1.367', 3], ['1.6683', 3], ['3468', 2], ['125', 2], ['0.0305', 2]].map(([s, n]) => mkRound(s, n)),
+  add: ['25.5 + 34.270', '32.72 − 0.0049', '320 + 12.5', '36 + 5.7', '824.1 − 10.834', '3.447 + 637.56 + 0.6297'].map(mkAdd),
+  mul: [['32.27 × 1.54'], ['3.68 ÷ 0.07925'], ['1.750 × 0.0342000'], ['68.2 × 3.8'], ['83.0 ÷ 42.1'], ['26.13 × 2.56 × 1.5346'],
+    ['50.0 ÷ 3.6', [false, true], 'Changing 50.0 km/h to m/s. 3.6 is a defined conversion factor.']].map(a => mkMul(...a)),
+  rule: [['Total length of two boards: 1.25 m + 0.6 m', '+'], ['Area of a desk: 1.20 m × 0.75 m', '×'], ['Speed: 18 m ÷ 3.4 s', '÷'],
+    ['How much taller: 172.5 cm − 168 cm', '−'], ['32.27 × 1.54', '×'], ['824.1 − 10.834', '−'], ['Time for one lap: 96.4 s ÷ 4 laps', '÷'],
+    ['Total trip: 12.5 km + 3.25 km + 7 km', '+']].map(a => mkRule(...a))
+};
+
+/* Random questions */
+function genCount() {
+  for (;;) {
+    const k = pick(['plain', 'lead', 'mid', 'trailP', 'trailNo', 'sci']);
+    let s;
+    if (k === 'plain') { const d = nzDigits(ri(2, 5)), p = ri(0, d.length - 1); s = p ? d.slice(0, p) + '.' + d.slice(p) : d; }
+    else if (k === 'lead') s = '0.' + '0'.repeat(ri(0, 3)) + nzDigits(ri(1, 3)) + (Math.random() < .4 ? '0' : '');
+    else if (k === 'mid') {
+      const a = nzDigits(ri(1, 2)), z = '0'.repeat(ri(1, 3)), b = nzDigits(ri(1, 2)), w = a + z + b;
+      const p = Math.random() < .5 ? 0 : ri(1, w.length - 1);
+      s = p ? w.slice(0, p) + '.' + w.slice(p) : w;
+    }
+    else if (k === 'trailP') s = Math.random() < .5 ? nzDigits(ri(1, 2)) + '.' + (Math.random() < .5 ? nz() : '') + '0'.repeat(ri(1, 2))
+      : nzDigits(ri(1, 2)) + '0.' + '0'.repeat(ri(1, 2));
+    else if (k === 'trailNo') s = nzDigits(ri(1, 2)) + (Math.random() < .4 ? '0' + nz() : '') + '0'.repeat(ri(1, 3));
+    else { const m = nz() + (Math.random() < .8 ? '.' + Array.from({ length: ri(1, 3) }, dg).join('') : ''); s = `${m} × 10^${pick([-5, -4, -3, -2, 2, 3, 4, 5, 6])}`; }
+    if (!BANK.count.some(q => q.s === s)) return mkCount(s);
+  }
+}
+// A number with exactly sf significant digits whose first digit is at place 10^m
+function sfNumber(sf, m) {
+  for (;;) {
+    let d = nz() + Array.from({ length: sf - 1 }, dg).join('');
+    const e = m - sf + 1;
+    if (e >= 0 && d.endsWith('0')) continue; // a whole number can't show a significant trailing zero
+    const s = MEAS.plainStr(MEAS.D(BigInt(d), e));
+    if (MEAS.sigFigs(s) === sf) return s;
+  }
+}
+function genRound() {
+  for (;;) {
+    const k = ri(4, 7), m = ri(-4, 4), n = ri(1, Math.min(4, k - 1));
+    let d = nz() + Array.from({ length: k - 1 }, dg).join('');
+    if (Math.random() < .3) d = d.slice(0, n) + '5' + d.slice(n + 1); // practise "5 or more"
+    const s = MEAS.plainStr(MEAS.D(BigInt(d), m - k + 1));
+    if (s.replace(/^0\.0*/, '').replace('.', '').length < n + 1) continue;
+    const q = mkRound(s, n);
+    if (q.r.plainOK && MEAS.sigFigs(s) > n) return q;
+  }
+}
+function genAdd() {
+  for (;;) {
+    const k = Math.random() < .7 ? 2 : 3, terms = [];
+    for (let i = 0; i < k; i++) {
+      if (Math.random() < .18) { terms.push(String(ri(2, 99) * 10).replace(/0$/, '') + '0'); continue; } // like 320: known to the tens
+      const dp = pick([0, 1, 1, 2, 2, 3, 4]), whole = String(ri(0, 3) ? ri(1, 99) : ri(100, 999));
+      terms.push(dp ? whole + '.' + Array.from({ length: dp - 1 }, dg).join('') + nz() : whole);
+    }
+    if (new Set(terms.map(t => MEAS.parse(t).lsd)).size < 2) continue; // make the precisions differ
+    const ops = terms.map((_, i) => i ? (Math.random() < .4 ? '−' : '+') : '');
+    if (ops.includes('−')) terms.sort((a, b) => parseFloat(b) - parseFloat(a));
+    const q = terms.map((t, i) => (i ? ` ${ops[i]} ` : '') + t).join('');
+    const r = MEAS.addSub(q);
+    if (r.value.n > 0n && MEAS.parse(r.best).ok) return mkAdd(q);
+  }
+}
+const EXACTS = [['3.6', 'Changing km/h to m/s. 3.6 is a defined conversion factor.', '÷'], ['60', 'Changing minutes to seconds: 60 s = 1 min exactly.', '×'],
+  ['1000', 'Changing km to m: 1 km = 1000 m exactly.', '×'], ['4', '4 laps were counted.', '÷'], ['12', '12 rulers were counted.', '×'], ['28', '28 students were counted.', '÷']];
+function genMul() {
+  for (;;) {
+    const k = Math.random() < .75 ? 2 : 3;
+    const terms = Array.from({ length: k }, () => sfNumber(ri(2, 5), ri(-3, 3)));
+    let exact = terms.map(() => false), why = '';
+    const ops = terms.map((_, i) => i ? pick(['×', '÷']) : '');
+    if (Math.random() < .25) { const [v, w, op] = pick(EXACTS); terms.push(v); ops.push(op); exact.push(true); why = w; }
+    if (new Set(terms.filter((_, i) => !exact[i]).map(t => MEAS.sigFigs(t))).size < 2 && Math.random() < .7) continue;
+    const q = terms.map((t, i) => (i ? ` ${ops[i]} ` : '') + t).join('');
+    const r = MEAS.mulDiv(q, exact);
+    const m = MEAS.msd(r.value);
+    if (m < -5 || m > 6) continue;
+    return mkMul(q, exact, why);
+  }
+}
+function genRule() {
+  const op = pick(['+', '−', '×', '÷']);
+  const a = sfNumber(ri(2, 4), ri(0, 2)), b = sfNumber(ri(2, 4), ri(-1, 1));
+  const words = {
+    '+': [`Total mass: ${a} g + ${b} g`, `${a} + ${b}`],
+    '−': [`Change in length: ${a} cm − ${b} cm`, `${a} − ${b}`],
+    '×': [`Distance = speed × time: ${a} m/s × ${b} s`, `${a} × ${b}`],
+    '÷': [`Speed = distance ÷ time: ${a} m ÷ ${b} s`, `${a} ÷ ${b}`]
+  }[op];
+  return mkRule(pick(words), op);
+}
+const GEN = { count: genCount, round: genRound, add: genAdd, mul: genMul, rule: genRule };
+
+/* ---------- state ---------- */
+const S = { topic: 'count', mode: 'guided', idx: { count: 0, round: 0, add: 0, mul: 0, rule: 0 }, rand: null,
+  q: null, tries: 0, help: 0, solved: false, fb: null, ch: null, input: '' };
+const qNow = () => S.mode === 'challenge' ? (S.ch && S.ch.started && !S.ch.done ? S.ch.list[S.ch.i] : null) : (S.rand || BANK[S.topic][S.idx[S.topic]]);
+
+function setTopic(t) {
+  S.topic = t;
+  document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.topic === t)));
+  if (S.mode === 'challenge') S.ch = { started: false };
+  S.rand = null; loadQ();
+}
+function setMode(m) {
+  S.mode = m;
+  document.querySelectorAll('.segbtn').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+  S.ch = { started: false }; S.rand = null; loadQ();
+}
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => setTopic(b.dataset.topic)));
+document.querySelectorAll('.segbtn').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+function loadQ() {
+  S.q = qNow(); S.tries = 0; S.help = 0; S.solved = false; S.fb = null; S.input = '';
+  render();
+}
+
+/* ---------- rendering ---------- */
+const TOPIC_NAME = { count: 'Count', round: 'Round', add: 'Add and subtract', mul: 'Multiply and divide', rule: 'Which rule?' };
+const maxScore = () => S.topic === 'rule' ? 10 : 30;
+function render() {
+  renderBar(); renderQ(); renderCoach(); renderHelp();
+}
+function renderBar() {
+  const bar = $('#bar');
+  if (S.mode === 'challenge') {
+    const ch = S.ch;
+    bar.innerHTML = ch.started && !ch.done
+      ? `<span class="lbl">CHALLENGE</span><span>Question ${ch.i + 1} of 10</span><span class="score">SCORE ${ch.score}</span>`
+      : `<span class="lbl">CHALLENGE</span><span>${TOPIC_NAME[S.topic]}</span>`;
+    return;
+  }
+  const bank = BANK[S.topic];
+  bar.innerHTML = `<span class="lbl">SLIDE PRACTICE</span><div class="pick" role="group" aria-label="Choose a question">${bank.map((q, i) =>
+    `<button type="button" data-i="${i}" class="${!S.rand && i === S.idx[S.topic] ? 'on' : ''} ${store.solved[q.id] ? 'done' : ''}"
+      aria-label="Question ${i + 1}${store.solved[q.id] ? ', solved' : ''}" aria-pressed="${!S.rand && i === S.idx[S.topic]}">${i + 1}</button>`).join('')}</div>
+    <button class="btn small" type="button" id="randBtn">${S.rand ? 'Another new one 🎲' : 'New question 🎲'}</button>`;
+  bar.querySelectorAll('.pick button').forEach(b => b.addEventListener('click', () => { S.rand = null; S.idx[S.topic] = +b.dataset.i; loadQ(); }));
+  $('#randBtn').addEventListener('click', () => { S.rand = GEN[S.topic](); loadQ(); focusInput(); });
+}
+function questionHTML(q) {
+  if (q.t === 'count') return `<p class="qtext">How many significant figures?</p><div class="big">${num(q.s)}</div>`;
+  if (q.t === 'round') return `<p class="qtext">Round to <b>${sfWord(q.n)}</b>.</p><div class="big">${num(q.s)}</div>`;
+  if (q.t === 'rule') return `<p class="qtext">Which rule decides how to round the answer?</p><div class="big" style="white-space:normal;font-size:34px">${num(q.text)}</div>`;
+  const terms = q.r.terms;
+  const body = terms.map((t, i) => (i ? ` ${t.op === '-' ? '−' : t.op} ` : '') + num(t.v) + (t.exact ? `<span class="chip" title="Exact number">EXACT</span>` : '')).join('');
+  return `<p class="qtext">${q.t === 'add' ? 'Add or subtract, then round the answer.' : 'Multiply or divide, then round the answer.'}</p>
+    <div class="big">${body}</div>
+    ${q.why ? `<p class="typehelp">${T('Exact number', 'exact')}: ${esc(q.why)}</p>` : ''}
+    <div class="calc"><span class="k">CALCULATOR</span><span class="v">${num(q.r.calc)}</span></div>`;
+}
+function renderQ() {
+  const box = $('#qbox'), q = S.q;
+  if (!q) {
+    box.innerHTML = S.mode === 'challenge' ? challengeIntro() : '';
+    const b = box.querySelector('#chGo'); if (b) b.addEventListener('click', startChallenge);
+    return;
+  }
+  let input;
+  if (q.t === 'rule') {
+    input = `<div class="choices" role="group" aria-label="Pick a rule">
+      <button class="btn" type="button" data-pick="dp" ${S.solved ? 'disabled' : ''}>Count decimal places (precision)</button>
+      <button class="btn" type="button" data-pick="sf" ${S.solved ? 'disabled' : ''}>Count sig figs</button></div>`;
+  } else {
+    const short = q.t === 'count';
+    input = `<div class="ans"><label for="ans">${short ? 'Sig figs:' : 'Answer:'}</label>
+      <input id="ans" class="${short ? 'short' : ''}" autocomplete="off" spellcheck="false" ${short ? 'inputmode="numeric"' : ''} value="${esc(S.input)}" ${S.solved ? 'disabled' : ''}>
+      ${S.solved ? '' : '<button class="btn primary" type="button" id="check">Check ✓</button>'}</div>
+      ${short ? '' : '<p class="typehelp">Scientific notation: type 3.3 x 10^2 (or 3.3e2).</p>'}`;
+  }
+  box.innerHTML = questionHTML(q) + input;
+  const inp = $('#ans');
+  if (inp) {
+    inp.addEventListener('input', () => { S.input = inp.value; });
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doCheck(); } });
+  }
+  const c = $('#check'); if (c) c.addEventListener('click', doCheck);
+  box.querySelectorAll('[data-pick]').forEach(b => b.addEventListener('click', () => { S.input = b.dataset.pick; doCheck(); }));
+}
+const focusInput = () => { const i = $('#ans') || document.querySelector('[data-pick]'); if (i) i.focus(); };
+
+function challengeIntro() {
+  const best = store.best[S.topic], ch = S.ch;
+  if (ch && ch.done) return `<div class="say good"><span class="tag">FINISHED!</span><p>Your score: <span class="score">${ch.score} / ${maxScore()}</span></p>
+    <p>Best on this device: <b>${best || 0}</b> / ${maxScore()}.</p></div><div class="acts"><button class="btn primary" type="button" id="chGo">Play again ▶</button></div>`;
+  return `<div class="say"><span class="tag">CHALLENGE · ${TOPIC_NAME[S.topic].toUpperCase()}</span><p>10 new questions. No step-by-step help this time.</p>
+    ${S.topic === 'rule' ? '<p>1 point for each right answer.</p>' : '<p>You get <b>3 points</b> if your first Check is right, <b>2</b> for the second try, and <b>1</b> for the third. After 3 tries the answer is shown.</p>'}
+    <p>Best on this device: <b>${best || 0}</b> / ${maxScore()}.</p></div>
+    <div class="acts"><button class="btn primary" type="button" id="chGo">Start ▶</button></div>`;
+}
+function startChallenge() {
+  const list = []; const seen = new Set();
+  while (list.length < 10) { const q = GEN[S.topic](); if (!seen.has(q.id)) { seen.add(q.id); list.push(q); } }
+  S.ch = { started: true, list, i: 0, score: 0, done: false };
+  loadQ(); focusInput();
+}
+function nextChallenge() {
+  if (S.ch.i >= 9) {
+    S.ch.done = true;
+    if (S.ch.score > (store.best[S.topic] || 0)) { store.best[S.topic] = S.ch.score; save(); }
+  } else S.ch.i++;
+  loadQ(); focusInput();
+}
+
+/* ---------- checking ---------- */
+function doCheck() {
+  const q = S.q; if (!q || S.solved) return;
+  const raw = (S.input || '').trim();
+  if (!raw) { S.fb = { kind: 'hint', msg: q.t === 'count' ? 'Type a whole number, like 3.' : 'Type your rounded answer first.' }; renderCoach(); return; }
+  let res;
+  if (q.t === 'count') res = checkCount(q, raw);
+  else if (q.t === 'round') res = checkRound(q, raw);
+  else if (q.t === 'add') res = checkCalc(q, raw, 'addsub');
+  else if (q.t === 'mul') res = checkCalc(q, raw, 'muldiv');
+  else res = checkRule(q, raw);
+  if (res.level === 'nan' || res.hint) { S.fb = { kind: 'hint', msg: res.msg }; renderCoach(); return; } // not counted as a try
+  S.tries++;
+  if (res.ok) {
+    S.solved = true;
+    if (S.mode === 'challenge') { const pts = q.t === 'rule' ? (S.tries === 1 ? 1 : 0) : Math.max(0, 4 - S.tries); S.ch.score += pts; res.pts = pts; }
+    else if (!S.rand) { store.solved[q.id] = true; save(); }
+    S.help = 99;
+  } else {
+    if (S.mode === 'guided') S.help = Math.max(S.help, Math.min(S.tries, nSteps(q) - 1));
+    const out = S.mode === 'challenge' && (q.t === 'rule' || S.tries >= 3);
+    if (out) { S.solved = true; S.help = 99; res.out = true; }
+  }
+  S.fb = Object.assign({ kind: res.ok ? 'good' : 'bad' }, res);
+  render();
+  const n = $('#next') || $('#ans'); if (n && !n.disabled) n.focus();
+}
+function checkCount(q, raw) {
+  const m = raw.match(/^\s*(\d+)\s*(sf|sig\s*figs?|s\.f\.)?\s*$/i);
+  if (!m) return { level: 'nan', msg: 'Type a whole number, like 3.' };
+  const n = +m[1];
+  if (n === q.answer) return { ok: true, msg: `${num(q.s)} has ${sfWord(q.answer)}.` };
+  const bd = MEAS.breakdown(q.s);
+  const zeros = bd.filter(x => x.ch === '0');
+  let why = 'Go digit by digit. Non-zero digits always count. For each zero, ask: is it in the middle (A), in front (B), or at the end (C)?';
+  if (n === bd.filter(x => x.counts !== null).length && zeros.some(z => !z.counts)) why = 'You counted every digit. Some of these zeros are only placeholders.';
+  else if (n < q.answer && zeros.some(z => z.counts)) why = 'Some of these zeros DO count. Check middle zeros (rule A) and trailing zeros after a decimal point (rule C).';
+  return { ok: false, msg: `Not yet. ${why}` };
+}
+function checkRound(q, raw) {
+  const p = MEAS.parse(raw);
+  if (!p.ok) return { level: 'nan', msg: 'Type a number, like 1.56.' };
+  if (p.unit) return { level: 'nan', msg: 'No unit needed here. Just the rounded number.' };
+  const want = MEAS.parse(q.r.best), exact = MEAS.parse(q.s).value;
+  if (MEAS.eq(p.value, want.value) && p.sf === want.sf) return { ok: true, msg: `${num(q.s)} to ${sfWord(q.n)} is ${num(q.r.best)}.` };
+  const ds = x => MEAS.trim(x).n.toString();
+  if (!MEAS.eq(p.value, want.value) && ds(p.value) === ds(want.value)) return { ok: false, msg: `Right digits, but the number changed size. Keep the placeholder zeros: ${num(q.r.best)}.` };
+  if (MEAS.eq(p.value, want.value)) {
+    if (!p.sci && !p.hasPoint && p.sf < q.n) return { ok: false, msg: `${num(p.mant)} only shows ${sfWord(p.sf)}. Write it in scientific notation to show ${q.n}: ${num(q.r.sci)}.` };
+    return { ok: false, msg: `Right value, but it shows ${sfWord(p.sf)}. The question asks for ${q.n}.` };
+  }
+  // Chopped off instead of rounding up?
+  const chopped = MEAS.D(exact.n / (10n ** BigInt(Math.max(0, q.r.place - exact.e))), q.r.place);
+  if (MEAS.eq(p.value, chopped) && !MEAS.eq(chopped, want.value)) return { ok: false, msg: `Look at the very next digit. It is 5 or more, so round up: add 1 to the last digit you keep.` };
+  if (p.sf !== q.n) return { ok: false, msg: `Not yet. Your answer has ${sfWord(p.sf)}; the question asks for ${q.n}. Start counting at the first non-zero digit.` };
+  return { ok: false, msg: 'Not yet. Find the first significant digit, count over, then look at the very next digit.' };
+}
+function checkCalc(q, raw, rule) {
+  const r = q.r;
+  const exact = MEAS.plainStr(MEAS.trim(r.exact));
+  const g = MEAS.grade(raw, { answer: r.best, exact, rule, example: '59.8' });
+  if (g.level === 'value' || g.level === 'sf') {
+    // Used the other rule?
+    const p = MEAS.parse(raw);
+    if (p.ok) {
+      if (rule === 'muldiv') {
+        // Let an exact number limit the answer? ("Not 14 m/s!")
+        const ex = q.r.terms.filter(t => t.exact);
+        if (ex.length) {
+          const withEx = MEAS.roundSF(r.exact, Math.min(...q.r.terms.map(t => t.sf)));
+          if (MEAS.eq(p.value, withEx.value) && p.sf === withEx.sf && withEx.sf !== r.sf)
+            return { ok: false, msg: `${ex.map(t => num(t.v)).join(' and ')} ${ex.length > 1 ? 'are' : 'is'} exact, so ${ex.length > 1 ? 'they have' : 'it has'} unlimited sig figs and never ${ex.length > 1 ? 'limit' : 'limits'} the answer. Count only the measurements.` };
+        }
+        const other = MEAS.roundPlace(r.exact, Math.max(...q.r.terms.map(t => MEAS.parse(t.v).lsd)));
+        if (MEAS.eq(p.value, other.value) && p.lsd === other.place) return { ok: false, msg: "You counted decimal places. That rule is for + and −. For × and ÷, count <b>sig figs</b>." };
+      } else {
+        const other = MEAS.roundSF(r.exact, Math.min(...q.r.terms.map(t => MEAS.sigFigs(t.v))));
+        if (MEAS.eq(p.value, other.value) && p.sf === other.sf && !(MEAS.eq(p.value, r.value) && p.lsd === r.place))
+          return { ok: false, msg: 'You counted sig figs. That rule is for × and ÷. For + and −, count <b>decimal places</b> (the least precise place).' };
+      }
+    }
+  }
+  if (g.ok) return { ok: true, msg: rule === 'addsub'
+    ? `The least precise measurement is known to ${dpWord(r.place)}, so the answer is ${num(r.best)}.`
+    : `The fewest sig figs is ${r.sf}, so the answer is ${num(r.best)}.` };
+  return { ok: false, level: g.level, hint: g.level === 'unit', msg: g.msg };
+}
+function checkRule(q, raw) {
+  const ok = raw === q.answer;
+  const opName = { '+': 'adding', '−': 'subtracting', '×': 'multiplying', '÷': 'dividing' }[q.op];
+  return { ok, msg: (ok ? '' : 'Not this time. ') + `This is ${opName}, so ${q.answer === 'dp'
+    ? 'count decimal places: round to the least precise measurement.'
+    : 'count significant figures: round to the fewest sig figs.'} Adding / subtracting → decimal places. Multiplying / dividing → sig figs.` };
+}
+
+/* ---------- coach (feedback under the question) ---------- */
+function renderCoach() {
+  const box = $('#coach'), q = S.q, fb = S.fb;
+  if (!q) { box.innerHTML = ''; return; }
+  let h = '';
+  if (fb && fb.kind === 'hint') h += `<div class="say hint"><span class="tag">TIP</span><p>${fb.msg}</p></div>`;
+  else if (fb && fb.kind === 'good') h += `<div class="say good"><span class="tag">CORRECT! ✓</span><p>${fb.msg}</p>${fb.pts != null ? `<p>+${plural(fb.pts, 'point')}.</p>` : ''}</div>`;
+  else if (fb && fb.kind === 'bad') h += `<div class="say bad"><span class="tag">${fb.out ? 'THE ANSWER' : 'NOT YET'}</span><p>${fb.msg.replace(/^Not yet\.\s*/, '')}</p>
+      ${fb.out ? `<p>The answer is <b>${q.t === 'rule' ? (q.answer === 'dp' ? 'count decimal places' : 'count sig figs') : num(answerText(q))}</b>. See the steps.</p>` : ''}
+      ${!fb.out && S.mode === 'guided' ? '<p>One more step is open on the right.</p>' : ''}</div>`;
+  const acts = [];
+  if (S.solved) {
+    if (S.mode === 'challenge') acts.push(`<button class="btn primary" type="button" id="next">${S.ch.i === 9 ? 'See your score ▶' : 'Next question ▶'}</button>`);
+    else if (S.rand) acts.push(`<button class="btn primary" type="button" id="next">Another new one 🎲</button>`);
+    else if (S.idx[S.topic] < BANK[S.topic].length - 1) acts.push(`<button class="btn primary" type="button" id="next">Next question ▶</button>`);
+    else acts.push(`<button class="btn primary" type="button" id="next">New question 🎲</button>`);
+  } else if (S.mode === 'guided' && q.t !== 'rule') {
+    acts.push(`<button class="btn" type="button" id="hintBtn" ${S.help >= nSteps(q) ? 'disabled' : ''}>${S.help >= nSteps(q) - 1 ? 'Show the answer' : 'Show the next step'}</button>`);
+  } else if (S.mode === 'challenge') acts.push(`<button class="btn small" type="button" id="skip">Skip (0 points)</button>`);
+  box.innerHTML = h + (acts.length ? `<div class="acts">${acts.join('')}</div>` : '');
+  const on = (id, fn) => { const b = box.querySelector('#' + id); if (b) b.addEventListener('click', fn); };
+  on('next', () => {
+    if (S.mode === 'challenge') return nextChallenge();
+    if (S.rand || S.idx[S.topic] >= BANK[S.topic].length - 1) S.rand = GEN[S.topic]();
+    else S.idx[S.topic]++;
+    loadQ(); focusInput();
+  });
+  on('hintBtn', () => { S.help++; if (S.help >= nSteps(q)) { S.solved = true; S.fb = { kind: 'bad', out: true, msg: 'Here is the full working.' }; } render(); });
+  on('skip', () => nextChallenge());
+}
+const answerText = q => q.t === 'count' ? String(q.answer) : q.r.best;
+
+/* ---------- step-by-step help ---------- */
+function nSteps(q) { return q.t === 'count' ? 3 : q.t === 'rule' ? 1 : q.t === 'round' ? 4 : 3; }
+function renderHelp() {
+  const box = $('#help'), q = S.q;
+  $('#helpTitle').textContent = 'STEP BY STEP';
+  if (!q) { box.innerHTML = ''; return; }
+  if (q.t === 'rule') {
+    box.innerHTML = `<ol class="steps"><li><span class="n">THE RULE</span>
+      <p><b>+ or −</b> → count <b>decimal places</b>. Round to the least precise measurement.</p>
+      <p><b>× or ÷</b> → count <b>significant figures</b>. Round to the fewest sig figs.</p>
+      <p>A chain is only as strong as its weakest link: the answer can't be more precise than the roughest measurement.</p></li></ol>`;
+    return;
+  }
+  const steps = STEPS[q.t](q);
+  const shown = S.mode === 'challenge' && !S.solved ? 0 : Math.min(S.help, steps.length);
+  if (!shown) {
+    box.innerHTML = S.mode === 'challenge'
+      ? `<div class="helpwait">Work it out on paper. The steps show up after you get it right, or after 3 tries.</div>`
+      : `<div class="helpwait">Try it first. Stuck? Press <b>Show the next step</b>. A wrong answer opens a step too.</div>`;
+    return;
+  }
+  box.innerHTML = `<ol class="steps">${steps.slice(0, shown).map((s, i) => `<li><span class="n">STEP ${i + 1}</span>${s}</li>`).join('')}</ol>`;
+}
+
+// Digit boxes. cls(i, info) gives the class and label for each character of the mantissa.
+function digitRow(mant, fn, extra) {
+  return `<div class="digits">${[...mant].map((ch, i) => {
+    if (ch === '.') return `<div class="dg pt"><span class="d">.</span><span class="r">&nbsp;</span></div>`;
+    const [c, label] = fn(ch, i);
+    return `<div class="dg ${c}"><span class="d">${ch}</span><span class="r">${label}</span></div>`;
+  }).join('')}${extra ? `<div class="dg sci"><span class="d">${extra}</span><span class="r">&nbsp;</span></div>` : ''}</div>`;
+}
+// Where a place value sits in a plain number string: index of its digit
+function placeIndex(s, place) {
+  const dot = s.includes('.') ? s.indexOf('.') : s.length;
+  return place >= 0 ? dot - 1 - place : dot - place;
+}
+// "49.6|958" : the calculator value with a bar after the last kept place. long values are cut with …
+function cutView(exact, place) {
+  let s = MEAS.plainStr(MEAS.trim(exact)).replace('-', '');
+  const last = placeIndex(s, place);
+  if (last >= s.length) {
+    // the value stops before that place: pad with zeros so the bar has somewhere to go
+    if (!s.includes('.') && place < 0) s += '.';
+    while (placeIndex(s, place) >= s.length) s += '0';
+  }
+  const i = placeIndex(s, place);
+  const tail = s.slice(i + 1);
+  const pre = tail[0] === '.' ? '.' : '';
+  let t = tail.slice(pre.length);
+  if (t.length > 5) t = t.slice(0, 4) + '…';
+  return {
+    html: `${esc(s.slice(0, i + 1))}<span class="cut">|</span>${pre}${t ? `<span class="nexts">${esc(t[0])}</span>${esc(t.slice(1))}` : ''}`,
+    next: +(t[0] || 0), empty: !/[1-9]/.test(tail)
+  };
+}
+
+const STEPS = {
+  count(q) {
+    const p = MEAS.parse(q.s), bd = MEAS.breakdown(q.s);
+    const extra = p.sci ? num(`× 10^${p.exp}`) : '';
+    const s1 = digitRow(p.mant, ch => ch === '0' ? ['', '?'] : ['yes', '✓ rule 1'], extra);
+    const s2 = digitRow(p.mant, (ch, i) => {
+      const b = bd[i];
+      return b.counts ? ['yes', `✓ ${b.rule === '1' ? 'rule 1' : b.rule}`] : ['no', `✗ ${b.rule}`];
+    }, extra);
+    const zeroNotes = [...new Set(bd.filter(b => b.ch === '0').map(b => b.rule + ': ' + b.why))];
+    return [
+      `<p>Every non-zero digit counts (rule 1).</p>${s1}`,
+      `<p>Check each zero with rules A, B, C.</p>${s2}${zeroNotes.length ? `<ul>${zeroNotes.map(z => `<li>${esc(z)}</li>`).join('')}</ul>` : '<p>No zeros to check.</p>'}
+        ${p.sci ? '<p>In scientific notation, every digit in the front number is significant. The × 10 part only moves the decimal point.</p>' : ''}
+        <div class="legend"><span>✓ = counts</span><span>✗ = doesn't count</span></div>`,
+      `<p>Add them up: <span class="vt">${num(q.s)}</span> has <b>${sfWord(q.answer)}</b>.</p>`
+    ];
+  },
+  round(q) {
+    const p = MEAS.parse(q.s), bd = MEAS.breakdown(q.s), r = q.r;
+    // mark kept digits, the next digit, and the rest
+    const first = bd.findIndex(b => /[1-9]/.test(b.ch));
+    const digitIdx = [...p.mant].map((c, i) => c === '.' ? -1 : i).filter(i => i >= first && i >= 0);
+    const keep = new Set(digitIdx.slice(0, q.n)), nextI = digitIdx[q.n];
+    const row = digitRow(p.mant, (ch, i) => keep.has(i) ? ['keep', `#${[...keep].indexOf(i) + 1}`] : i === nextI ? ['next', 'next'] : i < first ? ['no', 'placeholder'] : ['drop', '']);
+    const nd = nextI != null ? +p.mant[nextI] : 0, up = nd >= 5;
+    const cv = cutView(p.value, r.place);
+    const placeholders = (p.mant.match(/^0\.0*/) || [''])[0].length > 1 || r.place > 0;
+    return [
+      `<p>Find the first significant digit and count over ${q.n}: <span class="vt">${cv.html}</span></p>${row}`,
+      `<p>Look at the very next digit: <b>${nd}</b>.</p>`,
+      `<p>${nd} is ${up ? '5 or more → <b>round up</b> (add 1 to the last kept digit).' : '4 or less → <b>leave it</b> (the last kept digit stays the same).'}</p>
+        <p>"5 or more, let it soar. 4 or less, let it rest."</p>`,
+      `<p>Drop the rest${placeholders ? ', but keep the placeholder zeros so the number stays the same size' : ''}: <span class="vt">${num(r.best)}</span></p>
+        ${r.place > 0 ? `<p>${num(q.s)} is about ${num(r.best)}, not ${num(r.best.replace(/0+$/, '') || '0')}. The zeros at the end hold the place values.</p>` : ''}
+        ${!r.plainOK ? `<p>${num(r.plain)} would only show ${sfWord(MEAS.sigFigs(r.plain))}, so write it in scientific notation.</p>` : ''}`
+    ];
+  },
+  add(q) {
+    const r = q.r;
+    const cv = cutView(r.exact, r.place);
+    return [
+      `<p>Calculate: <span class="vt">${num(r.calc)}</span></p>`,
+      `<p>Find the least precise measurement (fewest ${T('decimal places', 'dp')}):</p>
+        <ul>${r.terms.map((t, i) => `<li>${num(t.v.replace('-', ''))} → ${t.place > 0 ? `known to the ${MEAS.placeName(t.place)} place` : plural(t.decimals, 'decimal place') + (t.decimals ? ` (${MEAS.placeName(t.place)})` : ' (ones)')}${i === r.least ? ' <b>← least precise</b>' : ''}</li>`).join('')}</ul>
+        ${columns(q)}
+        <div class="legend"><span><b style="color:var(--coral)">?</b> = digits nobody measured</span><span><s>red</s> = can't be trusted</span></div>`,
+      `<p>Round to ${dpWord(r.place)}: <span class="vt">${cv.html}</span> → next digit ${cv.next} → ${cv.next >= 5 ? 'round up' : 'leave it'}</p>
+        <p>Answer: <span class="vt">${num(r.best)}</span></p>
+        ${r.place > 0 ? `<p>${num(r.best)} is known only to the ${MEAS.placeName(r.place)} place. In scientific notation: ${num(r.sci)}.</p>` : ''}`
+    ];
+  },
+  mul(q) {
+    const r = q.r;
+    const cv = cutView(r.exact, r.place);
+    return [
+      `<p>Calculate: <span class="vt">${num(r.calc)}</span></p>`,
+      `<p>Count the sig figs in each measurement:</p>
+        <div class="sfs">${r.terms.map((t, i) => `<div class="${t.exact ? 'ex' : i === r.least ? 'least' : ''}"><b>${num(t.v)}</b><span>${t.exact ? 'exact: doesn\'t count' : sfWord(t.sf) + (i === r.least ? ' ← fewest' : '')}</span></div>`).join('')}</div>
+        <p>Fewest = <b>${sfWord(r.sf)}</b>.</p>`,
+      cv.empty && MEAS.sigFigs(MEAS.plainStr(MEAS.trim(r.exact))) <= r.sf
+        ? `<p>${num(r.calc)} already has ${sfWord(r.sf)}: <span class="vt">${num(r.best)}</span></p>`
+        : `<p>Round to ${sfWord(r.sf)}: <span class="vt">${cv.html}</span> → next digit ${cv.next} → ${cv.next >= 5 ? 'round up' : 'leave it'}</p>
+          <p>Answer: <span class="vt">${num(r.best)}</span></p>
+          ${r.plainOK && r.place > 0 ? `<p>Scientific notation shows the sig figs clearly: ${num(r.sci)}.</p>` : ''}
+          ${!r.plainOK ? `<p>${num(r.plain)} would only show ${sfWord(MEAS.sigFigs(r.plain))}, so write it in scientific notation: ${num(r.sci)}.</p>` : ''}`
+    ];
+  }
+};
+
+// Column addition: line the numbers up by the decimal point. ? marks places a measurement never measured.
+function columns(q) {
+  const r = q.r, terms = r.terms.map(t => Object.assign({}, t, { p: MEAS.parse(t.v) }));
+  const sum = MEAS.trim(r.exact), sumAbs = MEAS.D(sum.n < 0n ? -sum.n : sum.n, sum.e);
+  const lo = Math.min(...terms.map(t => t.p.value.e), sum.e), hi = Math.max(...terms.map(t => MEAS.msd(t.p.value)), MEAS.msd(sumAbs), 0);
+  const digitAt = (d, q2) => { if (q2 < d.e) return 0; const a = d.n < 0n ? -d.n : d.n; return Number((a / (10n ** BigInt(q2 - d.e))) % 10n); };
+  const places = []; for (let q2 = hi; q2 >= lo; q2--) places.push(q2);
+  const cell = (inner, cls) => `<td class="${cls || ''}">${inner}</td>`;
+  const row = (op, fn, cls) => `<tr class="${cls || ''}">${cell(op, 'op')}${places.map(q2 => (q2 === -1 ? cell('.', 'pt') : '') + fn(q2)).join('')}</tr>`;
+  let h = '<table class="cols" aria-label="Numbers lined up by decimal point">';
+  terms.forEach((t, i) => {
+    const v = MEAS.D(t.p.value.n < 0n ? -t.p.value.n : t.p.value.n, t.p.value.e), m = MEAS.msd(v);
+    h += row(i ? (t.op === '-' ? '−' : '+') : '', q2 => {
+      if (q2 > m && q2 > 0) return cell('');
+      if (q2 > m) return cell('0'); // the 0 in front of a decimal like 0.0049
+      if (q2 >= t.p.lsd) return cell(String(digitAt(v, q2)), q2 === r.place && t.p.lsd === r.place ? 'hl' : '');
+      if (q2 >= v.e) return cell(String(digitAt(v, q2)), 'nm'); // a zero that was written but not measured (320)
+      return cell('?', 'unk');
+    });
+  });
+  const ms = MEAS.msd(sumAbs);
+  h += row('=', q2 => q2 > ms && q2 > 0 ? cell('') : cell(String(digitAt(sumAbs, q2)), q2 < r.place ? 'x' : ''), 'sum');
+  h += '</table>';
+  return h;
+}
+
+/* ---------- start ---------- */
+function startLab() { $('#lab').hidden = false; $('#plain').open = false; store.seen = true; save(); }
+$('#goBtn').addEventListener('click', () => { startLab(); const t = document.querySelector('.tab[aria-selected=true]'); if (t) t.focus(); });
+if (store.seen) startLab();
+setTopic('count');
+})();
+</script>
+</body></html>
