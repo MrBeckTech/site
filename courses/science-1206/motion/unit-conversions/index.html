@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Notation and Units Practice | Science 1206</title>
-<meta name="tw-titlecard" content="MOTION · SIM 03|NOTATION|AND UNITS.">
+<title>Unit Conversions Practice | Science 1206</title>
+<meta name="tw-titlecard" content="MOTION · SIM 04|UNIT|CONVERSIONS.">
 <meta name="tw-canvas" content="off">
 <style>:root{
   --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
@@ -105,23 +105,6 @@ sup{font-size:.62em;line-height:0}
 kbd{font:700 .85rem 'Atkinson Hyperlegible',system-ui,sans-serif;background:#3a2463;color:var(--ink);border:2px solid #000;border-radius:3px;padding:0 5px;white-space:nowrap}
 kbd.ee{background:var(--gold);color:#1b1030}
 
-/* digit boxes: the decimal point hopping */
-.digits{display:flex;flex-wrap:wrap;align-items:flex-end;gap:3px;margin:6px 0 2px}
-.dg{display:flex;flex-direction:column;align-items:center;min-width:34px}
-.dg .d{font:400 34px/1 'VT323','Courier New',monospace;width:100%;text-align:center;padding:4px 4px 2px;border:3px solid #000;border-radius:4px;background:#2a1850;color:var(--ink)}
-.dg .r{font-size:.68rem;font-weight:700;margin-top:2px;white-space:nowrap;color:var(--ink2)}
-.dg.hop .d{background:#0e0820;color:var(--sky);border-color:var(--sky)}
-.dg.hop .r{color:var(--sky)}
-.dg.pad .d{background:#24130f;color:var(--warm);border-style:dashed;border-color:var(--warm)}
-.dg.pad .r{color:var(--warm)}
-.dg.pt{min-width:12px}
-.dg.pt .d{background:none;border-color:transparent;padding-left:0;padding-right:0}
-.dg.pt.newpt .d{color:var(--gold);font-size:44px;line-height:.75}
-.dg.pt.newpt .r{color:var(--gold)}
-.dg.pt.oldpt .d{color:#7d7399}
-.hopnote{font-weight:700;color:var(--sky)}
-.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.85rem;color:var(--ink2);margin:4px 0 0}
-
 /* unit analysis: the fraction chain */
 .chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:8px 0 4px;font:400 30px/1.1 'VT323','Courier New',monospace;
   min-height:78px;padding:6px 10px;background:#0e0820;border:2px solid var(--rim);border-radius:4px}
@@ -152,26 +135,6 @@ kbd.ee{background:var(--gold);color:#1b1030}
 .tilerow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .tilerow .lbl{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--ink2)}
 
-/* calculator */
-.cwrap{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;margin-top:8px}
-.cpad{background:#0e0820;border:3px solid #000;border-radius:8px;padding:7px;box-shadow:4px 4px 0 #000}
-.screen{background:#c5d6b0;color:#18210d;border:2px solid #000;border-radius:3px;padding:3px 8px;width:254px;font:400 24px/1.1 'VT323','Courier New',monospace;margin-bottom:7px}
-.screen .ex{min-height:27px;word-break:break-all}
-.screen .ex .cur{animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.screen .res{text-align:right;min-height:27px}
-.screen .res sup{font-size:.6em}
-.keys{display:grid;grid-template-columns:repeat(4,59px);gap:5px}
-.key{appearance:none;cursor:pointer;height:33px;font:700 1rem 'Atkinson Hyperlegible',system-ui,sans-serif;background:#3a2463;color:var(--ink);
-  border:3px solid #000;border-radius:5px;box-shadow:inset 0 -3px 0 #24163f}
-.key.fn{background:#5b3f94}
-.key.ee{background:var(--gold);color:#1b1030;box-shadow:inset 0 -3px 0 #c99a00}
-.key.eq{grid-column:1/-1;background:var(--mint);color:#1b1030;box-shadow:inset 0 -3px 0 #1f9c5c}
-.key:active{transform:translateY(1px)}
-.key:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
-.cnote{flex:1 1 150px;font-size:.86rem;color:var(--ink2)}
-.cnote p{margin:0 0 6px}
-
 /* learn cards */
 .learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px;margin-top:10px}
 .learn .card{margin:0}
@@ -184,15 +147,11 @@ kbd.ee{background:var(--gold);color:#1b1030}
 .rules td{padding:5px 8px;border-bottom:1px solid #2a1850;vertical-align:top}
 .rules td.ex{font:400 22px/1.15 'VT323','Courier New',monospace;white-space:nowrap}
 .learn .ex{background:var(--panel);border:3px solid #000;border-radius:4px;padding:6px 8px;margin-top:8px}
-.anat{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:flex-start;margin:6px 0}
-.anat .big{font-size:50px}
-.anat .co{border-bottom:3px solid var(--mint)} .anat .xp{color:var(--sky)}
-.anat ul{margin:0;padding-left:1.1rem;font-size:.93rem}
 .ladder{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font:400 26px/1 'VT323','Courier New',monospace;margin:6px 0}
 .ladder b{font-weight:400;background:#2a1850;border:2px solid #000;border-radius:4px;padding:3px 8px}
 .ladder span{font-size:18px;color:var(--gold)}
 .foot{margin:12px 4px 0;font-size:.82rem}
-@media(max-width:620px){.big{font-size:34px}.ans input{width:190px}.keys{grid-template-columns:repeat(4,52px)}.screen{width:228px}}
+@media(max-width:620px){.big{font-size:34px}.ans input{width:190px}}
 </style>
 <!--twilight:start-->
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -411,24 +370,21 @@ a{color:var(--tw-sky)}
 <body>
 <div id="app" class="app">
   <header class="hd">
-    <h1>Notation and Units Practice</h1>
+    <h1>Unit Conversions Practice</h1>
     <span class="pill">SCIENCE 1206 · UNIT 3</span>
-    <p class="lead">Write numbers in scientific notation, type them with the EE key, and convert units with unit analysis.</p>
+    <p class="lead">Convert distance, time and speed with unit analysis, and keep the right number of sig figs.</p>
   </header>
 
   <details class="card plain" id="plain" open>
     <summary>IN PLAIN WORDS</summary>
-    <p>Scientific notation is a short way to write huge or tiny numbers: the number, then how many places the decimal moved. 47 000 m is 4.7 × 10<sup>4</sup> m: write 4.7, then move the decimal point 4 places.</p>
     <p>Unit conversions multiply by a fraction that equals 1, so the amount stays the same and only the unit changes. 1 km and 1000 m are the same distance, so 1 km over 1000 m is just 1.</p>
+    <p>The conversion numbers (1000, 100, 60, 3600, 3.6) are exact, so the answer keeps the sig figs of the measurement you started with.</p>
     <button class="btn primary go" id="goBtn" type="button">Start practising ▶</button>
   </details>
 
   <div id="lab" hidden>
     <div class="toprow">
       <div class="tabs" role="tablist" aria-label="Topic">
-        <button class="tab" role="tab" data-topic="sci" type="button">To scientific notation</button>
-        <button class="tab" role="tab" data-topic="dec" type="button">To decimal form</button>
-        <button class="tab" role="tab" data-topic="calc" type="button">Calculator</button>
         <button class="tab" role="tab" data-topic="units" type="button">Unit analysis</button>
         <button class="tab" role="tab" data-topic="speed" type="button">Speed units</button>
         <button class="tab" role="tab" data-topic="combo" type="button">Convert + notation</button>
@@ -456,47 +412,6 @@ a{color:var(--tw-sky)}
   </div>
 
   <div class="learn">
-    <section class="card wide">
-      <h2 class="wtitle">SCIENTIFIC NOTATION</h2>
-      <table class="rules">
-        <thead><tr><th scope="col">SCIENTIFIC NOTATION</th><th scope="col">EXAMPLE</th></tr></thead>
-        <tbody>
-          <tr><td>Writes a number as a coefficient between 1 and 10, multiplied by a power of 10. Positive exponent → number 10 or bigger. Negative exponent → number smaller than 1. Exponent 0 → number from 1 to 10.</td>
-            <td class="ex">300 000 000 = 3 × 10<sup>8</sup><br>0.000 000 03 = 3 × 10<sup>−8</sup></td></tr>
-          <tr><td>Useful for very large or very small numbers, and for showing the correct number of significant figures.</td>
-            <td class="ex">100 cm to 3 SF → 1.00 × 10<sup>2</sup> cm<br>100 cm to 2 SF → 1.0 × 10<sup>2</sup> cm<br>100 cm to 1 SF → 1 × 10<sup>2</sup> cm</td></tr>
-        </tbody>
-      </table>
-      <div class="anat">
-        <div class="big"><span class="co">4.7</span> × 10<sup class="xp">4</sup></div>
-        <ul>
-          <li><b>Coefficient</b> (4.7): 1 ≤ number &lt; 10. All its digits are significant.</li>
-          <li><b>Exponent</b> (4): how many places the decimal point moved.</li>
-        </ul>
-      </div>
-      <div class="ex"><p><b>Watch out:</b> 47 × 10<sup>3</sup> and 0.47 × 10<sup>5</sup> are NOT proper scientific notation. The coefficient must be at least 1 and less than 10.</p></div>
-    </section>
-    <section class="card">
-      <h2 class="wtitle">HOW TO CONVERT, STEP BY STEP</h2>
-      <p><b>Big number:</b> 3200 → 2 SF</p>
-      <ol>
-        <li>Put the decimal after the first non-zero digit: 3.200</li>
-        <li>Count the places the decimal moved: 3200. → 3.200 = 3 places left</li>
-        <li>Moved left (big number) → positive exponent: 3.2 × 10<sup>3</sup></li>
-      </ol>
-      <p><b>Small number:</b> 0.000855 → 2 SF</p>
-      <ol>
-        <li>Put the decimal after the first non-zero digit: 8.55</li>
-        <li>Count the places: 0.000855 → 8.55 = 4 places right</li>
-        <li>Moved right (small number) → negative: 8.55 × 10<sup>−4</sup> → 2 SF: 8.6 × 10<sup>−4</sup></li>
-      </ol>
-    </section>
-    <section class="card">
-      <h2 class="wtitle">THE CALCULATOR: EE KEY</h2>
-      <p>Use the <kbd class="ee">EE</kbd> (or ×10<sup>x</sup>) key: 3.2 × 10<sup>3</sup> is typed 3.2 <kbd class="ee">EE</kbd> 3. This keeps the whole number together.</p>
-      <p>If you type 6 ÷ 2 × 10 ^ 3 instead of 6 ÷ 2 <kbd class="ee">EE</kbd> 3, the calculator does 6 ÷ 2 first and then multiplies by 1000, giving 3000 instead of 0.003.</p>
-      <p>For a negative exponent, press the negative key <kbd>(−)</kbd> before the exponent: 8.6 <kbd class="ee">EE</kbd> <kbd>(−)</kbd> 4.</p>
-    </section>
     <section class="card wide">
       <h2 class="wtitle">MOTION UNITS (MORE WILL COME LATER!)</h2>
       <table class="rules">
@@ -543,7 +458,7 @@ a{color:var(--tw-sky)}
       <div class="ex"><p><b>Watch out:</b> 12.5 m/s × 3.6 = 45 on the calculator, but 12.5 has 3 SF, so the answer must show 3 SF: 45.0 km/h. The zero is not extra; it tells the reader how precise the answer is.</p></div>
     </section>
   </div>
-  <p class="foot">Science 1206 · Unit 3 Motion · Booklet #1: Scientific Notation → Worksheet #4. Your progress is saved on this device only.</p>
+  <p class="foot">Science 1206 · Unit 3 Motion · Booklet #1: Motion units, Conversions and Worksheet #4 (questions 1 and 2). Your progress is saved on this device only.</p>
 </div>
 <div id="tip" role="tooltip" hidden></div>
 <!--meas:start-->
@@ -1555,15 +1470,13 @@ const unitSp = u => u ? ' ' + u : '';
 const DEBUG = /[?&]debug\b/.test(location.search);
 
 /* Progress: this device only */
-const KEY = 'notation-units:v1';
+const KEY = 'unit-conversions:v1';
 let store = { seen: false, solved: {}, best: {} };
 try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) store = Object.assign(store, s); } catch (e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
 
 /* tap-to-define words */
 const DEF = {
-  coef: 'Coefficient: the front number in scientific notation. It must be at least 1 and less than 10, and all its digits are significant.',
-  exp: 'Exponent: the small raised number on the 10. It tells how many places the decimal point moved. Positive = big number, negative = smaller than 1.',
   sf: 'Significant figures: the digits in a measurement that are known with certainty, plus one final estimated (uncertain) digit.',
   exact: 'A defined conversion factor (1 km = 1000 m, 60 s = 1 min, 3.6) or a counted number. It has unlimited sig figs, so it never limits your answer.',
   placeholder: 'A zero that only shows where the decimal point is. It was not measured, so it is not significant.'
@@ -1644,57 +1557,14 @@ const sizeCheck = (from, to) => SIZE[to] > SIZE[from]
   : `${to} is a smaller unit than ${from}, so the number should get bigger`;
 
 /* ---------- questions ---------- */
-// To scientific notation. n = round to n SF; n = null keeps every sig fig. A string like "47 × 10^3" is an improper form to fix.
-function mkSci(s, n, unit, src) {
-  const p = MEAS.parse(s), k = n || p.sf, r = MEAS.toSci(p.value, k);
-  return { t: 'sci', s, n, unit: unit || '', p, k, r, fix: p.sci, src, id: `s:${s}:${n}:${unit || ''}` };
-}
-function mkDec(s, unit, src) {
-  const p = MEAS.parse(s);
-  return { t: 'dec', s, unit: unit || '', p, ans: MEAS.plainStr(p.value), src, id: `d:${s}:${unit || ''}` };
-}
 const mkUnits = (v, from, to, src) => ({ t: 'units', v, from, to, r: MEAS.convert(v, from, to), src, id: `u:${v}:${from}:${to}` });
 const mkSpeed = (v, from, to, src) => ({ t: 'speed', v, from, to, r: MEAS.convert(v, from, to), op: from === 'km/h' ? '÷' : '×', src, id: `v:${v}:${from}:${to}` });
 function mkCombo(v, from, to, src) {
   const c = MEAS.convert(v, from, to);
   return { t: 'combo', v, from, to, c, r: MEAS.toSci(c.exact, 2), src, id: `x:${v}:${from}:${to}` };
 }
-// Calculator tasks. 'type': type one number. 'trap': a ÷ (b × 10^n), where ^ gives the wrong answer. 'ws': a Worksheet #4 calculation.
-function mkType(s, src) { return { t: 'calc', kind: 'type', s, target: flt(s), src, id: 'k:' + s }; }
-function mkTrap(a, b, src) {
-  const A = flt(a), B = flt(b), pb = MEAS.parse(b), coefB = flt(pb.mant);
-  return { t: 'calc', kind: 'trap', a, b, target: A / B, trapVal: A / coefB * Math.pow(10, pb.exp), src, id: `p:${a}/${b}` };
-}
-function mkWs(show, expr, rule, unit, src) {
-  const r = rule === 'addsub' ? MEAS.addSub(expr) : MEAS.mulDiv(expr);
-  const q = { t: 'calc', kind: 'ws', show, expr, rule, unit, r, target: flt(MEAS.trim(r.exact)), src, id: 'w:' + expr };
-  // the ^ trap for a division by a number in scientific notation
-  const m = expr.match(/^(.+?) ÷ (\S+) × 10\^(-?\d+)$/);
-  if (m) q.trapVal = flt(m[1]) / flt(m[2]) * Math.pow(10, +m[3]);
-  return q;
-}
-
 // Guided sets: the slide and Worksheet #4 questions, in booklet order
 const BANK = {
-  sci: [
-    ...['3200', '0.000855', '47 045', '4.05', '25', '0.0305', '0.0082', '243'].map((s, i) => mkSci(s, 2, '', `Slide practice · #${i + 1} (2 SF)`)),
-    ...[['454.3', 'm'], ['0.00034', 'm'], ['0.851', 's'], ['305', 'km'], ['0.000009', 'm'], ['8 000 000 000', 'mm']]
-      .map(([s, u], i) => mkSci(s, null, u, `Worksheet #4 · 3(${'abcdef'[i]})`)),
-    mkSci('100', 3, 'cm', 'Slide notes'), mkSci('100', 2, 'cm', 'Slide notes'), mkSci('100', 1, 'cm', 'Slide notes'),
-    mkSci('47 × 10^3', null, '', 'Slide: watch out'), mkSci('0.47 × 10^5', null, '', 'Slide: watch out')
-  ],
-  dec: [
-    ...[['3.5 × 10^-4', 'm'], ['2.6 × 10^3', 'm'], ['1.8 × 10^-2', 'm'], ['7.4 × 10^5', 'm']].map(([s, u], i) => mkDec(s, u, `Worksheet #4 · 4(${'abcd'[i]})`)),
-    mkDec('3 × 10^8', '', 'Slide notes'), mkDec('3 × 10^-8', '', 'Slide notes')
-  ],
-  calc: [
-    mkType('3.2 × 10^3', 'Slide tip'), mkType('8.6 × 10^-4', 'Slide practice #2'), mkTrap('6', '2 × 10^3', 'Slide tip'),
-    mkTrap('4.8 × 10^5', '1.2 × 10^2', 'Extra'),
-    mkWs('2.340 × 10^2 m + 1.000 × 10^3 m', '2.340 × 10^2 + 1.000 × 10^3', 'addsub', 'm', 'Worksheet #4 · 5(a)'),
-    mkWs('51.20 km + 3.2 × 10^-1 km', '51.20 + 3.2 × 10^-1', 'addsub', 'km', 'Worksheet #4 · 5(b)'),
-    mkWs('2.45 h × 1.10 × 10^2 km/h', '2.45 × 1.10 × 10^2', 'muldiv', 'km', 'Worksheet #4 · 5(c)'),
-    mkWs('7.7 m ÷ 2.1 × 10^-2 s', '7.7 ÷ 2.1 × 10^-2', 'muldiv', 'm/s', 'Worksheet #4 · 5(d)')
-  ],
   units: [
     mkUnits('381', 'm', 'cm', 'Slide example 1'), mkUnits('9812', 'm', 'km', 'Slide example 2'),
     ...[['125', 'cm', 'm'], ['2234', 'm', 'km'], ['23', 'mm', 'cm'], ['45', 'cm', 'km']].map(([v, f, t], i) => mkUnits(v, f, t, `Slide practice · distance ${'abcd'[i]})`)),
@@ -1725,42 +1595,6 @@ function sfNumber(sf, m) {
     if (MEAS.sigFigs(s) === sf) return s;
   }
 }
-const spaced = s => grp(s).replace(/ /g, ' ');
-function genSci() {
-  for (;;) {
-    if (Math.random() < .15) { // an improper form to fix
-      const big = Math.random() < .5, d = nz() + nz(), e = big ? ri(2, 6) : ri(-6, 6);
-      const s = `${big ? d : '0.' + d} × 10^${e}`;
-      if (!BANK.sci.some(q => q.s === s)) return mkSci(s, null, '');
-      continue;
-    }
-    const two = Math.random() < .5, sf = two ? ri(3, 5) : ri(1, 4);
-    const m = pick([-6, -5, -4, -3, -2, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8]);
-    const s = spaced(sfNumber(sf, m));
-    if (m === 0 && !two) continue;
-    const unit = pick(['', '', '', 'm', 'km', 's', 'mm', 'cm']);
-    const q = mkSci(s, two ? 2 : null, unit);
-    if (!BANK.sci.some(b => b.id === q.id)) return q;
-  }
-}
-function genDec() {
-  for (;;) {
-    const sf = ri(1, 3), coef = nz() + (sf > 1 ? '.' + Array.from({ length: sf - 1 }, dg).join('') : '');
-    const e = pick([-6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6]);
-    const s = `${coef} × 10^${e}`, q = mkDec(s, pick(['', 'm', 'km', 's', 'cm']));
-    if (MEAS.sigFigs(q.ans) === sf && !BANK.dec.some(b => b.s === s)) return q;
-  }
-}
-function genCalc() {
-  if (Math.random() < .5) {
-    const coef = nz() + '.' + dg() + (Math.random() < .5 ? nz() : '');
-    return mkType(`${coef} × 10^${pick([-7, -5, -4, -3, -2, 2, 3, 4, 5, 6, 8, 9])}`);
-  }
-  const a = Math.random() < .6 ? sfNumber(ri(1, 2), ri(0, 1)) : `${nz()}.${nz()} × 10^${ri(2, 6)}`;
-  const b = `${nz()}${Math.random() < .5 ? '.' + nz() : ''} × 10^${pick([-3, -2, 2, 3, 4])}`;
-  const q = mkTrap(a, b);
-  return close(q.target, q.trapVal) ? genCalc() : q;
-}
 function genUnits() {
   for (;;) {
     const kind = pick(['L', 'L', 'T']), us = LADDER[kind];
@@ -1787,10 +1621,10 @@ function genCombo() {
     if (m >= -6 && m <= 7 && MEAS.parse(v).sf > 2 && !BANK.combo.some(b => b.id === q.id)) return q;
   }
 }
-const GEN = { sci: genSci, dec: genDec, calc: genCalc, units: genUnits, speed: genSpeed, combo: genCombo };
+const GEN = { units: genUnits, speed: genSpeed, combo: genCombo };
 
 /* ---------- state ---------- */
-const S = { topic: 'sci', mode: 'guided', idx: { sci: 0, dec: 0, calc: 0, units: 0, speed: 0, combo: 0 }, rand: null,
+const S = { topic: 'units', mode: 'guided', idx: { units: 0, speed: 0, combo: 0 }, rand: null,
   q: null, tries: 0, help: 0, solved: false, fb: null, ch: null, input: '', chain: [], justAdded: false, op: null, cx: null };
 const qNow = () => S.mode === 'challenge' ? (S.ch && S.ch.started && !S.ch.done ? S.ch.list[S.ch.i] : null) : (S.rand || BANK[S.topic][S.idx[S.topic]]);
 
@@ -1810,12 +1644,12 @@ document.querySelectorAll('.segbtn').forEach(b => b.addEventListener('click', ()
 
 function loadQ() {
   S.q = qNow(); S.tries = 0; S.help = 0; S.solved = false; S.fb = null; S.input = '';
-  S.chain = []; S.justAdded = false; S.op = null; S.cx = { expr: '', out: '', stage: 1 };
+  S.chain = []; S.justAdded = false; S.op = null;
   render();
 }
 
 /* ---------- rendering ---------- */
-const TOPIC_NAME = { sci: 'To scientific notation', dec: 'To decimal form', calc: 'Calculator', units: 'Unit analysis', speed: 'Speed units', combo: 'Convert + notation' };
+const TOPIC_NAME = { units: 'Unit analysis', speed: 'Speed units', combo: 'Convert + notation' };
 const maxScore = () => 30;
 function render() { renderBar(); renderQ(); renderCoach(); renderHelp(); }
 function renderBar() {
@@ -1838,18 +1672,10 @@ function renderBar() {
 const given = q => `${num(grp(q.v))} ${q.from} <span class="arrow">→</span> ${q.to}`;
 function questionHTML(q) {
   const src = q.src ? `<p class="src">${esc(q.src)}</p>` : '';
-  if (q.t === 'sci') {
-    if (q.fix) return `${src}<p class="qtext">This is <b>not</b> proper scientific notation. Rewrite it properly.</p><div class="big">${num(q.s)}</div>`;
-    return `${src}<p class="qtext">Write in scientific notation${q.n ? ` with <b>${sfWord(q.n)}</b>` : ', keeping every sig fig'}.</p><div class="big">${num(grp(q.s))}${unitSp(q.unit)}</div>`;
-  }
-  if (q.t === 'dec') return `${src}<p class="qtext">Write in decimal form (an ordinary number, no × 10).</p><div class="big">${num(q.s)}${unitSp(q.unit)}</div>`;
   if (q.t === 'units') return `${src}<p class="qtext">Convert using unit analysis.</p><div class="big">${given(q)}</div>`;
   if (q.t === 'speed') return `${src}<p class="qtext">Convert the speed.</p><div class="big">${given(q)}</div>`;
   if (q.t === 'combo') return `${src}<p class="qtext">Three steps: 1. convert &nbsp;2. round to 2 SF &nbsp;3. write in scientific notation.</p><div class="big">${given(q)}</div>`;
-  // calculator
-  if (q.kind === 'type') return `${src}<p class="qtext">Type this number on the calculator with the <kbd class="ee">EE</kbd> key, then press <kbd>=</kbd>.</p><div class="big">${num(q.s)}</div>`;
-  if (q.kind === 'trap') return `${src}<p class="qtext">Work this out on the calculator. <b>${num(q.b)}</b> is one number.</p><div class="big">${num(q.a)} ÷ <span class="one">${num(q.b)}</span></div>`;
-  return `${src}<p class="qtext">${S.cx.stage === 1 ? 'Type it on the calculator with the EE key and press =.' : 'Now give the answer in scientific notation, with the correct unit.'}</p><div class="big" style="font-size:36px">${num(q.show)}</div>`;
+
 }
 function answerBox(label, help) {
   return `<div class="ans"><label for="ans">${label}</label>
@@ -1866,12 +1692,9 @@ function renderQ() {
     return;
   }
   let body = '';
-  if (q.t === 'sci') body = answerBox('Answer:', SCI_HELP + (q.unit ? ' Keep the unit.' : ''));
-  else if (q.t === 'dec') body = answerBox('Answer:', 'Type an ordinary number, like 0.0035' + (q.unit ? ' m. Keep the unit.' : '.'));
-  else if (q.t === 'units') body = unitsBody(q);
+  if (q.t === 'units') body = unitsBody(q);
   else if (q.t === 'speed') body = speedBody(q);
   else if (q.t === 'combo') body = answerBox('Answer:', SCI_HELP + ' Include the unit.');
-  else body = calcBody(q);
   box.innerHTML = questionHTML(q) + body;
   wireQ(box);
 }
@@ -1886,9 +1709,8 @@ function wireQ(box) {
   const un = $('#undo'); if (un) un.addEventListener('click', () => { S.chain.pop(); S.justAdded = false; renderQ(); const t = $('#undo') || box.querySelector('[data-tile]'); if (t) t.focus(); });
   const cl = $('#clear'); if (cl) cl.addEventListener('click', () => { S.chain = []; S.justAdded = false; renderQ(); const t = box.querySelector('[data-tile]'); if (t) t.focus(); });
   box.querySelectorAll('[data-op]').forEach(b => b.addEventListener('click', () => pickOp(b.dataset.op)));
-  box.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => pressKey(b.dataset.k)));
 }
-const focusInput = () => { const i = $('#ans') || document.querySelector('#qbox [data-tile], #qbox [data-op], #qbox [data-k]'); if (i && !i.disabled) i.focus(); };
+const focusInput = () => { const i = $('#ans') || document.querySelector('#qbox [data-tile], #qbox [data-op]'); if (i && !i.disabled) i.focus(); };
 
 /* unit analysis */
 function unitsBody(q) {
@@ -1934,104 +1756,7 @@ function pickOp(op) {
   finish({ ok: false, msg: `${q.from} → ${q.to} means ${q.op} 3.6. ${q.to === 'm/s' ? 'The m/s number is always smaller than the km/h number.' : 'The km/h number is always bigger than the m/s number.'}` });
 }
 
-/* calculator */
-const KEYS = [['E', 'EE', 'ee'], ['^', '^', 'fn'], ['DEL', 'DEL', 'fn'], ['AC', 'AC', 'fn'],
-  ['7'], ['8'], ['9'], ['/', '÷', 'fn'], ['4'], ['5'], ['6'], ['*', '×', 'fn'], ['1'], ['2'], ['3'], ['-', '−', 'fn'],
-  ['0'], ['.'], ['n', '(−)', 'fn'], ['+', '+', 'fn'], ['=', '=', 'eq']];
-const SHOW = { '*': '×', '/': '÷', '-': '−', 'n': '⁻', 'E': 'E' };
-const showExpr = e => esc([...e].map(c => SHOW[c] || c).join(''));
-function calcBody(q) {
-  const ws = q.kind === 'ws', stage2 = ws && S.cx.stage === 2;
-  let h = `<div class="cwrap"><div class="cpad" role="group" aria-label="Calculator">
-    <div class="screen" aria-live="polite"><div class="ex" id="cEx">${showExpr(S.cx.expr)}<span class="cur">_</span></div><div class="res" id="cRes">${S.cx.out}</div></div>
-    <div class="keys">${KEYS.map(([k, l, c]) => `<button class="key ${c || ''}" type="button" data-k="${esc(k)}" aria-label="${k === 'E' ? 'EE, times ten to the power' : k === 'n' ? 'negative' : esc(l || k)}">${esc(l || k)}</button>`).join('')}</div></div>
-    <div class="cnote"><p><kbd class="ee">EE</kbd> means "× 10 to the power". It keeps the whole number together.</p>
-      <p><kbd>(−)</kbd> makes a number negative, like the exponent in 10<sup>−4</sup>.</p><p>You can also use your keyboard: E for EE, ^ for power.</p></div></div>`;
-  if (stage2) h += answerBox('Answer:', SCI_HELP + ' Include the unit.');
-  return h;
-}
-function evalCalc(src) {
-  let i = 0;
-  const err = m => { throw new Error(m); };
-  function number() {
-    const m = src.slice(i).match(/^(\d+\.?\d*|\.\d+)(E([n-]?)(\d+))?/);
-    if (!m) err('SYNTAX ERROR');
-    if (/E/.test(src.slice(i + m[0].length, i + m[0].length + 1))) err('SYNTAX ERROR');
-    i += m[0].length;
-    return parseFloat(m[1]) * (m[2] ? Math.pow(10, (m[3] ? -1 : 1) * +m[4]) : 1);
-  }
-  function power() { const b = number(); if (src[i] === '^') { i++; return Math.pow(b, unary()); } return b; }
-  function unary() { if (src[i] === 'n' || src[i] === '-') { i++; return -unary(); } return power(); }
-  function term() { let v = unary(); while (src[i] === '*' || src[i] === '/') { const o = src[i++]; const r = unary(); if (o === '/' && r === 0) err('DIVIDE BY 0'); v = o === '*' ? v * r : v / r; } return v; }
-  function expr() { let v = term(); while (src[i] === '+' || src[i] === '-') { const o = src[i++]; const r = term(); v = o === '+' ? v + r : v - r; } return v; }
-  try {
-    if (!src) err('SYNTAX ERROR');
-    const v = expr(); if (i < src.length || !isFinite(v)) err('SYNTAX ERROR');
-    return { val: v };
-  } catch (e) { return { err: e.message }; }
-}
-function fmtCalc(x) {
-  if (x === 0) return '0';
-  const a = Math.abs(x);
-  if (a >= 1e10 || a < 1e-6) { const [m, e] = x.toExponential(9).split('e'); return `${m.replace(/\.?0+$/, '')} × 10^${+e}`; }
-  return String(Number(x.toPrecision(10)));
-}
-function refreshScreen() {
-  const ex = $('#cEx'), rs = $('#cRes');
-  if (ex) ex.innerHTML = showExpr(S.cx.expr) + '<span class="cur">_</span>';
-  if (rs) rs.innerHTML = S.cx.out;
-}
-function pressKey(k) {
-  const q = S.q; if (!q || q.t !== 'calc') return;
-  if (k === 'AC') { S.cx.expr = ''; S.cx.out = ''; }
-  else if (k === 'DEL') { S.cx.expr = S.cx.expr.slice(0, -1); S.cx.out = ''; }
-  else if (k === '=') return calcEquals(k);
-  else if (S.cx.expr.length < 40) { S.cx.expr += k; S.cx.out = ''; }
-  refreshScreen();
-}
-function calcEquals(k) {
-  const q = S.q, v = evalCalc(S.cx.expr);
-  S.cx.out = v.err ? v.err : num(fmtCalc(v.val));
-  const refocus = () => { const b = document.querySelector(`[data-k="${k}"]`); if (b) b.focus(); };
-  if (S.solved || S.cx.stage === 2) { refreshScreen(); return; }
-  if (v.err) { refreshScreen(); S.fb = { kind: 'hint', msg: v.err === 'DIVIDE BY 0' ? "You can't divide by 0. Press AC and try again." : "The calculator can't read that. Check that every EE has an exponent after it, and press AC to start again." }; renderCoach(); return; }
-  const usedEE = S.cx.expr.includes('E');
-  if (close(v.val, q.target)) {
-    if (q.kind === 'type' && !usedEE) { refreshScreen(); S.fb = { kind: 'hint', msg: 'Right number, but use the EE key. EE keeps the whole number together, which matters as soon as you divide by it. Press AC and try with EE.' }; renderCoach(); return; }
-    if (q.kind === 'ws') {
-      S.cx.stage = 2; S.tries = 0; S.help = Math.max(S.help, 1);
-      S.fb = { kind: 'hint', msg: `The calculator says ${num(fmtCalc(v.val))}. That's not the final answer yet: round it with the ${q.rule === 'addsub' ? 'adding and subtracting rule (least precise place)' : 'multiplying and dividing rule (fewest sig figs)'}, then write it in scientific notation.` };
-      render(); focusInput(); return;
-    }
-    finish({ ok: true, msg: q.kind === 'type' ? `${num(q.s)} = ${num(fmtCalc(q.target))}. Keys: ${keysFor(q.s)}.` : `${num(q.a)} ÷ ${num(q.b)} = ${num(fmtCalc(q.target))}. EE kept ${num(q.b)} together as one number.` });
-    return;
-  }
-  if (q.trapVal != null && close(v.val, q.trapVal)) {
-    const b = q.kind === 'trap' ? q.b : q.expr.split(' ÷ ')[1], a = q.kind === 'trap' ? q.a : q.expr.split(' ÷ ')[0];
-    const pb = MEAS.parse(b);
-    return void (finish({ ok: false, msg: `The calculator did ${num(a)} ÷ ${num(pb.mant)} first, then multiplied by 10<sup>${num(String(pb.exp))}</sup>, giving ${num(fmtCalc(q.trapVal))} instead of ${num(fmtCalc(q.target))}. ${num(b)} is one number: type it with EE (${keysFor(b)}) so it stays together.` }), refocus());
-  }
-  if (q.kind === 'type') {
-    const p = MEAS.parse(q.s);
-    if (close(v.val, flt(p.mant) * Math.pow(10, -p.exp))) return void (finish({ ok: false, msg: `The exponent's sign is backwards. For 10<sup>${num(String(p.exp))}</sup>, ${p.exp < 0 ? 'press (−) before the exponent' : "don't make the exponent negative"}.` }), refocus());
-  }
-  finish({ ok: false, msg: `The calculator shows ${num(fmtCalc(v.val))}. Press AC and type it again, one number at a time.` });
-  refocus();
-}
-const keysFor = s => { const p = MEAS.parse(s); if (!p.sci) return esc(p.mant); return `${esc(p.mant)} <kbd class="ee">EE</kbd> ${p.exp < 0 ? '<kbd>(−)</kbd> ' : ''}${Math.abs(p.exp)}`; };
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') hideTip();
-  const q = S.q; if (!q || q.t !== 'calc' || $('#lab').hidden) return;
-  const tg = e.target instanceof Element ? e.target : document.body;
-  if (tg.closest('input, textarea, a') || e.ctrlKey || e.metaKey || e.altKey) return;
-  const map = { Enter: '=', '=': '=', Backspace: 'DEL', Delete: 'AC', Escape: 'AC', e: 'E', E: 'E', '^': '^', '*': '*', x: '*', '/': '/', '-': '-', '+': '+', '.': '.', '_': 'n' };
-  const k = /^\d$/.test(e.key) ? e.key : map[e.key];
-  if (!k) return;
-  if (e.key === 'Enter' && tg.closest('button') && !tg.closest('[data-k]')) return; // let Enter press a focused button
-  e.preventDefault();
-  if (e.key === 'Enter' && tg.closest('[data-k]')) { pressKey(tg.closest('[data-k]').dataset.k); return; }
-  pressKey(k);
-});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
 
 function challengeIntro() {
   const best = store.best[S.topic], ch = S.ch;
@@ -2058,11 +1783,7 @@ function nextChallenge() {
 
 /* ---------- checking ---------- */
 function check(q, raw) {
-  if (q.t === 'sci') return checkSci(q, raw);
-  if (q.t === 'dec') return checkDec(q, raw);
-  if (q.t === 'units' || q.t === 'speed') return checkConv(q, raw);
-  if (q.t === 'combo') return checkCombo(q, raw);
-  return checkWs(q, raw);
+  return q.t === 'combo' ? checkCombo(q, raw) : checkConv(q, raw);
 }
 function doCheck() {
   const q = S.q; if (!q || S.solved) return;
@@ -2092,55 +1813,14 @@ function finish(res) {
 function showWorking(q) {
   if (q.t === 'units' && !chainState(q, S.chain).done) S.chain = pathTiles(q.from, q.to);
   if (q.t === 'speed') S.op = q.op;
-  if (q.t === 'calc' && q.kind === 'ws') S.cx.stage = 2;
-}
-function unitHint(p, unit) {
-  if (unit && p.unit !== unit) return { hint: true, msg: p.unit ? `Check the unit. This answer is in ${unit}, not ${esc(p.unit)}.` : `Add the unit (${unit}). Every final answer needs one.` };
-  if (!unit && p.unit) return { hint: true, msg: `This number has no unit. Leave "${esc(p.unit)}" off.` };
-  return null;
 }
 const isProper = p => { const c = Math.abs(parseFloat(p.mant)); return c >= 1 && c < 10; };
-const sameDigits = (a, b) => MEAS.trim(a).n === MEAS.trim(b).n || MEAS.trim(a).n === -MEAS.trim(b).n;
-function checkSci(q, raw) {
-  const p = MEAS.parse(raw);
-  if (!p.ok) return { level: 'nan', msg: 'Type a number in scientific notation, like 3.2 x 10^3.' };
-  const u = unitHint(p, q.unit); if (u) return u;
-  const want = MEAS.parse(q.r.sci), ans = num(q.r.sci) + unitSp(q.unit);
-  if (!p.sci) {
-    if (MEAS.eq(p.value, want.value) && want.exp === 0 && p.sf === want.sf) return { hint: true, msg: `Right number. In scientific notation, show the power of 10 too: ${ans}.` };
-    return { hint: true, msg: 'Write it in scientific notation: a number from 1 to 10, then × 10 to a power. Type it like 3.2 x 10^3.' };
-  }
-  if (!isProper(p)) return { ok: false, msg: `${num(p.mant)} × 10<sup>${num(String(p.exp))}</sup> is NOT proper scientific notation. The coefficient must be at least 1 and less than 10.` };
-  if (MEAS.eq(p.value, want.value)) {
-    if (p.sf === want.sf) return { ok: true, msg: q.fix ? `${num(q.s)} = ${ans}: the same number, now with a proper coefficient.` : `${num(grp(q.s))}${unitSp(q.unit)} = ${ans}.` };
-    if (q.n) return { ok: false, msg: `Right size, but ${num(p.mant)} has ${sfWord(p.sf)}. Round the front number to ${sfWord(q.n)}${q.n === 2 ? ': one digit before the decimal, one after' : ''}.` };
-    return { ok: false, msg: `Right size, but ${num(p.mant)} has ${sfWord(p.sf)}. ${num(grp(q.s))} has ${sfWord(q.k)}, and scientific notation keeps exactly those, so the front number needs ${plural(q.k, 'digit')}.` };
-  }
-  if (p.exp !== want.exp) {
-    if (p.exp === -want.exp) return { ok: false, msg: `Check the sign of the exponent. ${want.exp > 0 ? 'A number 10 or bigger has a positive exponent.' : 'A number smaller than 1 has a negative exponent.'}` };
-    return { ok: false, msg: 'Count the places again. The decimal point goes right after the first non-zero digit, and the exponent is how many places it moved.' };
-  }
-  if (q.n) return { ok: false, msg: `Check the rounding. Look at the digit right after sig fig #${q.n}: 5 or more → round up; 4 or less → leave it.` };
-  if (p.sf !== q.k) return { ok: false, msg: `${num(grp(q.s))} has ${sfWord(q.k)}. Keep every one: the front number needs ${plural(q.k, 'digit')}, with no rounding.` };
-  return { ok: false, msg: 'Not yet. Keep the same digits in the same order: only the decimal point moves.' };
-}
-function checkDec(q, raw) {
-  const p = MEAS.parse(raw);
-  if (!p.ok) return { level: 'nan', msg: 'Type an ordinary number, like 0.0035.' };
-  const u = unitHint(p, q.unit); if (u) return u;
-  if (p.sci) return { hint: true, msg: 'Write it as an ordinary number, without the × 10. Move the decimal point instead.' };
-  const want = MEAS.parse(q.ans), e = q.p.exp;
-  if (MEAS.eq(p.value, want.value)) {
-    if (p.sf === want.sf) return { ok: true, msg: `${num(q.s)}${unitSp(q.unit)} = ${num(grp(q.ans))}${unitSp(q.unit)}.` };
-    return { ok: false, msg: `Right size, but ${num(p.mant)} shows ${sfWord(p.sf)}. ${num(q.s)} has ${sfWord(want.sf)}, so don't add zeros after the last digit.` };
-  }
-  if (sameDigits(p.value, want.value)) return { ok: false, msg: `Right digits, wrong size. 10<sup>${num(String(e))}</sup> means move the decimal point ${placesWord(Math.abs(e))} ${e > 0 ? 'right (the number gets bigger)' : 'left (the number gets smaller)'}.` };
-  return { ok: false, msg: 'Not yet. Keep the same digits. Only the decimal point moves, and empty places fill with zeros.' };
-}
 function checkConv(q, raw) {
   const r = q.r, exact = MEAS.plainStr(MEAS.trim(r.exact)), sfIn = MEAS.parse(q.v).sf;
   const g = MEAS.grade(raw, { answer: r.best, exact, unit: q.to, example: `${r.best} ${q.to}` });
-  if (g.ok) return { ok: true, msg: `${num(grp(q.v))} ${q.from} = ${num(grp(r.best))} ${q.to}. ${q.v} has ${sfWord(sfIn)}, and the conversion factor${q.t === 'speed' ? ' 3.6 is' : 's are'} exact, so the answer keeps ${sfIn}. Check: ${sizeCheck(q.from, q.to).replace('should get', 'got')} ✓` };
+  if (g.ok) return { ok: true, msg: `${num(grp(q.v))} ${q.from} = ${num(grp(r.best))} ${q.to}. ${q.v} has ${sfWord(sfIn)}, and the conversion factor${q.t === 'speed' ? ' 3.6 is' : 's are'} exact, so the answer keeps ${sfIn}. Check: ${q.t === 'speed'
+    ? `${num(grp(r.best))} is ${q.to === 'm/s' ? 'smaller' : 'bigger'} than ${q.v}, and the m/s number is always the smaller one`
+    : sizeCheck(q.from, q.to).replace('should get', 'got')} ✓` };
   if (g.level === 'unit' || g.level === 'nan') return g;
   const p = MEAS.parse(raw);
   // went the wrong way (multiplied instead of divided)?
@@ -2174,19 +1854,6 @@ function checkCombo(q, raw) {
   if (p.ok && p.sci && p.sf === 2 && p.exp === expOf(r.sci)) return { ok: false, msg: 'Check the rounding. Look at the digit right after the 2nd sig fig: 5 or more → round up; 4 or less → leave it.' };
   return { ok: false, msg: 'Not yet. Step 1: convert. Step 2: round to 2 SF. Step 3: write it in scientific notation.' };
 }
-function checkWs(q, raw) {
-  const r = q.r, exact = MEAS.plainStr(MEAS.trim(r.exact));
-  const g = MEAS.grade(raw, { answer: r.sci, exact, rule: q.rule, unit: q.unit, example: `${r.sci} ${q.unit}` });
-  const p = MEAS.parse(raw);
-  if (g.level === 'unit' || g.level === 'nan') return g;
-  if (g.ok) {
-    if (!p.sci) return { hint: true, msg: `Right value. The question asks for scientific notation: ${num(r.sci)} ${q.unit}.` };
-    if (!isProper(p)) return { ok: false, msg: `Right value, but ${num(p.mant)} × 10<sup>${num(String(p.exp))}</sup> is NOT proper scientific notation. The coefficient must be at least 1 and less than 10.` };
-    return { ok: true, msg: `${num(r.sci)} ${q.unit}. ${q.rule === 'addsub' ? `Adding: the least precise measurement is known to ${dpWord(r.place)}.` : `Multiplying or dividing: the fewest sig figs is ${r.sf}.`}` };
-  }
-  return { ok: false, msg: g.msg };
-}
-
 /* ---------- coach (feedback under the question) ---------- */
 function renderCoach() {
   const box = $('#coach'), q = S.q, fb = S.fb;
@@ -2222,16 +1889,12 @@ function renderCoach() {
   on('skip', () => nextChallenge());
 }
 function answerText(q) {
-  if (q.t === 'sci') return num(q.r.sci) + unitSp(q.unit);
-  if (q.t === 'dec') return num(grp(q.ans)) + unitSp(q.unit);
   if (q.t === 'units' || q.t === 'speed') return `${num(grp(q.r.best))} ${q.to}`;
-  if (q.t === 'combo') return `${num(q.r.sci)} ${q.to}`;
-  if (q.kind === 'ws') return `${num(q.r.sci)} ${q.unit}`;
-  return `${num(fmtCalc(q.target))} (keys: ${q.kind === 'type' ? keysFor(q.s) : `${keysFor(q.a)} ÷ ${keysFor(q.b)}`} =)`;
+  return `${num(q.r.sci)} ${q.to}`;
 }
 
 /* ---------- step-by-step help ---------- */
-function nSteps(q) { return { sci: 3, dec: 3, calc: 3, units: 4, speed: 4, combo: 3 }[q.t]; }
+function nSteps(q) { return { units: 4, speed: 4, combo: 3 }[q.t]; }
 function renderHelp() {
   const box = $('#help'), q = S.q;
   if (!q) { box.innerHTML = ''; return; }
@@ -2246,22 +1909,6 @@ function renderHelp() {
   box.innerHTML = `<ol class="steps">${steps.slice(0, shown).map((s, i) => `<li><span class="n">STEP ${i + 1}</span>${s}</li>`).join('')}</ol>`;
 }
 
-// The decimal point hopping along a row of digits. from / to are gaps (gap g sits just before digit g).
-function hopRow(digits, from, to, added) {
-  added = added || new Set();
-  const lo = Math.min(from, to), hi = Math.max(from, to), left = to < from;
-  let h = '<div class="digits" aria-hidden="true">';
-  for (let g = 0; g <= digits.length; g++) {
-    if (g === to) h += `<div class="dg pt newpt"><span class="d">.</span><span class="r">${from === to ? 'here' : 'new'}</span></div>`;
-    else if (g === from) h += `<div class="dg pt oldpt"><span class="d">.</span><span class="r">start</span></div>`;
-    if (g === digits.length) break;
-    const crossed = g >= lo && g < hi, n = left ? from - g : g - from + 1;
-    const cls = added.has(g) ? 'pad' : crossed ? 'hop' : '';
-    const lab = crossed ? `hop ${n}` : added.has(g) ? '+0' : '&nbsp;';
-    h += `<div class="dg ${cls}"><span class="d">${digits[g]}</span><span class="r">${lab}</span></div>`;
-  }
-  return h + '</div>';
-}
 // "3.2|00": a value with a bar after the place being kept. Long values are cut with …
 function placeIndex(s, place) {
   const dot = s.includes('.') ? s.indexOf('.') : s.length;
@@ -2294,79 +1941,6 @@ const coefOf = sciString => sciString.split(' × ')[0];
 const expOf = sciString => +sciString.split('^')[1];
 
 const STEPS = {
-  sci(q) {
-    const ans = num(q.r.sci) + unitSp(q.unit);
-    if (q.fix) {
-      const c = q.p.mant, pc = MEAS.parse(c), full = MEAS.sciStr(MEAS.trim(pc.value)), k = expOf(full), nc = coefOf(full);
-      const digits = c.replace('.', ''), oldGap = c.includes('.') ? c.indexOf('.') : c.length, f = digits.search(/[1-9]/);
-      const left = k > 0;
-      return [
-        `<p>The ${T('coefficient', 'coef')}, ${num(c)}, is not between 1 and 10, so this isn't proper scientific notation.</p>`,
-        `<p>Move its decimal point so it is: <span class="vt">${num(c)} → ${num(nc)}</span> (${placesWord(Math.abs(k))} ${left ? 'left' : 'right'}).</p>${hopRow(digits, oldGap, f + 1)}`,
-        `<p>Moving the decimal ${left ? 'left made the front number smaller' : 'right made the front number bigger'}, so the ${T('exponent', 'exp')} goes ${left ? 'up' : 'down'} by ${Math.abs(k)} to keep the same value: 10<sup>${num(String(q.p.exp))}</sup> → 10<sup>${num(String(q.p.exp + k))}</sup>.</p>
-          <p>Answer: <span class="vt">${ans}</span></p>`
-      ];
-    }
-    const P = q.p.mant, digits = P.replace('.', ''), oldGap = P.includes('.') ? P.indexOf('.') : P.length;
-    const f = digits.search(/[1-9]/), newGap = f + 1, e = oldGap - newGap;
-    const rest = digits.slice(f), coefAll = rest[0] + (rest.length > 1 ? '.' + rest.slice(1) : '');
-    const hopTxt = e === 0 ? 'It is already there: 0 places → 10<sup>0</sup>.'
-      : `${placesWord(Math.abs(e))} ${e > 0 ? 'left' : 'right'} → 10<sup>${num(String(e))}</sup>. ${e > 0 ? 'Moved left (big number) → positive exponent.' : 'Moved right (small number) → negative exponent.'}`;
-    let s3;
-    if (q.n) {
-      const cv = cutView(MEAS.parse(coefAll).value, -(q.n - 1));
-      s3 = `<p>Round the front number to ${sfWord(q.n)}: <span class="vt">${cv.html}</span> → ${roundLine(cv, q.n)}</p>`;
-      if (expOf(q.r.sci) !== e) s3 += `<p>Rounding up made the front number 10, so the decimal moves one more place: ${num(q.r.sci)}.</p>`;
-    } else {
-      const trailing = !P.includes('.') && /0$/.test(P);
-      s3 = `<p>${num(grp(q.s))} has ${sfWord(q.k)}, so the front number keeps ${plural(q.k, 'digit')}.${trailing ? ` The zeros at the end of ${num(grp(q.s))} are ${T('placeholders', 'placeholder')} (no decimal point), so they are not written in the front number.` : ''}</p>`;
-    }
-    return [
-      `<p>Put the decimal after the first non-zero digit: <span class="vt">${esc(coefAll)}</span>${e === 0 ? ' (already there)' : ''}</p>${hopRow(digits, oldGap, newGap)}`,
-      `<p>Count the places the decimal moved: ${hopTxt}</p>`,
-      `${s3}<p>Answer: <span class="vt">${ans}</span></p>`
-    ];
-  },
-  dec(q) {
-    const e = q.p.exp, P = q.ans, digits = P.replace('.', ''), plainGap = P.includes('.') ? P.indexOf('.') : P.length;
-    const f = digits.search(/[1-9]/), len = q.p.mant.replace('.', '').length;
-    const added = new Set(); for (let g = 0; g < digits.length; g++) if (g < f || g >= f + len) added.add(g);
-    return [
-      `<p>The ${T('exponent', 'exp')} is ${num(String(e))}. ${e > 0 ? 'Positive → the number is 10 or bigger: move the decimal point <b>right</b>.' : 'Negative → the number is smaller than 1: move the decimal point <b>left</b>.'}</p>`,
-      `<p>Move it ${placesWord(Math.abs(e))} ${e > 0 ? 'right' : 'left'}. Fill the empty places with zeros.</p>${hopRow(digits, f + 1, plainGap, added)}
-        <div class="legend"><span style="color:var(--warm)">+0 = zero added to fill a place</span></div>`,
-      `<p>Answer: <span class="vt">${num(grp(P))}${unitSp(q.unit)}</span></p>${e > 0 && /0$/.test(P) ? `<p>The zeros at the end are ${T('placeholders', 'placeholder')}: ${num(grp(P))} still has ${sfWord(q.p.sf)}, the same as ${num(q.s)}.</p>` : ''}`
-    ];
-  },
-  calc(q) {
-    if (q.kind === 'type') {
-      const p = MEAS.parse(q.s);
-      return [
-        `<p>Type the front number: <b>${esc(p.mant)}</b>.</p>`,
-        `<p>Press <kbd class="ee">EE</kbd>. It means "× 10 to the power", and it keeps the whole number together.</p>`,
-        `<p>Type the exponent: <b>${num(String(p.exp))}</b>.${p.exp < 0 ? ' For a negative exponent, press <kbd>(−)</kbd> first.' : ''} Then press <kbd>=</kbd>.</p><p>Keys: ${keysFor(q.s)} <kbd>=</kbd></p>`
-      ];
-    }
-    if (q.kind === 'trap') {
-      const pb = MEAS.parse(q.b);
-      return [
-        `<p>${num(q.b)} is one number. To keep it together, type it with EE: ${keysFor(q.b)}.</p>`,
-        `<p>Keys: ${keysFor(q.a)} <kbd>÷</kbd> ${keysFor(q.b)} <kbd>=</kbd> → <b>${num(fmtCalc(q.target))}</b></p>`,
-        `<p><b>Why not × 10 ^ ${num(String(pb.exp))}?</b> The calculator would do ${num(q.a)} ÷ ${esc(pb.mant)} first and then multiply by 10<sup>${num(String(pb.exp))}</sup>, giving ${num(fmtCalc(q.trapVal))}. That is the wrong answer.</p>`
-      ];
-    }
-    const r = q.r;
-    const keys = r.terms.map((t, i) => (i ? ` <kbd>${t.op === '-' ? '−' : t.op}</kbd> ` : '') + keysFor(t.v)).join('');
-    const rule = q.rule === 'addsub'
-      ? `<p>Adding: round to the least precise measurement.</p><ul>${r.terms.map((t, i) => `<li>${num(t.v)} = ${esc(MEAS.plainStr(MEAS.parse(t.v).value))} → known to ${t.place > 0 ? 'the ' + MEAS.placeName(t.place) : MEAS.placeName(t.place)} place${i === r.least ? ' <b>← least precise</b>' : ''}</li>`).join('')}</ul>`
-      : `<p>Multiplying or dividing: count sig figs.</p><ul>${r.terms.map((t, i) => `<li>${num(t.v)} → ${sfWord(t.sf)}${i === r.least ? ' <b>← fewest</b>' : ''}</li>`).join('')}</ul>`;
-    const cv = cutView(r.exact, r.place);
-    return [
-      `<p>Type each number with EE: ${keys} <kbd>=</kbd> → <b>${num(MEAS.calcStr(r.exact))}</b></p>`,
-      rule,
-      `<p>Round: <span class="vt">${cv.html}</span> → ${roundLine(cv, r.sf)} → ${num(r.best)}</p><p>Answer in scientific notation: <span class="vt">${num(r.sci)} ${q.unit}</span></p>`
-    ];
-  },
   units(q) {
     const path = pathTiles(q.from, q.to), st = chainState(q, path), sfIn = MEAS.parse(q.v).sf;
     const facts = [...new Set(path.map(t => factText(t.bu, t.tu)))].join(' and ');
@@ -2418,8 +1992,8 @@ const STEPS = {
 function startLab() { $('#lab').hidden = false; $('#plain').open = false; store.seen = true; save(); }
 $('#goBtn').addEventListener('click', () => { startLab(); const t = document.querySelector('.tab[aria-selected=true]'); if (t) t.focus(); });
 if (store.seen) startLab();
-setTopic('sci');
-if (DEBUG) window.__nu = { BANK, GEN, check, STEPS, answerText, evalCalc, chainState, pathTiles };
+setTopic('units');
+if (DEBUG) window.__nu = { BANK, GEN, check, STEPS, answerText, chainState, pathTiles };
 })();
 </script>
 </body></html>

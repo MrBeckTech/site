@@ -1,0 +1,2086 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scientific Notation Practice | Science 1206</title>
+<meta name="tw-titlecard" content="MOTION · SIM 03|SCIENTIFIC|NOTATION.">
+<meta name="tw-canvas" content="off">
+<style>:root{
+  --bg:#1b1030; --ink:#f6efff; --ink2:#c3b2e6; --panel:#160d2b; --rim:#8a6fd0;
+  --gold:#ffd23f; --mint:#5df2a4; --sky:#6ad3ff; --coral:#ff5d73; --warm:#ff9a4d;
+  --radius:6px; --focus:#5df2a4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif}
+.app{max-width:1180px;margin:0 auto;padding:8px 12px 26px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 8px}
+.hd h1{margin:0}
+.lead{flex-basis:100%;margin:2px 0 0;font-size:.95rem}
+.card{padding:12px 14px;margin:0 0 10px}
+.wtitle{font-family:'Press Start 2P','Courier New',monospace;font-size:10px;line-height:1.6;color:var(--sky);margin:0 0 6px;font-weight:400}
+.wtitle.mint{color:var(--mint)}
+[hidden]{display:none!important}
+sup{font-size:.62em;line-height:0}
+
+/* plain words */
+.plain p{margin:4px 0;max-width:72ch}
+.plain summary{cursor:pointer;list-style:none;font-family:'Press Start 2P','Courier New',monospace;font-size:10px;color:var(--sky);padding:2px 0}
+.plain summary::-webkit-details-marker{display:none}
+.plain summary::before{content:'▶ '}
+.plain[open] summary::before{content:'▼ '}
+.plain .go{margin-top:8px}
+
+/* buttons */
+.btn,.tab,.segbtn{appearance:none;font:inherit;font-weight:700;padding:7px 12px;min-height:38px;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.small{padding:4px 9px;min-height:32px;font-size:.9rem}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.tab{padding:7px 10px}
+.modes{display:flex;gap:6px;align-items:center;margin-left:auto}
+.modes .lbl{font-family:'Press Start 2P','Courier New',monospace;font-size:9px;color:var(--ink2)}
+.toprow{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:0 0 8px}
+.toprow .tabs{margin:0}
+
+/* tap-to-define words */
+.term{appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:help;
+  text-decoration:underline dotted var(--sky);text-underline-offset:3px;text-decoration-thickness:2px}
+#tip{position:absolute;z-index:50;max-width:300px;background:var(--panel);color:var(--ink);border:3px solid #000;
+  border-left:6px solid var(--sky);border-radius:4px;padding:7px 10px;font-size:.92rem;box-shadow:4px 4px 0 #000}
+
+/* question bar */
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 8px}
+.bar .lbl{font-family:'Press Start 2P','Courier New',monospace;font-size:9px;color:var(--ink2)}
+.pick{display:flex;flex-wrap:wrap;gap:4px}
+.pick button{min-width:28px;min-height:30px;padding:2px 5px;font:700 .9rem 'Atkinson Hyperlegible',system-ui,sans-serif;
+  background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94;cursor:pointer}
+.pick button.on{background:var(--gold);color:#1b1030;box-shadow:inset 0 -3px 0 #c99a00}
+.pick button.done::after{content:'✓';margin-left:2px;color:var(--mint)}
+.pick button.on.done::after{color:#0b5a32}
+.score{font:400 24px/1 'VT323','Courier New',monospace;color:var(--gold)}
+
+/* the question */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.qbox{background:var(--panel);border:3px solid #000;border-radius:4px;padding:10px 12px}
+.src{margin:0 0 2px;font-size:.8rem;color:var(--ink2)}
+.qtext{margin:0 0 6px;font-size:1.05rem}
+.big{font:400 44px/1.05 'VT323','Courier New',monospace;color:var(--gold);letter-spacing:.02em}
+.big sup{font-size:.55em}
+.big .arrow{color:var(--ink2);padding:0 6px}
+.one{border-bottom:3px solid var(--sky);padding:0 2px}
+.calc{display:inline-flex;align-items:center;gap:8px;margin:6px 0 2px;padding:3px 10px;background:#0e0820;border:2px solid var(--rim);border-radius:4px}
+.calc .k{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--ink2)}
+.calc .v{font:400 30px/1 'VT323','Courier New',monospace;color:var(--mint)}
+.calc .v sup{font-size:.55em}
+.ans{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.ans label{font-weight:700}
+.ans input{width:250px;height:42px;padding:0 10px;font:400 30px/1 'VT323','Courier New',monospace;color:var(--gold);background:#0e0820;
+  border:2px solid var(--rim);border-radius:3px}
+.ans input:disabled{opacity:.7}
+.typehelp{margin:6px 0 0;font-size:.85rem;color:var(--ink2)}
+.choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.choices .btn{font:400 28px/1 'VT323','Courier New',monospace;min-width:110px}
+.choices .btn.picked{background:var(--mint);color:#1b1030}
+
+.say{background:var(--panel);border:3px solid #000;border-left:6px solid var(--sky);border-radius:4px;padding:8px 11px;margin:8px 0 0;font-size:.98rem}
+.say p{margin:3px 0}
+.say.good{border-left-color:var(--mint);background:#0f2219}
+.say.bad{border-left-color:var(--coral);background:#2a0f18}
+.say.warm{border-left-color:var(--warm);background:#24130f}
+.say.hint{border-left-color:var(--gold)}
+.say .tag{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;display:block;margin-bottom:3px;color:var(--gold)}
+.say.good .tag{color:var(--mint)} .say.bad .tag{color:var(--coral)} .say.warm .tag{color:var(--warm)}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+
+/* worked steps */
+.steps{list-style:none;margin:0;padding:0}
+.steps ul{margin:4px 0;padding-left:1.2rem}
+.steps>li{background:var(--panel);border:3px solid #000;border-radius:4px;padding:7px 10px;margin:0 0 6px}
+.steps>li>.n{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;color:var(--gold);display:block;margin-bottom:3px}
+.steps p{margin:3px 0}
+.vt{font:400 26px/1.1 'VT323','Courier New',monospace;color:var(--ink);white-space:nowrap}
+.vt sup{font-size:.55em}
+.cut{color:var(--coral);font-weight:700;padding:0 1px}
+.nexts{color:var(--sky);text-decoration:underline;text-underline-offset:3px}
+.helpwait{color:var(--ink2);font-size:.95rem;background:var(--panel);border:3px dashed #3a2463;border-radius:4px;padding:10px}
+kbd{font:700 .85rem 'Atkinson Hyperlegible',system-ui,sans-serif;background:#3a2463;color:var(--ink);border:2px solid #000;border-radius:3px;padding:0 5px;white-space:nowrap}
+kbd.ee{background:var(--gold);color:#1b1030}
+
+/* digit boxes: the decimal point hopping */
+.digits{display:flex;flex-wrap:wrap;align-items:flex-end;gap:3px;margin:6px 0 2px}
+.dg{display:flex;flex-direction:column;align-items:center;min-width:34px}
+.dg .d{font:400 34px/1 'VT323','Courier New',monospace;width:100%;text-align:center;padding:4px 4px 2px;border:3px solid #000;border-radius:4px;background:#2a1850;color:var(--ink)}
+.dg .r{font-size:.68rem;font-weight:700;margin-top:2px;white-space:nowrap;color:var(--ink2)}
+.dg.hop .d{background:#0e0820;color:var(--sky);border-color:var(--sky)}
+.dg.hop .r{color:var(--sky)}
+.dg.pad .d{background:#24130f;color:var(--warm);border-style:dashed;border-color:var(--warm)}
+.dg.pad .r{color:var(--warm)}
+.dg.pt{min-width:12px}
+.dg.pt .d{background:none;border-color:transparent;padding-left:0;padding-right:0}
+.dg.pt.newpt .d{color:var(--gold);font-size:44px;line-height:.75}
+.dg.pt.newpt .r{color:var(--gold)}
+.dg.pt.oldpt .d{color:#7d7399}
+.hopnote{font-weight:700;color:var(--sky)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.85rem;color:var(--ink2);margin:4px 0 0}
+
+/* calculator */
+.cwrap{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;margin-top:8px}
+.cpad{background:#0e0820;border:3px solid #000;border-radius:8px;padding:7px;box-shadow:4px 4px 0 #000}
+.screen{background:#c5d6b0;color:#18210d;border:2px solid #000;border-radius:3px;padding:3px 8px;width:254px;font:400 24px/1.1 'VT323','Courier New',monospace;margin-bottom:7px}
+.screen .ex{min-height:27px;word-break:break-all}
+.screen .ex .cur{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.screen .res{text-align:right;min-height:27px}
+.screen .res sup{font-size:.6em}
+.keys{display:grid;grid-template-columns:repeat(4,59px);gap:5px}
+.key{appearance:none;cursor:pointer;height:33px;font:700 1rem 'Atkinson Hyperlegible',system-ui,sans-serif;background:#3a2463;color:var(--ink);
+  border:3px solid #000;border-radius:5px;box-shadow:inset 0 -3px 0 #24163f}
+.key.fn{background:#5b3f94}
+.key.ee{background:var(--gold);color:#1b1030;box-shadow:inset 0 -3px 0 #c99a00}
+.key.eq{grid-column:1/-1;background:var(--mint);color:#1b1030;box-shadow:inset 0 -3px 0 #1f9c5c}
+.key:active{transform:translateY(1px)}
+.key:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
+.cnote{flex:1 1 150px;font-size:.86rem;color:var(--ink2)}
+.cnote p{margin:0 0 6px}
+
+/* learn cards */
+.learn{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px;margin-top:10px}
+.learn .card{margin:0}
+.learn ol,.learn ul{margin:4px 0 0;padding-left:1.2rem}
+.learn li{margin:4px 0}
+.learn p{margin:4px 0}
+.learn .wide{grid-column:1/-1}
+.rules{width:100%;border-collapse:collapse;background:var(--panel);border:3px solid #000;font-size:.95rem}
+.rules th{font-family:'Press Start 2P','Courier New',monospace;font-size:8px;font-weight:400;color:var(--ink2);text-align:left;padding:7px 8px;border-bottom:2px solid #3a2463}
+.rules td{padding:5px 8px;border-bottom:1px solid #2a1850;vertical-align:top}
+.rules td.ex{font:400 22px/1.15 'VT323','Courier New',monospace;white-space:nowrap}
+.learn .ex{background:var(--panel);border:3px solid #000;border-radius:4px;padding:6px 8px;margin-top:8px}
+.anat{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:flex-start;margin:6px 0}
+.anat .big{font-size:50px}
+.anat .co{border-bottom:3px solid var(--mint)} .anat .xp{color:var(--sky)}
+.anat ul{margin:0;padding-left:1.1rem;font-size:.93rem}
+.foot{margin:12px 4px 0;font-size:.82rem}
+@media(max-width:620px){.big{font-size:34px}.ans input{width:190px}.keys{grid-template-columns:repeat(4,52px)}.screen{width:228px}}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<div id="app" class="app">
+  <header class="hd">
+    <h1>Scientific Notation Practice</h1>
+    <span class="pill">SCIENCE 1206 · UNIT 3</span>
+    <p class="lead">Write numbers in scientific notation and back again, and type them on a calculator with the EE key.</p>
+  </header>
+
+  <details class="card plain" id="plain" open>
+    <summary>IN PLAIN WORDS</summary>
+    <p>Scientific notation is a short way to write huge or tiny numbers: the number, then how many places the decimal moved. 47 000 m is 4.7 × 10<sup>4</sup> m: write 4.7, then move the decimal point 4 places.</p>
+    <p>It is also how you show sig figs clearly: 100 cm with 3 sig figs is written 1.00 × 10<sup>2</sup> cm.</p>
+    <button class="btn primary go" id="goBtn" type="button">Start practising ▶</button>
+  </details>
+
+  <div id="lab" hidden>
+    <div class="toprow">
+      <div class="tabs" role="tablist" aria-label="Topic">
+        <button class="tab" role="tab" data-topic="sci" type="button">To scientific notation</button>
+        <button class="tab" role="tab" data-topic="dec" type="button">To decimal form</button>
+        <button class="tab" role="tab" data-topic="calc" type="button">Calculator</button>
+      </div>
+      <div class="modes" role="group" aria-label="Mode">
+        <span class="lbl">MODE</span>
+        <button class="segbtn" type="button" data-mode="guided" aria-pressed="true">Guided</button>
+        <button class="segbtn" type="button" data-mode="challenge" aria-pressed="false">Challenge (10)</button>
+      </div>
+    </div>
+
+    <section class="card" aria-label="Practice">
+      <div class="bar" id="bar"></div>
+      <div class="grid">
+        <div>
+          <div class="qbox" id="qbox"></div>
+          <div id="coach" aria-live="polite"></div>
+        </div>
+        <div>
+          <div class="wtitle mint" id="helpTitle">STEP BY STEP</div>
+          <div id="help"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="learn">
+    <section class="card wide">
+      <h2 class="wtitle">SCIENTIFIC NOTATION</h2>
+      <table class="rules">
+        <thead><tr><th scope="col">SCIENTIFIC NOTATION</th><th scope="col">EXAMPLE</th></tr></thead>
+        <tbody>
+          <tr><td>Writes a number as a coefficient between 1 and 10, multiplied by a power of 10. Positive exponent → number 10 or bigger. Negative exponent → number smaller than 1. Exponent 0 → number from 1 to 10.</td>
+            <td class="ex">300 000 000 = 3 × 10<sup>8</sup><br>0.000 000 03 = 3 × 10<sup>−8</sup></td></tr>
+          <tr><td>Useful for very large or very small numbers, and for showing the correct number of significant figures.</td>
+            <td class="ex">100 cm to 3 SF → 1.00 × 10<sup>2</sup> cm<br>100 cm to 2 SF → 1.0 × 10<sup>2</sup> cm<br>100 cm to 1 SF → 1 × 10<sup>2</sup> cm</td></tr>
+        </tbody>
+      </table>
+      <div class="anat">
+        <div class="big"><span class="co">4.7</span> × 10<sup class="xp">4</sup></div>
+        <ul>
+          <li><b>Coefficient</b> (4.7): 1 ≤ number &lt; 10. All its digits are significant.</li>
+          <li><b>Exponent</b> (4): how many places the decimal point moved.</li>
+        </ul>
+      </div>
+      <div class="ex"><p><b>Watch out:</b> 47 × 10<sup>3</sup> and 0.47 × 10<sup>5</sup> are NOT proper scientific notation. The coefficient must be at least 1 and less than 10.</p></div>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">HOW TO CONVERT, STEP BY STEP</h2>
+      <p><b>Big number:</b> 3200 → 2 SF</p>
+      <ol>
+        <li>Put the decimal after the first non-zero digit: 3.200</li>
+        <li>Count the places the decimal moved: 3200. → 3.200 = 3 places left</li>
+        <li>Moved left (big number) → positive exponent: 3.2 × 10<sup>3</sup></li>
+      </ol>
+      <p><b>Small number:</b> 0.000855 → 2 SF</p>
+      <ol>
+        <li>Put the decimal after the first non-zero digit: 8.55</li>
+        <li>Count the places: 0.000855 → 8.55 = 4 places right</li>
+        <li>Moved right (small number) → negative: 8.55 × 10<sup>−4</sup> → 2 SF: 8.6 × 10<sup>−4</sup></li>
+      </ol>
+    </section>
+    <section class="card">
+      <h2 class="wtitle">THE CALCULATOR: EE KEY</h2>
+      <p>Use the <kbd class="ee">EE</kbd> (or ×10<sup>x</sup>) key: 3.2 × 10<sup>3</sup> is typed 3.2 <kbd class="ee">EE</kbd> 3. This keeps the whole number together.</p>
+      <p>If you type 6 ÷ 2 × 10 ^ 3 instead of 6 ÷ 2 <kbd class="ee">EE</kbd> 3, the calculator does 6 ÷ 2 first and then multiplies by 1000, giving 3000 instead of 0.003.</p>
+      <p>For a negative exponent, press the negative key <kbd>(−)</kbd> before the exponent: 8.6 <kbd class="ee">EE</kbd> <kbd>(−)</kbd> 4.</p>
+    </section>
+  </div>
+  <p class="foot">Science 1206 · Unit 3 Motion · Booklet #1: Scientific Notation and Worksheet #4 (questions 3 to 5). Your progress is saved on this device only.</p>
+</div>
+<div id="tip" role="tooltip" hidden></div>
+<!--meas:start-->
+<script id="meas-core">
+/* MEAS: measurement maths for the Motion pages. Pure functions, no DOM.
+   Canonical copy: shared/meas-core.js. tools/inline-meas.mjs copies it into each page between
+   <!--meas:start--> and <!--meas:end-->, and tools/test-meas.mjs tests it in Node.
+   All arithmetic is exact decimal (BigInt digits × a power of ten), never floats, so 0.0305 to 2 SF is 0.031.
+   Conventions: NL Science 1206 Appendix A (see docs/motion-part1-plan.md §2.1). */
+const MEAS = (() => {
+  'use strict';
+  const B = BigInt, TEN = 10n;
+  const pow10 = k => TEN ** B(k);
+  const absB = n => n < 0n ? -n : n;
+
+  /* ---------- exact decimals: { n: BigInt, e: int } means n × 10^e ---------- */
+  const D = (n, e) => ({ n: B(n), e });
+  const isZero = d => d.n === 0n;
+  const digitsOf = d => absB(d.n).toString();
+  // exponent of the most significant digit (0.0072 -> -3, 1500 -> 3)
+  const msd = d => isZero(d) ? -Infinity : digitsOf(d).length - 1 + d.e;
+  function align(a, b) { const e = Math.min(a.e, b.e); return [a.n * pow10(a.e - e), b.n * pow10(b.e - e), e]; }
+  const add = (a, b) => { const [x, y, e] = align(a, b); return D(x + y, e); };
+  const sub = (a, b) => { const [x, y, e] = align(a, b); return D(x - y, e); };
+  const mul = (a, b) => D(a.n * b.n, a.e + b.e);
+  const neg = a => D(-a.n, a.e);
+  const absD = a => D(absB(a.n), a.e);
+  const cmp = (a, b) => { const [x, y] = align(a, b); return x < y ? -1 : x > y ? 1 : 0; };
+  const eq = (a, b) => cmp(a, b) === 0;
+  // Division to 40 significant digits (truncated). .inexact marks a quotient that did not end.
+  function div(a, b) {
+    if (b.n === 0n) throw new Error('divide by zero');
+    const k = Math.max(0, 40 - (digitsOf(a).length - digitsOf(b).length));
+    const num = a.n * pow10(k), q = num / b.n;
+    const out = D(q, a.e - b.e - k);
+    out.inexact = num % b.n !== 0n;
+    return out;
+  }
+  // Round to the place 10^p, half away from zero ("5 or more, let it soar")
+  function roundAt(d, p) {
+    if (d.e >= p) return D(d.n * pow10(d.e - p), p);
+    const k = pow10(p - d.e), a = absB(d.n);
+    let q = a / k; if ((a % k) * 2n >= k) q += 1n;
+    return D(d.n < 0n ? -q : q, p);
+  }
+  // Strip trailing zeros from n (same value, shortest form)
+  function trim(d) { let { n, e } = d; if (n === 0n) return D(0n, 0); while (n % TEN === 0n) { n /= TEN; e++; } return D(n, e); }
+
+  // Plain decimal string of n × 10^e, showing digits down to 10^e
+  function plainStr(d) {
+    const s = digitsOf(d), sign = d.n < 0n ? '-' : '';
+    if (d.e >= 0) return sign + (d.n === 0n ? '0' : s + '0'.repeat(d.e));
+    const k = -d.e, pad = s.padStart(k + 1, '0');
+    return sign + pad.slice(0, pad.length - k) + '.' + pad.slice(pad.length - k);
+  }
+  // Scientific-notation string with every digit of n shown: "3.20 × 10^3"
+  function sciStr(d) {
+    if (isZero(d)) return plainStr(d);
+    const s = digitsOf(d), sign = d.n < 0n ? '-' : '';
+    return `${sign}${s[0]}${s.length > 1 ? '.' + s.slice(1) : ''} × 10^${msd(d)}`;
+  }
+  // Calculator display: up to 9 significant digits, "…" when digits were cut off
+  function calcStr(d) {
+    const t = trim(d);
+    if (isZero(t)) return '0';
+    const s = digitsOf(t);
+    if (s.length <= 9 && !d.inexact) return plainStr(t);
+    return plainStr(trim(D(t.n / pow10(s.length - 9), t.e + s.length - 9))) + '…';
+  }
+
+  /* ---------- reading what a student typed ---------- */
+  const SUPS = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', '⁻': '-', '⁺': '+' };
+  const DIRS = {
+    e: ['EW', 1, 'E'], east: ['EW', 1, 'E'], w: ['EW', -1, 'W'], west: ['EW', -1, 'W'],
+    n: ['NS', 1, 'N'], north: ['NS', 1, 'N'], s: ['NS', -1, 'S'], south: ['NS', -1, 'S'],
+    right: ['LR', 1, 'right'], left: ['LR', -1, 'left'], up: ['UD', 1, 'up'], down: ['UD', -1, 'down'],
+    forward: ['FB', 1, 'forward'], forwards: ['FB', 1, 'forward'], backward: ['FB', -1, 'backward'], backwards: ['FB', -1, 'backward']
+  };
+  const UNITS = {
+    mm: 'mm', millimetre: 'mm', millimetres: 'mm', millimeter: 'mm', millimeters: 'mm',
+    cm: 'cm', centimetre: 'cm', centimetres: 'cm', centimeter: 'cm', centimeters: 'cm',
+    m: 'm', metre: 'm', metres: 'm', meter: 'm', meters: 'm',
+    km: 'km', kilometre: 'km', kilometres: 'km', kilometer: 'km', kilometers: 'km',
+    s: 's', sec: 's', secs: 's', second: 's', seconds: 's',
+    min: 'min', mins: 'min', minute: 'min', minutes: 'min',
+    h: 'h', hr: 'h', hrs: 'h', hour: 'h', hours: 'h',
+    'm/s': 'm/s', 'km/h': 'km/h', 'km/hr': 'km/h', kph: 'km/h',
+    g: 'g', kg: 'kg', '%': '%', step: 'steps', steps: 'steps', lap: 'laps', laps: 'laps'
+  };
+  const normUnit = u => { const k = u.replace(/\s+/g, ''); return UNITS[k] || UNITS[k.toLowerCase()] || k; };
+
+  // The number part of a string: mantissa text, exponent, and what is left over
+  const NUM = /^([+-]?)\s*(\d{1,3}(?:[   ,]\d{3})+(?:\.\d*)?|\d+\.?\d*|\.\d+)(?:\s*(?:[x×X*]\s*10\s*(?:\^|\*\*)?\s*\(?\s*([+-]?\d+)\s*\)?|[eE]([+-]?\d+)))?/;
+
+  function parse(str) {
+    let s = String(str == null ? '' : str).trim()
+      .replace(/[−–—]/g, '-')
+      .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, m => '^' + [...m].map(c => SUPS[c]).join(''))
+      .replace(/\^\^/g, '^');
+    const out = { raw: String(str == null ? '' : str), ok: false };
+    // direction: anything in [ ] wins; otherwise a trailing direction word
+    let dir = null;
+    const br = s.match(/\[\s*([^\]]*?)\s*\]/);
+    if (br) {
+      const w = br[1].toLowerCase();
+      if (!DIRS[w]) { out.error = 'dir'; out.dirText = br[1]; return out; }
+      dir = DIRS[w]; s = (s.slice(0, br.index) + ' ' + s.slice(br.index + br[0].length)).trim();
+    }
+    const m = s.match(NUM);
+    if (!m) { out.error = 'nan'; return out; }
+    let rest = s.slice(m[0].length).trim();
+    if (!dir) {
+      const words = rest.split(/\s+/);
+      const last = words[words.length - 1] || '', lw = last.toLowerCase();
+      // single letters N/E/S/W only count as a direction after a unit ("5.0 m S"), so "4.0 s" stays seconds
+      if (DIRS[lw] && (lw.length > 1 || (words.length > 1 && /^[NESW]$/.test(last)))) { dir = DIRS[lw]; words.pop(); rest = words.join(' '); }
+    }
+    if (/\d/.test(rest.replace(/[²³]|\^\s*-?\d/g, ''))) { out.error = 'nan'; return out; }
+    const mant = m[2].replace(/[   ,]/g, '');
+    const exp = m[3] != null ? +m[3] : m[4] != null ? +m[4] : 0;
+    const sci = m[3] != null || m[4] != null;
+    const hasPoint = mant.includes('.');
+    const digs = mant.replace('.', '').replace(/^0+(?=\d)/, '') || '0';
+    const decimals = hasPoint ? mant.length - mant.indexOf('.') - 1 : 0;
+    const sign = m[1] === '-' ? -1 : 1;
+    const val = D(B(digs) * B(sign), exp - decimals);
+    return Object.assign(out, {
+      ok: true, sign, explicitSign: !!m[1], mant, exp, sci, hasPoint, decimals,
+      value: val, sf: sigFigs(mant), lsd: lsdOf(mant) + exp,
+      unit: rest ? normUnit(rest) : '', dir: dir ? { axis: dir[0], sgn: dir[1], label: dir[2] } : null
+    });
+  }
+  // Exact value of a numeric string (no units)
+  const val = x => typeof x === 'object' ? x : parse(x).value;
+
+  /* ---------- counting sig figs (rule numbers from the slides: 1, 2A, 2B, 2C) ---------- */
+  function breakdown(input) {
+    const p = typeof input === 'string' ? parse(input) : input;
+    const mant = p.mant, hasPoint = mant.includes('.');
+    const chars = [...mant];
+    const isD = c => /\d/.test(c);
+    const firstNZ = chars.findIndex(c => /[1-9]/.test(c));
+    let lastNZ = -1; chars.forEach((c, i) => { if (/[1-9]/.test(c)) lastNZ = i; });
+    return chars.map((c, i) => {
+      if (!isD(c)) return { ch: c, counts: null, rule: '', why: 'decimal point' };
+      if (c !== '0') return { ch: c, counts: true, rule: '1', why: 'Non-zero digits always count.' };
+      if (firstNZ < 0) return hasPoint
+        ? { ch: c, counts: false, rule: '2B', why: 'A zero with no non-zero digit before it is a placeholder.' }
+        : { ch: c, counts: true, rule: '', why: 'The number zero.' };
+      if (i < firstNZ) return { ch: c, counts: false, rule: '2B', why: 'Leading zero: in front of the first non-zero digit, so it is only a placeholder.' };
+      if (i < lastNZ) return { ch: c, counts: true, rule: '2A', why: 'Middle zero: between non-zero digits, so it counts.' };
+      return hasPoint
+        ? { ch: c, counts: true, rule: '2C', why: 'Trailing zero with a decimal point, so it counts.' }
+        : { ch: c, counts: false, rule: '2C', why: 'Trailing zero with no decimal point, so it does not count.' };
+    });
+  }
+  // Count SF from the mantissa string (rule 2). "1500" -> 2, "1500." -> 4, "0.0072" -> 2.
+  function sigFigs(str) {
+    const p = /^[\d.]+$/.test(str) ? { mant: str } : parse(str);
+    if (!p.mant) return NaN;
+    const n = breakdown(p).filter(x => x.counts).length;
+    return n;
+  }
+  // Exponent of the last significant digit of a mantissa string (before any × 10^)
+  function lsdOf(mant) {
+    if (mant.includes('.')) return -(mant.length - mant.indexOf('.') - 1);
+    if (/^0+$/.test(mant)) return 0;
+    return mant.length - mant.replace(/0+$/, '').length;
+  }
+
+  /* ---------- rounding and formatting ---------- */
+  // A rounded result: shows the plain form when it shows the right number of SF, else scientific notation
+  function result(d, p, sf) {
+    const r = roundAt(d, p);
+    const plain = plainStr(r), sci = sciStr(r);
+    const sfShown = isZero(r) ? 0 : sigFigs(plain.replace('-', ''));
+    const best = isZero(r) || sfShown === sf ? plain : sci;
+    return { value: r, place: p, sf, plain, sci, best, plainOK: best === plain };
+  }
+  // Round to n sig figs. 3468 -> "3500"; 99.96 to 3 SF -> "1.00 × 10^2"; 0.0305 to 2 SF -> "0.031"
+  function roundSF(x, n) {
+    const d = val(x);
+    if (isZero(d)) return result(d, 0, 1);
+    let p = msd(d) - n + 1;
+    let r = roundAt(d, p);
+    if (msd(r) > msd(d)) p++; // 9.96 -> 10.0: the rounded number gained a digit
+    return result(d, p, n);
+  }
+  // Round to the place 10^p (p = -2 means hundredths)
+  function roundPlace(x, p) {
+    const d = val(x), r = roundAt(d, p);
+    return result(d, p, isZero(r) ? 0 : msd(r) - p + 1);
+  }
+
+  const PLACE = { 3: 'thousands', 2: 'hundreds', 1: 'tens', 0: 'ones', '-1': 'tenths', '-2': 'hundredths', '-3': 'thousandths',
+    '-4': 'ten-thousandths', '-5': 'hundred-thousandths', '-6': 'millionths' };
+  const placeName = p => PLACE[p] || `10^${p} place`;
+
+  /* ---------- the two calculation rules ---------- */
+  // terms: [{ v: '25.5' }, { op: '+', v: '34.270' }, ...] or a string "25.5 + 34.270"
+  function terms(x, ops) {
+    if (Array.isArray(x)) return x.map((t, i) => typeof t === 'string' ? { op: i ? ops[0] : null, v: t } : t);
+    const s = String(x).replace(/[−–]/g, '-').replace(/[()]/g, ' ');
+    const out = []; const re = new RegExp(`\\s*([${ops.join('').replace('-', '\\-')}])?\\s*(-?[\\d.]+(?:\\s*×\\s*10\\^-?\\d+)?)`, 'g');
+    let m; while ((m = re.exec(s))) {
+      if (!m[2]) break;
+      // a minus in front of the first number is its sign, not an operation
+      out.push(out.length ? { op: m[1] || ops[0], v: m[2] } : { op: null, v: (m[1] === '-' ? '-' : '') + m[2] });
+    }
+    return out;
+  }
+  // Adding and subtracting: round to the least precise place (fewest decimal places)
+  function addSub(x) {
+    const ts = terms(x, ['+', '-']).map(t => Object.assign({}, t, { p: parse(t.v) }));
+    let sum = D(0n, 0);
+    ts.forEach((t, i) => { sum = i && t.op === '-' ? sub(sum, t.p.value) : add(sum, t.p.value); });
+    const place = Math.max(...ts.map(t => t.p.lsd));
+    const least = ts.findIndex(t => t.p.lsd === place);
+    return Object.assign(roundPlace(sum, place), {
+      exact: sum, calc: calcStr(sum), placeName: placeName(place), least,
+      terms: ts.map(t => ({ op: t.op, v: t.v, place: t.p.lsd, decimals: Math.max(0, -t.p.lsd), placeName: placeName(t.p.lsd) }))
+    });
+  }
+  // Multiplying and dividing: round to the fewest SF. Terms marked exact (counted numbers, 3.6, 1000 ...) don't count.
+  function mulDiv(x, exactFlags) {
+    const ts = terms(x, ['×', '÷', '*', '/', 'x']).map((t, i) => Object.assign({}, t, { p: parse(t.v), exact: t.exact || !!(exactFlags && exactFlags[i]) }));
+    let r = D(1n, 0), inexact = false;
+    ts.forEach((t, i) => {
+      if (i && /[÷/]/.test(t.op)) { r = div(r, t.p.value); inexact = inexact || r.inexact; r = trim(r); r.inexact = inexact; }
+      else { r = mul(r, t.p.value); r.inexact = inexact; }
+    });
+    const counted = ts.filter(t => !t.exact);
+    const sf = counted.length ? Math.min(...counted.map(t => t.p.sf)) : Infinity;
+    // every number exact: nothing limits the answer, so keep it as it is
+    const res = sf === Infinity ? result(trim(r), trim(r).e, digitsOf(trim(r)).length) : roundSF(r, sf);
+    return Object.assign(res, {
+      exact: r, calc: calcStr(r), least: ts.findIndex(t => !t.exact && t.p.sf === sf),
+      terms: ts.map(t => ({ op: t.op, v: t.v, sf: t.p.sf, exact: t.exact }))
+    });
+  }
+
+  /* ---------- scientific notation and units ---------- */
+  function toSci(x, n) { const r = roundSF(x, n); return Object.assign(r, { best: r.sci }); }
+  function fromSci(x) { const p = parse(x); return { plain: plainStr(p.value), sf: p.sf, value: p.value }; }
+  // Exact conversion factors to base units, as fractions [num, den]
+  const FACT = { mm: [1n, 1000n], cm: [1n, 100n], m: [1n, 1n], km: [1000n, 1n], s: [1n, 1n], min: [60n, 1n], h: [3600n, 1n],
+    'm/s': [1n, 1n], 'km/h': [1000n, 3600n] };
+  const KIND = { mm: 'L', cm: 'L', m: 'L', km: 'L', s: 'T', min: 'T', h: 'T', 'm/s': 'V', 'km/h': 'V' };
+  function convert(x, from, to) {
+    const p = parse(x);
+    if (!FACT[from] || !FACT[to] || KIND[from] !== KIND[to]) throw new Error(`can't convert ${from} to ${to}`);
+    const [a, b] = FACT[from], [c, d] = FACT[to];
+    const r = div(mul(p.value, D(a * d, 0)), D(b * c, 0));
+    return Object.assign(roundSF(r, p.sf), { exact: r, calc: calcStr(r), from, to });
+  }
+  // Percent error = |theoretical − empirical| ÷ theoretical × 100%. Subtraction rule, then division rule; round only at the end.
+  function pctError(theo, emp) {
+    const t = parse(theo), e = parse(emp);
+    const diff = absD(sub(t.value, e.value));
+    const place = Math.max(t.lsd, e.lsd);
+    const dr = roundAt(diff, place);
+    if (isZero(dr)) return Object.assign(result(D(0n, 0), 0, 1), { diff, diffPlace: place, diffSF: 0, steps: [] });
+    const diffSF = msd(dr) - place + 1;
+    const sf = Math.min(diffSF, t.sf);
+    const q = mul(div(diff, t.value), D(100n, 0));
+    const res = roundSF(q, sf);
+    return Object.assign(res, {
+      diff, diffShown: plainStr(dr), diffPlace: place, diffSF, theoSF: t.sf, exact: q, calc: calcStr(q),
+      steps: [
+        `|${theo} − ${emp}| = ${plainStr(dr)} (subtracting: keep the ${placeName(place)} place, so ${diffSF} SF)`,
+        `${plainStr(dr)} ÷ ${theo} × 100% = ${calcStr(q)}%`,
+        `Fewest SF: ${plainStr(dr)} has ${diffSF}, ${theo} has ${t.sf}, and 100 is exact → ${sf} SF → ${res.best}%`
+      ]
+    });
+  }
+
+  /* ---------- grading: the shared feedback ladder ---------- */
+  // expected: { answer: '330', exact?: '332.5', rule: 'addsub' | 'muldiv' | 'sf' (default), unit?: 'm',
+  //             vector?: true, scalar?: true }   For a vector, answer carries its direction: '8 m [W]' or '-8'.
+  function grade(student, expected) {
+    const s = parse(student);
+    const want = parse(expected.answer);
+    if (!s.ok) return { level: 'nan', ok: false, msg: s.error === 'dir' ? `"${s.dirText}" isn't a direction. Use [N], [S], [E], [W], left, right, up or down.` : `Type a number, like ${expected.example || '97.8 m'}.` };
+    if (expected.unit && s.unit !== expected.unit) {
+      return { level: 'unit', ok: false, hint: true, msg: s.unit
+        ? `Check the unit. This answer is in ${expected.unit}, not ${s.unit}.`
+        : `Add the unit (${expected.unit}). Every final answer needs one.` };
+    }
+    if (!expected.unit && s.unit && s.unit !== '%') return { level: 'unit', ok: false, hint: true, msg: `This answer has no unit. Leave "${s.unit}" off.` };
+    const mag = absD(s.value), wantMag = absD(want.value);
+    const precise = expected.rule === 'addsub' ? 'place' : 'sf';
+    const sameP = precise === 'place' ? s.lsd === want.lsd : s.sf === want.sf;
+    if (!eq(mag, wantMag)) {
+      // Right value, wrong rounding? (unrounded calculator value, or rounded to the wrong precision)
+      const ex = expected.exact != null ? absD(val(String(expected.exact))) : null;
+      if (ex && (eq(mag, ex) || eq(roundAt(ex, s.lsd), mag))) return sfMsg(s, want, expected, eq(mag, ex));
+      return { level: 'value', ok: false, msg: 'Not yet. Check your working one step at a time.' };
+    }
+    if (!sameP) return sfMsg(s, want, expected, false);
+    if (expected.scalar && s.dir) return { level: 'scalar', ok: false, msg: 'That is a scalar. Leave the direction off.' };
+    if (expected.vector) {
+      const wantSigned = want.dir ? want.sign * want.dir.sgn : want.sign;
+      if (!s.dir && !(want.dir == null && s.explicitSign)) return { level: 'nodir', ok: false, msg: "That's a speed or a distance. Velocity and displacement need a direction." };
+      if (s.dir && want.dir && s.dir.axis !== want.dir.axis) return { level: 'dir', ok: false, msg: `Use the same kind of direction as the question (${want.dir.label}).` };
+      const got = s.sign * (s.dir ? s.dir.sgn : 1);
+      if (!isZero(want.value) && got !== wantSigned) return { level: 'dir', ok: false, msg: 'Check the sign. A negative answer means the negative direction ([W], [S], left or down).' };
+    }
+    return { level: 'correct', ok: true, msg: '✓ Correct.' };
+  }
+  function sfMsg(s, want, expected, unrounded) {
+    if (expected.rule === 'addsub') {
+      const d = n => n <= 0 ? `${-n} decimal place${n === -1 ? '' : 's'}` : `the ${placeName(n)} place`;
+      return { level: 'sf', ok: false, msg: unrounded
+        ? `That's the calculator answer. Adding or subtracting: round to the least precise measurement (${d(want.lsd)}).`
+        : `Right idea, wrong rounding. Adding or subtracting: round to the least precise measurement, which is ${d(want.lsd)}. Yours shows ${d(s.lsd)}.` };
+    }
+    if (!s.sci && !s.hasPoint && s.sf < want.sf && eq(absD(s.value), absD(want.value))) {
+      // 45 → 45.0 can be shown with a decimal point; 900 → 9.0 × 10^2 needs scientific notation
+      const plainFix = !want.sci && want.hasPoint;
+      const fix = plainFix ? want.mant : sciStr(roundAt(want.value, want.lsd));
+      return { level: 'sf', ok: false, msg: `${s.mant} has only ${s.sf} sig fig${s.sf === 1 ? '' : 's'}. Write ${fix}${expected.unit ? ' ' + expected.unit : ''} to show ${want.sf}.`, sciNeeded: !plainFix };
+    }
+    const why = expected.rule === 'muldiv' ? 'Multiplying or dividing: the answer gets the fewest sig figs of the measurements.' : 'Count the sig figs again.';
+    return { level: 'sf', ok: false, msg: unrounded
+      ? `That's the calculator answer. ${why} That means ${want.sf} SF.`
+      : `Right idea, wrong rounding. ${why} The answer needs ${want.sf} SF; yours has ${s.sf}.` };
+  }
+
+  return { parse, sigFigs, breakdown, lsdOf, roundSF, roundPlace, addSub, mulDiv, toSci, fromSci, convert, pctError, grade,
+    placeName, plainStr, sciStr, calcStr, msd, D, add, sub, mul, div, roundAt, eq, trim };
+})();
+if (typeof module !== 'undefined') module.exports = MEAS;
+</script>
+<!--meas:end-->, and tools/test-meas.mjs tests it in Node.
+   All arithmetic is exact decimal (BigInt digits × a power of ten), never floats, so 0.0305 to 2 SF is 0.031.
+   Conventions: NL Science 1206 Appendix A (see docs/motion-part1-plan.md §2.1). */
+const MEAS = (() => {
+  'use strict';
+  const B = BigInt, TEN = 10n;
+  const pow10 = k => TEN ** B(k);
+  const absB = n => n < 0n ? -n : n;
+
+  /* ---------- exact decimals: { n: BigInt, e: int } means n × 10^e ---------- */
+  const D = (n, e) => ({ n: B(n), e });
+  const isZero = d => d.n === 0n;
+  const digitsOf = d => absB(d.n).toString();
+  // exponent of the most significant digit (0.0072 -> -3, 1500 -> 3)
+  const msd = d => isZero(d) ? -Infinity : digitsOf(d).length - 1 + d.e;
+  function align(a, b) { const e = Math.min(a.e, b.e); return [a.n * pow10(a.e - e), b.n * pow10(b.e - e), e]; }
+  const add = (a, b) => { const [x, y, e] = align(a, b); return D(x + y, e); };
+  const sub = (a, b) => { const [x, y, e] = align(a, b); return D(x - y, e); };
+  const mul = (a, b) => D(a.n * b.n, a.e + b.e);
+  const neg = a => D(-a.n, a.e);
+  const absD = a => D(absB(a.n), a.e);
+  const cmp = (a, b) => { const [x, y] = align(a, b); return x < y ? -1 : x > y ? 1 : 0; };
+  const eq = (a, b) => cmp(a, b) === 0;
+  // Division to 40 significant digits (truncated). .inexact marks a quotient that did not end.
+  function div(a, b) {
+    if (b.n === 0n) throw new Error('divide by zero');
+    const k = Math.max(0, 40 - (digitsOf(a).length - digitsOf(b).length));
+    const num = a.n * pow10(k), q = num / b.n;
+    const out = D(q, a.e - b.e - k);
+    out.inexact = num % b.n !== 0n;
+    return out;
+  }
+  // Round to the place 10^p, half away from zero ("5 or more, let it soar")
+  function roundAt(d, p) {
+    if (d.e >= p) return D(d.n * pow10(d.e - p), p);
+    const k = pow10(p - d.e), a = absB(d.n);
+    let q = a / k; if ((a % k) * 2n >= k) q += 1n;
+    return D(d.n < 0n ? -q : q, p);
+  }
+  // Strip trailing zeros from n (same value, shortest form)
+  function trim(d) { let { n, e } = d; if (n === 0n) return D(0n, 0); while (n % TEN === 0n) { n /= TEN; e++; } return D(n, e); }
+
+  // Plain decimal string of n × 10^e, showing digits down to 10^e
+  function plainStr(d) {
+    const s = digitsOf(d), sign = d.n < 0n ? '-' : '';
+    if (d.e >= 0) return sign + (d.n === 0n ? '0' : s + '0'.repeat(d.e));
+    const k = -d.e, pad = s.padStart(k + 1, '0');
+    return sign + pad.slice(0, pad.length - k) + '.' + pad.slice(pad.length - k);
+  }
+  // Scientific-notation string with every digit of n shown: "3.20 × 10^3"
+  function sciStr(d) {
+    if (isZero(d)) return plainStr(d);
+    const s = digitsOf(d), sign = d.n < 0n ? '-' : '';
+    return `${sign}${s[0]}${s.length > 1 ? '.' + s.slice(1) : ''} × 10^${msd(d)}`;
+  }
+  // Calculator display: up to 9 significant digits, "…" when digits were cut off
+  function calcStr(d) {
+    const t = trim(d);
+    if (isZero(t)) return '0';
+    const s = digitsOf(t);
+    if (s.length <= 9 && !d.inexact) return plainStr(t);
+    return plainStr(trim(D(t.n / pow10(s.length - 9), t.e + s.length - 9))) + '…';
+  }
+
+  /* ---------- reading what a student typed ---------- */
+  const SUPS = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', '⁻': '-', '⁺': '+' };
+  const DIRS = {
+    e: ['EW', 1, 'E'], east: ['EW', 1, 'E'], w: ['EW', -1, 'W'], west: ['EW', -1, 'W'],
+    n: ['NS', 1, 'N'], north: ['NS', 1, 'N'], s: ['NS', -1, 'S'], south: ['NS', -1, 'S'],
+    right: ['LR', 1, 'right'], left: ['LR', -1, 'left'], up: ['UD', 1, 'up'], down: ['UD', -1, 'down'],
+    forward: ['FB', 1, 'forward'], forwards: ['FB', 1, 'forward'], backward: ['FB', -1, 'backward'], backwards: ['FB', -1, 'backward']
+  };
+  const UNITS = {
+    mm: 'mm', millimetre: 'mm', millimetres: 'mm', millimeter: 'mm', millimeters: 'mm',
+    cm: 'cm', centimetre: 'cm', centimetres: 'cm', centimeter: 'cm', centimeters: 'cm',
+    m: 'm', metre: 'm', metres: 'm', meter: 'm', meters: 'm',
+    km: 'km', kilometre: 'km', kilometres: 'km', kilometer: 'km', kilometers: 'km',
+    s: 's', sec: 's', secs: 's', second: 's', seconds: 's',
+    min: 'min', mins: 'min', minute: 'min', minutes: 'min',
+    h: 'h', hr: 'h', hrs: 'h', hour: 'h', hours: 'h',
+    'm/s': 'm/s', 'km/h': 'km/h', 'km/hr': 'km/h', kph: 'km/h',
+    g: 'g', kg: 'kg', '%': '%', step: 'steps', steps: 'steps', lap: 'laps', laps: 'laps'
+  };
+  const normUnit = u => { const k = u.replace(/\s+/g, ''); return UNITS[k] || UNITS[k.toLowerCase()] || k; };
+
+  // The number part of a string: mantissa text, exponent, and what is left over
+  const NUM = /^([+-]?)\s*(\d{1,3}(?:[   ,]\d{3})+(?:\.\d*)?|\d+\.?\d*|\.\d+)(?:\s*(?:[x×X*]\s*10\s*(?:\^|\*\*)?\s*\(?\s*([+-]?\d+)\s*\)?|[eE]([+-]?\d+)))?/;
+
+  function parse(str) {
+    let s = String(str == null ? '' : str).trim()
+      .replace(/[−–—]/g, '-')
+      .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, m => '^' + [...m].map(c => SUPS[c]).join(''))
+      .replace(/\^\^/g, '^');
+    const out = { raw: String(str == null ? '' : str), ok: false };
+    // direction: anything in [ ] wins; otherwise a trailing direction word
+    let dir = null;
+    const br = s.match(/\[\s*([^\]]*?)\s*\]/);
+    if (br) {
+      const w = br[1].toLowerCase();
+      if (!DIRS[w]) { out.error = 'dir'; out.dirText = br[1]; return out; }
+      dir = DIRS[w]; s = (s.slice(0, br.index) + ' ' + s.slice(br.index + br[0].length)).trim();
+    }
+    const m = s.match(NUM);
+    if (!m) { out.error = 'nan'; return out; }
+    let rest = s.slice(m[0].length).trim();
+    if (!dir) {
+      const words = rest.split(/\s+/);
+      const last = words[words.length - 1] || '', lw = last.toLowerCase();
+      // single letters N/E/S/W only count as a direction after a unit ("5.0 m S"), so "4.0 s" stays seconds
+      if (DIRS[lw] && (lw.length > 1 || (words.length > 1 && /^[NESW]$/.test(last)))) { dir = DIRS[lw]; words.pop(); rest = words.join(' '); }
+    }
+    if (/\d/.test(rest.replace(/[²³]|\^\s*-?\d/g, ''))) { out.error = 'nan'; return out; }
+    const mant = m[2].replace(/[   ,]/g, '');
+    const exp = m[3] != null ? +m[3] : m[4] != null ? +m[4] : 0;
+    const sci = m[3] != null || m[4] != null;
+    const hasPoint = mant.includes('.');
+    const digs = mant.replace('.', '').replace(/^0+(?=\d)/, '') || '0';
+    const decimals = hasPoint ? mant.length - mant.indexOf('.') - 1 : 0;
+    const sign = m[1] === '-' ? -1 : 1;
+    const val = D(B(digs) * B(sign), exp - decimals);
+    return Object.assign(out, {
+      ok: true, sign, explicitSign: !!m[1], mant, exp, sci, hasPoint, decimals,
+      value: val, sf: sigFigs(mant), lsd: lsdOf(mant) + exp,
+      unit: rest ? normUnit(rest) : '', dir: dir ? { axis: dir[0], sgn: dir[1], label: dir[2] } : null
+    });
+  }
+  // Exact value of a numeric string (no units)
+  const val = x => typeof x === 'object' ? x : parse(x).value;
+
+  /* ---------- counting sig figs (rule numbers from the slides: 1, 2A, 2B, 2C) ---------- */
+  function breakdown(input) {
+    const p = typeof input === 'string' ? parse(input) : input;
+    const mant = p.mant, hasPoint = mant.includes('.');
+    const chars = [...mant];
+    const isD = c => /\d/.test(c);
+    const firstNZ = chars.findIndex(c => /[1-9]/.test(c));
+    let lastNZ = -1; chars.forEach((c, i) => { if (/[1-9]/.test(c)) lastNZ = i; });
+    return chars.map((c, i) => {
+      if (!isD(c)) return { ch: c, counts: null, rule: '', why: 'decimal point' };
+      if (c !== '0') return { ch: c, counts: true, rule: '1', why: 'Non-zero digits always count.' };
+      if (firstNZ < 0) return hasPoint
+        ? { ch: c, counts: false, rule: '2B', why: 'A zero with no non-zero digit before it is a placeholder.' }
+        : { ch: c, counts: true, rule: '', why: 'The number zero.' };
+      if (i < firstNZ) return { ch: c, counts: false, rule: '2B', why: 'Leading zero: in front of the first non-zero digit, so it is only a placeholder.' };
+      if (i < lastNZ) return { ch: c, counts: true, rule: '2A', why: 'Middle zero: between non-zero digits, so it counts.' };
+      return hasPoint
+        ? { ch: c, counts: true, rule: '2C', why: 'Trailing zero with a decimal point, so it counts.' }
+        : { ch: c, counts: false, rule: '2C', why: 'Trailing zero with no decimal point, so it does not count.' };
+    });
+  }
+  // Count SF from the mantissa string (rule 2). "1500" -> 2, "1500." -> 4, "0.0072" -> 2.
+  function sigFigs(str) {
+    const p = /^[\d.]+$/.test(str) ? { mant: str } : parse(str);
+    if (!p.mant) return NaN;
+    const n = breakdown(p).filter(x => x.counts).length;
+    return n;
+  }
+  // Exponent of the last significant digit of a mantissa string (before any × 10^)
+  function lsdOf(mant) {
+    if (mant.includes('.')) return -(mant.length - mant.indexOf('.') - 1);
+    if (/^0+$/.test(mant)) return 0;
+    return mant.length - mant.replace(/0+$/, '').length;
+  }
+
+  /* ---------- rounding and formatting ---------- */
+  // A rounded result: shows the plain form when it shows the right number of SF, else scientific notation
+  function result(d, p, sf) {
+    const r = roundAt(d, p);
+    const plain = plainStr(r), sci = sciStr(r);
+    const sfShown = isZero(r) ? 0 : sigFigs(plain.replace('-', ''));
+    const best = isZero(r) || sfShown === sf ? plain : sci;
+    return { value: r, place: p, sf, plain, sci, best, plainOK: best === plain };
+  }
+  // Round to n sig figs. 3468 -> "3500"; 99.96 to 3 SF -> "1.00 × 10^2"; 0.0305 to 2 SF -> "0.031"
+  function roundSF(x, n) {
+    const d = val(x);
+    if (isZero(d)) return result(d, 0, 1);
+    let p = msd(d) - n + 1;
+    let r = roundAt(d, p);
+    if (msd(r) > msd(d)) p++; // 9.96 -> 10.0: the rounded number gained a digit
+    return result(d, p, n);
+  }
+  // Round to the place 10^p (p = -2 means hundredths)
+  function roundPlace(x, p) {
+    const d = val(x), r = roundAt(d, p);
+    return result(d, p, isZero(r) ? 0 : msd(r) - p + 1);
+  }
+
+  const PLACE = { 3: 'thousands', 2: 'hundreds', 1: 'tens', 0: 'ones', '-1': 'tenths', '-2': 'hundredths', '-3': 'thousandths',
+    '-4': 'ten-thousandths', '-5': 'hundred-thousandths', '-6': 'millionths' };
+  const placeName = p => PLACE[p] || `10^${p} place`;
+
+  /* ---------- the two calculation rules ---------- */
+  // terms: [{ v: '25.5' }, { op: '+', v: '34.270' }, ...] or a string "25.5 + 34.270"
+  function terms(x, ops) {
+    if (Array.isArray(x)) return x.map((t, i) => typeof t === 'string' ? { op: i ? ops[0] : null, v: t } : t);
+    const s = String(x).replace(/[−–]/g, '-').replace(/[()]/g, ' ');
+    const out = []; const re = new RegExp(`\\s*([${ops.join('').replace('-', '\\-')}])?\\s*(-?[\\d.]+(?:\\s*×\\s*10\\^-?\\d+)?)`, 'g');
+    let m; while ((m = re.exec(s))) {
+      if (!m[2]) break;
+      // a minus in front of the first number is its sign, not an operation
+      out.push(out.length ? { op: m[1] || ops[0], v: m[2] } : { op: null, v: (m[1] === '-' ? '-' : '') + m[2] });
+    }
+    return out;
+  }
+  // Adding and subtracting: round to the least precise place (fewest decimal places)
+  function addSub(x) {
+    const ts = terms(x, ['+', '-']).map(t => Object.assign({}, t, { p: parse(t.v) }));
+    let sum = D(0n, 0);
+    ts.forEach((t, i) => { sum = i && t.op === '-' ? sub(sum, t.p.value) : add(sum, t.p.value); });
+    const place = Math.max(...ts.map(t => t.p.lsd));
+    const least = ts.findIndex(t => t.p.lsd === place);
+    return Object.assign(roundPlace(sum, place), {
+      exact: sum, calc: calcStr(sum), placeName: placeName(place), least,
+      terms: ts.map(t => ({ op: t.op, v: t.v, place: t.p.lsd, decimals: Math.max(0, -t.p.lsd), placeName: placeName(t.p.lsd) }))
+    });
+  }
+  // Multiplying and dividing: round to the fewest SF. Terms marked exact (counted numbers, 3.6, 1000 ...) don't count.
+  function mulDiv(x, exactFlags) {
+    const ts = terms(x, ['×', '÷', '*', '/', 'x']).map((t, i) => Object.assign({}, t, { p: parse(t.v), exact: t.exact || !!(exactFlags && exactFlags[i]) }));
+    let r = D(1n, 0), inexact = false;
+    ts.forEach((t, i) => {
+      if (i && /[÷/]/.test(t.op)) { r = div(r, t.p.value); inexact = inexact || r.inexact; r = trim(r); r.inexact = inexact; }
+      else { r = mul(r, t.p.value); r.inexact = inexact; }
+    });
+    const counted = ts.filter(t => !t.exact);
+    const sf = counted.length ? Math.min(...counted.map(t => t.p.sf)) : Infinity;
+    // every number exact: nothing limits the answer, so keep it as it is
+    const res = sf === Infinity ? result(trim(r), trim(r).e, digitsOf(trim(r)).length) : roundSF(r, sf);
+    return Object.assign(res, {
+      exact: r, calc: calcStr(r), least: ts.findIndex(t => !t.exact && t.p.sf === sf),
+      terms: ts.map(t => ({ op: t.op, v: t.v, sf: t.p.sf, exact: t.exact }))
+    });
+  }
+
+  /* ---------- scientific notation and units ---------- */
+  function toSci(x, n) { const r = roundSF(x, n); return Object.assign(r, { best: r.sci }); }
+  function fromSci(x) { const p = parse(x); return { plain: plainStr(p.value), sf: p.sf, value: p.value }; }
+  // Exact conversion factors to base units, as fractions [num, den]
+  const FACT = { mm: [1n, 1000n], cm: [1n, 100n], m: [1n, 1n], km: [1000n, 1n], s: [1n, 1n], min: [60n, 1n], h: [3600n, 1n],
+    'm/s': [1n, 1n], 'km/h': [1000n, 3600n] };
+  const KIND = { mm: 'L', cm: 'L', m: 'L', km: 'L', s: 'T', min: 'T', h: 'T', 'm/s': 'V', 'km/h': 'V' };
+  function convert(x, from, to) {
+    const p = parse(x);
+    if (!FACT[from] || !FACT[to] || KIND[from] !== KIND[to]) throw new Error(`can't convert ${from} to ${to}`);
+    const [a, b] = FACT[from], [c, d] = FACT[to];
+    const r = div(mul(p.value, D(a * d, 0)), D(b * c, 0));
+    return Object.assign(roundSF(r, p.sf), { exact: r, calc: calcStr(r), from, to });
+  }
+  // Percent error = |theoretical − empirical| ÷ theoretical × 100%. Subtraction rule, then division rule; round only at the end.
+  function pctError(theo, emp) {
+    const t = parse(theo), e = parse(emp);
+    const diff = absD(sub(t.value, e.value));
+    const place = Math.max(t.lsd, e.lsd);
+    const dr = roundAt(diff, place);
+    if (isZero(dr)) return Object.assign(result(D(0n, 0), 0, 1), { diff, diffPlace: place, diffSF: 0, steps: [] });
+    const diffSF = msd(dr) - place + 1;
+    const sf = Math.min(diffSF, t.sf);
+    const q = mul(div(diff, t.value), D(100n, 0));
+    const res = roundSF(q, sf);
+    return Object.assign(res, {
+      diff, diffShown: plainStr(dr), diffPlace: place, diffSF, theoSF: t.sf, exact: q, calc: calcStr(q),
+      steps: [
+        `|${theo} − ${emp}| = ${plainStr(dr)} (subtracting: keep the ${placeName(place)} place, so ${diffSF} SF)`,
+        `${plainStr(dr)} ÷ ${theo} × 100% = ${calcStr(q)}%`,
+        `Fewest SF: ${plainStr(dr)} has ${diffSF}, ${theo} has ${t.sf}, and 100 is exact → ${sf} SF → ${res.best}%`
+      ]
+    });
+  }
+
+  /* ---------- grading: the shared feedback ladder ---------- */
+  // expected: { answer: '330', exact?: '332.5', rule: 'addsub' | 'muldiv' | 'sf' (default), unit?: 'm',
+  //             vector?: true, scalar?: true }   For a vector, answer carries its direction: '8 m [W]' or '-8'.
+  function grade(student, expected) {
+    const s = parse(student);
+    const want = parse(expected.answer);
+    if (!s.ok) return { level: 'nan', ok: false, msg: s.error === 'dir' ? `"${s.dirText}" isn't a direction. Use [N], [S], [E], [W], left, right, up or down.` : `Type a number, like ${expected.example || '97.8 m'}.` };
+    if (expected.unit && s.unit !== expected.unit) {
+      return { level: 'unit', ok: false, hint: true, msg: s.unit
+        ? `Check the unit. This answer is in ${expected.unit}, not ${s.unit}.`
+        : `Add the unit (${expected.unit}). Every final answer needs one.` };
+    }
+    if (!expected.unit && s.unit && s.unit !== '%') return { level: 'unit', ok: false, hint: true, msg: `This answer has no unit. Leave "${s.unit}" off.` };
+    const mag = absD(s.value), wantMag = absD(want.value);
+    const precise = expected.rule === 'addsub' ? 'place' : 'sf';
+    const sameP = precise === 'place' ? s.lsd === want.lsd : s.sf === want.sf;
+    if (!eq(mag, wantMag)) {
+      // Right value, wrong rounding? (unrounded calculator value, or rounded to the wrong precision)
+      const ex = expected.exact != null ? absD(val(String(expected.exact))) : null;
+      if (ex && (eq(mag, ex) || eq(roundAt(ex, s.lsd), mag))) return sfMsg(s, want, expected, eq(mag, ex));
+      return { level: 'value', ok: false, msg: 'Not yet. Check your working one step at a time.' };
+    }
+    if (!sameP) return sfMsg(s, want, expected, false);
+    if (expected.scalar && s.dir) return { level: 'scalar', ok: false, msg: 'That is a scalar. Leave the direction off.' };
+    if (expected.vector) {
+      const wantSigned = want.dir ? want.sign * want.dir.sgn : want.sign;
+      if (!s.dir && !(want.dir == null && s.explicitSign)) return { level: 'nodir', ok: false, msg: "That's a speed or a distance. Velocity and displacement need a direction." };
+      if (s.dir && want.dir && s.dir.axis !== want.dir.axis) return { level: 'dir', ok: false, msg: `Use the same kind of direction as the question (${want.dir.label}).` };
+      const got = s.sign * (s.dir ? s.dir.sgn : 1);
+      if (!isZero(want.value) && got !== wantSigned) return { level: 'dir', ok: false, msg: 'Check the sign. A negative answer means the negative direction ([W], [S], left or down).' };
+    }
+    return { level: 'correct', ok: true, msg: '✓ Correct.' };
+  }
+  function sfMsg(s, want, expected, unrounded) {
+    if (expected.rule === 'addsub') {
+      const d = n => n <= 0 ? `${-n} decimal place${n === -1 ? '' : 's'}` : `the ${placeName(n)} place`;
+      return { level: 'sf', ok: false, msg: unrounded
+        ? `That's the calculator answer. Adding or subtracting: round to the least precise measurement (${d(want.lsd)}).`
+        : `Right idea, wrong rounding. Adding or subtracting: round to the least precise measurement, which is ${d(want.lsd)}. Yours shows ${d(s.lsd)}.` };
+    }
+    if (!s.sci && !s.hasPoint && s.sf < want.sf && eq(absD(s.value), absD(want.value))) {
+      // 45 → 45.0 can be shown with a decimal point; 900 → 9.0 × 10^2 needs scientific notation
+      const plainFix = !want.sci && want.hasPoint;
+      const fix = plainFix ? want.mant : sciStr(roundAt(want.value, want.lsd));
+      return { level: 'sf', ok: false, msg: `${s.mant} has only ${s.sf} sig fig${s.sf === 1 ? '' : 's'}. Write ${fix}${expected.unit ? ' ' + expected.unit : ''} to show ${want.sf}.`, sciNeeded: !plainFix };
+    }
+    const why = expected.rule === 'muldiv' ? 'Multiplying or dividing: the answer gets the fewest sig figs of the measurements.' : 'Count the sig figs again.';
+    return { level: 'sf', ok: false, msg: unrounded
+      ? `That's the calculator answer. ${why} That means ${want.sf} SF.`
+      : `Right idea, wrong rounding. ${why} The answer needs ${want.sf} SF; yours has ${s.sf}.` };
+  }
+
+  return { parse, sigFigs, breakdown, lsdOf, roundSF, roundPlace, addSub, mulDiv, toSci, fromSci, convert, pctError, grade,
+    placeName, plainStr, sciStr, calcStr, msd, D, add, sub, mul, div, roundAt, eq, trim };
+})();
+if (typeof module !== 'undefined') module.exports = MEAS;
+</script>
+<!--meas:end-->, and tools/test-meas.mjs tests it in Node.
+   All arithmetic is exact decimal (BigInt digits × a power of ten), never floats, so 0.0305 to 2 SF is 0.031.
+   Conventions: NL Science 1206 Appendix A (see docs/motion-part1-plan.md §2.1). */
+const MEAS = (() => {
+  'use strict';
+  const B = BigInt, TEN = 10n;
+  const pow10 = k => TEN ** B(k);
+  const absB = n => n < 0n ? -n : n;
+
+  /* ---------- exact decimals: { n: BigInt, e: int } means n × 10^e ---------- */
+  const D = (n, e) => ({ n: B(n), e });
+  const isZero = d => d.n === 0n;
+  const digitsOf = d => absB(d.n).toString();
+  // exponent of the most significant digit (0.0072 -> -3, 1500 -> 3)
+  const msd = d => isZero(d) ? -Infinity : digitsOf(d).length - 1 + d.e;
+  function align(a, b) { const e = Math.min(a.e, b.e); return [a.n * pow10(a.e - e), b.n * pow10(b.e - e), e]; }
+  const add = (a, b) => { const [x, y, e] = align(a, b); return D(x + y, e); };
+  const sub = (a, b) => { const [x, y, e] = align(a, b); return D(x - y, e); };
+  const mul = (a, b) => D(a.n * b.n, a.e + b.e);
+  const neg = a => D(-a.n, a.e);
+  const absD = a => D(absB(a.n), a.e);
+  const cmp = (a, b) => { const [x, y] = align(a, b); return x < y ? -1 : x > y ? 1 : 0; };
+  const eq = (a, b) => cmp(a, b) === 0;
+  // Division to 40 significant digits (truncated). .inexact marks a quotient that did not end.
+  function div(a, b) {
+    if (b.n === 0n) throw new Error('divide by zero');
+    const k = Math.max(0, 40 - (digitsOf(a).length - digitsOf(b).length));
+    const num = a.n * pow10(k), q = num / b.n;
+    const out = D(q, a.e - b.e - k);
+    out.inexact = num % b.n !== 0n;
+    return out;
+  }
+  // Round to the place 10^p, half away from zero ("5 or more, let it soar")
+  function roundAt(d, p) {
+    if (d.e >= p) return D(d.n * pow10(d.e - p), p);
+    const k = pow10(p - d.e), a = absB(d.n);
+    let q = a / k; if ((a % k) * 2n >= k) q += 1n;
+    return D(d.n < 0n ? -q : q, p);
+  }
+  // Strip trailing zeros from n (same value, shortest form)
+  function trim(d) { let { n, e } = d; if (n === 0n) return D(0n, 0); while (n % TEN === 0n) { n /= TEN; e++; } return D(n, e); }
+
+  // Plain decimal string of n × 10^e, showing digits down to 10^e
+  function plainStr(d) {
+    const s = digitsOf(d), sign = d.n < 0n ? '-' : '';
+    if (d.e >= 0) return sign + (d.n === 0n ? '0' : s + '0'.repeat(d.e));
+    const k = -d.e, pad = s.padStart(k + 1, '0');
+    return sign + pad.slice(0, pad.length - k) + '.' + pad.slice(pad.length - k);
+  }
+  // Scientific-notation string with every digit of n shown: "3.20 × 10^3"
+  function sciStr(d) {
+    if (isZero(d)) return plainStr(d);
+    const s = digitsOf(d), sign = d.n < 0n ? '-' : '';
+    return `${sign}${s[0]}${s.length > 1 ? '.' + s.slice(1) : ''} × 10^${msd(d)}`;
+  }
+  // Calculator display: up to 9 significant digits, "…" when digits were cut off
+  function calcStr(d) {
+    const t = trim(d);
+    if (isZero(t)) return '0';
+    const s = digitsOf(t);
+    if (s.length <= 9 && !d.inexact) return plainStr(t);
+    return plainStr(trim(D(t.n / pow10(s.length - 9), t.e + s.length - 9))) + '…';
+  }
+
+  /* ---------- reading what a student typed ---------- */
+  const SUPS = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', '⁻': '-', '⁺': '+' };
+  const DIRS = {
+    e: ['EW', 1, 'E'], east: ['EW', 1, 'E'], w: ['EW', -1, 'W'], west: ['EW', -1, 'W'],
+    n: ['NS', 1, 'N'], north: ['NS', 1, 'N'], s: ['NS', -1, 'S'], south: ['NS', -1, 'S'],
+    right: ['LR', 1, 'right'], left: ['LR', -1, 'left'], up: ['UD', 1, 'up'], down: ['UD', -1, 'down'],
+    forward: ['FB', 1, 'forward'], forwards: ['FB', 1, 'forward'], backward: ['FB', -1, 'backward'], backwards: ['FB', -1, 'backward']
+  };
+  const UNITS = {
+    mm: 'mm', millimetre: 'mm', millimetres: 'mm', millimeter: 'mm', millimeters: 'mm',
+    cm: 'cm', centimetre: 'cm', centimetres: 'cm', centimeter: 'cm', centimeters: 'cm',
+    m: 'm', metre: 'm', metres: 'm', meter: 'm', meters: 'm',
+    km: 'km', kilometre: 'km', kilometres: 'km', kilometer: 'km', kilometers: 'km',
+    s: 's', sec: 's', secs: 's', second: 's', seconds: 's',
+    min: 'min', mins: 'min', minute: 'min', minutes: 'min',
+    h: 'h', hr: 'h', hrs: 'h', hour: 'h', hours: 'h',
+    'm/s': 'm/s', 'km/h': 'km/h', 'km/hr': 'km/h', kph: 'km/h',
+    g: 'g', kg: 'kg', '%': '%', step: 'steps', steps: 'steps', lap: 'laps', laps: 'laps'
+  };
+  const normUnit = u => { const k = u.replace(/\s+/g, ''); return UNITS[k] || UNITS[k.toLowerCase()] || k; };
+
+  // The number part of a string: mantissa text, exponent, and what is left over
+  const NUM = /^([+-]?)\s*(\d{1,3}(?:[   ,]\d{3})+(?:\.\d*)?|\d+\.?\d*|\.\d+)(?:\s*(?:[x×X*]\s*10\s*(?:\^|\*\*)?\s*\(?\s*([+-]?\d+)\s*\)?|[eE]([+-]?\d+)))?/;
+
+  function parse(str) {
+    let s = String(str == null ? '' : str).trim()
+      .replace(/[−–—]/g, '-')
+      .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, m => '^' + [...m].map(c => SUPS[c]).join(''))
+      .replace(/\^\^/g, '^');
+    const out = { raw: String(str == null ? '' : str), ok: false };
+    // direction: anything in [ ] wins; otherwise a trailing direction word
+    let dir = null;
+    const br = s.match(/\[\s*([^\]]*?)\s*\]/);
+    if (br) {
+      const w = br[1].toLowerCase();
+      if (!DIRS[w]) { out.error = 'dir'; out.dirText = br[1]; return out; }
+      dir = DIRS[w]; s = (s.slice(0, br.index) + ' ' + s.slice(br.index + br[0].length)).trim();
+    }
+    const m = s.match(NUM);
+    if (!m) { out.error = 'nan'; return out; }
+    let rest = s.slice(m[0].length).trim();
+    if (!dir) {
+      const words = rest.split(/\s+/);
+      const last = words[words.length - 1] || '', lw = last.toLowerCase();
+      // single letters N/E/S/W only count as a direction after a unit ("5.0 m S"), so "4.0 s" stays seconds
+      if (DIRS[lw] && (lw.length > 1 || (words.length > 1 && /^[NESW]$/.test(last)))) { dir = DIRS[lw]; words.pop(); rest = words.join(' '); }
+    }
+    if (/\d/.test(rest.replace(/[²³]|\^\s*-?\d/g, ''))) { out.error = 'nan'; return out; }
+    const mant = m[2].replace(/[   ,]/g, '');
+    const exp = m[3] != null ? +m[3] : m[4] != null ? +m[4] : 0;
+    const sci = m[3] != null || m[4] != null;
+    const hasPoint = mant.includes('.');
+    const digs = mant.replace('.', '').replace(/^0+(?=\d)/, '') || '0';
+    const decimals = hasPoint ? mant.length - mant.indexOf('.') - 1 : 0;
+    const sign = m[1] === '-' ? -1 : 1;
+    const val = D(B(digs) * B(sign), exp - decimals);
+    return Object.assign(out, {
+      ok: true, sign, explicitSign: !!m[1], mant, exp, sci, hasPoint, decimals,
+      value: val, sf: sigFigs(mant), lsd: lsdOf(mant) + exp,
+      unit: rest ? normUnit(rest) : '', dir: dir ? { axis: dir[0], sgn: dir[1], label: dir[2] } : null
+    });
+  }
+  // Exact value of a numeric string (no units)
+  const val = x => typeof x === 'object' ? x : parse(x).value;
+
+  /* ---------- counting sig figs (rule numbers from the slides: 1, 2A, 2B, 2C) ---------- */
+  function breakdown(input) {
+    const p = typeof input === 'string' ? parse(input) : input;
+    const mant = p.mant, hasPoint = mant.includes('.');
+    const chars = [...mant];
+    const isD = c => /\d/.test(c);
+    const firstNZ = chars.findIndex(c => /[1-9]/.test(c));
+    let lastNZ = -1; chars.forEach((c, i) => { if (/[1-9]/.test(c)) lastNZ = i; });
+    return chars.map((c, i) => {
+      if (!isD(c)) return { ch: c, counts: null, rule: '', why: 'decimal point' };
+      if (c !== '0') return { ch: c, counts: true, rule: '1', why: 'Non-zero digits always count.' };
+      if (firstNZ < 0) return hasPoint
+        ? { ch: c, counts: false, rule: '2B', why: 'A zero with no non-zero digit before it is a placeholder.' }
+        : { ch: c, counts: true, rule: '', why: 'The number zero.' };
+      if (i < firstNZ) return { ch: c, counts: false, rule: '2B', why: 'Leading zero: in front of the first non-zero digit, so it is only a placeholder.' };
+      if (i < lastNZ) return { ch: c, counts: true, rule: '2A', why: 'Middle zero: between non-zero digits, so it counts.' };
+      return hasPoint
+        ? { ch: c, counts: true, rule: '2C', why: 'Trailing zero with a decimal point, so it counts.' }
+        : { ch: c, counts: false, rule: '2C', why: 'Trailing zero with no decimal point, so it does not count.' };
+    });
+  }
+  // Count SF from the mantissa string (rule 2). "1500" -> 2, "1500." -> 4, "0.0072" -> 2.
+  function sigFigs(str) {
+    const p = /^[\d.]+$/.test(str) ? { mant: str } : parse(str);
+    if (!p.mant) return NaN;
+    const n = breakdown(p).filter(x => x.counts).length;
+    return n;
+  }
+  // Exponent of the last significant digit of a mantissa string (before any × 10^)
+  function lsdOf(mant) {
+    if (mant.includes('.')) return -(mant.length - mant.indexOf('.') - 1);
+    if (/^0+$/.test(mant)) return 0;
+    return mant.length - mant.replace(/0+$/, '').length;
+  }
+
+  /* ---------- rounding and formatting ---------- */
+  // A rounded result: shows the plain form when it shows the right number of SF, else scientific notation
+  function result(d, p, sf) {
+    const r = roundAt(d, p);
+    const plain = plainStr(r), sci = sciStr(r);
+    const sfShown = isZero(r) ? 0 : sigFigs(plain.replace('-', ''));
+    const best = isZero(r) || sfShown === sf ? plain : sci;
+    return { value: r, place: p, sf, plain, sci, best, plainOK: best === plain };
+  }
+  // Round to n sig figs. 3468 -> "3500"; 99.96 to 3 SF -> "1.00 × 10^2"; 0.0305 to 2 SF -> "0.031"
+  function roundSF(x, n) {
+    const d = val(x);
+    if (isZero(d)) return result(d, 0, 1);
+    let p = msd(d) - n + 1;
+    let r = roundAt(d, p);
+    if (msd(r) > msd(d)) p++; // 9.96 -> 10.0: the rounded number gained a digit
+    return result(d, p, n);
+  }
+  // Round to the place 10^p (p = -2 means hundredths)
+  function roundPlace(x, p) {
+    const d = val(x), r = roundAt(d, p);
+    return result(d, p, isZero(r) ? 0 : msd(r) - p + 1);
+  }
+
+  const PLACE = { 3: 'thousands', 2: 'hundreds', 1: 'tens', 0: 'ones', '-1': 'tenths', '-2': 'hundredths', '-3': 'thousandths',
+    '-4': 'ten-thousandths', '-5': 'hundred-thousandths', '-6': 'millionths' };
+  const placeName = p => PLACE[p] || `10^${p} place`;
+
+  /* ---------- the two calculation rules ---------- */
+  // terms: [{ v: '25.5' }, { op: '+', v: '34.270' }, ...] or a string "25.5 + 34.270"
+  function terms(x, ops) {
+    if (Array.isArray(x)) return x.map((t, i) => typeof t === 'string' ? { op: i ? ops[0] : null, v: t } : t);
+    const s = String(x).replace(/[−–]/g, '-').replace(/[()]/g, ' ');
+    const out = []; const re = new RegExp(`\\s*([${ops.join('').replace('-', '\\-')}])?\\s*(-?[\\d.]+(?:\\s*×\\s*10\\^-?\\d+)?)`, 'g');
+    let m; while ((m = re.exec(s))) {
+      if (!m[2]) break;
+      // a minus in front of the first number is its sign, not an operation
+      out.push(out.length ? { op: m[1] || ops[0], v: m[2] } : { op: null, v: (m[1] === '-' ? '-' : '') + m[2] });
+    }
+    return out;
+  }
+  // Adding and subtracting: round to the least precise place (fewest decimal places)
+  function addSub(x) {
+    const ts = terms(x, ['+', '-']).map(t => Object.assign({}, t, { p: parse(t.v) }));
+    let sum = D(0n, 0);
+    ts.forEach((t, i) => { sum = i && t.op === '-' ? sub(sum, t.p.value) : add(sum, t.p.value); });
+    const place = Math.max(...ts.map(t => t.p.lsd));
+    const least = ts.findIndex(t => t.p.lsd === place);
+    return Object.assign(roundPlace(sum, place), {
+      exact: sum, calc: calcStr(sum), placeName: placeName(place), least,
+      terms: ts.map(t => ({ op: t.op, v: t.v, place: t.p.lsd, decimals: Math.max(0, -t.p.lsd), placeName: placeName(t.p.lsd) }))
+    });
+  }
+  // Multiplying and dividing: round to the fewest SF. Terms marked exact (counted numbers, 3.6, 1000 ...) don't count.
+  function mulDiv(x, exactFlags) {
+    const ts = terms(x, ['×', '÷', '*', '/', 'x']).map((t, i) => Object.assign({}, t, { p: parse(t.v), exact: t.exact || !!(exactFlags && exactFlags[i]) }));
+    let r = D(1n, 0), inexact = false;
+    ts.forEach((t, i) => {
+      if (i && /[÷/]/.test(t.op)) { r = div(r, t.p.value); inexact = inexact || r.inexact; r = trim(r); r.inexact = inexact; }
+      else { r = mul(r, t.p.value); r.inexact = inexact; }
+    });
+    const counted = ts.filter(t => !t.exact);
+    const sf = counted.length ? Math.min(...counted.map(t => t.p.sf)) : Infinity;
+    // every number exact: nothing limits the answer, so keep it as it is
+    const res = sf === Infinity ? result(trim(r), trim(r).e, digitsOf(trim(r)).length) : roundSF(r, sf);
+    return Object.assign(res, {
+      exact: r, calc: calcStr(r), least: ts.findIndex(t => !t.exact && t.p.sf === sf),
+      terms: ts.map(t => ({ op: t.op, v: t.v, sf: t.p.sf, exact: t.exact }))
+    });
+  }
+
+  /* ---------- scientific notation and units ---------- */
+  function toSci(x, n) { const r = roundSF(x, n); return Object.assign(r, { best: r.sci }); }
+  function fromSci(x) { const p = parse(x); return { plain: plainStr(p.value), sf: p.sf, value: p.value }; }
+  // Exact conversion factors to base units, as fractions [num, den]
+  const FACT = { mm: [1n, 1000n], cm: [1n, 100n], m: [1n, 1n], km: [1000n, 1n], s: [1n, 1n], min: [60n, 1n], h: [3600n, 1n],
+    'm/s': [1n, 1n], 'km/h': [1000n, 3600n] };
+  const KIND = { mm: 'L', cm: 'L', m: 'L', km: 'L', s: 'T', min: 'T', h: 'T', 'm/s': 'V', 'km/h': 'V' };
+  function convert(x, from, to) {
+    const p = parse(x);
+    if (!FACT[from] || !FACT[to] || KIND[from] !== KIND[to]) throw new Error(`can't convert ${from} to ${to}`);
+    const [a, b] = FACT[from], [c, d] = FACT[to];
+    const r = div(mul(p.value, D(a * d, 0)), D(b * c, 0));
+    return Object.assign(roundSF(r, p.sf), { exact: r, calc: calcStr(r), from, to });
+  }
+  // Percent error = |theoretical − empirical| ÷ theoretical × 100%. Subtraction rule, then division rule; round only at the end.
+  function pctError(theo, emp) {
+    const t = parse(theo), e = parse(emp);
+    const diff = absD(sub(t.value, e.value));
+    const place = Math.max(t.lsd, e.lsd);
+    const dr = roundAt(diff, place);
+    if (isZero(dr)) return Object.assign(result(D(0n, 0), 0, 1), { diff, diffPlace: place, diffSF: 0, steps: [] });
+    const diffSF = msd(dr) - place + 1;
+    const sf = Math.min(diffSF, t.sf);
+    const q = mul(div(diff, t.value), D(100n, 0));
+    const res = roundSF(q, sf);
+    return Object.assign(res, {
+      diff, diffShown: plainStr(dr), diffPlace: place, diffSF, theoSF: t.sf, exact: q, calc: calcStr(q),
+      steps: [
+        `|${theo} − ${emp}| = ${plainStr(dr)} (subtracting: keep the ${placeName(place)} place, so ${diffSF} SF)`,
+        `${plainStr(dr)} ÷ ${theo} × 100% = ${calcStr(q)}%`,
+        `Fewest SF: ${plainStr(dr)} has ${diffSF}, ${theo} has ${t.sf}, and 100 is exact → ${sf} SF → ${res.best}%`
+      ]
+    });
+  }
+
+  /* ---------- grading: the shared feedback ladder ---------- */
+  // expected: { answer: '330', exact?: '332.5', rule: 'addsub' | 'muldiv' | 'sf' (default), unit?: 'm',
+  //             vector?: true, scalar?: true }   For a vector, answer carries its direction: '8 m [W]' or '-8'.
+  function grade(student, expected) {
+    const s = parse(student);
+    const want = parse(expected.answer);
+    if (!s.ok) return { level: 'nan', ok: false, msg: s.error === 'dir' ? `"${s.dirText}" isn't a direction. Use [N], [S], [E], [W], left, right, up or down.` : `Type a number, like ${expected.example || '97.8 m'}.` };
+    if (expected.unit && s.unit !== expected.unit) {
+      return { level: 'unit', ok: false, hint: true, msg: s.unit
+        ? `Check the unit. This answer is in ${expected.unit}, not ${s.unit}.`
+        : `Add the unit (${expected.unit}). Every final answer needs one.` };
+    }
+    if (!expected.unit && s.unit && s.unit !== '%') return { level: 'unit', ok: false, hint: true, msg: `This answer has no unit. Leave "${s.unit}" off.` };
+    const mag = absD(s.value), wantMag = absD(want.value);
+    const precise = expected.rule === 'addsub' ? 'place' : 'sf';
+    const sameP = precise === 'place' ? s.lsd === want.lsd : s.sf === want.sf;
+    if (!eq(mag, wantMag)) {
+      // Right value, wrong rounding? (unrounded calculator value, or rounded to the wrong precision)
+      const ex = expected.exact != null ? absD(val(String(expected.exact))) : null;
+      if (ex && (eq(mag, ex) || eq(roundAt(ex, s.lsd), mag))) return sfMsg(s, want, expected, eq(mag, ex));
+      return { level: 'value', ok: false, msg: 'Not yet. Check your working one step at a time.' };
+    }
+    if (!sameP) return sfMsg(s, want, expected, false);
+    if (expected.scalar && s.dir) return { level: 'scalar', ok: false, msg: 'That is a scalar. Leave the direction off.' };
+    if (expected.vector) {
+      const wantSigned = want.dir ? want.sign * want.dir.sgn : want.sign;
+      if (!s.dir && !(want.dir == null && s.explicitSign)) return { level: 'nodir', ok: false, msg: "That's a speed or a distance. Velocity and displacement need a direction." };
+      if (s.dir && want.dir && s.dir.axis !== want.dir.axis) return { level: 'dir', ok: false, msg: `Use the same kind of direction as the question (${want.dir.label}).` };
+      const got = s.sign * (s.dir ? s.dir.sgn : 1);
+      if (!isZero(want.value) && got !== wantSigned) return { level: 'dir', ok: false, msg: 'Check the sign. A negative answer means the negative direction ([W], [S], left or down).' };
+    }
+    return { level: 'correct', ok: true, msg: '✓ Correct.' };
+  }
+  function sfMsg(s, want, expected, unrounded) {
+    if (expected.rule === 'addsub') {
+      const d = n => n <= 0 ? `${-n} decimal place${n === -1 ? '' : 's'}` : `the ${placeName(n)} place`;
+      return { level: 'sf', ok: false, msg: unrounded
+        ? `That's the calculator answer. Adding or subtracting: round to the least precise measurement (${d(want.lsd)}).`
+        : `Right idea, wrong rounding. Adding or subtracting: round to the least precise measurement, which is ${d(want.lsd)}. Yours shows ${d(s.lsd)}.` };
+    }
+    if (!s.sci && !s.hasPoint && s.sf < want.sf && eq(absD(s.value), absD(want.value))) {
+      // 45 → 45.0 can be shown with a decimal point; 900 → 9.0 × 10^2 needs scientific notation
+      const plainFix = !want.sci && want.hasPoint;
+      const fix = plainFix ? want.mant : sciStr(roundAt(want.value, want.lsd));
+      return { level: 'sf', ok: false, msg: `${s.mant} has only ${s.sf} sig fig${s.sf === 1 ? '' : 's'}. Write ${fix}${expected.unit ? ' ' + expected.unit : ''} to show ${want.sf}.`, sciNeeded: !plainFix };
+    }
+    const why = expected.rule === 'muldiv' ? 'Multiplying or dividing: the answer gets the fewest sig figs of the measurements.' : 'Count the sig figs again.';
+    return { level: 'sf', ok: false, msg: unrounded
+      ? `That's the calculator answer. ${why} That means ${want.sf} SF.`
+      : `Right idea, wrong rounding. ${why} The answer needs ${want.sf} SF; yours has ${s.sf}.` };
+  }
+
+  return { parse, sigFigs, breakdown, lsdOf, roundSF, roundPlace, addSub, mulDiv, toSci, fromSci, convert, pctError, grade,
+    placeName, plainStr, sciStr, calcStr, msd, D, add, sub, mul, div, roundAt, eq, trim };
+})();
+if (typeof module !== 'undefined') module.exports = MEAS;
+</script>
+<!--meas:end-->
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// A number string for the screen: minus signs, and "× 10^3" with a real superscript
+const num = s => esc(s).replace(/-/g, '−').replace(/×\s*10\^(−?\d+)/g, '× 10<sup>$1</sup>');
+// Space out long whole numbers for reading: 38100 → 38 100 (display only)
+const grp = s => String(s).replace(/^(-?)(\d{5,})(?=\.|\s|$)/, (m, sg, d) => sg + d.replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const nz = () => String(ri(1, 9));
+const dg = () => String(ri(0, 9));
+const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+const sfWord = n => plural(n, 'sig fig');
+const placesWord = n => plural(n, 'place');
+const dpWord = n => n <= 0 ? `${-n} decimal place${n === -1 ? '' : 's'}` : `the ${MEAS.placeName(n)} place`;
+const flt = x => Number(MEAS.plainStr(typeof x === 'object' ? x : MEAS.parse(x).value));
+const close = (a, b) => Math.abs(a - b) <= 1e-9 * Math.max(Math.abs(a), Math.abs(b), 1e-300);
+const unitSp = u => u ? ' ' + u : '';
+const DEBUG = /[?&]debug\b/.test(location.search);
+
+/* Progress: this device only */
+const KEY = 'sci-notation:v1';
+let store = { seen: false, solved: {}, best: {} };
+try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) store = Object.assign(store, s); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+
+/* tap-to-define words */
+const DEF = {
+  coef: 'Coefficient: the front number in scientific notation. It must be at least 1 and less than 10, and all its digits are significant.',
+  exp: 'Exponent: the small raised number on the 10. It tells how many places the decimal point moved. Positive = big number, negative = smaller than 1.',
+  sf: 'Significant figures: the digits in a measurement that are known with certainty, plus one final estimated (uncertain) digit.',
+  placeholder: 'A zero that only shows where the decimal point is. It was not measured, so it is not significant.'
+};
+const T = (word, key) => `<button type="button" class="term" data-def="${key}">${word}</button>`;
+const tip = $('#tip');
+let tipFor = null;
+function showTip(el) {
+  tipFor = el; tip.textContent = DEF[el.dataset.def]; tip.hidden = false;
+  const r = el.getBoundingClientRect();
+  tip.style.left = Math.max(8, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - 316)) + 'px';
+  tip.style.top = (window.scrollY + r.bottom + 6) + 'px';
+}
+const hideTip = () => { tip.hidden = true; tipFor = null; };
+document.addEventListener('click', e => {
+  const t = e.target.closest('.term[data-def]');
+  if (t) { tipFor === t ? hideTip() : showTip(t); } else if (!e.target.closest('#tip')) hideTip();
+});
+document.addEventListener('focusin', e => { const t = e.target.closest('.term[data-def]'); if (t) showTip(t); });
+document.addEventListener('focusout', e => { if (e.target.closest('.term[data-def]')) hideTip(); });
+document.addEventListener('mouseover', e => { const t = e.target.closest('.term[data-def]'); if (t && tipFor !== t) showTip(t); });
+
+/* ---------- questions ---------- */
+// To scientific notation. n = round to n SF; n = null keeps every sig fig. A string like "47 × 10^3" is an improper form to fix.
+function mkSci(s, n, unit, src) {
+  const p = MEAS.parse(s), k = n || p.sf, r = MEAS.toSci(p.value, k);
+  return { t: 'sci', s, n, unit: unit || '', p, k, r, fix: p.sci, src, id: `s:${s}:${n}:${unit || ''}` };
+}
+function mkDec(s, unit, src) {
+  const p = MEAS.parse(s);
+  return { t: 'dec', s, unit: unit || '', p, ans: MEAS.plainStr(p.value), src, id: `d:${s}:${unit || ''}` };
+}
+// Calculator tasks. 'type': type one number. 'trap': a ÷ (b × 10^n), where ^ gives the wrong answer. 'ws': a Worksheet #4 calculation.
+function mkType(s, src) { return { t: 'calc', kind: 'type', s, target: flt(s), src, id: 'k:' + s }; }
+function mkTrap(a, b, src) {
+  const A = flt(a), B = flt(b), pb = MEAS.parse(b), coefB = flt(pb.mant);
+  return { t: 'calc', kind: 'trap', a, b, target: A / B, trapVal: A / coefB * Math.pow(10, pb.exp), src, id: `p:${a}/${b}` };
+}
+function mkWs(show, expr, rule, unit, src) {
+  const r = rule === 'addsub' ? MEAS.addSub(expr) : MEAS.mulDiv(expr);
+  const q = { t: 'calc', kind: 'ws', show, expr, rule, unit, r, target: flt(MEAS.trim(r.exact)), src, id: 'w:' + expr };
+  // the ^ trap for a division by a number in scientific notation
+  const m = expr.match(/^(.+?) ÷ (\S+) × 10\^(-?\d+)$/);
+  if (m) q.trapVal = flt(m[1]) / flt(m[2]) * Math.pow(10, +m[3]);
+  return q;
+}
+
+// Guided sets: the slide and Worksheet #4 questions, in booklet order
+const BANK = {
+  sci: [
+    ...['3200', '0.000855', '47 045', '4.05', '25', '0.0305', '0.0082', '243'].map((s, i) => mkSci(s, 2, '', `Slide practice · #${i + 1} (2 SF)`)),
+    ...[['454.3', 'm'], ['0.00034', 'm'], ['0.851', 's'], ['305', 'km'], ['0.000009', 'm'], ['8 000 000 000', 'mm']]
+      .map(([s, u], i) => mkSci(s, null, u, `Worksheet #4 · 3(${'abcdef'[i]})`)),
+    mkSci('100', 3, 'cm', 'Slide notes'), mkSci('100', 2, 'cm', 'Slide notes'), mkSci('100', 1, 'cm', 'Slide notes'),
+    mkSci('47 × 10^3', null, '', 'Slide: watch out'), mkSci('0.47 × 10^5', null, '', 'Slide: watch out')
+  ],
+  dec: [
+    ...[['3.5 × 10^-4', 'm'], ['2.6 × 10^3', 'm'], ['1.8 × 10^-2', 'm'], ['7.4 × 10^5', 'm']].map(([s, u], i) => mkDec(s, u, `Worksheet #4 · 4(${'abcd'[i]})`)),
+    mkDec('3 × 10^8', '', 'Slide notes'), mkDec('3 × 10^-8', '', 'Slide notes')
+  ],
+  calc: [
+    mkType('3.2 × 10^3', 'Slide tip'), mkType('8.6 × 10^-4', 'Slide practice #2'), mkTrap('6', '2 × 10^3', 'Slide tip'),
+    mkTrap('4.8 × 10^5', '1.2 × 10^2', 'Extra'),
+    mkWs('2.340 × 10^2 m + 1.000 × 10^3 m', '2.340 × 10^2 + 1.000 × 10^3', 'addsub', 'm', 'Worksheet #4 · 5(a)'),
+    mkWs('51.20 km + 3.2 × 10^-1 km', '51.20 + 3.2 × 10^-1', 'addsub', 'km', 'Worksheet #4 · 5(b)'),
+    mkWs('2.45 h × 1.10 × 10^2 km/h', '2.45 × 1.10 × 10^2', 'muldiv', 'km', 'Worksheet #4 · 5(c)'),
+    mkWs('7.7 m ÷ 2.1 × 10^-2 s', '7.7 ÷ 2.1 × 10^-2', 'muldiv', 'm/s', 'Worksheet #4 · 5(d)')
+  ]
+};
+
+/* Random questions */
+// A number with exactly sf significant digits whose first digit is at place 10^m
+function sfNumber(sf, m) {
+  for (;;) {
+    const d = nz() + Array.from({ length: sf - 1 }, dg).join('');
+    const e = m - sf + 1;
+    if (e >= 0 && d.endsWith('0')) continue; // a whole number can't show a significant trailing zero
+    const s = MEAS.plainStr(MEAS.D(BigInt(d), e));
+    if (MEAS.sigFigs(s) === sf) return s;
+  }
+}
+const spaced = s => grp(s).replace(/ /g, ' ');
+function genSci() {
+  for (;;) {
+    if (Math.random() < .15) { // an improper form to fix
+      const big = Math.random() < .5, d = nz() + nz(), e = big ? ri(2, 6) : ri(-6, 6);
+      const s = `${big ? d : '0.' + d} × 10^${e}`;
+      if (!BANK.sci.some(q => q.s === s)) return mkSci(s, null, '');
+      continue;
+    }
+    const two = Math.random() < .5, sf = two ? ri(3, 5) : ri(1, 4);
+    const m = pick([-6, -5, -4, -3, -2, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    const s = spaced(sfNumber(sf, m));
+    if (m === 0 && !two) continue;
+    const unit = pick(['', '', '', 'm', 'km', 's', 'mm', 'cm']);
+    const q = mkSci(s, two ? 2 : null, unit);
+    if (!BANK.sci.some(b => b.id === q.id)) return q;
+  }
+}
+function genDec() {
+  for (;;) {
+    const sf = ri(1, 3), coef = nz() + (sf > 1 ? '.' + Array.from({ length: sf - 1 }, dg).join('') : '');
+    const e = pick([-6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6]);
+    const s = `${coef} × 10^${e}`, q = mkDec(s, pick(['', 'm', 'km', 's', 'cm']));
+    if (MEAS.sigFigs(q.ans) === sf && !BANK.dec.some(b => b.s === s)) return q;
+  }
+}
+function genCalc() {
+  if (Math.random() < .5) {
+    const coef = nz() + '.' + dg() + (Math.random() < .5 ? nz() : '');
+    return mkType(`${coef} × 10^${pick([-7, -5, -4, -3, -2, 2, 3, 4, 5, 6, 8, 9])}`);
+  }
+  const a = Math.random() < .6 ? sfNumber(ri(1, 2), ri(0, 1)) : `${nz()}.${nz()} × 10^${ri(2, 6)}`;
+  const b = `${nz()}${Math.random() < .5 ? '.' + nz() : ''} × 10^${pick([-3, -2, 2, 3, 4])}`;
+  const q = mkTrap(a, b);
+  return close(q.target, q.trapVal) ? genCalc() : q;
+}
+const GEN = { sci: genSci, dec: genDec, calc: genCalc };
+
+/* ---------- state ---------- */
+const S = { topic: 'sci', mode: 'guided', idx: { sci: 0, dec: 0, calc: 0 }, rand: null,
+  q: null, tries: 0, help: 0, solved: false, fb: null, ch: null, input: '', chain: [], justAdded: false, op: null, cx: null };
+const qNow = () => S.mode === 'challenge' ? (S.ch && S.ch.started && !S.ch.done ? S.ch.list[S.ch.i] : null) : (S.rand || BANK[S.topic][S.idx[S.topic]]);
+
+function setTopic(t) {
+  S.topic = t;
+  document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.topic === t)));
+  if (S.mode === 'challenge') S.ch = { started: false };
+  S.rand = null; loadQ();
+}
+function setMode(m) {
+  S.mode = m;
+  document.querySelectorAll('.segbtn').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+  S.ch = { started: false }; S.rand = null; loadQ();
+}
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => setTopic(b.dataset.topic)));
+document.querySelectorAll('.segbtn').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+function loadQ() {
+  S.q = qNow(); S.tries = 0; S.help = 0; S.solved = false; S.fb = null; S.input = '';
+  S.cx = { expr: '', out: '', stage: 1 };
+  render();
+}
+
+/* ---------- rendering ---------- */
+const TOPIC_NAME = { sci: 'To scientific notation', dec: 'To decimal form', calc: 'Calculator' };
+const maxScore = () => 30;
+function render() { renderBar(); renderQ(); renderCoach(); renderHelp(); }
+function renderBar() {
+  const bar = $('#bar');
+  if (S.mode === 'challenge') {
+    const ch = S.ch;
+    bar.innerHTML = ch.started && !ch.done
+      ? `<span class="lbl">CHALLENGE</span><span>Question ${ch.i + 1} of 10</span><span class="score">SCORE ${ch.score}</span>`
+      : `<span class="lbl">CHALLENGE</span><span>${TOPIC_NAME[S.topic]}</span>`;
+    return;
+  }
+  const bank = BANK[S.topic];
+  bar.innerHTML = `<span class="lbl">BOOKLET PRACTICE</span><div class="pick" role="group" aria-label="Choose a question">${bank.map((q, i) =>
+    `<button type="button" data-i="${i}" title="${esc(q.src || '')}" class="${!S.rand && i === S.idx[S.topic] ? 'on' : ''} ${store.solved[q.id] ? 'done' : ''}"
+      aria-label="Question ${i + 1}${store.solved[q.id] ? ', solved' : ''}" aria-pressed="${!S.rand && i === S.idx[S.topic]}">${i + 1}</button>`).join('')}</div>
+    <button class="btn small" type="button" id="randBtn">${S.rand ? 'Another new one 🎲' : 'New question 🎲'}</button>`;
+  bar.querySelectorAll('.pick button').forEach(b => b.addEventListener('click', () => { S.rand = null; S.idx[S.topic] = +b.dataset.i; loadQ(); }));
+  $('#randBtn').addEventListener('click', () => { S.rand = GEN[S.topic](); loadQ(); focusInput(); });
+}
+function questionHTML(q) {
+  const src = q.src ? `<p class="src">${esc(q.src)}</p>` : '';
+  if (q.t === 'sci') {
+    if (q.fix) return `${src}<p class="qtext">This is <b>not</b> proper scientific notation. Rewrite it properly.</p><div class="big">${num(q.s)}</div>`;
+    return `${src}<p class="qtext">Write in scientific notation${q.n ? ` with <b>${sfWord(q.n)}</b>` : ', keeping every sig fig'}.</p><div class="big">${num(grp(q.s))}${unitSp(q.unit)}</div>`;
+  }
+  if (q.t === 'dec') return `${src}<p class="qtext">Write in decimal form (an ordinary number, no × 10).</p><div class="big">${num(q.s)}${unitSp(q.unit)}</div>`;
+  // calculator
+  if (q.kind === 'type') return `${src}<p class="qtext">Type this number on the calculator with the <kbd class="ee">EE</kbd> key, then press <kbd>=</kbd>.</p><div class="big">${num(q.s)}</div>`;
+  if (q.kind === 'trap') return `${src}<p class="qtext">Work this out on the calculator. <b>${num(q.b)}</b> is one number.</p><div class="big">${num(q.a)} ÷ <span class="one">${num(q.b)}</span></div>`;
+  return `${src}<p class="qtext">${S.cx.stage === 1 ? 'Type it on the calculator with the EE key and press =.' : 'Now give the answer in scientific notation, with the correct unit.'}</p><div class="big" style="font-size:36px">${num(q.show)}</div>`;
+}
+function answerBox(label, help) {
+  return `<div class="ans"><label for="ans">${label}</label>
+    <input id="ans" autocomplete="off" spellcheck="false" value="${esc(S.input)}" ${S.solved ? 'disabled' : ''}>
+    ${S.solved ? '' : '<button class="btn primary" type="button" id="check">Check ✓</button>'}</div>
+    <p class="typehelp">${help}</p>`;
+}
+const SCI_HELP = 'Type scientific notation like 3.2 x 10^3 (or 3.2e3). For a negative exponent: 8.6 x 10^-4.';
+function renderQ() {
+  const box = $('#qbox'), q = S.q;
+  if (!q) {
+    box.innerHTML = S.mode === 'challenge' ? challengeIntro() : '';
+    const b = box.querySelector('#chGo'); if (b) b.addEventListener('click', startChallenge);
+    return;
+  }
+  let body = '';
+  if (q.t === 'sci') body = answerBox('Answer:', SCI_HELP + (q.unit ? ' Keep the unit.' : ''));
+  else if (q.t === 'dec') body = answerBox('Answer:', 'Type an ordinary number, like 0.0035' + (q.unit ? ' m. Keep the unit.' : '.'));
+  else body = calcBody(q);
+  box.innerHTML = questionHTML(q) + body;
+  wireQ(box);
+}
+function wireQ(box) {
+  const inp = $('#ans');
+  if (inp) {
+    inp.addEventListener('input', () => { S.input = inp.value; });
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doCheck(); } });
+  }
+  const c = $('#check'); if (c) c.addEventListener('click', doCheck);
+  box.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => pressKey(b.dataset.k)));
+}
+const focusInput = () => { const i = $('#ans') || document.querySelector('#qbox [data-k]'); if (i && !i.disabled) i.focus(); };
+
+/* calculator */
+const KEYS = [['E', 'EE', 'ee'], ['^', '^', 'fn'], ['DEL', 'DEL', 'fn'], ['AC', 'AC', 'fn'],
+  ['7'], ['8'], ['9'], ['/', '÷', 'fn'], ['4'], ['5'], ['6'], ['*', '×', 'fn'], ['1'], ['2'], ['3'], ['-', '−', 'fn'],
+  ['0'], ['.'], ['n', '(−)', 'fn'], ['+', '+', 'fn'], ['=', '=', 'eq']];
+const SHOW = { '*': '×', '/': '÷', '-': '−', 'n': '⁻', 'E': 'E' };
+const showExpr = e => esc([...e].map(c => SHOW[c] || c).join(''));
+function calcBody(q) {
+  const ws = q.kind === 'ws', stage2 = ws && S.cx.stage === 2;
+  let h = `<div class="cwrap"><div class="cpad" role="group" aria-label="Calculator">
+    <div class="screen" aria-live="polite"><div class="ex" id="cEx">${showExpr(S.cx.expr)}<span class="cur">_</span></div><div class="res" id="cRes">${S.cx.out}</div></div>
+    <div class="keys">${KEYS.map(([k, l, c]) => `<button class="key ${c || ''}" type="button" data-k="${esc(k)}" aria-label="${k === 'E' ? 'EE, times ten to the power' : k === 'n' ? 'negative' : esc(l || k)}">${esc(l || k)}</button>`).join('')}</div></div>
+    <div class="cnote"><p><kbd class="ee">EE</kbd> means "× 10 to the power". It keeps the whole number together.</p>
+      <p><kbd>(−)</kbd> makes a number negative, like the exponent in 10<sup>−4</sup>.</p><p>You can also use your keyboard: E for EE, ^ for power.</p></div></div>`;
+  if (stage2) h += answerBox('Answer:', SCI_HELP + ' Include the unit.');
+  return h;
+}
+function evalCalc(src) {
+  let i = 0;
+  const err = m => { throw new Error(m); };
+  function number() {
+    const m = src.slice(i).match(/^(\d+\.?\d*|\.\d+)(E([n-]?)(\d+))?/);
+    if (!m) err('SYNTAX ERROR');
+    if (/E/.test(src.slice(i + m[0].length, i + m[0].length + 1))) err('SYNTAX ERROR');
+    i += m[0].length;
+    return parseFloat(m[1]) * (m[2] ? Math.pow(10, (m[3] ? -1 : 1) * +m[4]) : 1);
+  }
+  function power() { const b = number(); if (src[i] === '^') { i++; return Math.pow(b, unary()); } return b; }
+  function unary() { if (src[i] === 'n' || src[i] === '-') { i++; return -unary(); } return power(); }
+  function term() { let v = unary(); while (src[i] === '*' || src[i] === '/') { const o = src[i++]; const r = unary(); if (o === '/' && r === 0) err('DIVIDE BY 0'); v = o === '*' ? v * r : v / r; } return v; }
+  function expr() { let v = term(); while (src[i] === '+' || src[i] === '-') { const o = src[i++]; const r = term(); v = o === '+' ? v + r : v - r; } return v; }
+  try {
+    if (!src) err('SYNTAX ERROR');
+    const v = expr(); if (i < src.length || !isFinite(v)) err('SYNTAX ERROR');
+    return { val: v };
+  } catch (e) { return { err: e.message }; }
+}
+function fmtCalc(x) {
+  if (x === 0) return '0';
+  const a = Math.abs(x);
+  if (a >= 1e10 || a < 1e-6) { const [m, e] = x.toExponential(9).split('e'); return `${m.replace(/\.?0+$/, '')} × 10^${+e}`; }
+  return String(Number(x.toPrecision(10)));
+}
+function refreshScreen() {
+  const ex = $('#cEx'), rs = $('#cRes');
+  if (ex) ex.innerHTML = showExpr(S.cx.expr) + '<span class="cur">_</span>';
+  if (rs) rs.innerHTML = S.cx.out;
+}
+function pressKey(k) {
+  const q = S.q; if (!q || q.t !== 'calc') return;
+  if (k === 'AC') { S.cx.expr = ''; S.cx.out = ''; }
+  else if (k === 'DEL') { S.cx.expr = S.cx.expr.slice(0, -1); S.cx.out = ''; }
+  else if (k === '=') return calcEquals(k);
+  else if (S.cx.expr.length < 40) { S.cx.expr += k; S.cx.out = ''; }
+  refreshScreen();
+}
+function calcEquals(k) {
+  const q = S.q, v = evalCalc(S.cx.expr);
+  S.cx.out = v.err ? v.err : num(fmtCalc(v.val));
+  const refocus = () => { const b = document.querySelector(`[data-k="${k}"]`); if (b) b.focus(); };
+  if (S.solved || S.cx.stage === 2) { refreshScreen(); return; }
+  if (v.err) { refreshScreen(); S.fb = { kind: 'hint', msg: v.err === 'DIVIDE BY 0' ? "You can't divide by 0. Press AC and try again." : "The calculator can't read that. Check that every EE has an exponent after it, and press AC to start again." }; renderCoach(); return; }
+  const usedEE = S.cx.expr.includes('E');
+  if (close(v.val, q.target)) {
+    if (q.kind === 'type' && !usedEE) { refreshScreen(); S.fb = { kind: 'hint', msg: 'Right number, but use the EE key. EE keeps the whole number together, which matters as soon as you divide by it. Press AC and try with EE.' }; renderCoach(); return; }
+    if (q.kind === 'ws') {
+      S.cx.stage = 2; S.tries = 0; S.help = Math.max(S.help, 1);
+      S.fb = { kind: 'hint', msg: `The calculator says ${num(fmtCalc(v.val))}. That's not the final answer yet: round it with the ${q.rule === 'addsub' ? 'adding and subtracting rule (least precise place)' : 'multiplying and dividing rule (fewest sig figs)'}, then write it in scientific notation.` };
+      render(); focusInput(); return;
+    }
+    finish({ ok: true, msg: q.kind === 'type' ? `${num(q.s)} = ${num(fmtCalc(q.target))}. Keys: ${keysFor(q.s)}.` : `${num(q.a)} ÷ ${num(q.b)} = ${num(fmtCalc(q.target))}. EE kept ${num(q.b)} together as one number.` });
+    return;
+  }
+  if (q.trapVal != null && close(v.val, q.trapVal)) {
+    const b = q.kind === 'trap' ? q.b : q.expr.split(' ÷ ')[1], a = q.kind === 'trap' ? q.a : q.expr.split(' ÷ ')[0];
+    const pb = MEAS.parse(b);
+    return void (finish({ ok: false, msg: `The calculator did ${num(a)} ÷ ${num(pb.mant)} first, then multiplied by 10<sup>${num(String(pb.exp))}</sup>, giving ${num(fmtCalc(q.trapVal))} instead of ${num(fmtCalc(q.target))}. ${num(b)} is one number: type it with EE (${keysFor(b)}) so it stays together.` }), refocus());
+  }
+  if (q.kind === 'type') {
+    const p = MEAS.parse(q.s);
+    if (close(v.val, flt(p.mant) * Math.pow(10, -p.exp))) return void (finish({ ok: false, msg: `The exponent's sign is backwards. For 10<sup>${num(String(p.exp))}</sup>, ${p.exp < 0 ? 'press (−) before the exponent' : "don't make the exponent negative"}.` }), refocus());
+  }
+  finish({ ok: false, msg: `The calculator shows ${num(fmtCalc(v.val))}. Press AC and type it again, one number at a time.` });
+  refocus();
+}
+const keysFor = s => { const p = MEAS.parse(s); if (!p.sci) return esc(p.mant); return `${esc(p.mant)} <kbd class="ee">EE</kbd> ${p.exp < 0 ? '<kbd>(−)</kbd> ' : ''}${Math.abs(p.exp)}`; };
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') hideTip();
+  const q = S.q; if (!q || q.t !== 'calc' || $('#lab').hidden) return;
+  const tg = e.target instanceof Element ? e.target : document.body;
+  if (tg.closest('input, textarea, a') || e.ctrlKey || e.metaKey || e.altKey) return;
+  const map = { Enter: '=', '=': '=', Backspace: 'DEL', Delete: 'AC', Escape: 'AC', e: 'E', E: 'E', '^': '^', '*': '*', x: '*', '/': '/', '-': '-', '+': '+', '.': '.', '_': 'n' };
+  const k = /^\d$/.test(e.key) ? e.key : map[e.key];
+  if (!k) return;
+  if (e.key === 'Enter' && tg.closest('button') && !tg.closest('[data-k]')) return; // let Enter press a focused button
+  e.preventDefault();
+  if (e.key === 'Enter' && tg.closest('[data-k]')) { pressKey(tg.closest('[data-k]').dataset.k); return; }
+  pressKey(k);
+});
+
+function challengeIntro() {
+  const best = store.best[S.topic], ch = S.ch;
+  if (ch && ch.done) return `<div class="say good"><span class="tag">FINISHED!</span><p>Your score: <span class="score">${ch.score} / ${maxScore()}</span></p>
+    <p>Best on this device: <b>${best || 0}</b> / ${maxScore()}.</p></div><div class="acts"><button class="btn primary" type="button" id="chGo">Play again ▶</button></div>`;
+  return `<div class="say"><span class="tag">CHALLENGE · ${TOPIC_NAME[S.topic].toUpperCase()}</span><p>10 new questions. No step-by-step help this time.</p>
+    <p>You get <b>3 points</b> if your first try is right, <b>2</b> for the second try, and <b>1</b> for the third. After 3 tries the answer is shown.</p>
+    <p>Best on this device: <b>${best || 0}</b> / ${maxScore()}.</p></div>
+    <div class="acts"><button class="btn primary" type="button" id="chGo">Start ▶</button></div>`;
+}
+function startChallenge() {
+  const list = []; const seen = new Set();
+  while (list.length < 10) { const q = GEN[S.topic](); if (!seen.has(q.id)) { seen.add(q.id); list.push(q); } }
+  S.ch = { started: true, list, i: 0, score: 0, done: false };
+  loadQ(); focusInput();
+}
+function nextChallenge() {
+  if (S.ch.i >= 9) {
+    S.ch.done = true;
+    if (S.ch.score > (store.best[S.topic] || 0)) { store.best[S.topic] = S.ch.score; save(); }
+  } else S.ch.i++;
+  loadQ(); focusInput();
+}
+
+/* ---------- checking ---------- */
+function check(q, raw) {
+  if (q.t === 'sci') return checkSci(q, raw);
+  if (q.t === 'dec') return checkDec(q, raw);
+  return checkWs(q, raw);
+}
+function doCheck() {
+  const q = S.q; if (!q || S.solved) return;
+  const raw = (S.input || '').trim();
+  if (!raw) { S.fb = { kind: 'hint', msg: 'Type your answer first.' }; renderCoach(); return; }
+  finish(check(q, raw));
+}
+function finish(res) {
+  const q = S.q;
+  if (res.level === 'nan' || res.hint) { S.fb = { kind: 'hint', msg: res.msg }; renderCoach(); return; } // not counted as a try
+  S.tries++;
+  if (res.ok) {
+    S.solved = true;
+    if (S.mode === 'challenge') { const pts = Math.max(0, 4 - S.tries); S.ch.score += pts; res.pts = pts; }
+    else if (!S.rand) { store.solved[q.id] = true; save(); }
+    S.help = 99;
+  } else {
+    if (S.mode === 'guided') S.help = Math.max(S.help, Math.min(S.tries, nSteps(q) - 1));
+    if (S.mode === 'challenge' && S.tries >= 3) { S.solved = true; S.help = 99; res.out = true; }
+  }
+  if (S.solved) showWorking(q);
+  S.fb = Object.assign({ kind: res.ok ? 'good' : 'bad' }, res);
+  render();
+  const n = $('#next') || $('#ans'); if (n && !n.disabled) n.focus();
+}
+// When the answer is shown, fill in the working so the question box shows it too
+function showWorking(q) {
+  if (q.t === 'calc' && q.kind === 'ws') S.cx.stage = 2;
+}
+function unitHint(p, unit) {
+  if (unit && p.unit !== unit) return { hint: true, msg: p.unit ? `Check the unit. This answer is in ${unit}, not ${esc(p.unit)}.` : `Add the unit (${unit}). Every final answer needs one.` };
+  if (!unit && p.unit) return { hint: true, msg: `This number has no unit. Leave "${esc(p.unit)}" off.` };
+  return null;
+}
+const isProper = p => { const c = Math.abs(parseFloat(p.mant)); return c >= 1 && c < 10; };
+const sameDigits = (a, b) => MEAS.trim(a).n === MEAS.trim(b).n || MEAS.trim(a).n === -MEAS.trim(b).n;
+function checkSci(q, raw) {
+  const p = MEAS.parse(raw);
+  if (!p.ok) return { level: 'nan', msg: 'Type a number in scientific notation, like 3.2 x 10^3.' };
+  const u = unitHint(p, q.unit); if (u) return u;
+  const want = MEAS.parse(q.r.sci), ans = num(q.r.sci) + unitSp(q.unit);
+  if (!p.sci) {
+    if (MEAS.eq(p.value, want.value) && want.exp === 0 && p.sf === want.sf) return { hint: true, msg: `Right number. In scientific notation, show the power of 10 too: ${ans}.` };
+    return { hint: true, msg: 'Write it in scientific notation: a number from 1 to 10, then × 10 to a power. Type it like 3.2 x 10^3.' };
+  }
+  if (!isProper(p)) return { ok: false, msg: `${num(p.mant)} × 10<sup>${num(String(p.exp))}</sup> is NOT proper scientific notation. The coefficient must be at least 1 and less than 10.` };
+  if (MEAS.eq(p.value, want.value)) {
+    if (p.sf === want.sf) return { ok: true, msg: q.fix ? `${num(q.s)} = ${ans}: the same number, now with a proper coefficient.` : `${num(grp(q.s))}${unitSp(q.unit)} = ${ans}.` };
+    if (q.n) return { ok: false, msg: `Right size, but ${num(p.mant)} has ${sfWord(p.sf)}. Round the front number to ${sfWord(q.n)}${q.n === 2 ? ': one digit before the decimal, one after' : ''}.` };
+    return { ok: false, msg: `Right size, but ${num(p.mant)} has ${sfWord(p.sf)}. ${num(grp(q.s))} has ${sfWord(q.k)}, and scientific notation keeps exactly those, so the front number needs ${plural(q.k, 'digit')}.` };
+  }
+  if (p.exp !== want.exp) {
+    if (p.exp === -want.exp) return { ok: false, msg: `Check the sign of the exponent. ${want.exp > 0 ? 'A number 10 or bigger has a positive exponent.' : 'A number smaller than 1 has a negative exponent.'}` };
+    return { ok: false, msg: 'Count the places again. The decimal point goes right after the first non-zero digit, and the exponent is how many places it moved.' };
+  }
+  if (q.n) return { ok: false, msg: `Check the rounding. Look at the digit right after sig fig #${q.n}: 5 or more → round up; 4 or less → leave it.` };
+  if (p.sf !== q.k) return { ok: false, msg: `${num(grp(q.s))} has ${sfWord(q.k)}. Keep every one: the front number needs ${plural(q.k, 'digit')}, with no rounding.` };
+  return { ok: false, msg: 'Not yet. Keep the same digits in the same order: only the decimal point moves.' };
+}
+function checkDec(q, raw) {
+  const p = MEAS.parse(raw);
+  if (!p.ok) return { level: 'nan', msg: 'Type an ordinary number, like 0.0035.' };
+  const u = unitHint(p, q.unit); if (u) return u;
+  if (p.sci) return { hint: true, msg: 'Write it as an ordinary number, without the × 10. Move the decimal point instead.' };
+  const want = MEAS.parse(q.ans), e = q.p.exp;
+  if (MEAS.eq(p.value, want.value)) {
+    if (p.sf === want.sf) return { ok: true, msg: `${num(q.s)}${unitSp(q.unit)} = ${num(grp(q.ans))}${unitSp(q.unit)}.` };
+    return { ok: false, msg: `Right size, but ${num(p.mant)} shows ${sfWord(p.sf)}. ${num(q.s)} has ${sfWord(want.sf)}, so don't add zeros after the last digit.` };
+  }
+  if (sameDigits(p.value, want.value)) return { ok: false, msg: `Right digits, wrong size. 10<sup>${num(String(e))}</sup> means move the decimal point ${placesWord(Math.abs(e))} ${e > 0 ? 'right (the number gets bigger)' : 'left (the number gets smaller)'}.` };
+  return { ok: false, msg: 'Not yet. Keep the same digits. Only the decimal point moves, and empty places fill with zeros.' };
+}
+function checkWs(q, raw) {
+  const r = q.r, exact = MEAS.plainStr(MEAS.trim(r.exact));
+  const g = MEAS.grade(raw, { answer: r.sci, exact, rule: q.rule, unit: q.unit, example: `${r.sci} ${q.unit}` });
+  const p = MEAS.parse(raw);
+  if (g.level === 'unit' || g.level === 'nan') return g;
+  if (g.ok) {
+    if (!p.sci) return { hint: true, msg: `Right value. The question asks for scientific notation: ${num(r.sci)} ${q.unit}.` };
+    if (!isProper(p)) return { ok: false, msg: `Right value, but ${num(p.mant)} × 10<sup>${num(String(p.exp))}</sup> is NOT proper scientific notation. The coefficient must be at least 1 and less than 10.` };
+    return { ok: true, msg: `${num(r.sci)} ${q.unit}. ${q.rule === 'addsub' ? `Adding: the least precise measurement is known to ${dpWord(r.place)}.` : `Multiplying or dividing: the fewest sig figs is ${r.sf}.`}` };
+  }
+  return { ok: false, msg: g.msg };
+}
+
+/* ---------- coach (feedback under the question) ---------- */
+function renderCoach() {
+  const box = $('#coach'), q = S.q, fb = S.fb;
+  if (!q) { box.innerHTML = ''; return; }
+  let h = '';
+  if (fb && fb.kind === 'hint') h += `<div class="say hint"><span class="tag">TIP</span><p>${fb.msg}</p></div>`;
+  else if (fb && fb.kind === 'good') h += `<div class="say good"><span class="tag">CORRECT! ✓</span><p>${fb.msg}</p>${fb.pts != null ? `<p>+${plural(fb.pts, 'point')}.</p>` : ''}</div>`;
+  else if (fb && fb.kind === 'bad') h += `<div class="say bad"><span class="tag">${fb.out ? 'THE ANSWER' : 'NOT YET'}</span><p>${fb.msg.replace(/^Not yet\.\s*/, '') || 'Here is the full working.'}</p>
+      ${fb.out ? `<p>The answer is <b>${answerText(q)}</b>. See the steps.</p>` : ''}
+      ${!fb.out && S.mode === 'guided' ? '<p>One more step is open on the right.</p>' : ''}</div>`;
+  const acts = [];
+  if (S.solved) {
+    if (S.mode === 'challenge') acts.push(`<button class="btn primary" type="button" id="next">${S.ch.i === 9 ? 'See your score ▶' : 'Next question ▶'}</button>`);
+    else if (S.rand) acts.push(`<button class="btn primary" type="button" id="next">Another new one 🎲</button>`);
+    else if (S.idx[S.topic] < BANK[S.topic].length - 1) acts.push(`<button class="btn primary" type="button" id="next">Next question ▶</button>`);
+    else acts.push(`<button class="btn primary" type="button" id="next">New question 🎲</button>`);
+  } else if (S.mode === 'guided') {
+    acts.push(`<button class="btn" type="button" id="hintBtn" ${S.help >= nSteps(q) ? 'disabled' : ''}>${S.help >= nSteps(q) - 1 ? 'Show the answer' : 'Show the next step'}</button>`);
+  } else if (S.mode === 'challenge') acts.push(`<button class="btn small" type="button" id="skip">Skip (0 points)</button>`);
+  box.innerHTML = h + (acts.length ? `<div class="acts">${acts.join('')}</div>` : '');
+  const on = (id, fn) => { const b = box.querySelector('#' + id); if (b) b.addEventListener('click', fn); };
+  on('next', () => {
+    if (S.mode === 'challenge') return nextChallenge();
+    if (S.rand || S.idx[S.topic] >= BANK[S.topic].length - 1) S.rand = GEN[S.topic]();
+    else S.idx[S.topic]++;
+    loadQ(); focusInput();
+  });
+  on('hintBtn', () => {
+    S.help++;
+    if (S.help >= nSteps(q)) { S.solved = true; showWorking(q); S.fb = { kind: 'bad', out: true, msg: 'Here is the full working.' }; }
+    render();
+  });
+  on('skip', () => nextChallenge());
+}
+function answerText(q) {
+  if (q.t === 'sci') return num(q.r.sci) + unitSp(q.unit);
+  if (q.t === 'dec') return num(grp(q.ans)) + unitSp(q.unit);
+  if (q.kind === 'ws') return `${num(q.r.sci)} ${q.unit}`;
+  return `${num(fmtCalc(q.target))} (keys: ${q.kind === 'type' ? keysFor(q.s) : `${keysFor(q.a)} ÷ ${keysFor(q.b)}`} =)`;
+}
+
+/* ---------- step-by-step help ---------- */
+function nSteps(q) { return { sci: 3, dec: 3, calc: 3 }[q.t]; }
+function renderHelp() {
+  const box = $('#help'), q = S.q;
+  if (!q) { box.innerHTML = ''; return; }
+  const steps = STEPS[q.t](q);
+  const shown = S.mode === 'challenge' && !S.solved ? 0 : Math.min(S.help, steps.length);
+  if (!shown) {
+    box.innerHTML = S.mode === 'challenge'
+      ? `<div class="helpwait">Work it out on paper. The steps show up after you get it right, or after 3 tries.</div>`
+      : `<div class="helpwait">Try it first. Stuck? Press <b>Show the next step</b>. A wrong answer opens a step too.</div>`;
+    return;
+  }
+  box.innerHTML = `<ol class="steps">${steps.slice(0, shown).map((s, i) => `<li><span class="n">STEP ${i + 1}</span>${s}</li>`).join('')}</ol>`;
+}
+
+// The decimal point hopping along a row of digits. from / to are gaps (gap g sits just before digit g).
+function hopRow(digits, from, to, added) {
+  added = added || new Set();
+  const lo = Math.min(from, to), hi = Math.max(from, to), left = to < from;
+  let h = '<div class="digits" aria-hidden="true">';
+  for (let g = 0; g <= digits.length; g++) {
+    if (g === to) h += `<div class="dg pt newpt"><span class="d">.</span><span class="r">${from === to ? 'here' : 'new'}</span></div>`;
+    else if (g === from) h += `<div class="dg pt oldpt"><span class="d">.</span><span class="r">start</span></div>`;
+    if (g === digits.length) break;
+    const crossed = g >= lo && g < hi, n = left ? from - g : g - from + 1;
+    const cls = added.has(g) ? 'pad' : crossed ? 'hop' : '';
+    const lab = crossed ? `hop ${n}` : added.has(g) ? '+0' : '&nbsp;';
+    h += `<div class="dg ${cls}"><span class="d">${digits[g]}</span><span class="r">${lab}</span></div>`;
+  }
+  return h + '</div>';
+}
+// "3.2|00": a value with a bar after the place being kept. Long values are cut with …
+function placeIndex(s, place) {
+  const dot = s.includes('.') ? s.indexOf('.') : s.length;
+  return place >= 0 ? dot - 1 - place : dot - place;
+}
+function cutView(exact, place) {
+  let s = MEAS.plainStr(MEAS.trim(exact)).replace('-', '');
+  if (placeIndex(s, place) >= s.length) {
+    if (!s.includes('.') && place < 0) s += '.';
+    while (placeIndex(s, place) >= s.length) s += '0';
+  }
+  const i = placeIndex(s, place), tail = s.slice(i + 1);
+  const pre = tail[0] === '.' ? '.' : '';
+  let t = tail.slice(pre.length);
+  if (t.length > 5) t = t.slice(0, 4) + '…';
+  return { html: `${esc(s.slice(0, i + 1))}<span class="cut">|</span>${pre}${t ? `<span class="nexts">${esc(t[0])}</span>${esc(t.slice(1))}` : ''}`, next: +(t[0] || 0), empty: !/[1-9]/.test(tail) };
+}
+const roundLine = (cv, n) => cv.empty
+  ? `Nothing after sig fig #${n} to round.`
+  : `next digit ${cv.next} → ${cv.next >= 5 ? '5 or more → round up' : '4 or less → leave it'}`;
+const coefOf = sciString => sciString.split(' × ')[0];
+const expOf = sciString => +sciString.split('^')[1];
+
+const STEPS = {
+  sci(q) {
+    const ans = num(q.r.sci) + unitSp(q.unit);
+    if (q.fix) {
+      const c = q.p.mant, pc = MEAS.parse(c), full = MEAS.sciStr(MEAS.trim(pc.value)), k = expOf(full), nc = coefOf(full);
+      const digits = c.replace('.', ''), oldGap = c.includes('.') ? c.indexOf('.') : c.length, f = digits.search(/[1-9]/);
+      const left = k > 0;
+      return [
+        `<p>The ${T('coefficient', 'coef')}, ${num(c)}, is not between 1 and 10, so this isn't proper scientific notation.</p>`,
+        `<p>Move its decimal point so it is: <span class="vt">${num(c)} → ${num(nc)}</span> (${placesWord(Math.abs(k))} ${left ? 'left' : 'right'}).</p>${hopRow(digits, oldGap, f + 1)}`,
+        `<p>Moving the decimal ${left ? 'left made the front number smaller' : 'right made the front number bigger'}, so the ${T('exponent', 'exp')} goes ${left ? 'up' : 'down'} by ${Math.abs(k)} to keep the same value: 10<sup>${num(String(q.p.exp))}</sup> → 10<sup>${num(String(q.p.exp + k))}</sup>.</p>
+          <p>Answer: <span class="vt">${ans}</span></p>`
+      ];
+    }
+    const P = q.p.mant, digits = P.replace('.', ''), oldGap = P.includes('.') ? P.indexOf('.') : P.length;
+    const f = digits.search(/[1-9]/), newGap = f + 1, e = oldGap - newGap;
+    const rest = digits.slice(f), coefAll = rest[0] + (rest.length > 1 ? '.' + rest.slice(1) : '');
+    const hopTxt = e === 0 ? 'It is already there: 0 places → 10<sup>0</sup>.'
+      : `${placesWord(Math.abs(e))} ${e > 0 ? 'left' : 'right'} → 10<sup>${num(String(e))}</sup>. ${e > 0 ? 'Moved left (big number) → positive exponent.' : 'Moved right (small number) → negative exponent.'}`;
+    let s3;
+    if (q.n) {
+      const cv = cutView(MEAS.parse(coefAll).value, -(q.n - 1));
+      s3 = `<p>Round the front number to ${sfWord(q.n)}: <span class="vt">${cv.html}</span> → ${roundLine(cv, q.n)}</p>`;
+      if (expOf(q.r.sci) !== e) s3 += `<p>Rounding up made the front number 10, so the decimal moves one more place: ${num(q.r.sci)}.</p>`;
+    } else {
+      const trailing = !P.includes('.') && /0$/.test(P);
+      s3 = `<p>${num(grp(q.s))} has ${sfWord(q.k)}, so the front number keeps ${plural(q.k, 'digit')}.${trailing ? ` The zeros at the end of ${num(grp(q.s))} are ${T('placeholders', 'placeholder')} (no decimal point), so they are not written in the front number.` : ''}</p>`;
+    }
+    return [
+      `<p>Put the decimal after the first non-zero digit: <span class="vt">${esc(coefAll)}</span>${e === 0 ? ' (already there)' : ''}</p>${hopRow(digits, oldGap, newGap)}`,
+      `<p>Count the places the decimal moved: ${hopTxt}</p>`,
+      `${s3}<p>Answer: <span class="vt">${ans}</span></p>`
+    ];
+  },
+  dec(q) {
+    const e = q.p.exp, P = q.ans, digits = P.replace('.', ''), plainGap = P.includes('.') ? P.indexOf('.') : P.length;
+    const f = digits.search(/[1-9]/), len = q.p.mant.replace('.', '').length;
+    const added = new Set(); for (let g = 0; g < digits.length; g++) if (g < f || g >= f + len) added.add(g);
+    return [
+      `<p>The ${T('exponent', 'exp')} is ${num(String(e))}. ${e > 0 ? 'Positive → the number is 10 or bigger: move the decimal point <b>right</b>.' : 'Negative → the number is smaller than 1: move the decimal point <b>left</b>.'}</p>`,
+      `<p>Move it ${placesWord(Math.abs(e))} ${e > 0 ? 'right' : 'left'}. Fill the empty places with zeros.</p>${hopRow(digits, f + 1, plainGap, added)}
+        <div class="legend"><span style="color:var(--warm)">+0 = zero added to fill a place</span></div>`,
+      `<p>Answer: <span class="vt">${num(grp(P))}${unitSp(q.unit)}</span></p>${e > 0 && /0$/.test(P) ? `<p>The zeros at the end are ${T('placeholders', 'placeholder')}: ${num(grp(P))} still has ${sfWord(q.p.sf)}, the same as ${num(q.s)}.</p>` : ''}`
+    ];
+  },
+  calc(q) {
+    if (q.kind === 'type') {
+      const p = MEAS.parse(q.s);
+      return [
+        `<p>Type the front number: <b>${esc(p.mant)}</b>.</p>`,
+        `<p>Press <kbd class="ee">EE</kbd>. It means "× 10 to the power", and it keeps the whole number together.</p>`,
+        `<p>Type the exponent: <b>${num(String(p.exp))}</b>.${p.exp < 0 ? ' For a negative exponent, press <kbd>(−)</kbd> first.' : ''} Then press <kbd>=</kbd>.</p><p>Keys: ${keysFor(q.s)} <kbd>=</kbd></p>`
+      ];
+    }
+    if (q.kind === 'trap') {
+      const pb = MEAS.parse(q.b);
+      return [
+        `<p>${num(q.b)} is one number. To keep it together, type it with EE: ${keysFor(q.b)}.</p>`,
+        `<p>Keys: ${keysFor(q.a)} <kbd>÷</kbd> ${keysFor(q.b)} <kbd>=</kbd> → <b>${num(fmtCalc(q.target))}</b></p>`,
+        `<p><b>Why not × 10 ^ ${num(String(pb.exp))}?</b> The calculator would do ${num(q.a)} ÷ ${esc(pb.mant)} first and then multiply by 10<sup>${num(String(pb.exp))}</sup>, giving ${num(fmtCalc(q.trapVal))}. That is the wrong answer.</p>`
+      ];
+    }
+    const r = q.r;
+    const keys = r.terms.map((t, i) => (i ? ` <kbd>${t.op === '-' ? '−' : t.op}</kbd> ` : '') + keysFor(t.v)).join('');
+    const rule = q.rule === 'addsub'
+      ? `<p>Adding: round to the least precise measurement.</p><ul>${r.terms.map((t, i) => `<li>${num(t.v)} = ${esc(MEAS.plainStr(MEAS.parse(t.v).value))} → known to ${t.place > 0 ? 'the ' + MEAS.placeName(t.place) : MEAS.placeName(t.place)} place${i === r.least ? ' <b>← least precise</b>' : ''}</li>`).join('')}</ul>`
+      : `<p>Multiplying or dividing: count sig figs.</p><ul>${r.terms.map((t, i) => `<li>${num(t.v)} → ${sfWord(t.sf)}${i === r.least ? ' <b>← fewest</b>' : ''}</li>`).join('')}</ul>`;
+    const cv = cutView(r.exact, r.place);
+    return [
+      `<p>Type each number with EE: ${keys} <kbd>=</kbd> → <b>${num(MEAS.calcStr(r.exact))}</b></p>`,
+      rule,
+      `<p>Round: <span class="vt">${cv.html}</span> → ${roundLine(cv, r.sf)} → ${num(r.best)}</p><p>Answer in scientific notation: <span class="vt">${num(r.sci)} ${q.unit}</span></p>`
+    ];
+  }
+};
+
+/* ---------- start ---------- */
+function startLab() { $('#lab').hidden = false; $('#plain').open = false; store.seen = true; save(); }
+$('#goBtn').addEventListener('click', () => { startLab(); const t = document.querySelector('.tab[aria-selected=true]'); if (t) t.focus(); });
+if (store.seen) startLab();
+setTopic('sci');
+if (DEBUG) window.__nu = { BANK, GEN, check, STEPS, answerText, evalCalc };
+})();
+</script>
+</body></html>
