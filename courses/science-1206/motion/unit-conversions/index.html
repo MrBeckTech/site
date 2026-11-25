@@ -76,6 +76,15 @@ sup{font-size:.62em;line-height:0}
 .ans input{width:250px;height:42px;padding:0 10px;font:400 30px/1 'VT323','Courier New',monospace;color:var(--gold);background:#0e0820;
   border:2px solid var(--rim);border-radius:3px}
 .ans input:disabled{opacity:.7}
+.ans .albl{font-weight:700}
+.sbox{display:inline-flex;align-items:flex-start;gap:6px;padding-top:12px}
+.ans input.num{width:150px}
+.ans input.num.wide{width:210px}
+.ans input.exp{width:62px;height:34px;margin-top:-12px;font-size:24px;text-align:center}
+.ans input.unit{width:92px}
+.x10,.ulbl{font:400 30px/42px 'VT323','Courier New',monospace;color:var(--ink);white-space:nowrap}
+.ulbl{color:var(--gold)}
+@media(max-width:620px){.ans input.num{width:110px}.ans input.num.wide{width:170px}}
 .typehelp{margin:6px 0 0;font-size:.85rem;color:var(--ink2)}
 .choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .choices .btn{font:400 28px/1 'VT323','Courier New',monospace;min-width:110px}
@@ -990,7 +999,7 @@ document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () =>
 document.querySelectorAll('.segbtn').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
 
 function loadQ() {
-  S.q = qNow(); S.tries = 0; S.help = 0; S.solved = false; S.fb = null; S.input = '';
+  S.q = qNow(); S.tries = 0; S.help = 0; S.solved = false; S.fb = null; S.input = { c: '', e: '', u: '' };
   S.chain = []; S.justAdded = false; S.op = null;
   render();
 }
@@ -1024,13 +1033,28 @@ function questionHTML(q) {
   if (q.t === 'combo') return `${src}<p class="qtext">Three steps: 1. convert &nbsp;2. round to 2 SF &nbsp;3. write in scientific notation.</p><div class="big">${given(q)}</div>`;
 
 }
-function answerBox(label, help) {
-  return `<div class="ans"><label for="ans">${label}</label>
-    <input id="ans" autocomplete="off" spellcheck="false" value="${esc(S.input)}" ${S.solved ? 'disabled' : ''}>
-    ${S.solved ? '' : '<button class="btn primary" type="button" id="check">Check ✓</button>'}</div>
-    <p class="typehelp">${help}</p>`;
+// Answer boxes, so nobody has to type "x 10^". kind: 'sci' = front number × 10^(exponent), both needed;
+// 'opt' = the exponent box may stay empty (an ordinary number); 'num' = one number.
+// unit: a unit shown after the boxes, true = a box for the student to type the unit, '' = no unit.
+function answerBox(label, kind, unit, help) {
+  S.box = { kind, unit };
+  const v = S.input, dis = S.solved ? 'disabled' : '';
+  const box = (id, f, cls, aria, ph) => `<input id="${id}" data-f="${f}" class="${cls}" autocomplete="off" spellcheck="false" value="${esc(v[f] || '')}" aria-label="${aria}"${ph ? ` placeholder="${ph}"` : ''} ${dis}>`;
+  let h = `<div class="ans"><span class="albl">${label}</span><span class="sbox">`;
+  h += box('ans', 'c', kind === 'num' ? 'num wide' : 'num', kind === 'num' ? 'Answer' : 'Front number');
+  if (kind !== 'num') h += `<span class="x10">× 10</span>${box('ansE', 'e', 'exp', kind === 'opt' ? 'Exponent, leave empty for an ordinary number' : 'Exponent')}`;
+  if (unit === true) h += box('ansU', 'u', 'unit', 'Unit', 'unit');
+  else if (unit) h += `<span class="ulbl">${esc(unit)}</span>`;
+  h += `</span>${S.solved ? '' : '<button class="btn primary" type="button" id="check">Check ✓</button>'}</div>`;
+  return h + `<p class="typehelp">${help}</p>`;
 }
-const SCI_HELP = 'Type scientific notation like 3.2 x 10^3 (or 3.2e3). For a negative exponent: 8.6 x 10^-4.';
+// The boxes as one string for the checker, e.g. front 3.2, exponent -4, unit m
+function boxedAnswer() {
+  const v = S.input, b = S.box || {}, c = (v.c || '').trim(), e = (v.e || '').trim().replace(/\s+/g, '');
+  if (!c) return '';
+  return c + (e && b.kind !== 'num' ? ` x 10^${e}` : '') + (b.unit === true ? ' ' + (v.u || '').trim() : b.unit ? ' ' + b.unit : '');
+}
+const EXP_HELP = 'Front number in the first box, the exponent in the small raised box. A negative exponent gets a minus sign, like -4.';
 function renderQ() {
   const box = $('#qbox'), q = S.q;
   if (!q) {
@@ -1041,16 +1065,15 @@ function renderQ() {
   let body = '';
   if (q.t === 'units') body = unitsBody(q);
   else if (q.t === 'speed') body = speedBody(q);
-  else if (q.t === 'combo') body = answerBox('Answer:', SCI_HELP + ' Include the unit.');
+  else if (q.t === 'combo') body = answerBox('Answer:', 'sci', true, EXP_HELP + ' Type the unit in the last box.');
   box.innerHTML = questionHTML(q) + body;
   wireQ(box);
 }
 function wireQ(box) {
-  const inp = $('#ans');
-  if (inp) {
-    inp.addEventListener('input', () => { S.input = inp.value; });
+  box.querySelectorAll('.ans input').forEach(inp => {
+    inp.addEventListener('input', () => { S.input[inp.dataset.f] = inp.value; });
     inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doCheck(); } });
-  }
+  });
   const c = $('#check'); if (c) c.addEventListener('click', doCheck);
   box.querySelectorAll('[data-tile]').forEach(b => b.addEventListener('click', () => addTile(b.dataset.tile)));
   const un = $('#undo'); if (un) un.addEventListener('click', () => { S.chain.pop(); S.justAdded = false; renderQ(); const t = $('#undo') || box.querySelector('[data-tile]'); if (t) t.focus(); });
@@ -1078,7 +1101,7 @@ function unitsBody(q) {
     h += `<div class="acts"><button class="btn small" type="button" id="undo" ${S.chain.length ? '' : 'disabled'}>↶ Undo</button><button class="btn small" type="button" id="clear" ${S.chain.length ? '' : 'disabled'}>Clear</button></div>`;
   }
   if (st.done) h += `<div class="calc"><span class="k">CALCULATOR</span><span class="v">${num(MEAS.calcStr(st.val))}</span></div>` +
-    answerBox('Rounded answer:', 'Include the unit. Big or tiny answers can go in scientific notation: 3.81 x 10^4.');
+    answerBox('Rounded answer:', 'opt', true, 'Type the unit in the last box. The small raised box is only for scientific notation (like 3.81 × 10<sup>4</sup>): leave it empty for an ordinary number.');
   return h;
 }
 function addTile(key) {
@@ -1094,7 +1117,7 @@ function speedBody(q) {
   let h = `<p class="qtext" style="margin-top:10px">Which way?</p><div class="choices" role="group" aria-label="Multiply or divide by 3.6">
     ${['×', '÷'].map(o => `<button class="btn ${S.op === o ? 'picked' : ''}" type="button" data-op="${o}" ${S.op || S.solved ? 'disabled' : ''}>${o} 3.6</button>`).join('')}</div>`;
   if (S.op) h += `<div class="calc"><span class="k">CALCULATOR</span><span class="v">${q.v} ${q.op} 3.6 = ${num(MEAS.calcStr(q.r.exact))}</span></div>` +
-    answerBox('Rounded answer:', `Include the unit (${q.to}).`);
+    answerBox('Rounded answer:', 'opt', true, `Type the unit (${q.to}) in the last box. Leave the small raised box empty unless you need scientific notation.`);
   return h;
 }
 function pickOp(op) {
@@ -1134,8 +1157,9 @@ function check(q, raw) {
 }
 function doCheck() {
   const q = S.q; if (!q || S.solved) return;
-  const raw = (S.input || '').trim();
+  const raw = boxedAnswer();
   if (!raw) { S.fb = { kind: 'hint', msg: 'Type your answer first.' }; renderCoach(); return; }
+  if (S.box && S.box.kind === 'sci' && !(S.input.e || '').trim()) { S.fb = { kind: 'hint', msg: "Fill in the exponent box too (the small raised box). Use 0 if the decimal point didn't move." }; renderCoach(); return; }
   finish(check(q, raw));
 }
 function finish(res) {
@@ -1164,7 +1188,7 @@ function showWorking(q) {
 const isProper = p => { const c = Math.abs(parseFloat(p.mant)); return c >= 1 && c < 10; };
 function checkConv(q, raw) {
   const r = q.r, exact = MEAS.plainStr(MEAS.trim(r.exact)), sfIn = MEAS.parse(q.v).sf;
-  const g = MEAS.grade(raw, { answer: r.best, exact, unit: q.to, example: `${r.best} ${q.to}` });
+  const g = MEAS.grade(raw, { answer: r.best, exact, unit: q.to, example: '3.2' });
   if (g.ok) return { ok: true, msg: `${num(grp(q.v))} ${q.from} = ${num(grp(r.best))} ${q.to}. ${q.v} has ${sfWord(sfIn)}, and the conversion factor${q.t === 'speed' ? ' 3.6 is' : 's are'} exact, so the answer keeps ${sfIn}. Check: ${q.t === 'speed'
     ? `${num(grp(r.best))} is ${q.to === 'm/s' ? 'smaller' : 'bigger'} than ${q.v}, and the m/s number is always the smaller one`
     : sizeCheck(q.from, q.to).replace('should get', 'got')} ✓` };
@@ -1185,11 +1209,11 @@ function checkConv(q, raw) {
 }
 function checkCombo(q, raw) {
   const r = q.r, exact = MEAS.plainStr(MEAS.trim(q.c.exact));
-  const g = MEAS.grade(raw, { answer: r.sci, exact, unit: q.to, example: `${r.sci} ${q.to}` });
+  const g = MEAS.grade(raw, { answer: r.sci, exact, unit: q.to, example: '3.2' });
   const p = MEAS.parse(raw);
   if (g.level === 'unit' || g.level === 'nan') return g;
   if (g.ok) {
-    if (!p.sci) return { hint: true, msg: `Right value. Step 3: write it in scientific notation: ${num(r.sci)} ${q.to}.` };
+    if (!p.sci) return { hint: true, msg: "Right value. Step 3: write it in scientific notation, with the exponent in the small raised box." };
     if (!isProper(p)) return { ok: false, msg: `Right value, but ${num(p.mant)} × 10<sup>${num(String(p.exp))}</sup> is NOT proper scientific notation. The coefficient must be at least 1 and less than 10.` };
     return { ok: true, msg: `${num(grp(q.v))} ${q.from} = ${num(grp(MEAS.calcStr(q.c.exact)))} ${q.to} → 2 SF → ${num(r.sci)} ${q.to}.` };
   }

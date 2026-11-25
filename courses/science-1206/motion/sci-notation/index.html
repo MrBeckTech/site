@@ -76,6 +76,15 @@ sup{font-size:.62em;line-height:0}
 .ans input{width:250px;height:42px;padding:0 10px;font:400 30px/1 'VT323','Courier New',monospace;color:var(--gold);background:#0e0820;
   border:2px solid var(--rim);border-radius:3px}
 .ans input:disabled{opacity:.7}
+.ans .albl{font-weight:700}
+.sbox{display:inline-flex;align-items:flex-start;gap:6px;padding-top:12px}
+.ans input.num{width:150px}
+.ans input.num.wide{width:210px}
+.ans input.exp{width:62px;height:34px;margin-top:-12px;font-size:24px;text-align:center}
+.ans input.unit{width:92px}
+.x10,.ulbl{font:400 30px/42px 'VT323','Courier New',monospace;color:var(--ink);white-space:nowrap}
+.ulbl{color:var(--gold)}
+@media(max-width:620px){.ans input.num{width:110px}.ans input.num.wide{width:170px}}
 .typehelp{margin:6px 0 0;font-size:.85rem;color:var(--ink2)}
 .choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .choices .btn{font:400 28px/1 'VT323','Courier New',monospace;min-width:110px}
@@ -968,7 +977,7 @@ document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () =>
 document.querySelectorAll('.segbtn').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
 
 function loadQ() {
-  S.q = qNow(); S.tries = 0; S.help = 0; S.solved = false; S.fb = null; S.input = '';
+  S.q = qNow(); S.tries = 0; S.help = 0; S.solved = false; S.fb = null; S.input = { c: '', e: '', u: '' };
   S.cx = { expr: '', out: '', stage: 1 };
   render();
 }
@@ -1006,13 +1015,28 @@ function questionHTML(q) {
   if (q.kind === 'trap') return `${src}<p class="qtext">Work this out on the calculator. <b>${num(q.b)}</b> is one number.</p><div class="big">${num(q.a)} ÷ <span class="one">${num(q.b)}</span></div>`;
   return `${src}<p class="qtext">${S.cx.stage === 1 ? 'Type it on the calculator with the EE key and press =.' : 'Now give the answer in scientific notation, with the correct unit.'}</p><div class="big" style="font-size:36px">${num(q.show)}</div>`;
 }
-function answerBox(label, help) {
-  return `<div class="ans"><label for="ans">${label}</label>
-    <input id="ans" autocomplete="off" spellcheck="false" value="${esc(S.input)}" ${S.solved ? 'disabled' : ''}>
-    ${S.solved ? '' : '<button class="btn primary" type="button" id="check">Check ✓</button>'}</div>
-    <p class="typehelp">${help}</p>`;
+// Answer boxes, so nobody has to type "x 10^". kind: 'sci' = front number × 10^(exponent), both needed;
+// 'opt' = the exponent box may stay empty (an ordinary number); 'num' = one number.
+// unit: a unit shown after the boxes, true = a box for the student to type the unit, '' = no unit.
+function answerBox(label, kind, unit, help) {
+  S.box = { kind, unit };
+  const v = S.input, dis = S.solved ? 'disabled' : '';
+  const box = (id, f, cls, aria, ph) => `<input id="${id}" data-f="${f}" class="${cls}" autocomplete="off" spellcheck="false" value="${esc(v[f] || '')}" aria-label="${aria}"${ph ? ` placeholder="${ph}"` : ''} ${dis}>`;
+  let h = `<div class="ans"><span class="albl">${label}</span><span class="sbox">`;
+  h += box('ans', 'c', kind === 'num' ? 'num wide' : 'num', kind === 'num' ? 'Answer' : 'Front number');
+  if (kind !== 'num') h += `<span class="x10">× 10</span>${box('ansE', 'e', 'exp', kind === 'opt' ? 'Exponent, leave empty for an ordinary number' : 'Exponent')}`;
+  if (unit === true) h += box('ansU', 'u', 'unit', 'Unit', 'unit');
+  else if (unit) h += `<span class="ulbl">${esc(unit)}</span>`;
+  h += `</span>${S.solved ? '' : '<button class="btn primary" type="button" id="check">Check ✓</button>'}</div>`;
+  return h + `<p class="typehelp">${help}</p>`;
 }
-const SCI_HELP = 'Type scientific notation like 3.2 x 10^3 (or 3.2e3). For a negative exponent: 8.6 x 10^-4.';
+// The boxes as one string for the checker, e.g. front 3.2, exponent -4, unit m
+function boxedAnswer() {
+  const v = S.input, b = S.box || {}, c = (v.c || '').trim(), e = (v.e || '').trim().replace(/\s+/g, '');
+  if (!c) return '';
+  return c + (e && b.kind !== 'num' ? ` x 10^${e}` : '') + (b.unit === true ? ' ' + (v.u || '').trim() : b.unit ? ' ' + b.unit : '');
+}
+const EXP_HELP = 'Front number in the first box, the exponent in the small raised box. A negative exponent gets a minus sign, like -4.';
 function renderQ() {
   const box = $('#qbox'), q = S.q;
   if (!q) {
@@ -1021,18 +1045,17 @@ function renderQ() {
     return;
   }
   let body = '';
-  if (q.t === 'sci') body = answerBox('Answer:', SCI_HELP + (q.unit ? ' Keep the unit.' : ''));
-  else if (q.t === 'dec') body = answerBox('Answer:', 'Type an ordinary number, like 0.0035' + (q.unit ? ' m. Keep the unit.' : '.'));
+  if (q.t === 'sci') body = answerBox('Answer:', 'sci', q.unit, EXP_HELP);
+  else if (q.t === 'dec') body = answerBox('Answer:', 'num', q.unit, 'Type an ordinary number, like 0.0035.');
   else body = calcBody(q);
   box.innerHTML = questionHTML(q) + body;
   wireQ(box);
 }
 function wireQ(box) {
-  const inp = $('#ans');
-  if (inp) {
-    inp.addEventListener('input', () => { S.input = inp.value; });
+  box.querySelectorAll('.ans input').forEach(inp => {
+    inp.addEventListener('input', () => { S.input[inp.dataset.f] = inp.value; });
     inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doCheck(); } });
-  }
+  });
   const c = $('#check'); if (c) c.addEventListener('click', doCheck);
   box.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => pressKey(b.dataset.k)));
 }
@@ -1051,7 +1074,7 @@ function calcBody(q) {
     <div class="keys">${KEYS.map(([k, l, c]) => `<button class="key ${c || ''}" type="button" data-k="${esc(k)}" aria-label="${k === 'E' ? 'EE, times ten to the power' : k === 'n' ? 'negative' : esc(l || k)}">${esc(l || k)}</button>`).join('')}</div></div>
     <div class="cnote"><p><kbd class="ee">EE</kbd> means "× 10 to the power". It keeps the whole number together.</p>
       <p><kbd>(−)</kbd> makes a number negative, like the exponent in 10<sup>−4</sup>.</p><p>You can also use your keyboard: E for EE, ^ for power.</p></div></div>`;
-  if (stage2) h += answerBox('Answer:', SCI_HELP + ' Include the unit.');
+  if (stage2) h += answerBox('Answer:', 'sci', true, EXP_HELP + ' Type the unit in the last box.');
   return h;
 }
 function evalCalc(src) {
@@ -1168,8 +1191,9 @@ function check(q, raw) {
 }
 function doCheck() {
   const q = S.q; if (!q || S.solved) return;
-  const raw = (S.input || '').trim();
+  const raw = boxedAnswer();
   if (!raw) { S.fb = { kind: 'hint', msg: 'Type your answer first.' }; renderCoach(); return; }
+  if (S.box && S.box.kind === 'sci' && !(S.input.e || '').trim()) { S.fb = { kind: 'hint', msg: "Fill in the exponent box too (the small raised box). Use 0 if the decimal point didn't move." }; renderCoach(); return; }
   finish(check(q, raw));
 }
 function finish(res) {
@@ -1203,12 +1227,12 @@ const isProper = p => { const c = Math.abs(parseFloat(p.mant)); return c >= 1 &&
 const sameDigits = (a, b) => MEAS.trim(a).n === MEAS.trim(b).n || MEAS.trim(a).n === -MEAS.trim(b).n;
 function checkSci(q, raw) {
   const p = MEAS.parse(raw);
-  if (!p.ok) return { level: 'nan', msg: 'Type a number in scientific notation, like 3.2 x 10^3.' };
+  if (!p.ok) return { level: 'nan', msg: 'Use numbers only: a front number like 3.2, and an exponent like 3 or -4.' };
   const u = unitHint(p, q.unit); if (u) return u;
   const want = MEAS.parse(q.r.sci), ans = num(q.r.sci) + unitSp(q.unit);
   if (!p.sci) {
     if (MEAS.eq(p.value, want.value) && want.exp === 0 && p.sf === want.sf) return { hint: true, msg: `Right number. In scientific notation, show the power of 10 too: ${ans}.` };
-    return { hint: true, msg: 'Write it in scientific notation: a number from 1 to 10, then × 10 to a power. Type it like 3.2 x 10^3.' };
+    return { hint: true, msg: "Fill in the exponent box too (the small raised box). Use 0 if the decimal point didn't move." };
   }
   if (!isProper(p)) return { ok: false, msg: `${num(p.mant)} × 10<sup>${num(String(p.exp))}</sup> is NOT proper scientific notation. The coefficient must be at least 1 and less than 10.` };
   if (MEAS.eq(p.value, want.value)) {
@@ -1239,7 +1263,7 @@ function checkDec(q, raw) {
 }
 function checkWs(q, raw) {
   const r = q.r, exact = MEAS.plainStr(MEAS.trim(r.exact));
-  const g = MEAS.grade(raw, { answer: r.sci, exact, rule: q.rule, unit: q.unit, example: `${r.sci} ${q.unit}` });
+  const g = MEAS.grade(raw, { answer: r.sci, exact, rule: q.rule, unit: q.unit, example: '3.2' });
   const p = MEAS.parse(raw);
   if (g.level === 'unit' || g.level === 'nan') return g;
   if (g.ok) {
