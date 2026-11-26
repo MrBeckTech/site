@@ -1,0 +1,1859 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engine Bay</title>
+<meta name="tw-titlecard" content="PE3201 · SMALL ENGINES|ENGINE BAY|OPEN THE HOOD.">
+<meta name="tw-canvas" content="off">
+<style>
+/* Engine Bay styles. Every colour reads the Twilight token first, with the style guide's hex as fallback. */
+:root {
+  --eb-night: var(--bg, #1b1030); --eb-panel: var(--tw-panel, #160d2b); --eb-rim: var(--tw-rim, #8a6fd0);
+  --eb-ink: var(--ink, #f6efff); --eb-ink2: var(--ink2, #c3b2e6); --eb-gold: var(--tw-gold, #ffd23f);
+  --eb-mint: var(--tw-mint, #5df2a4); --eb-sky: var(--tw-sky, #6ad3ff); --eb-coral: var(--tw-coral, #ff5d73);
+  --eb-warm: var(--warm, #ff9a4d); --eb-amber: #ffb347; --eb-lav: #b388ff; --eb-btn: #4a2f86;
+  --eb-window: var(--tw-win, linear-gradient(180deg, #3b2468, #2a1850 55%, #1f1240));
+  --sys-ignition: var(--eb-gold); --sys-fuel: var(--eb-sky); --sys-valve: var(--eb-warm); --sys-compression: var(--eb-coral);
+  --sys-lubrication: var(--eb-mint); --sys-cooling: var(--eb-lav); --sys-mechanical: var(--eb-ink2);
+}
+* { box-sizing: border-box; }
+body { font-size: 17px; line-height: 1.5; }
+.px { font-family: 'Press Start 2P', monospace; letter-spacing: .5px; }
+.vt { font-family: 'VT323', monospace; }
+
+/* top bar */
+.eb-top { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 12px 16px; background: var(--eb-panel); border-bottom: 4px solid #000; position: sticky; top: 0; z-index: 10; }
+.eb-top h1 { margin: 0; font-size: 15px; color: var(--eb-gold); }
+.eb-top .kicker { font-size: 9px; color: var(--eb-amber); display: block; margin-bottom: 4px; }
+.eb-who { color: var(--eb-ink2); font-size: 15px; }
+.eb-spacer { flex: 1; }
+.eb-save { font-size: 14px; color: var(--eb-ink2); }
+.eb-save.dirty { color: var(--eb-coral); font-weight: 700; }
+
+/* tabs */
+.eb-tabs { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 16px 0; max-width: 1180px; margin: 0 auto; }
+.eb-tab { font-family: 'VT323', monospace; font-size: 22px; background: none; border: none; color: var(--eb-ink2); padding: 4px 10px; cursor: pointer; }
+.eb-tab:hover { color: var(--eb-ink); }
+.eb-tab.on { color: var(--eb-gold); }
+.eb-tab.on::before { content: '▶ '; }
+
+main.eb-main { max-width: 1180px; margin: 0 auto; padding: 16px 16px 80px; }
+
+/* window */
+.win { background: var(--eb-window); border: 4px solid #000; box-shadow: inset 0 0 0 3px var(--eb-rim), 5px 5px 0 #000; border-radius: 6px; padding: 20px 22px; margin-bottom: 18px; }
+.win h2, .win h3 { margin-top: 0; }
+.label { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--eb-mint); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 8px; }
+.screen { background: var(--eb-panel); border: 3px solid #000; border-radius: 4px; padding: 14px 16px; }
+.callout { background: var(--eb-panel); border-left: 6px solid var(--eb-sky); border-radius: 4px; padding: 12px 16px; margin: 10px 0; }
+.callout.good { border-left-color: var(--eb-mint); } .callout.bad { border-left-color: var(--eb-coral); } .callout.warm { border-left-color: var(--eb-warm); }
+.muted { color: var(--eb-ink2); }
+
+/* buttons */
+.btn { font: inherit; font-size: 16px; cursor: pointer; color: var(--eb-ink); background: var(--eb-btn); border: 3px solid #000; border-radius: 6px; padding: 9px 16px; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .18), 3px 3px 0 #000; }
+.btn:hover:not(:disabled) { filter: brightness(1.15); }
+.btn:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .18), 2px 2px 0 #000; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.primary { background: var(--eb-gold); color: #1b1030; font-weight: 700; }
+.btn.on { background: var(--eb-mint); color: #0d2a1c; }
+.btn.wrong { background: #4a1a2a; color: var(--eb-coral); }
+.btn.block { display: block; width: 100%; text-align: left; margin-bottom: 8px; }
+input, textarea, select { font: inherit; color: var(--eb-ink); background: var(--eb-panel); border: 3px solid #000; border-radius: 4px; padding: 9px 12px; width: 100%; }
+textarea { min-height: 90px; resize: vertical; }
+label.f { display: block; color: var(--eb-ink2); font-size: 15px; margin: 12px 0 4px; }
+
+/* layout */
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.two { display: grid; gap: 18px; grid-template-columns: minmax(300px, 400px) 1fr; align-items: start; }
+.two.wide { grid-template-columns: 1fr minmax(280px, 340px); }
+@media (max-width: 860px) { .two, .two.wide { grid-template-columns: 1fr; } }
+.hidden { display: none !important; }
+
+/* readouts */
+.readout { display: inline-flex; flex-direction: column; background: var(--eb-panel); border: 3px solid #000; border-radius: 4px; padding: 6px 12px; min-width: 110px; }
+.readout .k { font-size: 13px; color: var(--eb-ink2); }
+.readout .v { font-family: 'VT323', monospace; font-size: 30px; color: var(--eb-mint); line-height: 1; }
+.score { font-family: 'VT323', monospace; font-size: 64px; color: var(--eb-gold); line-height: 1; }
+.badge { font-family: 'Press Start 2P', monospace; font-size: 9px; padding: 5px 8px; border: 2px solid #000; border-radius: 4px; background: var(--eb-panel); color: var(--eb-ink2); }
+.badge.good { color: var(--eb-mint); } .badge.new { color: var(--eb-coral); }
+
+/* lists */
+.item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--eb-panel); border: 3px solid #000; border-radius: 4px; margin-bottom: 10px; }
+.item .t { flex: 1; }
+.dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #000; flex: 0 0 12px; display: inline-block; }
+.sysname { font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--eb-ink2); margin: 16px 0 8px; }
+.log .entry { background: var(--eb-panel); border-left: 6px solid var(--eb-rim); border-radius: 4px; padding: 10px 14px; margin-bottom: 10px; }
+.log .entry .name { font-size: 14px; color: var(--eb-ink2); font-weight: 700; }
+.log .entry .explain { color: var(--eb-ink2); font-size: 15px; border-top: 2px dashed #3a2a63; padding-top: 6px; margin-top: 6px; }
+
+/* learn */
+.learn-body p { margin: 0 0 12px; }
+.learn-body ul { margin: 0 0 12px; padding-left: 22px; } .learn-body li { margin-bottom: 6px; }
+.learn-body b { color: var(--eb-sky); }
+.pager { display: flex; gap: 6px; margin-bottom: 14px; }
+.pager span { width: 22px; height: 8px; background: #3a2a63; border: 2px solid #000; }
+.pager span.on { background: var(--eb-gold); }
+
+/* engine diagram */
+.engine-svg { width: 100%; height: auto; max-height: calc(100vh - 370px); min-height: 300px; display: block; background: var(--eb-panel); border: 3px solid #000; border-radius: 4px; }
+.engine-svg .part { cursor: pointer; }
+.engine-svg .part:hover { filter: drop-shadow(0 0 2px var(--eb-gold)) drop-shadow(0 0 2px var(--eb-gold)); }
+.engine-svg .part.sel { filter: drop-shadow(0 0 3px var(--eb-gold)) drop-shadow(0 0 3px var(--eb-gold)) drop-shadow(0 0 2px var(--eb-gold)); }
+.engine-svg .part.faded { pointer-events: none; filter: brightness(.6) saturate(.5); }
+.engine-svg .part.flash { filter: drop-shadow(0 0 3px var(--eb-coral)) drop-shadow(0 0 3px var(--eb-coral)) drop-shadow(0 0 2px var(--eb-coral)); }
+.eb-views { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.eb-views .btn { padding: 6px 10px; font-size: 14px; }
+
+/* measure */
+.gaugebox { background: var(--eb-panel); border: 3px solid #000; border-radius: 4px; padding: 10px; }
+.blades { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.blades .btn { font-family: 'VT323', monospace; font-size: 22px; padding: 4px 12px; }
+
+/* banner + dialog */
+.eb-banner { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--eb-gold); color: #1b1030; border: 3px solid #000; box-shadow: 4px 4px 0 #000; padding: 12px 18px; border-radius: 6px; font-weight: 700; display: none; z-index: 40; }
+.eb-banner.show { display: block; }
+dialog { color: var(--eb-ink); background: var(--eb-window); border: 4px solid #000; box-shadow: inset 0 0 0 3px var(--eb-rim), 5px 5px 0 #000; border-radius: 6px; max-width: 560px; width: calc(100% - 32px); padding: 20px; }
+dialog::backdrop { background: rgba(10, 4, 24, .75); }
+table.spec { width: 100%; border-collapse: collapse; font-size: 15px; }
+table.spec td { padding: 7px 4px; border-bottom: 2px solid #000; vertical-align: top; }
+table.spec td:first-child { color: var(--eb-ink2); width: 42%; }
+
+body { margin: 0; background-color: var(--eb-night); color: var(--eb-ink); font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; }
+
+/* end card: copied from chemistry/part2-review */
+.endcard{position:fixed;inset:0;z-index:9998;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;cursor:pointer;overflow:hidden}
+.endcard[hidden]{display:none}
+.endcard .stripes{position:absolute;inset:-20% -10%;background:repeating-linear-gradient(-28deg,transparent 0 46px,rgba(255,210,63,.9) 46px 58px,transparent 58px 120px,rgba(255,93,115,.85) 120px 128px,transparent 128px 190px,rgba(106,211,255,.8) 190px 196px);
+  opacity:.22;animation:slide 6s linear infinite}
+@keyframes slide{to{transform:translateX(190px)}}
+.endcard .k{font:400 clamp(10px,1.4vw,14px)/1.6 'Press Start 2P','Courier New',monospace;color:var(--eb-gold);position:relative;letter-spacing:.06em}
+.endcard .big{font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.92;position:relative;transform-origin:left;transform:scaleX(.72);white-space:nowrap}
+.endcard .l1{font-size:clamp(40px,8vw,96px)}
+.endcard .l2{font-size:clamp(52px,11vw,132px);color:var(--eb-gold)}
+.endcard .sub{position:relative;font:italic 700 clamp(14px,2vw,22px)/1.3 'Atkinson Hyperlegible',sans-serif;color:var(--eb-sky);margin-top:14px}
+.endcard .close{position:absolute;right:18px;bottom:14px;font-size:13px;color:#888}
+.endcard .in{animation:pop .6s cubic-bezier(.2,1.4,.4,1) both}
+.endcard .in.d2{animation-delay:.25s} .endcard .in.d3{animation-delay:.5s} .endcard .in.d4{animation-delay:.8s}
+@keyframes pop{from{opacity:0;transform:translateX(-40px) scaleX(.72)}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.endcard .stripes,.endcard .in{animation:none}}
+</style>
+<!--twilight:start-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&family=Shippori+Mincho+B1:wght@800&display=swap" rel="stylesheet">
+<style>
+/* Twilight Menu theme: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   It sits AFTER each sim's own <style>, so it overrides the old light look without touching sim logic. */
+:root{
+  --bg:#1b1030; --card:#2a1850; --ink:#f6efff; --ink2:#c3b2e6; --line:#4a3478;
+  --brand:#ffd23f; --brand2:#3a2463; --cool:#6ad3ff; --warm:#ff9a4d; --good:#5df2a4; --bad:#ff5d73;
+  --focus:#5df2a4; --radius:6px;
+  --tw-win:linear-gradient(180deg,#3b2468 0%,#2a1850 55%,#1f1240 100%);
+  --tw-panel:#160d2b; --tw-rim:#8a6fd0; --tw-gold:#ffd23f; --tw-mint:#5df2a4; --tw-sky:#6ad3ff; --tw-coral:#ff5d73;
+  --tw-pix:'Press Start 2P','Courier New',monospace;
+  --tw-term:'VT323','Courier New',monospace;
+  --tw-body:'Atkinson Hyperlegible',system-ui,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+html,body{background-color:var(--bg);color:var(--ink);font-family:var(--tw-body);
+  background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:6px 6px}
+
+/* header */
+.hd h1{font-family:var(--tw-pix);font-weight:400;font-size:clamp(14px,2.2vw,20px);line-height:1.5;color:var(--tw-gold);
+  text-shadow:3px 3px 0 #000}
+.pill{font-family:var(--tw-pix);font-size:9px;font-weight:400;letter-spacing:0;background:var(--tw-mint);color:#1b1030;
+  border:3px solid #000;border-radius:0;padding:5px 8px}
+.lead{color:var(--ink2)}
+
+/* windows */
+.card{background:var(--tw-win);border:4px solid #000;border-radius:var(--radius);
+  box-shadow:inset 0 0 0 3px var(--tw-rim),5px 5px 0 #000;padding:14px}
+.stagecard{padding:10px}
+.stage canvas,.stage svg{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.caption{color:var(--ink2)} .caption b{color:var(--ink)}
+
+/* headings inside windows */
+.ctl-head h2,.learn h2,.sub{font-family:var(--tw-pix);font-weight:400;font-size:10px;line-height:1.6;letter-spacing:0;color:var(--tw-mint)}
+.learn h2{color:var(--tw-sky)}
+
+/* tabs and buttons: chunky menu buttons */
+.tab,.btn,.segbtn{background:#3a2463;color:var(--ink);border:3px solid #000;border-radius:4px;
+  box-shadow:inset 0 0 0 2px #5b3f94;font-family:var(--tw-body);font-weight:700}
+.tab:hover,.btn:hover,.segbtn:hover{border-color:#000;box-shadow:inset 0 0 0 2px var(--tw-gold)}
+.tab[aria-selected=true],.btn.primary{background:var(--tw-gold);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #c99a00}
+.tab[aria-selected=true]::before{content:'▶ ';font-size:.75em}
+.segbtn[aria-pressed=true]{background:var(--tw-mint);color:#1b1030;border-color:#000;box-shadow:inset 0 -3px 0 #2fae6f}
+.btn:active,.tab:active,.segbtn:active{transform:translate(1px,1px)}
+
+/* controls */
+.ctl-row{flex-wrap:wrap}
+.ctl-row output{font-family:var(--tw-term);font-size:1.35rem;font-weight:400;color:var(--tw-gold);line-height:1;white-space:nowrap;margin-left:auto}
+.hint{color:var(--ink2)}
+input[type=range],.chk input{accent-color:var(--tw-gold)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* readouts: terminal-style panel */
+.ro{background:var(--tw-panel);border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #3a2463}
+.ro .k{color:var(--ink2)} .ro .v{font-family:var(--tw-term);font-size:1.25rem;color:var(--tw-mint);line-height:1.1}
+
+/* callouts: dialogue-box style */
+.callout{background:var(--tw-panel);border:3px solid #000;border-left:6px solid var(--tw-sky);border-radius:4px;color:var(--ink)}
+.callout.warm{background:#24130f;border-left-color:var(--warm)}
+.callout.good{background:#0f2219;border-left-color:var(--tw-mint)}
+.callout.bad{background:#2a0f18;border-left-color:var(--tw-coral)}
+
+/* learn / quiz */
+.learn dd,.learn .ans{color:var(--ink2)}
+.learn details{background:var(--tw-panel);border:3px solid #000;border-radius:4px}
+.learn summary::before{background:var(--tw-gold);color:#1b1030;border-radius:0}
+.learn details[open] summary::before{background:var(--tw-mint);color:#1b1030}
+.foot{color:var(--ink2)}
+a{color:var(--tw-sky)}
+
+/* World Map button */
+.tw-back-wrap{max-width:1120px;margin:0 auto;padding:10px 12px 0}
+.tw-back{display:inline-block;font-family:var(--tw-pix);font-size:10px;line-height:1;color:var(--tw-gold);background:#3a2463;
+  text-decoration:none;padding:8px 10px;border:3px solid #000;border-radius:4px;box-shadow:inset 0 0 0 2px #5b3f94}
+.tw-back:hover{box-shadow:inset 0 0 0 2px var(--tw-gold)}
+@media print{.tw-back-wrap{display:none}}
+
+/* anime title card */
+.tw-card{position:fixed;inset:0;z-index:9999;background:#000;color:#fff;display:flex;flex-direction:column;justify-content:center;
+  padding:0 8vw;font-family:'Shippori Mincho B1','Times New Roman',serif;font-weight:800;line-height:.95;cursor:pointer;
+  transition:opacity .45s}
+.tw-card.out{opacity:0;pointer-events:none}
+.tw-card div{transform-origin:left;white-space:nowrap}
+.tw-card .l1{font-size:clamp(18px,3.4vw,34px);transform:scaleX(.82)}
+.tw-card .l2{font-size:clamp(44px,9vw,104px);transform:scaleX(.7);letter-spacing:-.02em;margin:.08em 0}
+.tw-card .l3{font-size:clamp(20px,4vw,44px);transform:scaleX(.8)}
+.tw-card .skip{position:absolute;right:16px;bottom:12px;font:12px var(--tw-body);font-weight:400;color:#777;transform:none}
+@media(prefers-reduced-motion:reduce){.tw-card{display:none}}
+</style>
+<script>
+/* Twilight Menu theme runtime: shared by every sim. Edit here, then run tools/apply-theme.mjs.
+   1) Canvas colour remap: the sims were drawn for a light background. Rather than hand-editing ~400
+      colour literals across 18 sims, this rewrites colours as they are assigned to the canvas:
+        light, greyish backgrounds -> dark twilight panels (same hue)
+        dark, greyish ink/text     -> light ink
+        dark saturated accents     -> lightened so they read on dark
+        white halos behind labels  -> dark halos
+      Mid/bright science colours (warm reds, cold blues, etc.) pass through unchanged.
+      Shape-aware: pale colours filling round shapes (clouds, snow, droplets) stay pale; pale boxes go dark.
+      Per-sim control: <meta name="tw-white" content="panel"> darkens everything pale regardless of shape;
+      content="keep" never touches pure white. <meta name="tw-map" content="old=new; old=new"> forces exact colours.
+      <meta name="tw-canvas" content="off"> turns the remap off: for new sims drawn in theme colours.
+   2) Title card: reads <meta name="tw-titlecard" content="LINE 1|LINE 2|LINE 3">. Shown once per tab session.
+   NEW sims should use the theme colours directly; the remap is there to convert the existing ones. */
+(function(){
+  const meta=n=>{const m=document.querySelector(`meta[name="${n}"]`);return m?m.content:null;};
+  // tw-white: "auto" (default) | "panel" (dark-mode everything) | "keep" (never touch white)
+  const whiteMode=meta('tw-white')||'auto';
+  const cache=new Map();
+  // Per-sim exact overrides: <meta name="tw-map" content="rgba(255,255,255,.92)=#241845; #e3e9f1=#3a2c5c">
+  const norm=c=>String(c).toLowerCase().replace(/\s+/g,'');
+  const overrides=new Map((meta('tw-map')||'').split(';').map(x=>x.split('=').map(y=>y.trim())).filter(x=>x.length===2&&x[0]).map(([a,b])=>[norm(a),b]));
+  function parse(c){
+    if(typeof c!=='string')return null; c=c.trim().toLowerCase();
+    let m;
+    if(c[0]==='#'){let h=c.slice(1);if(h.length===3||h.length===4)h=[...h].map(x=>x+x).join('');
+      if(h.length!==6&&h.length!==8)return null;
+      return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16),h.length===8?parseInt(h.slice(6,8),16)/255:1];}
+    if((m=c.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/)))
+      return [+m[1],+m[2],+m[3],m[4]==null?1:+m[4]];
+    if(c==='white')return [255,255,255,1];
+    if(c==='black')return [0,0,0,1];
+    return null;
+  }
+  function toHsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2;let h=0,s=0;
+    if(mx!==mn){const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);
+      h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h/=6;}
+    return [h,s,l];}
+  function hsl(h,s,l,a){const f=n=>{const k=(n+h*12)%12,q=s*Math.min(l,1-l);return Math.round(255*(l-q*Math.max(-1,Math.min(k-3,9-k,1))));};
+    return `rgba(${f(0)},${f(8)},${f(4)},${a})`;}
+  const isWhite=p=>p&&p[0]>=250&&p[1]>=250&&p[2]>=250;
+  const chromaOf=p=>(Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))/255;
+  // "pale" = white or a washed-out tint: these are the colours that are either backgrounds or clouds/snow
+  function isPale(c){const p=parse(c);if(!p)return false;if(isWhite(p))return true;const l=toHsl(p[0],p[1],p[2])[2];return l>=.72&&chromaOf(p)<.4;}
+  function remap(c,kind){
+    if(overrides.has(norm(c)))return overrides.get(norm(c));
+    const key=kind+c; if(cache.has(key))return cache.get(key);
+    const p=parse(c); let out=c;
+    if(p){const [r,g,b,a]=p,[h,s,l]=toHsl(r,g,b);
+      const chroma=chromaOf(p);
+      const TH=.73;                                        // theme hue (twilight purple)
+      if(isWhite(p)){
+        if(whiteMode==='keep') out=c;
+        else if(a<1) out=`rgba(22,13,43,${a})`;           // label halos (strokes) / veils over backgrounds
+        else out=kind==='stroke'?c:'#241845';               // white panels -> dark; white outlines stay
+      }
+      else if(l>=.72&&chroma<.4) out=chroma<.05                                         // pale backgrounds, grid lines
+        ? hsl(TH,.3,.09+(1-l)*.95,a) : hsl(h,Math.min(s,.32),.1+(1-l)*.95,a);
+      else if(l<.5&&chroma<.3) out=chroma<.12                                           // ink, labels, grey strokes
+        ? hsl(TH,.3,Math.min(.93,1.02-l*.8),a) : hsl(h,.35,Math.min(.9,1-l*.7),a);
+      else if(l<.47) out=hsl(h,s,Math.min(.78,Math.max(.66,l+.25)),a);                 // dark accents -> lighter
+    }
+    cache.set(key,out); return out;
+  }
+  const C2=meta('tw-canvas')!=='off'&&window.CanvasRenderingContext2D&&CanvasRenderingContext2D.prototype;
+  if(C2){
+    const ORIG='__twFill', STACK='__twStack';
+    const fd=Object.getOwnPropertyDescriptor(C2,'fillStyle');
+    Object.defineProperty(C2,'fillStyle',{configurable:true,enumerable:fd.enumerable,get:fd.get,
+      set(v){this[ORIG]=v;fd.set.call(this,typeof v==='string'?remap(v,'fill'):v);}});
+    ['strokeStyle','shadowColor'].forEach(k=>{
+      const d=Object.getOwnPropertyDescriptor(C2,k); if(!d||!d.set)return;
+      Object.defineProperty(C2,k,{configurable:true,enumerable:d.enumerable,get:d.get,set(v){d.set.call(this,typeof v==='string'?remap(v,'stroke'):v);}});
+    });
+    // keep the remembered original fill colour in step with save()/restore()
+    const sv=C2.save,rs=C2.restore;
+    C2.save=function(){(this[STACK]||(this[STACK]=[])).push(this[ORIG]);return sv.call(this);};
+    C2.restore=function(){if(this[STACK]&&this[STACK].length)this[ORIG]=this[STACK].pop();return rs.call(this);};
+    // Shape awareness: round things (paths made only of arc/ellipse: clouds, snow, droplets, particles) keep their
+    // pale colour; boxy things (rects, lines, rounded rects: panels, cards, backgrounds) go dark.
+    const bp=C2.beginPath; C2.beginPath=function(){this.__twArc=false;this.__twBox=false;return bp.call(this);};
+    ['arc','ellipse'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twArc=true;return f.apply(this,a);};});
+    ['lineTo','rect','roundRect','arcTo','bezierCurveTo','quadraticCurveTo'].forEach(k=>{const f=C2[k];if(f)C2[k]=function(...a){this.__twBox=true;return f.apply(this,a);};});
+    const fill=C2.fill;
+    C2.fill=function(...a){
+      const o=this[ORIG];
+      if(whiteMode!=='panel'&&!(a[0]&&typeof a[0]==='object')&&this.__twArc&&!this.__twBox&&typeof o==='string'&&isPale(o)&&!overrides.has(norm(o))){
+        const cur=fd.get.call(this); fd.set.call(this,o); const r=fill.apply(this,a); fd.set.call(this,cur); return r;}
+      return fill.apply(this,a);
+    };
+    const fr=C2.fillRect;  // tiny white squares are snow/stars, not panels
+    C2.fillRect=function(x,y,w,h){const o=this[ORIG];
+      if(whiteMode!=='panel'&&Math.abs(w*h)<=36&&typeof o==='string'&&isPale(o)){const cur=fd.get.call(this);fd.set.call(this,o);const r=fr.call(this,x,y,w,h);fd.set.call(this,cur);return r;}
+      return fr.call(this,x,y,w,h);};
+    const G=window.CanvasGradient&&CanvasGradient.prototype;
+    if(G){const add=G.addColorStop;G.addColorStop=function(o,c){return add.call(this,o,remap(c,'fill'));};}
+  }
+  window.twilightRemap=remap;
+
+  /* World Map button: back to the site's landing page, above the sim */
+  const addBack=()=>{if(document.querySelector('.tw-back'))return;
+    const w=document.createElement('div');w.className='tw-back-wrap';
+    w.innerHTML='<a class="tw-back" href="https://mrbecktech.github.io/site/">&#9664; WORLD MAP</a>';
+    const app=document.getElementById('app');app?app.before(w):document.body.prepend(w);};
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',addBack):addBack();
+
+  /* title card */
+  const tc=meta('tw-titlecard');
+  if(tc){let seen=false;try{seen=sessionStorage.getItem('tw-card:'+location.pathname+tc)==='1';}catch(e){}
+    if(!seen&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const show=()=>{const el=document.createElement('div');el.className='tw-card';el.setAttribute('role','presentation');
+        const [a,b,c]=tc.split('|');el.innerHTML=`<div class="l1"></div><div class="l2"></div><div class="l3"></div><div class="skip">click to skip</div>`;
+        el.querySelector('.l1').textContent=a||'';el.querySelector('.l2').textContent=b||'';el.querySelector('.l3').textContent=c||'';
+        document.body.appendChild(el);
+        const close=()=>{el.classList.add('out');setTimeout(()=>el.remove(),500);};
+        el.addEventListener('click',close);setTimeout(close,2200);
+        try{sessionStorage.setItem('tw-card:'+location.pathname+tc,'1');}catch(e){}};
+      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',show):show();}}
+})();
+</script>
+<!--twilight:end-->
+</head>
+<body>
+<header class="eb-top">
+  <h1 class="px"><span class="kicker">PE3201 · SMALL ENGINES</span>ENGINE BAY</h1>
+  <div class="eb-who" id="who"></div>
+  <div class="eb-spacer"></div>
+  <div class="eb-save vt" id="savestate" style="font-size:20px"></div>
+  <button id="saveBtn" class="btn primary hidden">SAVE</button>
+</header>
+<nav class="eb-tabs" id="tabs"></nav>
+<main class="eb-main" id="app"></main>
+<div class="eb-banner" id="banner"></div>
+<dialog id="specDialog"><span class="label">Spec card</span><h3 id="specTitle" style="margin-top:0">GX-style 212 cc OHV</h3><table class="spec" id="specTable"></table>
+  <div class="row" style="margin-top:16px;justify-content:flex-end"><button class="btn" onclick="specDialog.close()">Close</button></div></dialog>
+<input type="file" id="fileInput" accept=".peng,.txt" class="hidden">
+<div id="endcard" class="endcard" role="dialog" aria-modal="true" aria-label="Certification complete" hidden tabindex="-1">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="k in">ENGINE BAY · CERTIFICATION COMPLETE</div>
+  <div class="big l1 in d2">SEE YOU</div>
+  <div class="big l2 in d3">NEXT CLASS...</div>
+  <div class="sub in d4">Show your teacher the My results screen, then save your file.</div>
+  <div class="close">click or press Esc to close</div>
+</div>
+<script>
+// pengsave.js — shared save-file format for Engine Bay (and later the Cabin game).
+// Format:  PENG1.<base64 of deflated JSON>.<checksum>
+// The checksum stops casual editing (a student opening the file in a text editor).
+// It is NOT real security: anything that runs in the browser can be reverse-engineered.
+(function (global) {
+  const MAGIC = 'PENG1';
+  const SALT = 'qerhs-pe3201-neon-decay'; // change this each year to invalidate old files
+
+  // cyrb53: small, fast, non-cryptographic string hash
+  function cyrb53(str, seed = 0) {
+    let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+    for (let i = 0; i < str.length; i++) {
+      const ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+  }
+
+  function bytesToB64(bytes) {
+    let s = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(s);
+  }
+  function b64ToBytes(b64) {
+    const s = atob(b64), out = new Uint8Array(s.length);
+    for (let i = 0; i < s.length; i++) out[i] = s.charCodeAt(i);
+    return out;
+  }
+  async function pipe(bytes, stream) {
+    const res = new Response(new Blob([bytes]).stream().pipeThrough(stream));
+    return new Uint8Array(await res.arrayBuffer());
+  }
+
+  async function encode(obj) {
+    const json = JSON.stringify(obj);
+    const packed = await pipe(new TextEncoder().encode(json), new CompressionStream('deflate'));
+    const body = bytesToB64(packed);
+    return `${MAGIC}.${body}.${cyrb53(SALT + body)}`;
+  }
+
+  // Returns { data, valid } — valid=false means the file was edited or damaged.
+  async function decode(text) {
+    const parts = text.trim().split('.');
+    if (parts.length !== 3 || parts[0] !== MAGIC) throw new Error('Not an Engine Bay save file');
+    const [, body, sum] = parts;
+    const valid = cyrb53(SALT + body) === sum;
+    let data;
+    try {
+      data = JSON.parse(new TextDecoder().decode(await pipe(b64ToBytes(body), new DecompressionStream('deflate'))));
+    } catch (e) { throw new Error('The file is damaged and can\'t be read'); }
+    return { data, valid };
+  }
+
+  // Save: on ChromeOS Chrome this opens a real "Save as" dialog (students can pick their Drive folder).
+  // Fallback: a normal download.
+  async function saveToFile(obj, suggestedName) {
+    const text = await encode(obj);
+    if (global.showSaveFilePicker) {
+      try {
+        const handle = await global.showSaveFilePicker({
+          suggestedName,
+          types: [{ description: 'Engine Bay save', accept: { 'text/plain': ['.peng'] } }],
+        });
+        const w = await handle.createWritable();
+        await w.write(text); await w.close();
+        return 'saved';
+      } catch (e) {
+        if (e.name === 'AbortError') return 'cancelled';
+        // fall through to download on any other error (e.g. blocked by policy)
+      }
+    }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain' }));
+    a.download = suggestedName;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    return 'downloaded';
+  }
+
+  global.PengSave = { encode, decode, saveToFile };
+})(window);
+
+</script>
+<script>
+// cases-gx.js — diagnosis cases for the GX-style 212 cc OHV horizontal-shaft engine
+// (Pro-Point 212 cc; Predator and Honda GX200 are the same type. The lab Powerfist is 79 cc, with different specs).
+// TEACHER: every number here is editable. All are from the Pro-Point 212 manual except the coil air gap (Honda GX200 value;
+// the manual doesn't give one) and compression (measured on the lab engines).
+window.ENGINE_GX = {
+  id: 'gx212',
+  name: 'GX-style 212 cc OHV (horizontal shaft)',
+
+  SPEC: {
+    plugGap: '0.70–0.80 mm (0.028–0.031 in)',
+    valveIntake: '0.10–0.15 mm (cold)',
+    valveExhaust: '0.15–0.20 mm (cold)',
+    oil: 'SAE 10W-30, 0.58 L (about 0.6 L), filled to the edge of the filler neck',
+    // Based on readings from our lab engines (new ones included): about 40–60 psi, some a little higher.
+    airGap: '0.2–0.6 mm between coil and flywheel magnet',
+    torque: 'Flywheel nut 63 ft-lb · Cylinder head bolts 26 ft-lb · Crankcase cover bolts 21 ft-lb · Spark plug 13–16 ft-lb, aim for 15 · Connecting rod bolts 10 ft-lb · Rocker arm lock nuts 7 ft-lb',
+    compression: 'about 40–65 psi on a gauge when pulled by hand (the automatic compression release keeps cranking readings low)',
+  },
+
+  // Every test a student can run. "normal" is the result on a healthy engine.
+  // Each result has an explanation so the student learns what the reading MEANS.
+  TESTS: [
+    { id: 'oil', system: 'Lubrication', name: 'Check oil level and condition (dipstick)',
+      normal: { result: 'Oil is at the full mark and a clean amber colour.',
+        explain: 'Full and clean oil means the lubrication system is not the problem. Oil that is low, black and gritty, or milky (water in it) would point to a lubrication fault.' } },
+    { id: 'fuel', system: 'Fuel', name: 'Check fuel level and quality',
+      normal: { result: 'Tank is half full. The fuel is clear and smells like fresh gasoline.',
+        explain: 'Gasoline starts breaking down after about a month. Old fuel turns darker and smells sour, like varnish, and the sticky residue it leaves can block the tiny passages in a carburetor.' } },
+    { id: 'air', system: 'Fuel', name: 'Inspect the air filter',
+      normal: { result: 'The filter element is clean and dry.',
+        explain: 'A gasoline engine burns best at about 14.7 parts air to 1 part fuel, by weight. A clogged filter starves it of air, so the mixture runs rich (too much fuel): black smoke and low power.' } },
+    { id: 'spark', system: 'Ignition', name: 'Spark test (spark tester, plug lead connected to tester)',
+      normal: { result: 'A bright blue spark jumps the tester gap on every pull.',
+        explain: 'A strong blue spark means the coil, flywheel magnets and stop circuit are all working. A weak orange spark or no spark points to the ignition system.' } },
+    { id: 'plug', system: 'Ignition', name: 'Remove and read the spark plug, check the gap',
+      normal: { result: 'The insulator tip is light tan-grey and the electrodes are dry. Gap measures 0.75 mm.',
+        explain: 'A light tan tip means the plug is running at the right temperature with the right mixture. Compare the gap to the spec card: too wide makes the spark struggle, too narrow makes a weak spark.' } },
+    { id: 'stop', system: 'Ignition', name: 'Test the stop (kill) circuit with a multimeter',
+      normal: { result: 'Switch ON: no continuity from the stop wire to ground. Switch OFF: continuity to ground.',
+        explain: 'The engine is stopped by grounding the ignition coil. With the switch ON the stop wire must NOT touch ground, or the coil can never fire.' } },
+    { id: 'compression', system: 'Compression', name: 'Compression test (gauge in the plug hole, pull the rope 5 times)',
+      normal: { result: 'Gauge reads 55 psi.',
+        explain: 'Compression is how tightly the piston squeezes the air-fuel mixture. The engine needs a good seal from the rings, valves and head gasket. These engines have an automatic compression release: at slow pull-start speed it holds the exhaust valve open a tiny bit so the rope is easier to pull, which is why a healthy reading looks low. Compare to the spec card: well below the range means a leak somewhere.' } },
+    { id: 'valves', system: 'Valve train', name: 'Check valve clearance (piston at TDC on compression, feeler gauge)',
+      normal: { result: 'Intake 0.12 mm, exhaust 0.18 mm. Both are inside spec.',
+        explain: 'Valve clearance is the small gap between the rocker arm and the valve stem. It lets the valve close fully as parts heat up and expand. Too tight: the valve is held slightly open and compression leaks. Too loose: noisy, and the valve opens less.' } },
+    { id: 'flywheel', system: 'Ignition', name: 'Remove the flywheel and inspect the flywheel key',
+      normal: { result: 'The key is whole and the flywheel keyway lines up with the crankshaft keyway.',
+        explain: 'The soft aluminum flywheel key locks the flywheel to the crankshaft. Where the flywheel sits sets the ignition timing: the moment the magnet passes the coil and fires the plug.' } },
+    { id: 'carb', system: 'Fuel', name: 'Remove the carburetor bowl, inspect the float, needle and main jet',
+      normal: { result: 'The bowl is clean, the float moves freely, and the needle shuts off fuel when the float is lifted. Light shines through the main jet.',
+        explain: 'The float and needle keep the fuel in the bowl at a set level. The main jet is a precisely sized hole that meters fuel into the airflow. If you can\'t see light through it, it is blocked.' } },
+    { id: 'vent', system: 'Fuel', name: 'Check the fuel cap vent',
+      normal: { result: 'Air passes freely through the cap vent.',
+        explain: 'As fuel leaves the tank, air must get in to replace it. A blocked vent builds a vacuum that stops fuel flowing after a few minutes of running.' } },
+    { id: 'fins', system: 'Cooling', name: 'Inspect the cooling fins and blower housing',
+      normal: { result: 'Fins are clear of grass and dirt and the housing is intact.',
+        explain: 'Air-cooled engines are cooled by air the flywheel fan pushes across the cylinder fins. Packed debris traps heat, and an overheated engine loses power and wears fast.' } },
+    { id: 'recoil', system: 'Mechanical', name: 'Inspect the recoil starter',
+      normal: { result: 'The rope pulls smoothly, the pawls grab, and the rope rewinds fully.',
+        explain: 'The recoil spring rewinds the rope and the pawls (dogs) grab the starter cup to turn the crankshaft.' } },
+  ],
+
+  // Wrong answers are mixed with the right ones so students must reason, not guess.
+  FAULTS: [
+    { id: 'fouled_plug', name: 'Fouled spark plug' },
+    { id: 'stop_short', name: 'Stop wire shorted to ground' },
+    { id: 'jet_clogged', name: 'Main jet clogged by stale fuel' },
+    { id: 'valve_tight', name: 'Exhaust valve clearance too tight' },
+    { id: 'low_oil', name: 'Low oil: oil alert is shutting off the ignition' },
+    { id: 'key_sheared', name: 'Sheared flywheel key' },
+    { id: 'bad_coil', name: 'Failed ignition coil' },
+    { id: 'vent_blocked', name: 'Blocked fuel cap vent' },
+    { id: 'air_dirty', name: 'Clogged air filter' },
+    { id: 'rings_worn', name: 'Worn piston rings' },
+    { id: 'head_gasket', name: 'Blown head gasket' },
+    { id: 'recoil_broken', name: 'Broken recoil spring' },
+  ],
+
+  REPAIRS: [
+    { id: 'replace_plug', name: 'Replace the spark plug, gapped to spec' },
+    { id: 'fix_stop_wire', name: 'Repair and insulate the stop wire, re-route it away from sharp edges' },
+    { id: 'clean_carb', name: 'Drain the old fuel, clean the carburetor and main jet, refill with fresh fuel' },
+    { id: 'adjust_valves', name: 'Adjust the valve clearance to spec (piston at TDC on compression)' },
+    { id: 'add_oil', name: 'Fill the oil to spec and look for the cause of the oil loss' },
+    { id: 'replace_key', name: 'Replace the flywheel key and torque the flywheel nut' },
+    { id: 'replace_coil', name: 'Replace the ignition coil and set the air gap' },
+    { id: 'replace_cap', name: 'Clean or replace the fuel cap' },
+    { id: 'replace_filter', name: 'Replace the air filter element' },
+    { id: 'rebuild_top', name: 'Replace the piston rings' },
+    { id: 'replace_gasket', name: 'Replace the head gasket' },
+    { id: 'replace_recoil', name: 'Replace the recoil spring' },
+  ],
+
+  CASES: [
+    {
+      id: 'gx-fouled-plug', title: 'The pressure washer that misses',
+      complaint: 'Customer: "It\'s really hard to start, and when it does run it sputters and misses. My kid always leaves the choke on."',
+      startAttempt: 'You try it: it takes many pulls, then runs rough and stumbles.',
+      useful: ['spark', 'plug', 'air', 'fuel'],
+      results: {
+        plug: { result: 'The insulator tip is coated in dry, black, sooty carbon. Gap measures 0.75 mm.',
+          explain: 'Dry black soot is carbon fouling. It comes from running rich, such as leaving the choke on. Carbon conducts electricity, so the spark leaks to ground along the soot instead of jumping the gap.' },
+      },
+      fault: 'fouled_plug', repair: 'replace_plug',
+      verify: 'With a new plug gapped to 0.75 mm, the engine starts in two pulls and runs smoothly. You remind the customer to open the choke once the engine warms up.',
+    },
+    {
+      id: 'gx-stop-short', title: 'The go-kart with no spark',
+      complaint: 'Customer: "It pulls over fine, but it won\'t start. Not even a pop. I did hit a curb last week."',
+      startAttempt: 'You pull it ten times: good compression feel, no firing at all.',
+      useful: ['spark', 'stop', 'fuel', 'oil'],
+      results: {
+        spark: { result: 'No spark at the tester, on any pull.',
+          explain: 'No spark at all means something in the ignition system is either broken or being grounded out. Check the stop circuit before blaming the coil: it is the cheaper and more common fault.' },
+        stop: { result: 'Switch ON: the meter shows CONTINUITY from the stop wire to ground. The insulation is rubbed through where the wire crosses the frame.',
+          explain: 'With the switch ON the stop wire must not touch ground. Here the bare wire is touching the frame, so the coil is grounded all the time and can never fire.' },
+        plug: { result: 'The plug tip is wet with fuel. Gap measures 0.75 mm.',
+          explain: 'A wet plug means fuel is arriving, but nothing is lighting it. That points away from the fuel system and toward ignition.' },
+      },
+      fault: 'stop_short', repair: 'fix_stop_wire',
+      verify: 'After repairing the wire, the spark tester shows a strong blue spark and the engine starts. Switching OFF stops it, so the stop circuit works again.',
+    },
+    {
+      id: 'gx-jet', title: 'The generator that only runs on choke',
+      complaint: 'Customer: "It sat in the shed all winter with gas in it. It starts, but it dies as soon as I push the choke off."',
+      startAttempt: 'It starts with the choke closed. When you open the choke, it bogs and stalls.',
+      useful: ['fuel', 'carb', 'spark', 'air'],
+      results: {
+        fuel: { result: 'The fuel is dark yellow-brown and smells sour, like varnish.',
+          explain: 'That fuel has gone stale. As it evaporates in the carburetor it leaves a sticky varnish that blocks small passages.' },
+        carb: { result: 'There is gummy brown residue in the bowl. Holding the main jet up to the light, you see no light through it.',
+          explain: 'The main jet is blocked, so almost no fuel reaches the airflow. The choke cuts off air, which makes the little fuel that does get through rich enough to run. Open the choke and the mixture goes too lean to burn.' },
+      },
+      fault: 'jet_clogged', repair: 'clean_carb',
+      verify: 'With the old fuel drained, the jet cleaned until light shows through, and fresh fuel added, the engine idles and runs with the choke open.',
+    },
+    {
+      id: 'gx-valve', title: 'The log splitter that lost its power',
+      complaint: 'Customer: "Someone adjusted the valves for me. Now it\'s hard to start and it has no power, especially once it\'s warm."',
+      startAttempt: 'It starts after several pulls but has very little power under load.',
+      useful: ['compression', 'valves', 'spark', 'plug'],
+      results: {
+        compression: { result: 'Gauge reads 20 psi.',
+          explain: 'That is well below the spec card range of 40–65 psi, so the cylinder isn\'t sealing. The leak could be at the valves, rings or head gasket. Check the cheapest and easiest first: valve clearance.' },
+        valves: { result: 'Intake 0.12 mm. Exhaust 0.05 mm: the 0.05 blade barely fits.',
+          explain: 'The spec is 0.15–0.20 mm. With almost no clearance, the exhaust valve is held slightly open, worse when the engine is hot and parts expand. Compression leaks out past it.' },
+      },
+      fault: 'valve_tight', repair: 'adjust_valves',
+      verify: 'With the exhaust set to 0.18 mm, inside the 0.15–0.20 mm spec (piston at TDC on the compression stroke, both valves closed), compression reads 55 psi and power is back.',
+    },
+    {
+      id: 'gx-oil', title: 'The pump that quits after a second',
+      complaint: 'Customer: "It fires for a second and then just shuts off. It has gas. I don\'t think I\'ve ever checked the oil."',
+      startAttempt: 'It catches for about one second, then dies, every time.',
+      useful: ['oil', 'spark', 'stop', 'fuel'],
+      results: {
+        oil: { result: 'Oil is barely on the tip of the dipstick, well below the lower mark.',
+          explain: 'Many GX-style engines have an oil alert switch: a float in the crankcase. When oil is low, it grounds the ignition to stop the engine before it destroys itself.' },
+        spark: { result: 'A spark for the first pull or two, then none.',
+          explain: 'The spark is being shut off, not failing on its own. Something is grounding the ignition, which points to the stop circuit or the oil alert.' },
+        stop: { result: 'Switch ON: the stop switch tests open (normal). The oil alert lead tests to ground.',
+          explain: 'The stop switch is fine. The ground is coming from the oil alert, which is doing its job because the oil is low.' },
+      },
+      fault: 'low_oil', repair: 'add_oil',
+      verify: 'With oil filled to spec, the engine starts and keeps running. You check for leaks around the drain plug and gasket: no leaks, so the oil was never topped up.',
+    },
+    {
+      id: 'gx-key', title: 'The tiller that kicks back',
+      complaint: 'Customer: "The tines hit a big rock and the engine stopped dead. Now the rope kicks back hard and it won\'t start."',
+      startAttempt: 'The rope kicks back in your hand on some pulls. No start.',
+      useful: ['spark', 'flywheel', 'plug', 'compression'],
+      results: {
+        flywheel: { result: 'The flywheel key is sheared in half. The flywheel has turned on the crankshaft, so the keyways no longer line up.',
+          explain: 'A sudden stop let the heavy flywheel keep spinning, and it sheared the soft key. Now the magnet passes the coil at the wrong moment, firing the plug while the piston is still rising. That pushes the piston backwards and kicks back the rope.' },
+      },
+      fault: 'key_sheared', repair: 'replace_key',
+      verify: 'With a new key installed and the flywheel nut torqued, the timing is correct again. The engine starts with no kickback.',
+    },
+  ],
+};
+
+</script>
+<script>
+// LEARN content: one walk-through per system, then a 5-question check.
+// Written for students who skip long reading: short pages, one idea each, every idea explained.
+window.LEARN = [
+  {
+    id: 'overview', title: 'How an engine works', outcomes: '4.1, 4.2, 4.3',
+    pages: [
+      { h: 'Four strokes, two turns',
+        body: ['A four-stroke engine makes power by burning a small amount of fuel and air above a piston. The burning gas pushes the piston down, and the crankshaft turns that push into spinning.',
+          'One full cycle takes four strokes of the piston (one stroke = the piston moving all the way up or all the way down):',
+          ['<b>Intake:</b> the piston moves down and the intake valve is open. Fuel and air are pulled into the cylinder.',
+           '<b>Compression:</b> both valves close and the piston moves up, squeezing the mixture into a small space.',
+           '<b>Power:</b> the spark plug fires, the mixture burns, and the hot, expanding gas pushes the piston down hard. This is the only stroke that makes power.',
+           '<b>Exhaust:</b> the exhaust valve opens and the piston moves up, pushing the burned gas out.'],
+          'Four strokes take two full turns of the crankshaft. The flywheel\'s spinning weight carries the engine through the three strokes that don\'t make power.'] },
+      { h: 'The six systems',
+        body: ['Every part of the engine belongs to a system with one job. When an engine fails, a mechanic first works out which system has the problem.',
+          ['<b>Ignition:</b> makes the spark at the right moment.',
+           '<b>Fuel:</b> mixes fuel with air in the right amount.',
+           '<b>Valve train / timing:</b> opens and closes the valves at the right moment.',
+           '<b>Compression:</b> seals the cylinder so the mixture can be squeezed.',
+           '<b>Lubrication / cooling:</b> keeps oil between moving parts and carries heat away.',
+           '<b>Mechanical:</b> the moving parts that turn the push on the piston into rotation (piston, connecting rod, crankshaft, bearings, flywheel).'],
+          'An engine needs three things to run: <b>spark</b>, <b>fuel and air</b>, and <b>compression</b>, all at the right time. If one is missing, it won\'t run.'] },
+      { h: 'Troubleshooting is a method',
+        body: ['Troubleshooting means finding the cause of a problem by testing, not guessing. Mechanics follow the same steps every time:',
+          ['<b>1. Get the complaint:</b> what does the customer say it does, and when did it start?',
+           '<b>2. Check it yourself:</b> does it crank? Start? Run badly?',
+           '<b>3. Pick the likely system:</b> no spark is ignition; floods or dies is usually fuel; low power with good spark and fuel may be compression.',
+           '<b>4. Test simple and cheap first:</b> checking the fuel takes 10 seconds, while pulling the head takes an hour.',
+           '<b>5. Fix the cause</b>, not just the symptom.',
+           '<b>6. Verify:</b> run the test again to prove it is fixed.'],
+          'The service manual has troubleshooting charts that list each symptom, its likely causes, and what to check, in order.'] },
+    ],
+    quiz: [
+      { q: 'Which stroke is the only one that makes power?', a: ['Intake', 'Compression', 'Power', 'Exhaust'], c: 2, why: 'Only on the power stroke does burning gas push the piston down. The other three strokes use energy stored in the flywheel.' },
+      { q: 'How many turns of the crankshaft does one four-stroke cycle take?', a: ['One', 'Two', 'Four', 'Half a turn'], c: 1, why: 'Each stroke is half a turn, so four strokes make two full turns.' },
+      { q: 'An engine needs spark, fuel and air, and ___ to run.', a: ['A battery', 'Compression', 'A governor', 'A muffler'], c: 1, why: 'Without compression the mixture can\'t be squeezed and won\'t burn with enough force.' },
+      { q: 'Which system opens and closes the valves at the right moment?', a: ['Ignition', 'Compression', 'Valve train / timing', 'Mechanical'], c: 2, why: 'The valve train (cam, lifters, pushrods, rockers, valves) is timed to the crankshaft.' },
+      { q: 'When troubleshooting, what should you test first?', a: ['The most expensive part', 'The quickest, simplest checks', 'Whatever the customer suggests', 'The crankshaft'], c: 1, why: 'Simple checks rule out common causes fast, before any teardown.' },
+    ],
+  },
+  {
+    id: 'ignition', title: 'Ignition system', outcomes: '5.2, 5.3, 5.4',
+    pages: [
+      { h: 'What the ignition system does',
+        body: ['The ignition system makes a spark across the spark plug gap at the exact moment the piston nears the top of the compression stroke.',
+          'Small engines make their own electricity using a <b>magneto</b>: magnets in the flywheel spin past a coil (the armature) mounted beside it. A moving magnet near a wire coil makes electricity flow in it. This is called induction.'] },
+      { h: 'How a coil makes a high voltage',
+        body: ['The coil has two windings around an iron core:',
+          ['The <b>primary winding</b> has a few hundred turns of thick wire. The passing magnet makes current flow in it.',
+           'The <b>secondary winding</b> has thousands of turns of very thin wire, wrapped around the primary.'],
+          'At the right moment the primary current is suddenly switched off. The magnetic field collapses all at once, and that fast change induces a very high voltage in the secondary: over 10,000 volts. That is enough to jump the plug gap as a spark.'] },
+      { h: 'Three types of ignition',
+        body: ['They differ in <b>what switches the primary current off</b>:',
+          ['<b>Breaker points:</b> a mechanical switch opened by a cam on the crankshaft, with a condenser to stop the points arcing. Found on older engines. The points wear and need adjusting.',
+           '<b>Solid-state transistor (TCI):</b> a transistor in the coil switches the current electronically. No moving parts and nothing to adjust. Most modern small engines use this.',
+           '<b>Capacitor discharge (CDI):</b> the magneto charges a capacitor, which then dumps its charge into the coil all at once. Common on two-strokes and dirt bikes.']] },
+      { h: 'Air gap, stop switch and timing',
+        body: ['<b>Air gap:</b> the small space between the coil and the flywheel magnets. Too wide and the magnet can\'t induce enough current, giving a weak or no spark. It is set with a feeler gauge or a gauge card.',
+          '<b>Stop (kill) switch:</b> stops the engine by connecting the primary winding to ground, so no spark can form. If that wire touches metal with the switch ON, the engine has no spark.',
+          '<b>Timing:</b> the flywheel key locks the flywheel to the crankshaft, so the magnet passes the coil at the right moment. If the key shears, the timing is wrong.'] },
+      { h: 'Spark plug and tools',
+        body: ['A spark plug has a centre electrode, a side (ground) electrode, and a ceramic insulator. The <b>gap</b> is the space between the two electrodes, and it must match spec.',
+          ['<b>Spark tester:</b> shows whether the coil makes a strong spark, without the risk of holding a plug lead.',
+           '<b>Gap gauge (wire type):</b> measures and sets plug gap.',
+           '<b>Feeler gauge:</b> sets the coil air gap.',
+           '<b>Spark plug socket:</b> has a rubber insert that protects the ceramic.'],
+          'Reading a plug: light tan-grey is healthy. Dry black soot means running rich. Wet means fuel is arriving with no spark. Oily black means oil is getting into the cylinder.'] },
+    ],
+    quiz: [
+      { q: 'What makes electricity in a small-engine magneto?', a: ['A battery', 'Magnets in the flywheel passing the coil', 'The spark plug', 'The fuel'], c: 1, why: 'Moving magnets near a coil induce current: that is induction.' },
+      { q: 'Why does the secondary winding have thousands of turns?', a: ['To make the coil heavier', 'To step the voltage up high enough to jump the gap', 'To cool the coil', 'To store fuel'], c: 1, why: 'Far more turns than the primary means a far higher voltage when the field collapses.' },
+      { q: 'On a breaker-point ignition, what switches the primary current off?', a: ['A transistor', 'A capacitor', 'Mechanical points opened by a cam', 'The stop switch'], c: 2, why: 'The points are a mechanical switch, opened by a cam.' },
+      { q: 'The stop switch stops the engine by…', a: ['Shutting off fuel', 'Grounding the primary winding', 'Opening the valves', 'Removing the plug'], c: 1, why: 'Grounding the primary means no current change, so no spark.' },
+      { q: 'A plug tip covered in dry black soot means…', a: ['Running rich (too much fuel)', 'Perfect condition', 'Too much oil', 'No compression'], c: 0, why: 'Soot is unburned fuel carbon: too much fuel or not enough air.' },
+    ],
+  },
+  {
+    id: 'fuel', title: 'Fuel system', outcomes: '6.2, 6.3, 6.4, 6.5, 6.6',
+    pages: [
+      { h: 'Getting fuel to the carburetor',
+        body: ['There are three common ways to supply fuel:',
+          ['<b>Gravity feed:</b> the tank sits above the carburetor, so fuel simply flows down. This is what your lab engines use, with a fuel shut-off valve.',
+           '<b>Suction (vacuum) feed:</b> the tank is below the carburetor, and air rushing through the carburetor lifts fuel up a pickup tube.',
+           '<b>Pump feed:</b> a small diaphragm pump, driven by pressure pulses from the crankcase, pushes fuel to the carburetor. Used when the tank must sit low or far away.']] },
+      { h: 'How a carburetor works',
+        body: ['A carburetor mixes fuel into the air going into the engine. It works on the <b>venturi principle</b>: when air is forced through a narrow section, it speeds up and its pressure drops.',
+          'A fuel nozzle sits at the narrowest point. Normal air pressure in the float bowl pushes fuel up through the nozzle into that low-pressure airstream, where it breaks into a fine mist.',
+          ['The <b>main jet</b> is a precisely sized hole that meters how much fuel can flow.',
+           'The <b>throttle</b> is a valve that controls how much air (and so how much power) gets in.',
+           'The <b>choke</b> blocks most of the air for cold starting. Less air with the same fuel makes a richer mixture that lights easily in a cold engine.']] },
+      { h: 'Three types of carburetor',
+        body: [['<b>Float-type:</b> a float in a bowl rises with the fuel level and pushes a needle closed when the bowl is full, like a toilet tank. This keeps the level steady. It is the most common type, and it is on your lab engines.',
+           '<b>Suction-type:</b> no float bowl. It sits on top of the tank and draws fuel straight up. It is simple and cheap, and found on old small Briggs engines.',
+           '<b>Diaphragm-type:</b> a flexible rubber diaphragm controls fuel flow instead of a float, so it works at any angle, even upside down. Used on chainsaws, trimmers and blowers.'] ] },
+      { h: 'Air cleaners',
+        body: ['The air cleaner stops dirt getting into the engine. Dirt acts like sandpaper on the piston, rings and cylinder.',
+          ['<b>Paper (dry) element:</b> pleated paper that traps fine dust. It is replaced, never washed or oiled.',
+           '<b>Foam element:</b> polyurethane foam, lightly oiled so dust sticks to it. It can be washed, re-oiled and reused. The 212 cc lab engines use a foam element on its own.',
+           '<b>Dual-element:</b> a foam pre-cleaner wrapped over a paper element. The foam catches large dirt, so the paper lasts longer.'],
+          'A clogged filter means not enough air, which makes the mixture rich: black smoke and low power.'] },
+      { h: 'Governors',
+        body: ['A governor keeps engine speed steady as the load changes. For example, it opens the throttle when a log splitter starts pushing.',
+          ['<b>Mechanical (centrifugal) governor:</b> small flyweights inside the crankcase spin with the engine and fly outward as speed rises. Through a linkage they close the throttle against a spring. Your lab engines use this.',
+           '<b>Pneumatic (air-vane) governor:</b> a vane sits in the air blown by the flywheel fan. Faster engine, more air, and the vane closes the throttle against a spring.'],
+          'In both, a <b>spring</b> pulls the throttle open and the speed signal pushes it closed. Where they balance is the governed speed.'] },
+    ],
+    quiz: [
+      { q: 'Why does fuel come out of the carburetor nozzle?', a: ['A pump pushes it', 'Fast-moving air in the venturi has lower pressure', 'The spark pulls it', 'Gravity alone'], c: 1, why: 'Higher pressure in the bowl pushes fuel toward the low pressure in the venturi.' },
+      { q: 'The choke helps a cold start by…', a: ['Adding more air', 'Making the mixture richer', 'Making a bigger spark', 'Raising compression'], c: 1, why: 'Blocking air means relatively more fuel: a rich mixture lights easily when cold.' },
+      { q: 'Which carburetor works at any angle?', a: ['Float-type', 'Suction-type', 'Diaphragm-type', 'None of them'], c: 2, why: 'A diaphragm doesn\'t depend on gravity, unlike a float.' },
+      { q: 'How should you service a paper air filter element?', a: ['Wash it in soap', 'Soak it in oil', 'Replace it', 'Blow it out with high-pressure air and oil it'], c: 2, why: 'Paper elements are replaced. Washing or oiling ruins them.' },
+      { q: 'In a governor, what pulls the throttle open?', a: ['A spring', 'The flyweights', 'The air vane', 'The choke'], c: 0, why: 'The spring pulls it open, and the speed signal pushes it closed.' },
+    ],
+  },
+  {
+    id: 'valvetrain', title: 'Valve train and timing', outcomes: '7.2, 7.3, 7.6',
+    pages: [
+      { h: 'What the valve train does',
+        body: ['Each cylinder has two valves: an <b>intake</b> valve that lets the fuel-air mixture in, and an <b>exhaust</b> valve that lets burned gas out. The valve train opens each valve at exactly the right moment in the four-stroke cycle and lets it close tightly the rest of the time.'] },
+      { h: 'From crankshaft to valve',
+        body: ['On an overhead-valve (OHV) engine like yours, the motion goes:',
+          ['<b>Crankshaft gear</b> turns the <b>camshaft gear</b>.',
+           'Each egg-shaped <b>cam lobe</b> lifts a <b>lifter</b> (tappet) as it turns.',
+           'The lifter pushes a <b>pushrod</b> up to the cylinder head.',
+           'The pushrod tips a <b>rocker arm</b>, which pushes the <b>valve</b> open.',
+           'A <b>valve spring</b> snaps the valve shut when the cam lobe rolls past.'],
+          'On older <b>L-head (flathead)</b> engines, the valves sit in the block beside the cylinder and the lifters push them directly: no pushrods or rockers.'] },
+      { h: 'Why the cam turns at half speed',
+        body: ['Each valve opens once per four-stroke cycle, and a cycle takes two crankshaft turns. So the camshaft must turn once for every two crankshaft turns.',
+          'That is why the cam gear has twice as many teeth as the crank gear: a 2:1 ratio.',
+          'The gears have <b>timing marks</b> that must line up during assembly. If the cam is off by even one tooth, the valves open at the wrong time and the engine runs badly or not at all.'] },
+      { h: 'Valve clearance',
+        body: ['<b>Valve clearance</b> (lash) is the small gap between the rocker arm and the top of the valve stem when the valve is closed.',
+          'It is needed because metal expands when hot. With no gap, the hot valve stem would grow and hold the valve slightly open.',
+          ['<b>Too tight:</b> the valve doesn\'t fully close, so compression leaks out, it is hard to start, and the valve can burn.',
+           '<b>Too loose:</b> it is noisy (tapping) and the valve opens less, so power drops.'],
+          'Check clearance <b>cold</b>, with the piston at top dead centre (TDC) on the compression stroke, when both valves are closed. Measure with a feeler gauge: the right blade slides in with a slight drag.'] },
+    ],
+    quiz: [
+      { q: 'What pushes the valve open on an OHV engine?', a: ['The valve spring', 'The rocker arm', 'The piston', 'The flywheel'], c: 1, why: 'Cam → lifter → pushrod → rocker arm → valve.' },
+      { q: 'What closes the valve?', a: ['The valve spring', 'The pushrod', 'The cam lobe', 'Compression'], c: 0, why: 'The spring snaps the valve shut when the cam lobe rolls past.' },
+      { q: 'Why does the camshaft turn at half crankshaft speed?', a: ['To save fuel', 'Each valve opens once per cycle, and a cycle is two crank turns', 'To make it quieter', 'It doesn\'t'], c: 1, why: 'Once per cycle and two turns per cycle gives 2:1.' },
+      { q: 'Valve clearance that is too tight causes…', a: ['Tapping noise only', 'The valve not fully closing, so compression leaks', 'More power', 'Nothing'], c: 1, why: 'Heat expansion holds a tight valve slightly open.' },
+      { q: 'When do you check valve clearance?', a: ['Engine hot, any position', 'Engine cold, piston at TDC on compression', 'Engine running', 'Piston at the bottom of the exhaust stroke'], c: 1, why: 'Cold matches the spec, and TDC on compression means both valves are closed.' },
+    ],
+  },
+  {
+    id: 'compression', title: 'Compression system', outcomes: '8.2, 8.4, 8.5',
+    pages: [
+      { h: 'Why compression matters',
+        body: ['Squeezing the fuel-air mixture into a small space before it burns makes it burn faster and push much harder. A poorly sealed cylinder lets the mixture leak away, so power drops, starting gets hard, and fuel is wasted.',
+          'The <b>compression ratio</b> compares the cylinder\'s volume with the piston at the bottom to its volume with the piston at the top. Small engines are around 8:1 to 9:1. The Pro-Point manual gives 9.0:1, meaning the mixture is squeezed into one-ninth of the space.'] },
+      { h: 'What seals the cylinder',
+        body: [['<b>Piston rings:</b> springy metal rings in grooves around the piston. The top two (compression rings) press out against the cylinder wall to seal the gas above. The bottom ring (the oil control ring) scrapes oil off the wall so it doesn\'t burn.',
+           '<b>Valves:</b> they must seat perfectly in the head when closed.',
+           '<b>Head gasket:</b> it seals the joint between the cylinder head and the block.',
+           '<b>Spark plug:</b> its washer or tapered seat seals the plug hole.'],
+          'A leak at any of these lowers compression.'] },
+      { h: 'Automatic compression release',
+        body: ['Pulling a high-compression engine by hand would be very hard. Your lab engines have an <b>automatic compression release</b>: at slow cranking speed, a small weight on the camshaft holds the exhaust valve open a tiny amount during compression. Some pressure escapes, so the rope pulls easily.',
+          'Once the engine starts and speeds up, the weight swings out of the way and full compression returns.',
+          'This is why a healthy engine only shows about 40–65 psi on a gauge when pulled by hand.'] },
+      { h: 'Testing compression',
+        body: [['<b>Compression gauge:</b> screw it into the plug hole, open the throttle, and pull the rope several times. Compare the highest reading to spec.',
+           '<b>Leak-down tester:</b> pumps air into the cylinder at TDC and measures how fast it leaks. You can find where it leaks by listening: hissing at the carburetor means the intake valve, at the muffler the exhaust valve, at the oil fill the rings.',
+           '<b>Wet test:</b> if compression is low, squirt a little oil into the cylinder and test again. If the reading jumps up, the oil sealed the rings, so the rings are worn. If it stays low, look at the valves or head gasket.'],
+          'Signs of low compression: hard starting, low power, and blue smoke (oil burning past worn rings).'] },
+    ],
+    quiz: [
+      { q: 'What do the compression rings do?', a: ['Scrape oil off the wall', 'Seal the gas above the piston', 'Hold the piston pin', 'Cool the piston'], c: 1, why: 'The top rings press against the wall to seal compression. The bottom ring controls oil.' },
+      { q: 'Why does a healthy lab engine read only about 40–65 psi?', a: ['The gauge is broken', 'The automatic compression release opens the exhaust valve slightly while cranking', 'Worn rings', 'The choke is on'], c: 1, why: 'The release makes hand starting easy by letting some pressure out at low speed.' },
+      { q: 'Compression rises a lot after a squirt of oil. The problem is…', a: ['Valves', 'Head gasket', 'Worn rings', 'Spark plug'], c: 2, why: 'Oil temporarily seals worn rings. Valves and gaskets aren\'t helped by it.' },
+      { q: 'During a leak-down test, air hisses out of the carburetor. Which part is leaking?', a: ['Exhaust valve', 'Intake valve', 'Rings', 'Head gasket'], c: 1, why: 'The carburetor connects to the intake port, so the intake valve isn\'t sealing.' },
+      { q: 'Blue smoke from the exhaust usually means…', a: ['Rich fuel mixture', 'Oil burning', 'Water in the fuel', 'Normal running'], c: 1, why: 'Blue smoke is oil getting past worn rings or valve guides.' },
+    ],
+  },
+  {
+    id: 'lubcool', title: 'Lubrication and cooling', outcomes: '9.2, 9.3, 9.4, 9.5',
+    pages: [
+      { h: 'What oil does',
+        body: ['Oil keeps a thin film between moving metal parts so they slide on oil instead of grinding on each other. It also carries heat away, helps the rings seal, and holds dirt so it drains out at the next oil change.',
+          'Run an engine without oil and parts like the connecting rod overheat, weld together and break within minutes.'] },
+      { h: 'Types of lubrication systems',
+        body: [['<b>Splash:</b> a dipper on the bottom of the connecting rod (or a spinning slinger) flings oil around the crankcase with every turn. Simple, and used on your lab engines.',
+           '<b>Pressure:</b> a pump pushes oil through passages to each bearing. Used on larger engines and in cars.',
+           '<b>Mixed fuel (two-strokes):</b> oil is mixed into the gasoline at a set ratio, such as 50:1, and lubricates parts as the mixture passes through the crankcase. There is no oil in the crankcase.'],
+          'Many GX-style engines have an <b>oil alert</b>: a float switch that grounds the ignition when oil is low, so the engine stops before it is damaged.'] },
+      { h: 'Reading an oil label',
+        body: ['<b>Viscosity</b> means thickness, or how easily oil flows. Thin oil flows fast when cold; thick oil holds a stronger film when hot.',
+          'A label like <b>SAE 10W-30</b> means:',
+          ['<b>10W:</b> it flows like a thin 10-weight oil when cold. The W stands for winter.',
+           '<b>30:</b> it protects like a 30-weight oil at running temperature.'],
+          'Oil that is thin when cold and still strong when hot is called multigrade. The <b>API service class</b> (such as SJ or SN) shows the quality standard it meets. Always use what the manual specifies.'] },
+      { h: 'Cooling',
+        body: [['<b>Air-cooled:</b> fins on the cylinder and head add surface area. A fan on the flywheel blows air across them (on the Pro-Point it is a separate plastic fan, clamped on by the flywheel nut), and the blower housing (shroud) guides that air. Your lab engines are air-cooled.',
+           '<b>Liquid-cooled:</b> coolant is pumped through passages around the cylinder, picks up heat, and gives it off in a radiator. It holds a steadier temperature and is used on cars and bigger engines.'],
+          'Grass and dirt packed in the fins, or a missing shroud, means the air can\'t carry heat away. The engine overheats, loses power, and wears quickly.'] },
+    ],
+    quiz: [
+      { q: 'What lubrication type do your lab engines use?', a: ['Pressure', 'Splash', 'Mixed fuel', 'None'], c: 1, why: 'A dipper or slinger splashes oil around the crankcase.' },
+      { q: 'In SAE 10W-30, the "W" stands for…', a: ['Weight', 'Winter', 'Water', 'Wide'], c: 1, why: 'The W number is the cold (winter) rating.' },
+      { q: 'How is a two-stroke engine lubricated?', a: ['A pump', 'Oil splash', 'Oil mixed into the fuel', 'Grease'], c: 2, why: 'The oil travels with the fuel through the crankcase.' },
+      { q: 'What moves cooling air across the fins?', a: ['The muffler', 'Fan blades on the flywheel', 'The carburetor', 'The piston'], c: 1, why: 'The flywheel fan blows air, and the shroud guides it.' },
+      { q: 'What does an oil alert switch do when oil is low?', a: ['Adds oil', 'Grounds the ignition to stop the engine', 'Opens the choke', 'Nothing'], c: 1, why: 'It stops the engine before running dry destroys it.' },
+    ],
+  },
+  {
+    id: 'mechanical', title: 'Mechanical system', outcomes: '10.2, 10.4, 10.6',
+    pages: [
+      { h: 'Turning a push into rotation',
+        body: ['The piston only moves up and down. The <b>connecting rod</b> joins the piston (by the piston pin, or wrist pin) to an off-centre journal on the <b>crankshaft</b> called the crankpin. As the piston is pushed down, the rod pushes the crankpin around in a circle, like your legs on bicycle pedals.',
+          'The <b>flywheel</b> on one end of the crankshaft is heavy. Its spinning weight (momentum) carries the crankshaft through the non-power strokes and smooths out the pulses.'] },
+      { h: 'Bearings and the crankcase',
+        body: ['<b>Bearings</b> support spinning parts and let them turn with little friction:',
+          ['<b>Ball bearings</b> support the crankshaft ends in the crankcase.',
+           '<b>Plain bearings</b> (smooth, oiled surfaces) are used where the connecting rod wraps around the crankpin.'],
+          'The <b>crankcase</b> holds everything and the oil. The <b>crankcase cover</b> (side cover) comes off to reach the crankshaft, camshaft and governor. A <b>gasket</b> seals the joint.',
+          'The <b>PTO shaft</b> (power take-off) is the end of the crankshaft that drives the machine.'] },
+      { h: 'Horizontal and vertical shaft',
+        body: [['<b>Horizontal shaft:</b> the crankshaft sticks out sideways. Used on go-karts, pumps, generators, pressure washers and snowblowers. Your lab engines are horizontal shaft.',
+           '<b>Vertical shaft:</b> the crankshaft points straight down. Used on lawnmowers, where the blade bolts directly to the crankshaft.'],
+          'The systems work the same way. Only the layout changes.'] },
+      { h: 'Measuring and wear',
+        body: ['Mechanical parts wear slowly. Mechanics measure them and compare to the service limit, the point where a part must be replaced:',
+          ['<b>Outside micrometer or caliper:</b> crankpin and piston diameter.',
+           '<b>Telescoping gauge or bore gauge:</b> cylinder bore.',
+           '<b>Feeler gauge:</b> ring end gap and side clearances.',
+           '<b>Dial indicator:</b> crankshaft runout (wobble from a bent shaft).'],
+          'A bent crankshaft, often from hitting something, causes heavy vibration. Worn bearings cause knocking.'] },
+    ],
+    quiz: [
+      { q: 'What converts the piston\'s up-and-down motion into rotation?', a: ['Camshaft', 'Connecting rod and crankshaft', 'Flywheel key', 'Governor'], c: 1, why: 'The rod pushes the off-centre crankpin around in a circle.' },
+      { q: 'Why is the flywheel heavy?', a: ['To hold the engine down', 'Its momentum carries the engine through the non-power strokes', 'To make a spark', 'To cool the oil'], c: 1, why: 'Stored momentum keeps the crank turning between power strokes.' },
+      { q: 'The PTO shaft is…', a: ['The end of the crankshaft that drives the machine', 'The camshaft', 'The pushrod', 'The throttle shaft'], c: 0, why: 'PTO stands for power take-off.' },
+      { q: 'A lawnmower usually uses a…', a: ['Horizontal-shaft engine', 'Vertical-shaft engine', 'Two-cylinder engine', 'Diesel engine'], c: 1, why: 'The blade bolts straight to a vertical crankshaft.' },
+      { q: 'Which tool checks a crankshaft for wobble (runout)?', a: ['Feeler gauge', 'Dial indicator', 'Spark tester', 'Compression gauge'], c: 1, why: 'A dial indicator shows tiny movements as the shaft turns.' },
+    ],
+  },
+];
+
+</script>
+<script>
+// TEARDOWN & REBUILD data — GX-style 212 cc OHV.
+// under: parts that must come off BEFORE this one (what's in the way). This one relation drives
+//   removal (can't remove until everything in "under" is off) and rebuild (reverse).
+// ext: true = visible from outside; false = only drawn once everything in "under" is removed.
+// The drawings of each part are in engine-svg.js (four views traced from the lab Pro-Point photos).
+// TEACHER: tool names are generic until the shop tool list is in. Torque values are from the Pro-Point 212 manual
+// (spec page and Appendix B, Bolt Torque), in ft-lb rounded to whole numbers.
+window.TOOLS = [
+  { id: 'hands', name: 'Hands' },
+  { id: 'socket', name: 'Socket and ratchet' },
+  { id: 'plugsocket', name: 'Spark plug socket' },
+  { id: 'strap', name: 'Strap wrench + socket' },
+  { id: 'puller', name: 'Flywheel puller' },
+  { id: 'flat', name: 'Flat screwdriver' },
+  { id: 'pliers', name: 'Needle-nose pliers' },
+  { id: 'torque', name: 'Torque wrench' },
+  { id: 'hammer', name: 'Hammer' },
+  { id: 'pry', name: 'Pry bar' },
+];
+window.TOOL_WHY = {
+  hammer: 'Never hammer engine parts. Aluminum castings crack and threads get damaged. If something is stuck, check for a hidden fastener or tap gently with a rubber mallet.',
+  pry: 'Prying between sealing surfaces gouges them, and then the gasket can\'t seal. Find the fastener that is still holding it.',
+};
+
+window.PARTS = {
+  plugwire: { name: 'Spark plug lead', sys: 'Ignition', tool: 'hands', under: [], ext: true,
+    off: 'Always disconnect the plug lead first. Now the engine can\'t fire while you work on it.' },
+  plug: { name: 'Spark plug', sys: 'Ignition', tool: 'plugsocket', under: ['plugwire'], ext: true, torque: 15,
+    off: 'The spark plug socket\'s rubber insert grips the ceramic so it doesn\'t crack.',
+    check: { q: 'Installing the plug: how do you start the threads?', a: ['By hand, so it can\'t cross-thread', 'With an impact gun', 'With a hammer'], c: 0, why: 'Thread it in by hand first. The head is aluminum and cross-threading strips it. Then torque it to spec: 13–16 ft-lb on the Pro-Point.' } },
+  recoil: { name: 'Recoil starter', sys: 'Mechanical', tool: 'socket', under: [], ext: true,
+    off: 'The recoil starter bolts onto the blower housing. Its spring stays wound inside the cover, so don\'t open it.' },
+  fuelvalve: { name: 'Fuel valve (turn OFF)', sys: 'Fuel', tool: 'hands', under: [], ext: true,
+    off: 'Turning the fuel valve off stops fuel draining out of the tank when the line comes off.' },
+  fuelline: { name: 'Fuel line', sys: 'Fuel', tool: 'pliers', under: ['fuelvalve'], ext: true,
+    off: 'Squeeze the spring clamp with pliers and slide it back. Catch any fuel in a rag.' },
+  tank: { name: 'Fuel tank', sys: 'Fuel', tool: 'socket', under: ['fuelline'], ext: true,
+    off: 'The tank sits on top of the blower housing, so it has to come off first.' },
+  shroud: { name: 'Blower housing (shroud)', sys: 'Cooling', tool: 'socket', under: ['recoil', 'tank'], ext: true,
+    off: 'The shroud guides fan air over the cylinder fins. Without it the engine overheats, so it always goes back on.' },
+  coil: { name: 'Ignition coil', sys: 'Ignition', tool: 'socket', under: ['shroud', 'plugwire'], ext: false,
+    off: 'The coil sits just beside the flywheel magnets. That small space is the air gap.',
+    check: { q: 'Setting the coil air gap: what goes between the coil and the flywheel magnet?', a: ['A 0.4 mm feeler gauge (spec 0.2–0.6 mm)', 'A 2 mm washer', 'Nothing, push the coil against the flywheel'], c: 0, why: 'Hold the gauge between the coil and the magnet, let the magnet pull the coil against it, tighten the bolts, then remove the gauge. Too wide gives a weak spark. Touching the flywheel would rub it.' } },
+  flynut: { name: 'Flywheel nut', sys: 'Mechanical', tool: 'strap', under: ['shroud'], ext: false, torque: 63,
+    off: 'The strap wrench holds the flywheel still while you turn the nut. Never jam a screwdriver in the fins: they break.' },
+  startcup: { name: 'Starter cup', sys: 'Mechanical', tool: 'hands', under: ['flynut'], ext: false,
+    off: 'When you pull the rope, the recoil starter\'s pawls grab this cup and turn the crankshaft. The flywheel nut is all that holds it on, so it lifts off once the nut is out.' },
+  fan: { name: 'Cooling fan (plastic)', sys: 'Cooling', tool: 'hands', under: ['startcup'], ext: false,
+    off: 'The fan blows air through the shroud and over the cylinder fins. The same flywheel nut clamps it to the flywheel. Check for cracked or missing blades: a broken blade cuts the cooling air and throws the flywheel out of balance.' },
+  flywheel: { name: 'Flywheel', sys: 'Ignition', tool: 'puller', under: ['fan'], ext: false,
+    off: 'The flywheel sits on a taper, a cone-shaped fit that grips tight. The puller pushes on the crankshaft and draws the flywheel straight off.' },
+  key: { name: 'Flywheel key', sys: 'Ignition', tool: 'pliers', under: ['flywheel'], ext: false,
+    off: 'Check the key: if it is sheared or bent, the ignition timing is off.',
+    check: { q: 'Installing the flywheel: what must line up?', a: ['The keyway in the flywheel with the key in the crankshaft', 'The fins with the cylinder', 'Nothing, any position works'], c: 0, why: 'The key sets where the magnet passes the coil: the ignition timing.' } },
+
+  linkage: { name: 'Throttle and governor linkage', sys: 'Fuel', tool: 'pliers', under: [], ext: true,
+    off: 'Take a photo before unhooking the linkage. It only works hooked into the right holes.' },
+  aircover: { name: 'Air cleaner cover', sys: 'Fuel', tool: 'hands', under: [], ext: true,
+    off: 'A wing nut holds the cover on. No tools needed.' },
+  element: { name: 'Air filter element (foam)', sys: 'Fuel', tool: 'hands', under: ['aircover'], ext: false,
+    off: 'Foam element: wash it in warm soapy water, squeeze it dry, then work in a little clean engine oil and squeeze out the extra. (On engines that also have a paper element, the paper is replaced, never washed.)' },
+  aircase: { name: 'Air cleaner case', sys: 'Fuel', tool: 'socket', under: ['element'], ext: false,
+    off: 'The case is held on by nuts on the carburetor studs.' },
+  carb: { name: 'Carburetor', sys: 'Fuel', tool: 'hands', under: ['aircase', 'fuelline', 'linkage'], ext: true,
+    off: 'With the case, fuel line and linkage off, the carburetor slides off its studs. Keep the gaskets in order.' },
+  bowlbolt: { name: 'Float bowl bolt', sys: 'Fuel', tool: 'socket', under: ['carb'], ext: false,
+    off: 'On many carburetors this bolt has a small passage drilled through it that feeds the main nozzle, so keep it clean.' },
+  bowl: { name: 'Float bowl', sys: 'Fuel', tool: 'hands', under: ['bowlbolt'], ext: false,
+    off: 'Look in the bowl: water drops, rust or gummy varnish tell you about the fuel.' },
+  floatpin: { name: 'Float pin', sys: 'Fuel', tool: 'pliers', under: ['bowl'], ext: false,
+    off: 'The float pivots on this pin. Push it out gently, since the posts snap easily.' },
+  float: { name: 'Float and needle', sys: 'Fuel', tool: 'hands', under: ['floatpin'], ext: false,
+    off: 'Lift the float and the needle should shut off fuel completely. A worn needle floods the engine.' },
+  mainjet: { name: 'Main jet', sys: 'Fuel', tool: 'flat', under: ['bowl'], ext: false,
+    off: 'Hold the jet up to the light. You must see through it. Clean it with carb cleaner, never by poking it with wire, which enlarges the hole.' },
+
+  valvecover: { name: 'Valve cover', sys: 'Valve train', tool: 'socket', under: [], ext: true,
+    off: 'Under the cover are the rocker arms. Set the piston to TDC on compression before touching them.' },
+  rockernut: { name: 'Rocker arm lock nuts', sys: 'Valve train', tool: 'socket', under: ['valvecover'], ext: false, torque: 7,
+    off: 'The lock nuts hold the rocker pivots, which set the valve clearance.',
+    check: { q: 'Before tightening the lock nuts, set the valve clearance (cold) to:', a: ['Intake 0.10–0.15 mm, exhaust 0.15–0.20 mm', 'Intake 2 mm, exhaust 2 mm', 'No gap at all'], c: 0, why: 'Feeler gauge between rocker and valve stem with a slight drag. Hold the pivot, torque the lock nut, then re-check.' } },
+  rockers: { name: 'Rocker arms', sys: 'Valve train', tool: 'hands', under: ['rockernut'], ext: false,
+    off: 'Keep the intake and exhaust parts separate. Worn parts must go back where they came from.' },
+  pushrods: { name: 'Pushrods', sys: 'Valve train', tool: 'hands', under: ['rockers'], ext: false,
+    off: 'Roll each pushrod on a flat bench: a bent one wobbles.' },
+
+  muffler: { name: 'Muffler', sys: 'Compression', tool: 'socket', under: [], ext: true,
+    off: 'The muffler bolts to the exhaust port. Check that it is cold before you touch it.' },
+  headbolts: { name: 'Cylinder head bolts', sys: 'Compression', tool: 'socket', under: ['muffler', 'carb', 'pushrods', 'plug'], ext: true, torque: 26,
+    off: 'Loosen the head bolts a little at a time in a criss-cross pattern, so the head doesn\'t warp.' },
+  head: { name: 'Cylinder head', sys: 'Compression', tool: 'hands', under: ['headbolts'], ext: true,
+    off: 'If the head is stuck, tap it with a rubber mallet. Never pry between the head and the block.' },
+  gasket: { name: 'Head gasket', sys: 'Compression', tool: 'hands', under: ['head'], ext: false,
+    off: 'Head gaskets crush to seal, so a used one is always replaced.' },
+
+  dipstick: { name: 'Oil fill cap / dipstick', sys: 'Lubrication', tool: 'hands', under: [], ext: true,
+    off: 'Opening the fill cap lets air in so the oil drains fast.' },
+  drainplug: { name: 'Oil drain plug', sys: 'Lubrication', tool: 'socket', under: ['dipstick'], ext: true,
+    off: 'Drain into a pan. Used oil goes to recycling, never down the drain.',
+    check: { q: 'After the rebuild, fill the oil with:', a: ['SAE 10W-30, about 0.6 L, to the edge of the filler neck', 'Any amount of any oil', 'Gasoline'], c: 0, why: 'Right oil and right amount. Too little starves the parts; too much churns it into foam.' } },
+  oilalert: { name: 'Oil alert switch', sys: 'Lubrication', tool: 'socket', under: ['casecover'], ext: false,
+    off: 'It is bolted inside the crankcase, so the cover has to come off first. The float inside drops when oil is low and grounds the ignition.' },
+
+  casebolts: { name: 'Crankcase cover bolts', sys: 'Mechanical', tool: 'socket', under: ['drainplug'], ext: true, torque: 21,
+    off: 'Drain the oil first, or it pours out when the cover comes off.' },
+  casecover: { name: 'Crankcase cover', sys: 'Mechanical', tool: 'hands', under: ['casebolts'], ext: true,
+    off: 'Inside: the camshaft, the governor and the end of the crankshaft. Replace the cover gasket on rebuild.' },
+  cam: { name: 'Camshaft', sys: 'Valve train', tool: 'hands', under: ['casecover', 'pushrods'], ext: false,
+    off: 'Notice the timing marks on the cam gear and crank gear. Line them up to put it back.',
+    check: { q: 'Installing the camshaft: the timing marks on the cam gear and crank gear must…', a: ['Line up exactly', 'Be one tooth apart', 'Point away from each other'], c: 0, why: 'Even one tooth off and the valves open at the wrong time.' } },
+  rodbolts: { name: 'Connecting rod cap bolts', sys: 'Mechanical', tool: 'socket', under: ['casecover'], ext: false, torque: 10,
+    off: 'Mark the rod cap so it goes back the same way round.' },
+  rodcap: { name: 'Connecting rod cap', sys: 'Mechanical', tool: 'hands', under: ['rodbolts'], ext: false,
+    off: 'The cap and rod are machined as a pair, so a cap never goes on a different rod.' },
+  piston: { name: 'Piston and connecting rod', sys: 'Compression', tool: 'hands', under: ['rodcap', 'gasket'], ext: false,
+    off: 'Push the piston out the top of the cylinder. Don\'t scratch the cylinder wall with the rod.',
+    check: { q: 'Putting the piston back in, what squeezes the rings so they slide into the cylinder?', a: ['A ring compressor', 'Pliers', 'A hammer'], c: 0, why: 'A ring compressor squeezes the rings into their grooves so they slide in without breaking.' } },
+  crankshaft: { name: 'Crankshaft', sys: 'Mechanical', tool: 'hands', under: ['piston', 'cam', 'key'], ext: false,
+    off: 'The crankshaft slides out through the cover side. Check the bearings: they should spin smoothly, not gritty.' },
+};
+
+// Jobs: one per system. Each lists every part that has to come off for that job.
+window.JOBS = [
+  { id: 'ignition', title: 'Ignition: flywheel, key and coil', outcomes: '5.6, 5.7',
+    parts: ['plugwire', 'plug', 'recoil', 'fuelvalve', 'fuelline', 'tank', 'shroud', 'coil', 'flynut', 'startcup', 'fan', 'flywheel', 'key'] },
+  { id: 'fuel', title: 'Fuel: carburetor and air cleaner', outcomes: '6.7, 6.8',
+    parts: ['plugwire', 'fuelvalve', 'fuelline', 'linkage', 'aircover', 'element', 'aircase', 'carb', 'bowlbolt', 'bowl', 'floatpin', 'float', 'mainjet'] },
+  { id: 'valvetrain', title: 'Valve train: rockers and pushrods', outcomes: '7.3, 7.4',
+    parts: ['plugwire', 'valvecover', 'rockernut', 'rockers', 'pushrods'] },
+  { id: 'compression', title: 'Compression: cylinder head', outcomes: '8.4',
+    parts: ['plugwire', 'plug', 'fuelvalve', 'fuelline', 'linkage', 'aircover', 'element', 'aircase', 'carb', 'muffler', 'valvecover', 'rockernut', 'rockers', 'pushrods', 'headbolts', 'head', 'gasket'] },
+  { id: 'lubcool', title: 'Lubrication and cooling', outcomes: '9.7, 9.8',
+    parts: ['plugwire', 'dipstick', 'drainplug', 'casebolts', 'casecover', 'oilalert', 'recoil', 'fuelvalve', 'fuelline', 'tank', 'shroud'] },
+  { id: 'mechanical', title: 'Full teardown: down to the crankshaft', outcomes: '10.4, 10.5',
+    parts: Object.keys(window.PARTS).filter(p => !['bowlbolt', 'bowl', 'floatpin', 'float', 'mainjet', 'oilalert'].includes(p)) },
+];
+
+</script>
+<script>
+// Engine drawings for the teardown, traced from photos of the lab Pro-Point 212 (docs/photos/engine-bay/).
+// One view can't show every part, so there are four, like the photos: the pull-start end, the cylinder head side,
+// the output shaft end, and the carburetor on the bench. Every removable part is its own clickable group.
+// Each view's art list runs back to front: [partId or null (fixed engine), svg, behind?].
+// "behind" = the parts that hide it in this view (default: none for outside parts, its blockers for inside parts).
+window.EngineSVG = (function () {
+  const f = n => +n.toFixed(1);
+  const pt = (cx, cy, r, a) => `${f(cx + r * Math.cos(a))},${f(cy + r * Math.sin(a))}`;
+  const ring = (n, fn) => Array.from({ length: n }, (_, i) => fn(i, i / n * Math.PI * 2)).join('');
+  const hex = (x, y, r, fill = 'url(#gSteel)') => `<polygon points="${ring(6, (i, a) => pt(x, y, r, a + Math.PI / 6) + ' ')}" fill="${fill}" stroke="#000" stroke-width="1.5"/>`;
+  const bolt = (x, y, r, cap) => `<circle cx="${x}" cy="${y}" r="${f(r * 1.35)}" fill="url(#gSteel)" stroke="#000" stroke-width="1.5"/>${hex(x, y, r)}${cap ? `<circle cx="${x}" cy="${y}" r="${f(r * .55)}" fill="${cap}"/>` : ''}`;
+  const gear = (cx, cy, r, n, fill) => `<polygon points="${ring(n, (i, a) => { const s = Math.PI * 2 / n;
+    return [pt(cx, cy, r - 4, a), pt(cx, cy, r, a + s * .2), pt(cx, cy, r, a + s * .5), pt(cx, cy, r - 4, a + s * .7)].join(' ') + ' '; })}" fill="${fill}" stroke="#000" stroke-width="1.5"/>`;
+  const fins = (n, fn) => Array.from({ length: n }, (_, i) => fn(i)).join('');
+  const yellowCap = (x, y, rot) => `<g transform="translate(${x} ${y}) rotate(${rot})"><rect x="-8" y="-4" width="16" height="16" fill="url(#gAlu)" stroke="#000"/><rect x="-13" y="-22" width="26" height="22" rx="6" fill="url(#gYel)" stroke="#000" stroke-width="1.5"/><rect x="-3" y="-30" width="6" height="12" rx="2" fill="url(#gYel)" stroke="#000"/></g>`;
+
+  const DEFS = `<defs>
+    <linearGradient id="gAlu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef1f4"/><stop offset=".5" stop-color="#b4bcc5"/><stop offset="1" stop-color="#8a939c"/></linearGradient>
+    <linearGradient id="gAluD" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a3acb6"/><stop offset="1" stop-color="#5d6670"/></linearGradient>
+    <linearGradient id="gBlk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4d53"/><stop offset="1" stop-color="#18191c"/></linearGradient>
+    <linearGradient id="gTank" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa0a7"/><stop offset=".55" stop-color="#6c7178"/><stop offset="1" stop-color="#474b51"/></linearGradient>
+    <linearGradient id="gSteel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef0f3"/><stop offset="1" stop-color="#8d959e"/></linearGradient>
+    <linearGradient id="gYel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd84d"/><stop offset="1" stop-color="#cf9600"/></linearGradient>
+    <linearGradient id="gBrass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0cd6a"/><stop offset="1" stop-color="#9c741c"/></linearGradient>
+    <linearGradient id="gFoam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9d988f"/><stop offset="1" stop-color="#77736c"/></linearGradient>
+    <radialGradient id="gFan" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfd6dd"/></radialGradient>
+    <radialGradient id="gFly" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#85878a"/><stop offset="1" stop-color="#4b4d50"/></radialGradient>
+    <radialGradient id="gRec" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#c1c6cc"/><stop offset="1" stop-color="#7a8087"/></radialGradient>
+    <radialGradient id="gBowl" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#f1f3f5"/><stop offset="1" stop-color="#8f979f"/></radialGradient>
+    <pattern id="pFoam" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".9" fill="#5f5b55"/><circle cx="5" cy="4.5" r=".7" fill="#b0aaa1"/></pattern>
+  </defs>`;
+  const BENCH = `<rect x="0" y="468" width="800" height="42" fill="#15101f"/><line x1="0" y1="468" x2="800" y2="468" stroke="#000" stroke-width="3"/>`;
+
+  // ---------- pull-start end (fan centre 500,340) ----------
+  const FC = [500, 340];
+  const PULL = [
+    [null, `${BENCH}
+      <path d="M598,160 L660,122 L678,138 L640,180 L640,334 L612,334 L612,200 Z" fill="url(#gAlu)" stroke="#000" stroke-width="2"/>
+      <rect x="318" y="330" width="324" height="126" rx="18" fill="url(#gAlu)" stroke="#000" stroke-width="2"/>
+      <path d="M296,196 L424,236 L424,346 L296,322 Z" fill="url(#gAluD)" stroke="#000" stroke-width="2"/>
+      <rect x="306" y="246" width="34" height="34" rx="4" fill="url(#gAluD)" stroke="#000" stroke-width="2"/>
+      ${fins(7, i => `<line x1="298" y1="${206 + i * 17}" x2="422" y2="${245 + i * 15}" stroke="#000" stroke-width="7"/><line x1="298" y1="${206 + i * 17}" x2="422" y2="${245 + i * 15}" stroke="#ccd3da" stroke-width="4"/>`)}
+      <path d="M418,456 V306 Q418,228 500,224 Q596,228 606,300 V456 Z" fill="url(#gAluD)" stroke="#000" stroke-width="2"/>
+      <path d="M442,262 Q500,240 570,266 M440,430 Q500,452 584,428" fill="none" stroke="#5d6670" stroke-width="3"/>
+      <circle cx="${FC[0]}" cy="${FC[1]}" r="44" fill="url(#gAlu)" stroke="#000" stroke-width="2"/>
+      <circle cx="${FC[0]}" cy="${FC[1]}" r="27" fill="#2b2e33" stroke="#000" stroke-width="1.5"/><circle cx="${FC[0]}" cy="${FC[1]}" r="22" fill="none" stroke="#5a5f66" stroke-width="2"/>
+      ${[[359, 278], [359, 364]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="9" fill="url(#gAlu)" stroke="#000" stroke-width="1.5"/><circle cx="${x}" cy="${y}" r="3.5" fill="#2b2e33"/>`).join('')}
+      <rect x="298" y="452" width="364" height="16" rx="3" fill="url(#gAlu)" stroke="#000" stroke-width="2"/>`],
+    ['crankshaft', `<circle cx="${FC[0]}" cy="${FC[1]}" r="17" fill="url(#gSteel)" stroke="#000" stroke-width="2"/><circle cx="${FC[0]}" cy="${FC[1]}" r="6" fill="#2b2e33"/>`, ['flywheel']],
+    ['key', `<rect x="${FC[0] - 4}" y="${FC[1] - 24}" width="8" height="10" rx="1" fill="#6d747c" stroke="#000" stroke-width="1.5"/>`],
+    ['flywheel', `<circle cx="${FC[0]}" cy="${FC[1]}" r="124" fill="url(#gFly)" stroke="#000" stroke-width="2.5"/>
+      <path d="M${pt(...FC, 120, 3.4)} A120,120 0 0 1 ${pt(...FC, 120, 4.7)} L${pt(...FC, 100, 4.7)} A100,100 0 0 0 ${pt(...FC, 100, 3.4)} Z" fill="#a9afb5" stroke="#000"/>
+      <circle cx="${FC[0]}" cy="${FC[1]}" r="58" fill="none" stroke="#3b3d40" stroke-width="3"/>
+      <path d="M${FC[0] - 26},${FC[1] + 16} L${FC[0]},${FC[1] - 30} L${FC[0] + 26},${FC[1] + 16} Z" fill="#6a6c70" stroke="#000" stroke-linejoin="round" stroke-width="1.5"/>
+      ${ring(3, (i, a) => `<circle cx="${pt(...FC, 106, a + .9).split(',')[0]}" cy="${pt(...FC, 106, a + .9).split(',')[1]}" r="6" fill="#2a2c2f"/>`)}`],
+    ['coil', `<rect x="346" y="266" width="26" height="110" rx="3" fill="url(#gSteel)" stroke="#000" stroke-width="2"/>
+      <rect x="322" y="292" width="36" height="60" rx="5" fill="url(#gBlk)" stroke="#000" stroke-width="2"/>
+      ${bolt(359, 278, 6)}${bolt(359, 364, 6)}`, ['shroud']],
+    ['fan', `<circle cx="${FC[0]}" cy="${FC[1]}" r="118" fill="url(#gFan)" stroke="#000" stroke-width="2"/>
+      ${ring(26, (i, a) => `<path d="M${pt(...FC, 46, a)} Q${pt(...FC, 84, a + .16)} ${pt(...FC, 116, a + .3)}" fill="none" stroke="#aab4be" stroke-width="5" stroke-linecap="round"/>`)}
+      <circle cx="${FC[0]}" cy="${FC[1]}" r="46" fill="#e9edf1" stroke="#9aa4ae" stroke-width="2"/>`, ['shroud']],
+    ['startcup', `<circle cx="${FC[0]}" cy="${FC[1]}" r="38" fill="url(#gSteel)" stroke="#000" stroke-width="2"/><circle cx="${FC[0]}" cy="${FC[1]}" r="28" fill="#7c848c" stroke="#000"/>
+      ${ring(3, (i, a) => `<rect x="${FC[0] - 5}" y="${FC[1] - 38}" width="10" height="9" fill="#3a3d42" transform="rotate(${f(a * 180 / Math.PI)} ${FC[0]} ${FC[1]})"/>`)}`, ['shroud']],
+    ['flynut', `${hex(FC[0], FC[1], 14)}<circle cx="${FC[0]}" cy="${FC[1]}" r="6" fill="#4a4f55"/>`, ['shroud']],
+    ['plugwire', `<path d="M336,292 C330,244 326,214 314,182" fill="none" stroke="#111" stroke-width="8" stroke-linecap="round"/>`],
+    ['carb', `<rect x="262" y="236" width="54" height="62" rx="7" fill="url(#gAlu)" stroke="#000" stroke-width="2"/><rect x="266" y="232" width="24" height="9" rx="2" fill="#f2f2f2" stroke="#000"/><ellipse cx="289" cy="312" rx="25" ry="17" fill="url(#gBowl)" stroke="#000" stroke-width="2"/>${hex(289, 326, 6)}`, ['aircase']],
+    ['linkage', `<path d="M318,176 L612,168" stroke="#000" stroke-width="5"/><path d="M318,176 L612,168" stroke="#d9dee3" stroke-width="2.5"/>
+      <path d="M430,172 ${fins(9, i => `l5,${i % 2 ? 7 : -7} `)}" fill="none" stroke="#c9ced4" stroke-width="2.5"/>
+      <path d="M326,160 L364,164 L360,192 L330,188 Z" fill="url(#gSteel)" stroke="#000" stroke-width="1.5"/>`],
+    ['fuelline', `<path d="M374,152 C374,190 332,182 316,214 L302,240" fill="none" stroke="#000" stroke-width="10" stroke-linecap="round"/><path d="M374,152 C374,190 332,182 316,214 L302,240" fill="none" stroke="#2c2d30" stroke-width="7" stroke-linecap="round"/>`],
+    ['tank', `<rect x="352" y="42" width="290" height="114" rx="26" fill="url(#gTank)" stroke="#000" stroke-width="2.5"/>
+      <path d="M356,96 H638" stroke="#3b3f45" stroke-width="2"/><rect x="430" y="60" width="150" height="26" rx="6" fill="#1d1f22" stroke="#5c6168"/>
+      <ellipse cx="404" cy="42" rx="28" ry="10" fill="url(#gBlk)" stroke="#000" stroke-width="2"/>`],
+    ['shroud', `<g fill="url(#gBlk)" stroke="#000" stroke-width="2.5"><path d="M352,170 H560 V450 H352 Q330,450 330,428 V192 Q330,170 352,170 Z"/><circle cx="${FC[0]}" cy="${FC[1]}" r="136"/></g>
+      <path d="M352,172 H560 V450 H352 Q332,450 332,428 V192 Q332,172 352,172 Z" fill="#1d1f23"/><circle cx="${FC[0]}" cy="${FC[1]}" r="134" fill="#1d1f23"/>`],
+    ['recoil', `<circle cx="${FC[0]}" cy="${FC[1]}" r="118" fill="url(#gRec)" stroke="#000" stroke-width="2.5"/>
+      ${ring(14, (i, a) => `<path d="M${pt(...FC, 60, a)} Q${pt(...FC, 82, a + .1)} ${pt(...FC, 102, a + .05)}" fill="none" stroke="#1b1c1f" stroke-width="10" stroke-linecap="round"/>`)}
+      <circle cx="${FC[0]}" cy="${FC[1]}" r="44" fill="#151618" stroke="#000" stroke-width="2"/><rect x="${FC[0] - 22}" y="${FC[1] - 12}" width="44" height="24" rx="3" fill="#2b2d31" stroke="#6b7078"/>
+      ${ring(3, (i, a) => bolt(+pt(...FC, 108, a - 1.2).split(',')[0], +pt(...FC, 108, a - 1.2).split(',')[1], 5))}
+      <path d="M598,262 L612,254" stroke="#222" stroke-width="4"/><path d="M604,212 L624,208 L634,318 L614,322 Z" fill="url(#gBlk)" stroke="#000" stroke-width="2" stroke-linejoin="round"/>`],
+    ['aircase', `<path d="M150,108 H316 V372 Q316,426 266,430 H178 Q150,428 150,398 Z" fill="url(#gBlk)" stroke="#000" stroke-width="2.5"/>
+      <rect x="222" y="224" width="86" height="70" rx="6" fill="#0d0e10" stroke="#000"/>
+      <rect x="166" y="214" width="36" height="74" rx="3" fill="#25272b" stroke="#6b7078"/><path d="M172,232 l12,-10 m0,10 l12,-10 M172,262 h24 M172,274 h24" stroke="#c9ced4" stroke-width="2"/>
+      ${fins(4, i => `<path d="M168,${392 + i * 9} H300" stroke="#34373c" stroke-width="3"/>`)}${bolt(172, 330, 5)}${bolt(210, 316, 5)}`, []],
+    ['element', `<rect x="158" y="70" width="154" height="42" rx="8" fill="url(#gFoam)" stroke="#000" stroke-width="2"/><rect x="158" y="70" width="154" height="42" rx="8" fill="url(#pFoam)"/>`],
+    ['aircover', `<path d="M140,114 V58 Q140,24 176,24 H318 Q352,24 352,58 V114 Z" fill="url(#gBlk)" stroke="#000" stroke-width="2.5"/>
+      <rect x="132" y="98" width="228" height="20" rx="8" fill="url(#gBlk)" stroke="#000" stroke-width="2"/><rect x="200" y="36" width="116" height="44" rx="4" fill="#25272b" stroke="#6b7078"/>
+      ${fins(4, i => `<path d="M210,${48 + i * 8} H${i ? 300 : 260}" stroke="#c9ced4" stroke-width="2"/>`)}`],
+    ['fuelvalve', `<rect x="262" y="262" width="40" height="10" rx="3" fill="#ededed" stroke="#000" stroke-width="1.5"/><circle cx="282" cy="267" r="7" fill="#2b2e33" stroke="#000"/>`],
+  ];
+
+  // ---------- cylinder head side (bore centre 385,292) ----------
+  const HEAD = [
+    [null, `${BENCH}<rect x="284" y="452" width="214" height="16" rx="3" fill="url(#gAlu)" stroke="#000" stroke-width="2"/>
+      <rect x="304" y="388" width="174" height="68" rx="8" fill="url(#gAlu)" stroke="#000" stroke-width="2"/>
+      ${fins(12, i => `<rect x="266" y="${196 + i * 16}" width="248" height="8" rx="3" fill="url(#gAluD)" stroke="#000"/>`)}
+      <rect x="290" y="188" width="190" height="214" rx="14" fill="#aab2bb" stroke="#000" stroke-width="2"/>
+      <circle cx="385" cy="292" r="72" fill="#2c2f34" stroke="#000" stroke-width="2"/>
+      ${[[308, 206], [462, 206], [308, 382], [462, 382]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="#2c2f34"/>`).join('')}`],
+    ['piston', `<circle cx="385" cy="292" r="66" fill="url(#gSteel)" stroke="#000" stroke-width="2"/><circle cx="385" cy="292" r="58" fill="none" stroke="#9aa2ab" stroke-width="1.5"/>
+      <ellipse cx="362" cy="286" rx="14" ry="11" fill="none" stroke="#8a929b" stroke-width="1.5"/><ellipse cx="408" cy="286" rx="14" ry="11" fill="none" stroke="#8a929b" stroke-width="1.5"/>`, ['head']],
+    ['gasket', `<path fill-rule="evenodd" d="M304,190 H466 Q478,190 478,202 V388 Q478,400 466,400 H304 Q292,400 292,388 V202 Q292,190 304,190 Z M385,218 a74,74 0 1,0 0.1,0 Z" fill="#666b72" stroke="#000" stroke-width="2"/>
+      ${[[308, 206], [462, 206], [308, 382], [462, 382]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="#2c2f34"/>`).join('')}
+      <circle cx="385" cy="292" r="78" fill="none" stroke="#c6ccd2" stroke-width="2"/>`],
+    ['head', `<rect x="284" y="180" width="202" height="226" rx="16" fill="url(#gAlu)" stroke="#000" stroke-width="2.5"/>
+      <rect x="312" y="214" width="146" height="172" rx="14" fill="#33363b" stroke="#000" stroke-width="2"/>
+      <circle cx="353" cy="250" r="16" fill="url(#gSteel)" stroke="#000"/><circle cx="417" cy="250" r="16" fill="url(#gSteel)" stroke="#000"/>
+      <path d="M296,236 L284,236 M296,268 L284,268 M474,236 L486,236 M474,268 L486,268" stroke="#000" stroke-width="2"/>`],
+    ['pushrods', `<rect x="338" y="326" width="94" height="12" rx="3" fill="url(#gSteel)" stroke="#000"/>
+      <path d="M353,330 V384 M417,330 V384" stroke="#000" stroke-width="9"/><path d="M353,330 V384 M417,330 V384" stroke="#cfd5db" stroke-width="5"/>`, ['valvecover']],
+    ['rockers', `<rect x="341" y="236" width="24" height="108" rx="11" fill="url(#gSteel)" stroke="#000" stroke-width="2"/><rect x="405" y="236" width="24" height="108" rx="11" fill="url(#gSteel)" stroke="#000" stroke-width="2"/>
+      <circle cx="353" cy="334" r="6" fill="#8d959e" stroke="#000"/><circle cx="417" cy="334" r="6" fill="#8d959e" stroke="#000"/>`, ['valvecover']],
+    ['rockernut', `${hex(353, 288, 12)}<circle cx="353" cy="288" r="4.5" fill="#5b636b"/>${hex(417, 288, 12)}<circle cx="417" cy="288" r="4.5" fill="#5b636b"/>`],
+    ['headbolts', `${bolt(304, 198, 9, '#2747c9')}${bolt(466, 198, 9, '#2747c9')}${bolt(330, 368, 9, '#2747c9')}${bolt(440, 368, 9, '#2747c9')}`],
+    ['plug', `<rect x="442" y="154" width="12" height="20" rx="3" fill="#f4f4f4" stroke="#000" stroke-width="1.5"/>${hex(448, 180, 11)}`],
+    ['plugwire', `<path d="M448,166 L472,116" stroke="#000" stroke-width="24" stroke-linecap="round"/><path d="M448,166 L472,116" stroke="#c8ccd2" stroke-width="20" stroke-linecap="round"/>
+      <path d="M472,116 C484,86 540,78 560,118" fill="none" stroke="#111" stroke-width="9" stroke-linecap="round"/>`],
+    ['valvecover', `<path d="M318,214 H452 Q462,214 465,224 L470,380 Q470,392 458,392 H312 Q300,392 300,380 L305,224 Q308,214 318,214 Z" fill="url(#gSteel)" stroke="#000" stroke-width="2.5"/>
+      <path d="M326,232 H444 L450,372 H320 Z" fill="none" stroke="#8d959e" stroke-width="2"/>
+      <text x="385" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="46" fill="none" stroke="#7d858e" stroke-width="2">OHV</text>
+      ${bolt(314, 226, 6)}${bolt(456, 226, 6)}${bolt(312, 380, 6)}${bolt(458, 380, 6)}`],
+    ['muffler', `<path d="M262,182 H282 V222 H292 V240 H262 Z" fill="url(#gBlk)" stroke="#000" stroke-width="2"/>
+      <path d="M150,48 Q150,22 176,22 H304 Q330,22 330,48 V186 H150 Z" fill="url(#gBlk)" stroke="#000" stroke-width="2.5"/>
+      ${fins(16, i => `<ellipse cx="${172 + (i % 8) * 20}" cy="${42 + Math.floor(i / 8) * 26}" rx="7" ry="10" fill="#0b0c0e"/>`)}
+      <circle cx="240" cy="148" r="26" fill="#0b0c0e" stroke="#4d5157" stroke-width="2"/><path d="M220,138 H260 M220,148 H260 M220,158 H260 M230,128 V168 M240,124 V172 M250,128 V168" stroke="#4d5157" stroke-width="1.5"/>`],
+    ['carb', `<rect x="486" y="286" width="64" height="64" rx="8" fill="url(#gAlu)" stroke="#000" stroke-width="2"/><ellipse cx="518" cy="364" rx="27" ry="20" fill="url(#gBowl)" stroke="#000" stroke-width="2"/>${hex(518, 382, 7)}`],
+    ['linkage', `<path d="M478,198 L562,188" stroke="#000" stroke-width="5"/><path d="M478,198 L562,188" stroke="#d9dee3" stroke-width="2.5"/><path d="M500,182 L530,180 L528,204 L502,206 Z" fill="url(#gSteel)" stroke="#000"/>`],
+    ['aircase', `<rect x="548" y="110" width="104" height="292" rx="14" fill="url(#gBlk)" stroke="#000" stroke-width="2.5"/>${bolt(600, 380, 6)}`, []],
+    ['aircover', `<rect x="470" y="30" width="192" height="88" rx="24" fill="url(#gBlk)" stroke="#000" stroke-width="2.5"/><path d="M500,52 H632 M500,62 H632" stroke="#34373c" stroke-width="3"/>`],
+    ['dipstick', yellowCap(296, 424, -20)],
+  ];
+
+  // ---------- output shaft end (crank centre 305,345) ----------
+  // Crank gear 18 teeth, cam gear 36: the cam turns once for every two crank turns. Their timing dots face each other.
+  const CR = [305, 345], PIN = [330, 322], PA = Math.atan2(PIN[1] - CR[1], PIN[0] - CR[0]), U = [-0.766, 0.643], CAM = [f(CR[0] + U[0] * 66), f(CR[1] + U[1] * 66)];
+  const SHAFT = [
+    [null, `${BENCH}<rect x="168" y="452" width="304" height="16" rx="3" fill="url(#gAlu)" stroke="#000" stroke-width="2"/>
+      <path d="M392,252 L560,170 L616,252 L446,334 Z" fill="url(#gAluD)" stroke="#000" stroke-width="2"/>
+      ${fins(7, i => { const x = 420 + i * 24, y = 280 - i * 15; return `<line x1="${x - 30}" y1="${y - 40}" x2="${x + 32}" y2="${y + 44}" stroke="#000" stroke-width="7"/><line x1="${x - 30}" y1="${y - 40}" x2="${x + 32}" y2="${y + 44}" stroke="#ccd3da" stroke-width="4"/>`; })}
+      <path d="M446,300 L560,262 L566,388 L452,404 Z" fill="#8f969e" stroke="#000" stroke-width="2"/>
+      <rect x="188" y="218" width="256" height="240" rx="22" fill="url(#gAluD)" stroke="#000" stroke-width="2"/>
+      <rect x="205" y="236" width="224" height="206" rx="28" fill="#23262b" stroke="#565c63" stroke-width="3"/>
+      <rect x="440" y="428" width="38" height="28" rx="5" fill="url(#gAluD)" stroke="#000" stroke-width="2"/>
+      ${gear(392, 404, 22, 18, '#1f2023')}<circle cx="392" cy="404" r="6" fill="#55595f"/>`],
+    ['crankshaft', `<path d="M${pt(...CR, 58, PA + Math.PI / 2)} A58,58 0 0 1 ${pt(...CR, 58, PA + Math.PI * 1.5)} Z" fill="#55585d" stroke="#000" stroke-width="2"/>
+      <circle cx="${PIN[0]}" cy="${PIN[1]}" r="15" fill="#55585d" stroke="#000" stroke-width="2"/>
+      ${gear(...CR, 24, 18, 'url(#gSteel)')}<circle cx="${CR[0]}" cy="${CR[1]}" r="13" fill="url(#gSteel)" stroke="#000"/>
+      <circle cx="${f(CR[0] + U[0] * 17)}" cy="${f(CR[1] + U[1] * 17)}" r="3.5" fill="#d23b3b"/>`, ['casecover']],
+    ['piston', `<path d="M${PIN[0]},${PIN[1]} L404,264" stroke="#000" stroke-width="22" stroke-linecap="round"/><path d="M${PIN[0]},${PIN[1]} L404,264" stroke="#aeb5bd" stroke-width="18" stroke-linecap="round"/>`, ['casecover']],
+    ['rodcap', `<rect x="${PIN[0] - 25}" y="${PIN[1] - 12}" width="50" height="24" rx="8" fill="#8f979f" stroke="#000" stroke-width="2" transform="rotate(-38 ${PIN[0]} ${PIN[1]})"/>`, ['casecover']],
+    ['rodbolts', `${hex(f(PIN[0] + 16), f(PIN[1] - 12.3), 6)}${hex(f(PIN[0] - 16), f(PIN[1] + 12.3), 6)}`],
+    ['cam', `${gear(...CAM, 46, 36, 'url(#gSteel)')}<circle cx="${CAM[0]}" cy="${CAM[1]}" r="28" fill="none" stroke="#9aa2ab" stroke-width="2"/><circle cx="${CAM[0]}" cy="${CAM[1]}" r="11" fill="#6b737b" stroke="#000"/>
+      <circle cx="${f(CAM[0] - U[0] * 37)}" cy="${f(CAM[1] - U[1] * 37)}" r="3.5" fill="#d23b3b"/>`, ['casecover']],
+    ['oilalert', `<rect x="212" y="258" width="32" height="42" rx="7" fill="url(#gBlk)" stroke="#000" stroke-width="2"/>${hex(228, 254, 6)}<path d="M242,264 C256,254 266,248 286,250" fill="none" stroke="#111" stroke-width="3"/>`],
+    ['casecover', `<rect x="198" y="226" width="238" height="226" rx="26" fill="url(#gAlu)" stroke="#000" stroke-width="2.5"/>
+      <rect x="258" y="298" width="94" height="94" rx="10" fill="#c6ccd3" stroke="#000" stroke-width="1.5"/>
+      ${[[270, 310], [340, 310], [270, 380], [340, 380]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="#3a3e44"/>`).join('')}
+      <circle cx="${CR[0]}" cy="${CR[1]}" r="30" fill="#1b1c1f" stroke="#000"/><circle cx="${CR[0]}" cy="${CR[1]}" r="18" fill="url(#gSteel)" stroke="#000" stroke-width="2"/>
+      <rect x="${CR[0] - 3}" y="${CR[1] - 18}" width="6" height="9" fill="#30343a"/><circle cx="${CR[0]}" cy="${CR[1]}" r="5" fill="#30343a"/>`],
+    ['casebolts', [[214, 242], [420, 242], [208, 340], [426, 340], [214, 436], [420, 436]].map(([x, y]) => bolt(x, y, 8, '#2747c9')).join('')],
+    ['dipstick', yellowCap(186, 420, -55) + yellowCap(452, 412, 55)],
+    ['drainplug', bolt(459, 442, 8)],
+    ['muffler', `<path d="M612,178 H676 Q690,178 690,192 V300 H612 Z" fill="url(#gBlk)" stroke="#000" stroke-width="2.5"/>${fins(3, i => `<ellipse cx="${636 + i * 18}" cy="236" rx="5" ry="9" fill="#0b0c0e"/>`)}`],
+    ['fuelline', `<path d="M398,186 C430,200 450,206 470,220" fill="none" stroke="#2c2d30" stroke-width="8" stroke-linecap="round"/>`],
+    ['tank', `<rect x="170" y="30" width="240" height="168" rx="24" fill="url(#gTank)" stroke="#000" stroke-width="2.5"/><path d="M174,118 H406" stroke="#3b3f45" stroke-width="2"/>
+      <ellipse cx="290" cy="30" rx="34" ry="11" fill="url(#gBlk)" stroke="#000" stroke-width="2"/>`],
+    ['aircase', `<rect x="520" y="138" width="92" height="72" rx="10" fill="url(#gBlk)" stroke="#000" stroke-width="2.5"/>`, []],
+    ['aircover', `<rect x="470" y="26" width="212" height="122" rx="24" fill="url(#gBlk)" stroke="#000" stroke-width="2.5"/>${fins(5, i => `<rect x="${500 + i * 34}" y="62" width="20" height="44" rx="6" fill="#0b0c0e"/>`)}`],
+  ];
+
+  // ---------- carburetor on the bench, float bowl side up (centre 400,270) ----------
+  const BENCHV = [
+    [null, `<rect x="110" y="40" width="580" height="430" rx="16" fill="#1c1a22" stroke="#000" stroke-width="3"/>
+      <rect x="236" y="218" width="68" height="104" rx="8" fill="url(#gAlu)" stroke="#000" stroke-width="2"/><circle cx="262" cy="270" r="22" fill="#2b2e33" stroke="#000"/>
+      <rect x="382" y="128" width="36" height="40" rx="6" fill="url(#gAlu)" stroke="#000" stroke-width="2"/>
+      <circle cx="400" cy="270" r="104" fill="url(#gAlu)" stroke="#000" stroke-width="2.5"/><circle cx="400" cy="270" r="86" fill="#2b2e33" stroke="#000" stroke-width="5"/>
+      <circle cx="400" cy="270" r="17" fill="url(#gAlu)" stroke="#000" stroke-width="2"/>
+      <text x="400" y="452" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif" font-size="15" fill="#c3b2e6">Carburetor upside down on the bench, float bowl side up</text>`],
+    ['mainjet', `${hex(400, 270, 9, 'url(#gBrass)')}<path d="M394,270 H406" stroke="#5b4210" stroke-width="2"/>`],
+    ['float', `<path fill-rule="evenodd" d="M${pt(400, 270, 62, 2.0)} A62,62 0 1 1 ${pt(400, 270, 62, 1.14)} L${pt(400, 270, 30, 1.14)} A30,30 0 1 0 ${pt(400, 270, 30, 2.0)} Z" fill="#eef1f4" stroke="#9aa4ae" stroke-width="2"/>
+      <rect x="392" y="196" width="16" height="20" rx="3" fill="#eef1f4" stroke="#9aa4ae" stroke-width="2"/><rect x="397" y="186" width="6" height="12" fill="#6b737b"/>`, ['bowl']],
+    ['floatpin', `<path d="M350,206 H450" stroke="#000" stroke-width="7" stroke-linecap="round"/><path d="M350,206 H450" stroke="#d3d8de" stroke-width="4" stroke-linecap="round"/>`],
+    ['bowl', `<circle cx="400" cy="270" r="84" fill="url(#gBowl)" stroke="#000" stroke-width="2.5"/><circle cx="400" cy="270" r="62" fill="none" stroke="#9aa2ab" stroke-width="2"/>
+      <path d="M346,250 Q400,200 454,250" fill="none" stroke="#b9c0c7" stroke-width="3"/>${bolt(452, 302, 6)}`, []],
+    ['bowlbolt', `<circle cx="400" cy="270" r="21" fill="url(#gSteel)" stroke="#000" stroke-width="1.5"/>${hex(400, 270, 15)}`],
+  ];
+
+  const VIEWS = [
+    { id: 'pull', label: 'Pull-start end', art: PULL },
+    { id: 'head', label: 'Cylinder head side', art: HEAD },
+    { id: 'shaft', label: 'Output shaft end', art: SHAFT },
+    { id: 'bench', label: 'Carburetor on the bench', art: BENCHV, needs: ['carb'] },
+  ];
+  const V = id => VIEWS.find(v => v.id === id);
+  const behind = ([id, , b]) => b || (PARTS[id].ext ? [] : PARTS[id].under);
+  const usable = (v, off) => !v.needs || v.needs.every(n => off.has(n));
+  const shown = (entry, off) => !off.has(entry[0]) && behind(entry).every(b => off.has(b));
+  // Views worth offering for a job: usable now, and showing at least one of the job's parts.
+  function views(scope, off) { return VIEWS.filter(v => usable(v, off) && v.art.some(e => e[0] && scope.includes(e[0]))).map(v => v.id); }
+  const has = (view, id) => V(view).art.some(e => e[0] === id);
+  const shows = (view, id, off) => usable(V(view), off) && V(view).art.some(e => e[0] === id && shown(e, off));
+
+  // opts: { view, scope: [partIds in the job], off: Set of removed parts, sel: partId, flash: partId }
+  function render(opts) {
+    const v = V(opts.view), scope = new Set(opts.scope), off = opts.off;
+    let out = '';
+    for (const e of v.art) {
+      const [id, svg] = e;
+      if (!id) { out += svg; continue; }
+      if (!shown(e, off)) continue;
+      const cls = ['part', scope.has(id) ? '' : 'faded', opts.sel === id ? 'sel' : '', opts.flash === id ? 'flash' : ''].join(' ');
+      out += `<g class="${cls}" data-part="${id}"><title>${PARTS[id].name}</title>${svg}</g>`;
+    }
+    return `<svg class="engine-svg" viewBox="0 0 800 510" role="img" aria-label="Engine: ${v.label}">${DEFS}${out}
+      <text x="790" y="496" text-anchor="end" fill="#c3b2e6" font-family="Atkinson Hyperlegible, sans-serif" font-size="13">${v.label} · drawn from the lab Pro-Point 212</text></svg>`;
+  }
+  return { render, views, has, shows, VIEWS };
+})();
+
+</script>
+<script>
+// ENGINE BAY — main app. Data lives in data-*.js; save format in pengsave.js.
+(function () {
+const E = window.ENGINE_GX;
+const SCORING = { wastedTest: 4, wrongFault: 20, wrongRepair: 15, teardownError: 3 };
+const CERT_CASES = 3, CERT_NEEDS = 3, REMIND_MIN = 10;
+
+let S = null, dirty = false, busy = null; // busy = a case/teardown/measure run in progress
+let tab = 'home';
+const $ = s => document.querySelector(s);
+const app = () => $('#app');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const sysVar = s => `var(--sys-${s.toLowerCase().split(' ')[0]})`;
+const shuffle = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const now = () => new Date().toISOString();
+
+// ================= save =================
+function blank(name, cls) {
+  return { v: 2, app: 'engine-bay', student: { name, cls }, created: now(), saved: null, saveCount: 0,
+    learn: {}, teardown: {}, measure: { attempts: 0, best: null }, practice: {}, cert: { status: 'none', cases: [], results: {} }, log: [] };
+}
+function upgrade(d) { // v1 files had no learn/teardown/measure
+  d.learn ||= {}; d.teardown ||= {}; d.measure ||= { attempts: 0, best: null }; d.practice ||= {}; d.cert ||= { status: 'none', cases: [], results: {} }; d.log ||= []; d.v = 2; return d;
+}
+function logEvent(ev) { S.log.push({ t: now(), ev }); if (S.log.length > 500) S.log.shift(); }
+function markDirty() { dirty = true; header(); }
+async function save() {
+  S.saved = now(); S.saveCount++;
+  const fname = (S.student.name.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '') || 'student') + '-EngineBay.peng';
+  const r = await PengSave.saveToFile(S, fname);
+  if (r === 'cancelled') { S.saveCount--; return; }
+  dirty = false; header(); banner(r === 'saved' ? 'Saved.' : 'Downloaded: move it into your Drive folder.');
+}
+window.ebSave = save;
+function banner(msg, ms = 3500) { const b = $('#banner'); b.textContent = msg; b.classList.add('show'); clearTimeout(banner.t); banner.t = setTimeout(() => b.classList.remove('show'), ms); }
+setInterval(() => { if (S && dirty) banner('Save your file now! (SAVE, top right)', 8000); }, REMIND_MIN * 60000);
+window.addEventListener('beforeunload', e => { if (S && (dirty || busy)) { e.preventDefault(); e.returnValue = ''; } });
+
+function header() {
+  $('#who').textContent = S ? `${S.student.name} · ${S.student.cls}` : '';
+  $('#saveBtn').classList.toggle('hidden', !S);
+  const st = $('#savestate');
+  st.textContent = !S ? '' : dirty ? 'UNSAVED' : (S.saved ? 'Saved ' + new Date(S.saved).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : '');
+  st.classList.toggle('dirty', !!(S && dirty));
+  const tabs = [['home', 'Home'], ['learn', 'Learn'], ['teardown', 'Teardown'], ['measure', 'Measure'], ['diagnose', 'Diagnose'], ['cert', 'Certify'], ['results', 'My results']];
+  $('#tabs').innerHTML = S ? tabs.map(([k, l]) => `<button class="eb-tab ${tab === k ? 'on' : ''}" data-tab="${k}">${l}</button>`).join('') : '';
+  $('#tabs').querySelectorAll('[data-tab]').forEach(b => b.onclick = () => go(b.dataset.tab));
+}
+function go(t) {
+  if (busy && !confirm('Leave this activity? Progress on it will be lost.')) return;
+  busy = null; tab = t; header();
+  ({ home, learn: learnList, teardown: jobList, measure: measureStart, diagnose: caseList, cert: certHome, results })[t]();
+  window.scrollTo(0, 0);
+}
+function openSpec() {
+  const L = { plugGap: 'Spark plug gap', valveIntake: 'Valve clearance: intake', valveExhaust: 'Valve clearance: exhaust', oil: 'Oil', compression: 'Compression (hand pull)', airGap: 'Coil air gap', torque: 'Torque' };
+  $('#specTable').innerHTML = Object.entries(E.SPEC).map(([k, v]) => `<tr><td>${L[k] || k}</td><td>${esc(v)}</td></tr>`).join('');
+  $('#specDialog').showModal();
+}
+window.ebSpec = openSpec;
+
+// ================= start =================
+function start() {
+  header();
+  app().innerHTML = `
+  <div class="win" style="max-width:580px;margin:40px auto">
+    <span class="label">PE3201 · Small engines</span>
+    <h2>Welcome to the Engine Bay</h2>
+    <p class="muted">Everything you do is kept in your save file. Open it at the start of every class, and save it before you leave.</p>
+    <button class="btn primary" id="openBtn" style="width:100%;margin:8px 0 22px">Open my save file</button>
+    <span class="label">First time? Make a new file</span>
+    <label class="f" for="nm">Full name</label><input id="nm" autocomplete="name">
+    <label class="f" for="cls">Class / period</label><input id="cls" placeholder="e.g. PE3201 Period 2">
+    <button class="btn" id="newBtn" style="width:100%;margin-top:16px">Create my file</button>
+    <p class="muted" id="startMsg"></p>
+  </div>`;
+  $('#openBtn').onclick = () => $('#fileInput').click();
+  $('#newBtn').onclick = () => {
+    const nm = $('#nm').value.trim(), cls = $('#cls').value.trim();
+    if (nm.length < 3 || !cls) { $('#startMsg').textContent = 'Type your full name and class.'; return; }
+    S = blank(nm, cls); logEvent('created'); markDirty(); go('home');
+    banner('File created: press SAVE (top right) now.');
+  };
+}
+async function openFile(e) {
+  const f = e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  try {
+    const { data, valid } = await PengSave.decode(await f.text());
+    if (data.app !== 'engine-bay') throw new Error('That is not an Engine Bay file.');
+    if (!valid) data.tampered = true;
+    S = upgrade(data); logEvent('opened'); dirty = false; go('home');
+  } catch (err) { alert('Could not open that file: ' + err.message); }
+}
+
+// ================= home =================
+const learnDone = () => LEARN.filter(m => (S.learn[m.id] || {}).passed).length;
+const jobsDone = () => JOBS.filter(j => (S.teardown[j.id] || {}).best != null).length;
+const casesDone = () => Object.values(S.practice).filter(p => p.best != null).length;
+function home() {
+  const tile = (t, k, desc, prog, label) => `<div class="win" style="display:flex;flex-direction:column;gap:8px"><span class="label">${label}</span><h3 style="margin:0">${t}</h3><p class="muted" style="margin:0;flex:1">${desc}</p>
+    <div class="row"><span class="readout"><span class="k">Done</span><span class="v">${prog}</span></span><div class="eb-spacer"></div><button class="btn primary" data-go="${k}">Open</button></div></div>`;
+  const c = S.cert;
+  app().innerHTML = `<div class="grid">
+    ${tile('Learn', 'learn', 'How each engine system works, with a 5-question check.', `${learnDone()}/${LEARN.length}`, 'Step 1')}
+    ${tile('Teardown & Rebuild', 'teardown', 'Take each system apart in the right order with the right tool, then put it back together.', `${jobsDone()}/${JOBS.length}`, 'Step 2')}
+    ${tile('Measure', 'measure', 'Use a plug gauge, feeler gauge, caliper and compression gauge, and judge each reading against spec.', S.measure.best != null ? S.measure.best + '%' : '–', 'Step 3')}
+    ${tile('Diagnose', 'diagnose', 'Real shop cases: read the complaint, run tests, find the fault, fix it.', `${casesDone()}/${E.CASES.length}`, 'Step 4')}
+    ${tile('Certification', 'cert', `${CERT_CASES} random cases, one try each, no hints. This is marked.`, c.status === 'done' ? c.score + '%' : c.status === 'in_progress' ? '…' : '–', 'Final')}
+    ${tile('My results', 'results', 'Everything you have done, on one screen. Show it to your teacher to get your mark.', c.status === 'done' ? c.score + '%' : '–', 'Show your teacher')}
+  </div>
+  ${S.tampered ? '<div class="callout bad">This file was changed outside Engine Bay. Your teacher will see that.</div>' : ''}`;
+  app().querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
+}
+
+// ================= MY RESULTS (the student shows this screen to the teacher) =================
+const when = iso => iso ? new Date(iso).toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+function results() {
+  const c = S.cert, ro = (k, v) => `<span class="readout" style="flex:1"><span class="k">${k}</span><span class="v">${v}</span></span>`;
+  const cert = c.status === 'done' ? `${c.score}%` : c.status === 'in_progress' ? 'Not finished' : 'Not done yet';
+  app().innerHTML = `<div class="win" style="max-width:700px;margin:12px auto">
+    <span class="label">My results · show your teacher this screen</span>
+    <h2 style="margin:4px 0 0">${esc(S.student.name)}</h2>
+    <p class="muted" style="margin:0 0 8px">${esc(S.student.cls)}</p>
+    ${S.tampered ? '<div class="callout bad"><b>WARNING: this file was changed outside Engine Bay.</b> These results may not be real.</div>' : ''}
+    <div style="text-align:center;margin:4px 0 10px"><span class="label">Certification (marked)</span><div class="score">${cert}</div>
+      ${c.status === 'done' ? `<p style="margin:6px 0 0;font-size:15px">${c.cases.map(id => `${esc(caseById(id).title)}: <b>${c.results[id].score}%</b>`).join('<br>')}</p>
+      <p class="muted" style="margin:4px 0 0">Finished ${when(c.finishedAt)}</p>` : ''}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      ${ro('Learn checks passed', `${learnDone()}/${LEARN.length}`)}
+      ${ro('Teardown jobs done', `${jobsDone()}/${JOBS.length}`)}
+      ${ro('Measure best', S.measure.best != null ? S.measure.best + '%' : '–')}
+      ${ro('Practice cases solved', `${casesDone()}/${E.CASES.length}`)}
+    </div>
+    <p class="muted" style="margin:10px 0 0;text-align:center">Screen shown <span id="resClock"></span></p></div>`;
+  const tick = () => { const el = $('#resClock'); if (!el) return clearInterval(tick.id); el.textContent = when(now()); };
+  tick(); tick.id = setInterval(tick, 15000);
+}
+
+// ================= LEARN =================
+function learnList() {
+  app().innerHTML = `<div class="win"><span class="label">Learn</span><h2>Engine systems</h2><p class="muted">Read each one, then pass its check (4 out of 5). Do these before the teardown for each system.</p>
+    ${LEARN.map(m => { const r = S.learn[m.id] || {};
+      return `<div class="item"><div class="t"><b>${esc(m.title)}</b><div class="muted" style="font-size:14px">Outcomes ${m.outcomes}${r.best != null ? ` · Best check: ${r.best}/5` : ''}</div></div>${r.passed ? '<span class="badge good">PASSED</span>' : ''}<button class="btn" data-m="${m.id}">${r.best != null ? 'Review' : 'Start'}</button></div>`; }).join('')}</div>`;
+  app().querySelectorAll('[data-m]').forEach(b => b.onclick = () => learnPage(b.dataset.m, 0));
+}
+function renderBody(body) {
+  return body.map(x => Array.isArray(x) ? `<ul>${x.map(li => `<li>${li}</li>`).join('')}</ul>` : `<p>${x}</p>`).join('');
+}
+function learnPage(id, i) {
+  const m = LEARN.find(x => x.id === id), n = m.pages.length;
+  if (i >= n) return learnQuiz(id);
+  busy = null;
+  const pg = m.pages[i];
+  app().innerHTML = `<div class="win" style="max-width:820px;margin:0 auto">
+    <div class="row"><span class="label" style="margin:0">${esc(m.title)} · ${i + 1} of ${n}</span><div class="eb-spacer"></div><button class="btn" id="lback">All systems</button></div>
+    <div class="pager" style="margin-top:12px">${m.pages.map((_, k) => `<span class="${k <= i ? 'on' : ''}"></span>`).join('')}<span></span></div>
+    <h2 style="color:var(--eb-sky)">${pg.h}</h2>
+    <div class="learn-body">${renderBody(pg.body)}</div>
+    <div class="row" style="margin-top:16px">${i > 0 ? '<button class="btn" id="prev">← Back</button>' : ''}<div class="eb-spacer"></div><button class="btn primary" id="next">${i === n - 1 ? 'Take the check →' : 'Next →'}</button></div></div>`;
+  $('#lback').onclick = learnList;
+  $('#next').onclick = () => { learnPage(id, i + 1); window.scrollTo(0, 0); };
+  if (i > 0) $('#prev').onclick = () => { learnPage(id, i - 1); window.scrollTo(0, 0); };
+}
+function learnQuiz(id) {
+  const m = LEARN.find(x => x.id === id);
+  busy = { kind: 'quiz' };
+  app().innerHTML = `<div class="win" style="max-width:820px;margin:0 auto"><span class="label">${esc(m.title)} · check</span><h2>5 questions</h2>
+    ${m.quiz.map((q, qi) => `<div class="screen" style="margin-bottom:12px"><p style="margin-top:0"><b>${qi + 1}. ${esc(q.q)}</b></p>
+      ${q.a.map((a, ai) => `<label style="display:flex;gap:10px;align-items:flex-start;margin:6px 0;cursor:pointer"><input type="radio" name="q${qi}" value="${ai}" style="width:auto;margin-top:4px"> <span>${esc(a)}</span></label>`).join('')}
+      <div class="why hidden" id="why${qi}"></div></div>`).join('')}
+    <div class="row"><button class="btn" id="qback">← Re-read</button><div class="eb-spacer"></div><button class="btn primary" id="qsub">Check my answers</button></div></div>`;
+  $('#qback').onclick = () => learnPage(id, 0);
+  $('#qsub').onclick = () => {
+    const ans = m.quiz.map((_, qi) => { const r = document.querySelector(`input[name=q${qi}]:checked`); return r ? +r.value : null; });
+    if (ans.includes(null)) { alert('Answer every question first.'); return; }
+    let score = 0;
+    m.quiz.forEach((q, qi) => { const ok = ans[qi] === q.c; score += ok;
+      const w = $('#why' + qi); w.className = 'callout ' + (ok ? 'good' : 'bad');
+      w.innerHTML = (ok ? 'Correct. ' : `Not quite. The answer is: <b>${esc(q.a[q.c])}</b>. `) + esc(q.why); });
+    const r = S.learn[id] || (S.learn[id] = { attempts: 0, best: null });
+    r.attempts++; r.best = Math.max(r.best ?? 0, score); r.last = ans; if (score >= 4) r.passed = true;
+    logEvent(`learn ${id} ${score}/5`); markDirty(); busy = null;
+    $('#qsub').outerHTML = `<span class="readout"><span class="k">Score</span><span class="v">${score}/5</span></span>`;
+    $('#qback').insertAdjacentHTML('afterend', `<button class="btn ${score >= 4 ? 'primary' : ''}" id="qdone">${score >= 4 ? 'Passed! Back to Learn' : 'Re-read and try again'}</button>`);
+    $('#qdone').onclick = () => score >= 4 ? learnList() : learnPage(id, 0);
+  };
+}
+
+// ================= TEARDOWN =================
+function jobList() {
+  app().innerHTML = `<div class="win"><span class="label">Teardown & Rebuild</span><h2>${esc(E.name)}</h2>
+    <p class="muted">Pick a job. Take off each part in an order that actually works, using the right tool. Then rebuild it. Every mistake costs ${SCORING.teardownError} points.</p>
+    ${JOBS.map(j => { const r = S.teardown[j.id] || {};
+      return `<div class="item"><div class="t"><b>${esc(j.title)}</b><div class="muted" style="font-size:14px">${j.parts.length} parts · Outcomes ${j.outcomes}${r.best != null ? ` · Best: ${r.best}%` : ''}</div></div>${r.best != null ? '<span class="badge good">DONE</span>' : ''}<button class="btn" data-j="${j.id}">${r.best != null ? 'Again' : 'Start'}</button></div>`; }).join('')}</div>`;
+  app().querySelectorAll('[data-j]').forEach(b => b.onclick = () => startJob(b.dataset.j));
+}
+function startJob(id) {
+  const job = JOBS.find(j => j.id === id);
+  busy = { kind: 'teardown', job, phase: 'off', off: new Set(), errors: 0, sel: null, step: null, log: [], startedAt: now() };
+  drawJob();
+}
+const inJob = (job, id) => job.parts.includes(id);
+function blockersOff(job, off, id) { return PARTS[id].under.filter(b => inJob(job, b) && !off.has(b)); }          // still on, in the way
+function needsFirst(job, off, id) { return job.parts.filter(c => off.has(c) && PARTS[c].under.includes(id)); }     // must go back before id
+function drawJob(flash) {
+  const B = busy, job = B.job, rebuild = B.phase === 'on';
+  const list = job.parts.filter(p => rebuild ? B.off.has(p) : !B.off.has(p)).sort((a, b) => PARTS[a].name.localeCompare(PARTS[b].name));
+  // Which drawing to show: stay on the student's view while it still shows something they can work on, otherwise move to one that does.
+  const views = EngineSVG.views(job.parts, B.off);
+  const can = B.step ? [B.step.part] : job.parts.filter(p => rebuild ? B.off.has(p) && !needsFirst(job, B.off, p).length : !B.off.has(p) && !blockersOff(job, B.off, p).length);
+  const fits = v => can.some(p => rebuild ? EngineSVG.has(v, p) : EngineSVG.shows(v, p, B.off));
+  const most = v => job.parts.filter(p => EngineSVG.has(v, p)).length; // prefer the side where most of this job happens
+  if (!views.includes(B.view) || (!B.pinned && !fits(B.view))) B.view = views.filter(fits).sort((a, b) => most(b) - most(a))[0] || views[0];
+  const logHtml = B.log.slice().reverse().map(l => `<div class="entry" style="border-left-color:${l.bad ? 'var(--eb-coral)' : 'var(--eb-mint)'}"><div>${l.html}</div></div>`).join('');
+  let panel = '';
+  if (B.step && B.step.stage === 'tool') {
+    const p = PARTS[B.step.part];
+    panel = `<div class="callout"><b>${esc(p.name)}</b>: which tool${rebuild && p.torque ? ' do you finish it with' : ''}?</div>
+      <div class="row">${TOOLS.map(t => `<button class="btn ${B.step.wrong.includes(t.id) ? 'wrong' : ''}" data-tool="${t.id}" ${B.step.wrong.includes(t.id) ? 'disabled' : ''}>${esc(t.name)}</button>`).join('')}</div>
+      <button class="btn" id="cancelStep" style="margin-top:10px">Cancel</button>`;
+  } else if (B.step && B.step.stage === 'torque') {
+    const p = PARTS[B.step.part];
+    panel = `<div class="callout"><b>${esc(p.name)}</b>: torque to what? (Open the spec card if you need it.)</div>
+      <div class="row">${[...new Set(Object.values(PARTS).map(q => q.torque).filter(Boolean))].sort((a, b) => a - b).map(v => `<button class="btn vt ${B.step.wrong.includes(v) ? 'wrong' : ''}" style="font-size:22px" data-tq="${v}" ${B.step.wrong.includes(v) ? 'disabled' : ''}>${v} ft-lb</button>`).join('')}</div>`;
+  } else if (B.step && B.step.stage === 'check') {
+    const ck = PARTS[B.step.part].check;
+    panel = `<div class="callout"><b>${esc(ck.q)}</b></div>${ck.a.map((a, i) => `<button class="btn block ${B.step.wrong.includes(i) ? 'wrong' : ''}" data-ck="${i}" ${B.step.wrong.includes(i) ? 'disabled' : ''}>${esc(a)}</button>`).join('')}`;
+  } else {
+    panel = `<p class="muted" style="margin:0 0 8px">${rebuild ? 'Pick the next part to put back on (click it in the tray).' : 'Pick the next part to take off (click it here or on the engine).'}</p>
+      ${list.map(p => `<button class="btn block" data-p="${p}"><span class="dot" style="background:${sysVar(PARTS[p].sys)};margin-right:8px"></span>${esc(PARTS[p].name)}</button>`).join('')}`;
+  }
+  app().innerHTML = `
+  <div class="row" style="margin-bottom:12px"><button class="btn" id="jback">← Jobs</button><span class="label" style="margin:0 0 0 8px">${esc(job.title)}</span><div class="eb-spacer"></div>
+    <span class="readout"><span class="k">${rebuild ? 'Installed' : 'Removed'}</span><span class="v">${rebuild ? job.parts.length - B.off.size : B.off.size}/${job.parts.length}</span></span>
+    <span class="readout"><span class="k">Mistakes</span><span class="v" style="color:${B.errors ? 'var(--eb-coral)' : 'var(--eb-mint)'}">${B.errors}</span></span>
+    <button class="btn" onclick="ebSpec()">Spec card</button></div>
+  <div class="two wide">
+    <div><div class="win" style="padding:12px"><div class="eb-views">${views.map(v => `<button class="btn ${v === B.view ? 'primary' : ''}" data-view="${v}">${EngineSVG.VIEWS.find(x => x.id === v).label}</button>`).join('')}</div>
+      ${EngineSVG.render({ view: B.view, scope: job.parts, off: B.off, sel: B.step && B.step.part, flash })}</div>
+      <div class="win log"><span class="label">Shop log</span>${logHtml || '<p class="muted">Safety first: think about what has to happen before anything else.</p>'}</div></div>
+    <div class="win"><span class="label">${rebuild ? 'Rebuild · parts tray' : 'Teardown · parts on the engine'}</span>${panel}</div>
+  </div>`;
+  $('#jback').onclick = () => go('teardown');
+  app().querySelectorAll('[data-p]').forEach(b => b.onclick = () => choosePart(b.dataset.p));
+  if (!rebuild && !B.step) app().querySelectorAll('.engine-svg .part:not(.faded)').forEach(g => g.onclick = () => choosePart(g.dataset.part));
+  app().querySelectorAll('[data-view]').forEach(b => b.onclick = () => { B.view = b.dataset.view; B.pinned = true; drawJob(); });
+  app().querySelectorAll('[data-tool]').forEach(b => b.onclick = () => chooseTool(b.dataset.tool));
+  app().querySelectorAll('[data-tq]').forEach(b => b.onclick = () => chooseTorque(+b.dataset.tq));
+  app().querySelectorAll('[data-ck]').forEach(b => b.onclick = () => chooseCheck(+b.dataset.ck));
+  const c = $('#cancelStep'); if (c) c.onclick = () => { B.step = null; drawJob(); };
+}
+function err(html, flash) { busy.errors++; busy.log.push({ bad: true, html }); drawJob(flash); }
+function choosePart(id) {
+  const B = busy, job = B.job, p = PARTS[id];
+  if (B.phase === 'off') {
+    if (!inJob(job, id)) return;
+    const bl = blockersOff(job, B.off, id);
+    if (bl.length) return err(`<b>${esc(p.name)}</b> can't come off yet: <b>${esc(PARTS[bl[0]].name)}</b> is in the way.`, bl[0]);
+  } else {
+    const nf = needsFirst(job, B.off, id);
+    if (nf.length) return err(`<b>${esc(p.name)}</b> can't go on yet: <b>${esc(PARTS[nf[0]].name)}</b> goes on underneath it first.`);
+  }
+  B.step = { part: id, stage: 'tool', wrong: [] }; B.pinned = false; drawJob();
+}
+function chooseTool(t) {
+  const B = busy, p = PARTS[B.step.part], rebuild = B.phase === 'on';
+  const right = rebuild && p.torque ? 'torque' : p.tool;
+  if (t !== right) {
+    B.step.wrong.push(t);
+    const why = TOOL_WHY[t] || (rebuild && p.torque && t === p.tool ? `That gets it snug, but this fastener has a torque spec, so it is finished with the torque wrench.` : `${TOOLS.find(x => x.id === t).name} isn't the right tool for the ${p.name.toLowerCase()}.`);
+    return err(why);
+  }
+  if (rebuild && p.check) { B.step.stage = 'check'; B.step.wrong = []; return drawJob(); }
+  if (rebuild && p.torque) { B.step.stage = 'torque'; B.step.wrong = []; return drawJob(); }
+  finishStep();
+}
+function chooseTorque(v) {
+  const B = busy, p = PARTS[B.step.part];
+  if (v !== p.torque) { B.step.wrong.push(v); return err(`${v} ft-lb is wrong for the ${p.name.toLowerCase()}. Too loose and it works free; too tight and it stretches the bolt or strips the aluminum threads. Check the spec card.`); }
+  finishStep();
+}
+function chooseCheck(i) {
+  const B = busy, p = PARTS[B.step.part], ck = p.check;
+  if (i !== ck.c) { B.step.wrong.push(i); return err(`Not right. ${esc(ck.why)}`); }
+  B.log.push({ html: esc(ck.why) });
+  if (p.torque) { B.step.stage = 'torque'; B.step.wrong = []; return drawJob(); }
+  finishStep();
+}
+function finishStep() {
+  const B = busy, id = B.step.part, p = PARTS[id], job = B.job;
+  if (B.phase === 'off') { B.off.add(id); B.log.push({ html: `<b>Off: ${esc(p.name)}.</b> ${esc(p.off)}` }); }
+  else { B.off.delete(id); B.log.push({ html: `<b>On: ${esc(p.name)}.</b>${p.torque ? ` Torqued to ${p.torque} ft-lb.` : ''}` }); }
+  B.step = null; B.pinned = false;
+  if (B.phase === 'off' && B.off.size === job.parts.length) {
+    B.phase = 'on'; B.log.push({ html: '<b>Teardown complete.</b> Inspect, clean, then rebuild: the last part off is the first part back on.' });
+  } else if (B.phase === 'on' && B.off.size === 0) return jobDone();
+  drawJob();
+}
+function jobDone() {
+  const B = busy, score = Math.max(0, 100 - B.errors * SCORING.teardownError);
+  const r = S.teardown[B.job.id] || (S.teardown[B.job.id] = { attempts: 0, best: null });
+  r.attempts++; r.best = Math.max(r.best ?? 0, score); r.last = { score, errors: B.errors, startedAt: B.startedAt, finishedAt: now() };
+  logEvent(`teardown ${B.job.id} ${score}`); markDirty(); busy = null;
+  app().innerHTML = `<div class="win" style="max-width:620px;margin:30px auto;text-align:center"><span class="label">Job complete</span><h2>${esc(B.job.title)}</h2>
+    <div class="score">${score}%</div><p class="muted">${B.errors} mistake(s) × ${SCORING.teardownError} points</p>
+    <div class="row" style="justify-content:center"><button class="btn primary" onclick="ebSave()">Save my file</button><button class="btn" id="more">More jobs</button></div></div>`;
+  $('#more').onclick = () => go('teardown');
+}
+
+// ================= MEASURE =================
+const range = (a, b, s) => { const out = []; for (let v = a; v <= b + 1e-9; v += s) out.push(+v.toFixed(2)); return out; };
+const WIRES = range(0.5, 1.0, 0.05), BLADES = [0.05, 0.08, 0.10, 0.12, 0.15, 0.18, 0.20, 0.22, 0.25, 0.30];
+function measureStart() {
+  app().innerHTML = `<div class="win" style="max-width:820px;margin:0 auto"><span class="label">Measure</span><h2>Four measuring jobs</h2>
+    <p>Each round gives you new readings. For each one, take the measurement, write it down, then decide whether it is in spec.</p>
+    <div class="callout">1. Spark plug gap with a wire gauge<br>2. Valve clearance (intake and exhaust) with a feeler gauge<br>3. Two readings on a vernier caliper<br>4. A compression gauge reading</div>
+    <div class="row"><span class="readout"><span class="k">Best</span><span class="v">${S.measure.best != null ? S.measure.best + '%' : '–'}</span></span><div class="eb-spacer"></div><button class="btn" onclick="ebSpec()">Spec card</button><button class="btn primary" id="mgo">Start a round</button></div></div>`;
+  $('#mgo').onclick = () => {
+    busy = { kind: 'measure', i: 0, pts: 0, max: 0, res: [], tasks: [
+      { k: 'plug', v: pick(range(0.6, 0.95, 0.05)) },
+      { k: 'valve', side: 'intake', v: pick([0.05, 0.08, 0.10, 0.12, 0.12, 0.15, 0.18, 0.20]) },
+      { k: 'valve', side: 'exhaust', v: pick([0.08, 0.10, 0.12, 0.15, 0.18, 0.18, 0.20, 0.22, 0.25]) },
+      { k: 'caliper', v: +(Math.round((10 + Math.random() * 50) * 20) / 20).toFixed(2) },
+      { k: 'caliper', v: +(Math.round((10 + Math.random() * 50) * 20) / 20).toFixed(2) },
+      { k: 'comp', v: Math.random() < .5 ? 40 + Math.round(Math.random() * 22) : 12 + Math.round(Math.random() * 20) },
+    ] };
+    measureTask();
+  };
+}
+function judgeBtns(opts) { return `<div class="row" style="margin-top:10px">${opts.map((o, i) => `<button class="btn" data-j="${i}">${o}</button>`).join('')}</div>`; }
+function measureTask() {
+  const B = busy, T = B.tasks[B.i];
+  if (!T) return measureDone();
+  let html = '', tries = [];
+  const head = `<div class="row"><span class="label" style="margin:0">Task ${B.i + 1} of ${B.tasks.length}</span><div class="eb-spacer"></div><button class="btn" onclick="ebSpec()">Spec card</button></div>`;
+  if (T.k === 'plug' || T.k === 'valve') {
+    const plug = T.k === 'plug', set = plug ? WIRES : BLADES;
+    const specTxt = plug ? E.SPEC.plugGap : (T.side === 'intake' ? E.SPEC.valveIntake : E.SPEC.valveExhaust);
+    html = `${head}<h2>${plug ? 'Spark plug gap' : `Valve clearance: ${T.side}`}</h2>
+      <p class="muted">${plug ? 'Try wires from the wire gauge in the gap. The right one slides through with a slight drag. Too small slides through loose. Too big won\'t go in.' : 'Piston at TDC on compression. Slide blades between the rocker arm and the valve stem. The right blade slides with a slight drag.'}</p>
+      <div class="gaugebox"><div class="blades">${set.map(w => `<button class="btn" data-w="${w}">${w.toFixed(2)}</button>`).join('')}</div><div id="feel" class="callout">Pick a ${plug ? 'wire' : 'blade'} to try.</div></div>
+      <label class="f">Your reading (mm)</label><select id="rd"><option value="">Choose…</option>${set.map(w => `<option>${w.toFixed(2)}</option>`).join('')}</select>
+      <label class="f">Spec: ${esc(specTxt)}. What should you do?</label>
+      ${judgeBtns(plug ? ['In spec: leave it', 'Too narrow: open the gap', 'Too wide: close the gap'] : ['In spec: leave it', 'Too tight: loosen it', 'Too loose: tighten it'])}`;
+    app().innerHTML = `<div class="win" style="max-width:820px;margin:0 auto">${html}</div>`;
+    app().querySelectorAll('[data-w]').forEach(b => b.onclick = () => {
+      const w = +b.dataset.w; tries.push(w);
+      $('#feel').innerHTML = `<span class="vt" style="font-size:24px;color:var(--eb-mint)">${w.toFixed(2)} mm</span>: ` + (Math.abs(w - T.v) < 1e-6 ? 'slides through with a slight drag. That\'s the reading.' : w < T.v ? 'slides through loose, with no drag. The gap is bigger than this.' : 'won\'t fit. The gap is smaller than this.');
+    });
+    const [lo, hi] = plug ? [0.7, 0.8] : T.side === 'intake' ? [0.10, 0.15] : [0.15, 0.20];
+    const correctJ = T.v < lo - 1e-6 ? 1 : T.v > hi + 1e-6 ? 2 : 0;
+    app().querySelectorAll('[data-j]').forEach(b => b.onclick = () => {
+      const rd = $('#rd').value; if (!rd) { alert('Choose your reading first.'); return; }
+      measureScore([+rd === T.v, +b.dataset.j === correctJ], `${plug ? 'Plug gap' : 'Valve ' + T.side}: actual ${T.v.toFixed(2)} mm, you read ${rd}. ${['In spec', plug ? 'Too narrow' : 'Too tight', plug ? 'Too wide' : 'Too loose'][correctJ]}.`, { tries: tries.length });
+    });
+  } else if (T.k === 'caliper') {
+    app().innerHTML = `<div class="win" style="max-width:860px;margin:0 auto">${head}<h2>Read the vernier caliper</h2>
+      <div class="callout"><b>How to read it:</b> (1) Find the last whole millimetre on the main scale <i>before</i> the vernier's 0 line. (2) Find the one vernier line that lines up exactly with a main-scale line. Each vernier line is 0.05 mm, and the numbers 1–10 mark tenths (0.1–1.0 mm). (3) Add them: whole mm + vernier.</div>
+      <div class="gaugebox">${caliperSVG(T.v)}</div>
+      <label class="f">Your reading (mm, to 2 decimals)</label><input id="rd" inputmode="decimal" placeholder="e.g. 23.45">
+      <div class="row" style="margin-top:12px"><div class="eb-spacer"></div><button class="btn primary" id="sub">Record it</button></div></div>`;
+    $('#sub').onclick = () => { const x = parseFloat($('#rd').value.replace(',', '.')); if (isNaN(x)) { alert('Type a number.'); return; }
+      const ok = Math.abs(x - T.v) < 0.001;
+      measureScore([ok, ok], `Caliper: actual ${T.v.toFixed(2)} mm, you read ${x.toFixed(2)}.`); };
+  } else if (T.k === 'comp') {
+    app().innerHTML = `<div class="win" style="max-width:820px;margin:0 auto">${head}<h2>Compression gauge</h2>
+      <p class="muted">The gauge was screwed into the plug hole with the throttle open, and the rope pulled five times. Read the needle: small lines are every 5 psi.</p>
+      <div class="gaugebox" style="max-width:360px">${dialSVG(T.v)}</div>
+      <label class="f">Your reading (psi)</label><input id="rd" inputmode="numeric" placeholder="e.g. 55">
+      <label class="f">Spec: ${esc(E.SPEC.compression)}. Verdict?</label>
+      ${judgeBtns(['Healthy: compression is fine', 'Low: find the leak (valves, rings, gasket)'])}</div>`;
+    app().querySelectorAll('[data-j]').forEach(b => b.onclick = () => {
+      const x = parseFloat($('#rd').value); if (isNaN(x)) { alert('Type your reading first.'); return; }
+      const healthy = T.v >= 40;
+      measureScore([Math.abs(x - T.v) <= 3, (+b.dataset.j === 0) === healthy], `Compression: actual ${T.v} psi, you read ${x}. ${healthy ? 'Healthy.' : 'Low.'}`);
+    });
+  }
+}
+function measureScore(oks, msg, extra) {
+  const B = busy, n = oks.filter(Boolean).length;
+  B.pts += n; B.max += oks.length; B.res.push({ task: B.tasks[B.i].k, ok: oks, msg, ...extra });
+  const box = document.createElement('div');
+  box.className = 'callout ' + (n === oks.length ? 'good' : 'bad');
+  box.innerHTML = `${n === oks.length ? '✔ ' : '✘ '}${esc(msg)} <button class="btn primary" style="margin-left:10px" id="mnext">Next →</button>`;
+  app().querySelector('.win').appendChild(box);
+  app().querySelectorAll('[data-j], #sub, [data-w]').forEach(b => b.disabled = true);
+  $('#mnext').onclick = () => { B.i++; measureTask(); window.scrollTo(0, 0); };
+}
+function measureDone() {
+  const B = busy, score = Math.round(100 * B.pts / B.max);
+  S.measure.attempts++; S.measure.best = Math.max(S.measure.best ?? 0, score); S.measure.last = { score, results: B.res, finishedAt: now() };
+  logEvent('measure ' + score); markDirty(); busy = null;
+  app().innerHTML = `<div class="win" style="max-width:620px;margin:30px auto;text-align:center"><span class="label">Round complete</span><div class="score">${score}%</div>
+    <div style="text-align:left">${B.res.map(r => `<div class="callout ${r.ok.every(Boolean) ? 'good' : 'bad'}">${esc(r.msg)}</div>`).join('')}</div>
+    <div class="row" style="justify-content:center"><button class="btn primary" onclick="ebSave()">Save my file</button><button class="btn" id="again">New round</button></div></div>`;
+  $('#again').onclick = () => go('measure');
+}
+function caliperSVG(v) {
+  const s = 12, start = Math.floor(v) - 5, X = mm => 30 + (mm - start) * s;
+  let main = '', vern = '';
+  for (let mm = start; mm <= start + 58; mm++) {
+    const h = mm % 10 === 0 ? 30 : mm % 5 === 0 ? 22 : 14;
+    main += `<line x1="${X(mm)}" x2="${X(mm)}" y1="90" y2="${90 - h}" stroke="#f6efff" stroke-width="1.5"/>`;
+    if (mm % 10 === 0) main += `<text x="${X(mm)}" y="50" fill="#f6efff" font-size="15" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif">${mm}</text>`;
+  }
+  for (let k = 0; k <= 20; k++) {
+    const x = X(v + 1.95 * k), h = k % 2 === 0 ? 24 : 14;
+    vern += `<line x1="${x}" x2="${x}" y1="92" y2="${92 + h}" stroke="#ffd23f" stroke-width="1.5"/>`;
+    if (k % 2 === 0) vern += `<text x="${x}" y="134" fill="#ffd23f" font-size="13" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif">${k / 2}</text>`;
+  }
+  return `<svg viewBox="0 0 760 150" style="width:100%;height:auto;display:block" role="img" aria-label="Vernier caliper scale">
+    <rect x="10" y="30" width="740" height="62" fill="#2a1d4d" stroke="#000" stroke-width="2"/>
+    <rect x="${X(v) - 14}" y="92" width="${1.95 * 20 * s + 28}" height="50" rx="4" fill="#3b2468" stroke="#000" stroke-width="2"/>
+    <text x="14" y="24" fill="#c3b2e6" font-size="12" font-family="Atkinson Hyperlegible, sans-serif">main scale (mm)</text>
+    ${main}${vern}</svg>`;
+}
+function dialSVG(v) {
+  const cx = 160, cy = 160, R = 130, max = 200, A = p => (-225 + 270 * p / max) * Math.PI / 180;
+  let t = '';
+  for (let p = 0; p <= max; p += 5) {
+    const a = A(p), L = p % 20 === 0 ? 18 : p % 10 === 0 ? 12 : 7;
+    t += `<line x1="${cx + Math.cos(a) * R}" y1="${cy + Math.sin(a) * R}" x2="${cx + Math.cos(a) * (R - L)}" y2="${cy + Math.sin(a) * (R - L)}" stroke="#f6efff" stroke-width="${p % 20 === 0 ? 2.5 : 1.3}"/>`;
+    if (p % 20 === 0) t += `<text x="${cx + Math.cos(a) * (R - 34)}" y="${cy + Math.sin(a) * (R - 34) + 5}" fill="#f6efff" font-size="15" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif">${p}</text>`;
+  }
+  const a = A(v);
+  return `<svg viewBox="0 0 320 300" style="width:100%;height:auto;display:block" role="img" aria-label="Compression gauge dial">
+    <circle cx="${cx}" cy="${cy}" r="${R + 10}" fill="#2a1d4d" stroke="#000" stroke-width="4"/>${t}
+    <text x="${cx}" y="${cy + 60}" fill="#c3b2e6" font-size="14" text-anchor="middle" font-family="Atkinson Hyperlegible, sans-serif">psi</text>
+    <line x1="${cx}" y1="${cy}" x2="${cx + Math.cos(a) * (R - 12)}" y2="${cy + Math.sin(a) * (R - 12)}" stroke="#ff5d73" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="9" fill="#ff5d73" stroke="#000" stroke-width="2"/></svg>`;
+}
+
+// ================= DIAGNOSE =================
+const caseById = id => E.CASES.find(c => c.id === id);
+const nameOf = (list, id) => (list.find(x => x.id === id) || {}).name || id;
+function caseList() {
+  app().innerHTML = `<div class="win"><div class="row"><span class="label" style="margin:0">Diagnose · practice</span><div class="eb-spacer"></div><button class="btn" onclick="ebSpec()">Spec card</button></div>
+    <h2>${esc(E.name)}</h2><p class="muted">Solve at least ${CERT_NEEDS} cases before certification.</p>
+    ${E.CASES.map(cs => { const p = S.practice[cs.id];
+      return `<div class="item"><div class="t"><b>${esc(cs.title)}</b><div class="muted" style="font-size:14px">${p ? `Attempts: ${p.attempts} · Best: ${p.best ?? '–'}%` : 'Not tried yet'}</div></div>${p && p.best != null ? '<span class="badge good">SOLVED</span>' : ''}<button class="btn" data-case="${cs.id}">${p ? 'Again' : 'Start'}</button></div>`; }).join('')}</div>`;
+  app().querySelectorAll('[data-case]').forEach(b => b.onclick = () => startCase(b.dataset.case, 'practice'));
+}
+function startCase(id, mode) {
+  busy = { kind: 'case', id, mode, stage: 'test', tests: [], wrongFaults: [], wrongRepairs: [], startedAt: now() };
+  if (mode === 'cert') logEvent('cert-case-start ' + id);
+  drawCase();
+}
+const resultFor = (cs, tid) => (cs.results && cs.results[tid]) || E.TESTS.find(x => x.id === tid).normal;
+function drawCase() {
+  const R = busy, cs = caseById(R.id), cert = R.mode === 'cert';
+  const systems = [...new Set(E.TESTS.map(t => t.system))];
+  const tests = systems.map(sys => `<div class="sysname">${sys}</div>` + E.TESTS.filter(t => t.system === sys).map(t =>
+    `<button class="btn block" data-test="${t.id}" style="${R.tests.includes(t.id) ? 'opacity:.55' : ''}" ${R.stage !== 'test' ? 'disabled' : ''}><span class="dot" style="background:${sysVar(sys)};margin-right:8px"></span>${esc(t.name)}</button>`).join('')).join('');
+  const log = R.tests.map((tid, i) => { const t = E.TESTS.find(x => x.id === tid), r = resultFor(cs, tid);
+    return `<div class="entry" style="border-left-color:${sysVar(t.system)}"><div class="name">Test ${i + 1}: ${esc(t.name)}</div><div>${esc(r.result)}</div>${cert ? '' : `<div class="explain">${esc(r.explain)}</div>`}</div>`; }).join('')
+    || '<p class="muted">Pick a test. Think like a mechanic: start with the system the complaint points to, and with quick, cheap checks.</p>';
+  let action = '';
+  if (R.stage === 'test') action = `<div class="win"><button class="btn primary" id="toDiag" ${R.tests.length < 2 ? 'disabled' : ''}>I know what's wrong →</button>
+      <span class="muted" style="margin-left:10px;font-size:15px">${R.tests.length < 2 ? 'Run at least 2 tests first.' : 'Only diagnose when your tests prove it.'}</span></div>`;
+  else if (R.stage === 'fault') action = `<div class="win"><span class="label">Diagnosis</span><h3>What is the fault?</h3>
+      ${R.wrongFaults.length ? '<div class="callout bad">Your test results don\'t support that. Look at the evidence again, or go back and run another test.</div>' : ''}
+      ${E.FAULTS.map(f => `<button class="btn block ${R.wrongFaults.includes(f.id) ? 'wrong' : ''}" data-fault="${f.id}" ${R.wrongFaults.includes(f.id) ? 'disabled' : ''}>${esc(f.name)}</button>`).join('')}
+      <button class="btn" id="backTest" style="margin-top:8px">← Run more tests</button></div>`;
+  else if (R.stage === 'repair') action = `<div class="win"><span class="label">Repair</span><h3>Fault: ${esc(nameOf(E.FAULTS, cs.fault))}. Which repair fixes it?</h3>
+      ${E.REPAIRS.map(r => `<button class="btn block ${R.wrongRepairs.includes(r.id) ? 'wrong' : ''}" data-repair="${r.id}" ${R.wrongRepairs.includes(r.id) ? 'disabled' : ''}>${esc(r.name)}</button>`).join('')}</div>`;
+  else if (R.stage === 'explain') action = `<div class="win"><span class="label">Verify</span><p>${esc(cs.verify)}</p>
+      <label class="f" for="why">Work order notes: in 1–3 sentences, which test results proved the fault, and why did it cause the customer's problem?</label>
+      <textarea id="why"></textarea><button class="btn primary" id="finish" style="margin-top:12px">Close the work order</button></div>`;
+  app().innerHTML = `<div class="row" style="margin-bottom:12px">${cert ? '<span class="badge new">CERTIFICATION · NO HINTS</span>' : '<button class="btn" id="cback">← Cases</button>'}<div class="eb-spacer"></div><button class="btn" onclick="ebSpec()">Spec card</button></div>
+  <div class="two"><div>
+      <div class="win" style="border-left:none"><span class="label">Work order · ${esc(E.name)}</span><h2>${esc(cs.title)}</h2><div class="callout warm" style="font-size:18px">${esc(cs.complaint)}</div><p class="muted">${esc(cs.startAttempt)}</p></div>
+      <div class="win"><span class="label">Tests</span>${tests}</div></div>
+    <div><div class="win log"><span class="label">Shop log</span>${log}</div>${action}</div></div>`;
+  const cb = $('#cback'); if (cb) cb.onclick = () => go('diagnose');
+  app().querySelectorAll('[data-test]').forEach(b => b.onclick = () => { if (!R.tests.includes(b.dataset.test)) { R.tests.push(b.dataset.test); drawCase(); } });
+  app().querySelectorAll('[data-fault]').forEach(b => b.onclick = () => { if (b.dataset.fault === cs.fault) R.stage = 'repair'; else R.wrongFaults.push(b.dataset.fault); drawCase(); });
+  app().querySelectorAll('[data-repair]').forEach(b => b.onclick = () => { if (b.dataset.repair === cs.repair) R.stage = 'explain'; else R.wrongRepairs.push(b.dataset.repair); drawCase(); });
+  const td = $('#toDiag'); if (td) td.onclick = () => { R.stage = 'fault'; drawCase(); };
+  const bt = $('#backTest'); if (bt) bt.onclick = () => { R.stage = 'test'; drawCase(); };
+  const fin = $('#finish'); if (fin) fin.onclick = () => { const why = $('#why').value.trim(); if (why.length < 25) { alert('Write a proper explanation (at least one full sentence).'); return; } finishCase(why); };
+}
+function finishCase(why) {
+  const R = busy, cs = caseById(R.id);
+  const wasted = R.tests.filter(t => !cs.useful.includes(t)).length;
+  const score = Math.max(0, 100 - wasted * SCORING.wastedTest - R.wrongFaults.length * SCORING.wrongFault - R.wrongRepairs.length * SCORING.wrongRepair);
+  const rec = { score, tests: R.tests, wasted, wrongFaults: R.wrongFaults, wrongRepairs: R.wrongRepairs, explanation: why, startedAt: R.startedAt, finishedAt: now() };
+  if (R.mode === 'cert') { S.cert.results[R.id] = rec; logEvent(`cert-case ${R.id} ${score}`); }
+  else { const p = S.practice[R.id] || (S.practice[R.id] = { attempts: 0, best: null }); p.attempts++; p.best = Math.max(p.best ?? 0, score); p.last = rec; logEvent(`practice ${R.id} ${score}`); }
+  markDirty(); const mode = R.mode; busy = null;
+  app().innerHTML = `<div class="win" style="max-width:660px;margin:30px auto;text-align:center"><span class="label">Work order closed</span><div class="score">${score}%</div>
+    <p class="muted">Tests run: ${rec.tests.length} (${wasted} didn't help: −${wasted * SCORING.wastedTest})<br>Wrong diagnoses: ${rec.wrongFaults.length} (−${rec.wrongFaults.length * SCORING.wrongFault})<br>Wrong repairs: ${rec.wrongRepairs.length} (−${rec.wrongRepairs.length * SCORING.wrongRepair})</p>
+    ${mode === 'practice' ? `<div class="callout" style="text-align:left">Useful tests for this case: ${cs.useful.map(t => esc(E.TESTS.find(x => x.id === t).name)).join('; ')}.</div>` : ''}
+    <div class="row" style="justify-content:center">${mode === 'cert' ? '<button class="btn primary" id="nextCert">Next certification case →</button>' : '<button class="btn primary" id="toCases">Back to cases</button>'}<button class="btn" onclick="ebSave()">Save my file</button></div></div>`;
+  const n = $('#nextCert'); if (n) n.onclick = certContinue;
+  const c = $('#toCases'); if (c) c.onclick = () => go('diagnose');
+}
+
+// ================= CERTIFICATION =================
+function certHome() {
+  const c = S.cert;
+  if (c.status === 'done') return certSummary(false);
+  const ready = casesDone() >= CERT_NEEDS;
+  app().innerHTML = `<div class="win" style="max-width:700px;margin:0 auto"><span class="label">Certification</span><h2>Small engine diagnosis</h2>
+    <p>${CERT_CASES} random cases. One attempt each, and the tests show results without the explanations. Wasted tests and wrong answers cost points, just like in practice. Your teacher marks this.</p>
+    <div class="callout warm">Once you start a case you must finish it. When you finish, show your teacher the <b>My results</b> screen.</div>
+    ${ready ? '' : `<div class="callout bad">Solve at least ${CERT_NEEDS} practice cases first (you have ${casesDone()}).</div>`}
+    <button class="btn primary" id="cgo" ${ready ? '' : 'disabled'}>${c.status === 'in_progress' ? 'Continue certification' : 'Start certification'}</button></div>`;
+  $('#cgo').onclick = () => {
+    if (c.status === 'none') {
+      if (!confirm('Start certification now?')) return;
+      Object.assign(c, { status: 'in_progress', startedAt: now(), cases: shuffle(E.CASES.map(x => x.id)).slice(0, CERT_CASES), results: {} });
+      logEvent('cert-start'); markDirty();
+    }
+    certContinue();
+  };
+}
+function certContinue() {
+  const c = S.cert, next = c.cases.find(id => !c.results[id]);
+  if (next) return startCase(next, 'cert');
+  const sc = c.cases.map(id => c.results[id].score);
+  c.score = Math.round(sc.reduce((a, b) => a + b, 0) / sc.length); c.status = 'done'; c.finishedAt = now();
+  logEvent('cert-done ' + c.score); markDirty(); certSummary(true);
+}
+function certSummary(fresh) {
+  const c = S.cert;
+  app().innerHTML = `<div class="win" style="max-width:620px;margin:30px auto;text-align:center"><span class="label">Certification complete</span><div class="score">${c.score}%</div>
+    <p>${c.cases.map(id => `${esc(caseById(id).title)}: ${c.results[id].score}%`).join('<br>')}</p>
+    <div class="callout warm"><b>Show your teacher your results.</b> Then save your file so your progress is kept.</div>
+    <div class="row" style="justify-content:center;gap:10px"><button class="btn primary" id="toRes">My results</button><button class="btn" onclick="ebSave()">Save my file</button></div></div>`;
+  $('#toRes').onclick = () => go('results');
+  if (fresh) endCard();
+}
+let endFrom = null;
+function endCard() {
+  const e = $('#endcard'); endFrom = document.activeElement; e.hidden = false;
+  e.querySelectorAll('.in').forEach(x => { x.style.animation = 'none'; void x.offsetWidth; x.style.animation = ''; });
+  e.focus();
+}
+function hideEnd() { $('#endcard').hidden = true; if (endFrom && endFrom.focus) endFrom.focus(); }
+$('#endcard').addEventListener('click', hideEnd);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#endcard').hidden) hideEnd(); });
+
+// ================= TEST MENU (only with ?debug in the address) =================
+// One click to any part of Engine Bay. Jumps make a test student if none is open, and skip reading and confirm boxes.
+function fillAll() {
+  const t = now(), rec = cs => ({ score: 100, tests: cs.useful, wasted: 0, wrongFaults: [], wrongRepairs: [], explanation: 'Filled in by the test menu.', startedAt: t, finishedAt: t });
+  LEARN.forEach(m => S.learn[m.id] = { attempts: 1, best: 5, passed: true });
+  JOBS.forEach(j => S.teardown[j.id] = { attempts: 1, best: 100, last: { score: 100, errors: 0, startedAt: t, finishedAt: t } });
+  S.measure = { attempts: 1, best: 100 };
+  E.CASES.forEach(cs => S.practice[cs.id] = { attempts: 1, best: 100, last: rec(cs) });
+  return rec;
+}
+function testStudent(done) { S = blank('Test Student', 'Test'); if (done) fillAll(); logEvent('test student'); dirty = false; busy = null; }
+function jump(t, fn) {
+  $('#dbg').close();
+  if (!S) testStudent(true);
+  busy = null; tab = t; header(); fn(); window.scrollTo(0, 0);
+}
+function debugMenu() {
+  const groups = [
+    ['Test student', [
+      ['New test student with nothing done', () => { testStudent(false); jump('home', home); }],
+      ['New test student with Learn, Teardown, Measure and all practice cases done', () => { testStudent(true); jump('home', home); }],
+      ['Show the "file was changed outside Engine Bay" warning', () => jump('home', () => { S.tampered = true; home(); })],
+      ['My results screen (everything before certification done)', () => jump('results', results)],
+      ['My results screen with certification finished', () => jump('results', () => { const rec = fillAll(); const cases = shuffle(E.CASES.map(x => x.id)).slice(0, CERT_CASES);
+        S.cert = { status: 'done', startedAt: now(), finishedAt: now(), score: 100, cases, results: Object.fromEntries(cases.map(id => [id, rec(caseById(id))])) }; results(); })],
+      ['Save this student\'s file (to try on the marks page)', () => { $('#dbg').close(); if (!S) testStudent(true); header(); save(); }]]],
+    ['Learn: straight to the 5-question check', LEARN.map(m => [m.title, () => jump('learn', () => learnQuiz(m.id))])],
+    ['Teardown: take apart', JOBS.map(j => [j.title, () => jump('teardown', () => startJob(j.id))])],
+    ['Teardown: put back together (already taken apart; tests tools, questions and torque)', JOBS.map(j => [j.title, () => jump('teardown', () => {
+      startJob(j.id); busy.off = new Set(j.parts); busy.phase = 'on';
+      busy.log.push({ html: '<b>Test menu: already taken apart.</b> Rebuild: the last part off is the first part back on.' }); drawJob(); })])],
+    ['Measure', [['Start a measuring round', () => jump('measure', () => { measureStart(); $('#mgo').click(); })]]],
+    ['Diagnose: practice case', E.CASES.map(cs => [cs.title, () => jump('diagnose', () => startCase(cs.id, 'practice'))])],
+    ['Certification', [
+      ['Start screen (3 practice cases already solved)', () => jump('cert', () => { fillAll(); S.cert = { status: 'none', cases: [], results: {} }; certHome(); })],
+      ['First certification case', () => jump('cert', () => { fillAll(); Object.assign(S.cert, { status: 'in_progress', startedAt: now(), cases: shuffle(E.CASES.map(x => x.id)).slice(0, CERT_CASES), results: {} }); certContinue(); })],
+      ['Finished: score screen and the "see you next class" card', () => jump('cert', () => { const rec = fillAll();
+        const cases = shuffle(E.CASES.map(x => x.id)).slice(0, CERT_CASES);
+        S.cert = { status: 'in_progress', startedAt: now(), cases, results: Object.fromEntries(cases.map(id => [id, rec(caseById(id))])) }; certContinue(); })]]],
+  ];
+  const d = document.createElement('dialog');
+  d.id = 'dbg'; d.style.maxWidth = '760px'; d.style.maxHeight = '88vh'; d.style.overflow = 'auto';
+  d.innerHTML = `<div class="row"><span class="label" style="margin:0">Test menu</span><div class="eb-spacer"></div><button class="btn" id="dbgX">Close</button></div>
+    <p class="muted" style="margin-top:6px">Only shows when the address ends in ?debug, so students never see it. Every button goes straight there. If no file is open, it makes a "Test Student" with everything before certification done.</p>
+    ${groups.map(([h, btns], gi) => `<h3 style="margin:14px 0 6px">${esc(h)}</h3><div class="row" style="flex-wrap:wrap;gap:6px">${btns.map(([l], bi) => `<button class="btn" data-dbg="${gi}.${bi}">${esc(l)}</button>`).join('')}</div>`).join('')}`;
+  document.body.appendChild(d);
+  d.querySelector('#dbgX').onclick = () => d.close();
+  d.querySelectorAll('[data-dbg]').forEach(b => { const [gi, bi] = b.dataset.dbg.split('.'); b.onclick = groups[gi][1][bi][1]; });
+  const open = document.createElement('button');
+  open.className = 'btn'; open.textContent = 'TEST MENU';
+  open.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:50';
+  open.onclick = () => d.showModal();
+  document.body.appendChild(open);
+}
+
+// ================= boot =================
+$('#fileInput').onchange = openFile;
+$('#saveBtn').onclick = save;
+if (/[?&#]debug\b/.test(location.search + location.hash)) debugMenu();
+start();
+})();
+
+</script>
+</body>
+</html>
